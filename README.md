@@ -29,14 +29,6 @@ Enter the project directory:
 $ cd sitarri-dashboard
 ```
 
-#### Using stable release
-
-To use the official stable release, checkout to a release tag:
-
-```
-$ git checkout 2.10.0
-```
-
 #### Using development version
 
 If you want to use the latest development version, checkout to the `master` branch:
