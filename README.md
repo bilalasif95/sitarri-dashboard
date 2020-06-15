@@ -1,6 +1,6 @@
 # Sitarri Dashboard
 
-A GraphQL-powered, single-page dashboard application for [Sitarri](https://erocery.com).
+A GraphQL-powered, single-page dashboard application for [Sitarri](https://admin.erocery.com).
 
 ## Demo
 
@@ -17,7 +17,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 - Node.js 10.0+
-- A running instance of [Sitarri](https://erocery.com).
+- A running instance of [Sitarri](https://admin.erocery.com).
 
 ### Installing
 
