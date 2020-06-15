@@ -1,5 +1,5 @@
 {
-  "name": "saleor-dashboard",
+  "name": "sitarri-dashboard",
   "version": "2.10.0",
   "main": "src/index.tsx",
   "repository": {
