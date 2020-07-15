@@ -3,8 +3,10 @@ import React from "react";
 import SVG from "react-inlinesvg";
 
 import backgroundArt from "@assets/images/login-background.svg";
-import saleorDarkLogo from "@assets/images/logo-dark.svg";
-import saleorLightLogo from "@assets/images/logo-light.svg";
+// import saleorDarkLogo from "@assets/images/logo-dark.svg";
+// import saleorLightLogo from "@assets/images/logo-light.svg";
+import sitarriLogo from "@assets/images/Sitarri.svg";
+import sitarriWhiteLogo from "@assets/images/SitarriWhiteLogo.svg";
 import useTheme from "@saleor/hooks/useTheme";
 
 const useStyles = makeStyles(
@@ -13,7 +15,8 @@ const useStyles = makeStyles(
       "& svg": {
         display: "block",
         height: 40,
-        marginBottom: theme.spacing(4)
+        marginBottom: theme.spacing(4),
+        width: '170px',
       }
     },
     mainPanel: {
@@ -86,7 +89,7 @@ const Layout: React.FC = props => {
         <div className={classes.mainPanelContent}>
           <SVG
             className={classes.logo}
-            src={isDark ? saleorDarkLogo : saleorLightLogo}
+            src={isDark ? sitarriWhiteLogo : sitarriLogo}
           />
           {children}
         </div>

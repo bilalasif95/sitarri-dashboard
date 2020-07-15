@@ -1,6 +1,14 @@
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
+import SVG from "react-inlinesvg";
+import { FormattedMessage } from "react-intl";
 
+import claimBusiness from "@assets/images/Group 9355.svg";
+import newBusiness from "@assets/images/Group 9685.svg";
+import employeeAccess from "@assets/images/OBJECTS.svg";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
@@ -34,6 +42,9 @@ const useStyles = makeStyles(
       [theme.breakpoints.down("xs")]: {
         gridTemplateColumns: "1fr"
       }
+    },
+    cards: {
+      display: 'flex',
     },
     icon: {
       "& path":{
@@ -75,9 +86,10 @@ const HomePage: React.FC<HomePageProps> = props => {
     productsOutOfStock,
     userPermissions
   } = props;
-
   const classes = useStyles(props);
-
+  const [open, setOpen] = React.useState(true);
+  const onClose = () => setOpen(false);
+  
   return (
     <Container>
       <HomeHeader userName={userName} />
@@ -144,6 +156,59 @@ const HomePage: React.FC<HomePageProps> = props => {
           </RequirePermissions>
         </div>
       </Grid>
+      <Dialog
+        onClose={onClose}
+        open={open}
+        maxWidth="xl"
+        fullWidth
+        PaperProps={{
+          style: { overflowY: "visible" }
+        }}
+      >
+        <DialogContent>
+          <div className={classes.cards}>
+            <div>
+              <h3>Claim Business</h3>
+              <SVG src={claimBusiness} />
+              {/* <img width="170" height="40" src={sitarriLogo}></img> */}
+              <h4>Claim a business already on Sitarri</h4>
+              <p>If you own or manage a business that is already on Sitarri, click below to take control</p>
+              <Button color="primary" variant="contained">
+                <FormattedMessage
+                  defaultMessage="Claim Business"
+                  description="button"
+                />
+              </Button>
+            </div>
+            <div>
+              <h3>New Business</h3>
+              <SVG src={newBusiness} />
+              {/* <img width="170" height="40" src={sitarriLogo}></img> */}
+              <h4>Add a business to Sitarri</h4>
+              <p>If you own or manage a business, click below to add it to Sitarri</p>
+              <Button color="primary" variant="contained">
+                <FormattedMessage
+                  defaultMessage="Add Business"
+                  description="button"
+                />
+              </Button>
+            </div>
+            <div>
+              <h3>Employee Access</h3>
+              <SVG src={employeeAccess} />
+              {/* <img width="170" height="40" src={sitarriLogo}></img> */}
+              <h4>Staff member of a business</h4>
+              <p>Request employee access to a business listed to Sitarri</p>
+              <Button color="primary" variant="contained">
+                <FormattedMessage
+                  defaultMessage="Make employee account"
+                  description="button"
+                />
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </Container>
   );
 };

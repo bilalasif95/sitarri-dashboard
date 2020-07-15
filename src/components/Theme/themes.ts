@@ -100,7 +100,7 @@ export const light: IThemeColors = {
     textHover: "#616161"
   },
   paperBorder: "#EAEAEA",
-  primary: "#06847B",
+  primary: "#f34828",
   secondary: "#21125E",
   theme: "light"
 };
