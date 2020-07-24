@@ -54,6 +54,12 @@ const HomeSection = () => {
           productsOutOfStock={maybe(() => data.productsOutOfStock.totalCount)}
           userName={getUserName(user, true)}
           userPermissions={user?.userPermissions || []}
+          countryDisplayValue={""}
+          confirmButtonState={maybe(()=>null)}
+          disabled={false}
+          countries={[]}
+          data={""}
+          onCountryChange={()=>null}
         />
       )}
     </HomePageQuery>
