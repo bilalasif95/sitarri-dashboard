@@ -5,6 +5,7 @@ import React from "react";
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import { adminUserPermissions } from "@saleor/fixtures";
 import { PermissionEnum } from "@saleor/types/globalTypes";
+import { maybe } from "../../../misc";
 import HomePage, { HomePageProps } from "../../../home/components/HomePage";
 import { shop as shopFixture } from "../../../home/fixtures";
 import Decorator from "../../Decorator";
@@ -13,6 +14,12 @@ const shop = shopFixture(placeholderImage);
 
 const homePageProps: Omit<HomePageProps, "classes"> = {
   activities: shop.activities.edges.map(edge => edge.node),
+  confirmButtonState:maybe(()=>undefined),
+  countries:[],
+  countryDisplayValue:"",
+  data:"",
+  disabled:false,
+  onCountryChange:()=>undefined,
   onOrdersToCaptureClick: () => undefined,
   onOrdersToFulfillClick: () => undefined,
   onProductClick: () => undefined,
@@ -24,7 +31,7 @@ const homePageProps: Omit<HomePageProps, "classes"> = {
   sales: shop.salesToday.gross,
   topProducts: shop.productTopToday.edges.map(edge => edge.node),
   userName: "admin@example.com",
-  userPermissions: adminUserPermissions
+  userPermissions: adminUserPermissions,
 };
 
 storiesOf("Views / HomePage", module)
