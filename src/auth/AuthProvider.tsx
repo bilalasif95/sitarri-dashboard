@@ -8,10 +8,14 @@ import {
 import { MutationFunction, MutationResult } from "react-apollo";
 import { maybe } from "@saleor/misc";
 import {
+  TypedAccountRegisterMutation,
   TypedTokenAuthMutation,
   TypedVerifyTokenMutation,
-  TokenRefreshMutation
+  TokenRefreshMutation,
+  TypedSocialAuthMutation
 } from "./mutations";
+import { RegisterAccount, RegisterAccountVariables } from "./types/RegisterAccount";
+import { SignInWithSocialMedia, SignInWithSocialMediaVariables } from "./types/SignInWithSocialMedia";
 import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
 import { User } from "./types/User";
 import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
@@ -33,21 +37,31 @@ const AuthProviderOperations: React.FC<AuthProviderOperationsProps> = ({
 }) => (
   <TypedTokenAuthMutation>
     {(...tokenAuth) => (
-      <TypedVerifyTokenMutation>
-        {(...tokenVerify) => (
-          <TokenRefreshMutation>
-            {(...tokenRefresh) => (
-              <AuthProvider
-                tokenAuth={tokenAuth}
-                tokenVerify={tokenVerify}
-                tokenRefresh={tokenRefresh}
-              >
-                {children}
-              </AuthProvider>
-            )}
-          </TokenRefreshMutation>
+      <TypedAccountRegisterMutation>
+      {(...signUpTokenAuth) => (
+        <TypedSocialAuthMutation>
+        {(...socialTokenAuth) => (
+        <TypedVerifyTokenMutation>
+          {(...tokenVerify) => (
+            <TokenRefreshMutation>
+              {(...tokenRefresh) => (
+                <AuthProvider
+                  signUpTokenAuth={signUpTokenAuth}
+                  socialTokenAuth={socialTokenAuth}
+                  tokenAuth={tokenAuth}
+                  tokenVerify={tokenVerify}
+                  tokenRefresh={tokenRefresh}
+                >
+                  {children}
+                </AuthProvider>
+              )}
+            </TokenRefreshMutation>
+          )}
+        </TypedVerifyTokenMutation>
         )}
-      </TypedVerifyTokenMutation>
+        </TypedSocialAuthMutation>
+      )}
+      </TypedAccountRegisterMutation>
     )}
   </TypedTokenAuthMutation>
 );
@@ -60,6 +74,14 @@ interface AuthProviderProps {
     tokenVerifyLoading: boolean;
     user: User;
   }) => React.ReactNode;
+  signUpTokenAuth: [
+    MutationFunction<RegisterAccount, RegisterAccountVariables>,
+    MutationResult<RegisterAccount>
+  ];
+  socialTokenAuth: [
+    MutationFunction<SignInWithSocialMedia, SignInWithSocialMediaVariables>,
+    MutationResult<SignInWithSocialMedia>
+  ];
   tokenAuth: [
     MutationFunction<TokenAuth, TokenAuthVariables>,
     MutationResult<TokenAuth>
@@ -75,8 +97,10 @@ interface AuthProviderProps {
 }
 
 interface AuthProviderState {
+  errors: any;
   user: User;
   persistToken: boolean;
+  success: string;
 }
 
 class AuthProvider extends React.Component<
@@ -85,7 +109,7 @@ class AuthProvider extends React.Component<
 > {
   constructor(props) {
     super(props);
-    this.state = { persistToken: false, user: undefined };
+    this.state = { errors: undefined,persistToken: false,success: "", user: undefined };
   }
 
   componentWillReceiveProps(props: AuthProviderProps) {
@@ -140,6 +164,49 @@ class AuthProvider extends React.Component<
     });
   };
 
+  signup = async (email: string, password: string,redirectUrl: string) => {
+    const { signUpTokenAuth } = this.props;
+    const [tokenAuthFn] = signUpTokenAuth;
+    this.setState({
+      errors: [],
+      success: "",
+    })
+    tokenAuthFn({ variables: { email, password,redirectUrl } }).then(result => {
+      if (result && !result.data.accountRegister.errors.length) {
+        this.setState({success: result.data.accountRegister.requiresConfirmation
+          ? "Please check your e-mail for further instructions"
+          : "New user has been created"})
+        setTimeout(()=> {
+          this.setState({success: ""})
+          window.location.replace("/");
+        },3000)
+      }
+      else {
+        this.setState({errors: result.data.accountRegister.errors})
+      }
+    });
+  };
+
+  socialAuth = async (accessToken: string, provider: string,email: string,uid: string) => {
+    const { socialTokenAuth } = this.props;
+    const [tokenAuthFn] = socialTokenAuth;
+    this.setState({
+      errors: [],
+    })
+    tokenAuthFn({ variables: { accessToken,email, provider,uid } }).then(result => {
+      if (result && result.data.socialAuth.error === null) {
+        saveCredentials(result.data.socialAuth.social.user, email);
+        setAuthToken(
+          result.data.socialAuth.token,
+          this.state.persistToken
+        );
+      }
+      else {
+        this.setState({errors: [result.data.socialAuth.error]})
+      }
+    });
+  };
+
   loginByToken = (token: string, user: User) => {
     this.setState({ user });
     setAuthToken(token, this.state.persistToken);
@@ -174,15 +241,19 @@ class AuthProvider extends React.Component<
     const { children, tokenAuth, tokenVerify } = this.props;
     const tokenAuthOpts = tokenAuth[1];
     const tokenVerifyOpts = tokenVerify[1];
-    const { user } = this.state;
+    const { errors,success,user } = this.state;
     const isAuthenticated = !!user;
 
     return (
       <UserContext.Provider
         value={{
+          errors,
           login: this.login,
           loginByToken: this.loginByToken,
           logout: this.logout,
+          signup: this.signup,
+          socialAuth: this.socialAuth,
+          success,
           tokenAuthLoading: tokenAuthOpts.loading,
           tokenRefresh: this.refreshToken,
           tokenVerifyLoading: tokenVerifyOpts.loading,

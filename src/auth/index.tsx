@@ -15,7 +15,11 @@ import ResetPasswordSuccess from "./views/ResetPasswordSuccess";
 import LoginLoading from "./components/LoginLoading";
 
 interface UserContext {
+  errors: any;
+  success: string;
   login: (username: string, password: string) => void;
+  socialAuth: (accessToken: string, provider:  string, email: string, uid: string) => void;
+  signup: (username: string, password: string,redirectUrl: string) => void;
   loginByToken: (token: string, user: User) => void;
   logout: () => void;
   tokenAuthLoading: boolean;
@@ -25,9 +29,13 @@ interface UserContext {
 }
 
 export const UserContext = React.createContext<UserContext>({
+  errors: undefined,
   login: undefined,
   loginByToken: undefined,
   logout: undefined,
+  signup: undefined,
+  socialAuth: undefined,
+  success: "",
   tokenAuthLoading: false,
   tokenRefresh: undefined,
   tokenVerifyLoading: false

@@ -10,6 +10,8 @@ import { SetPassword, SetPasswordVariables } from "./types/SetPassword";
 import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
 import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
 import { RefreshToken, RefreshTokenVariables } from "./types/RefreshToken";
+import { RegisterAccount,RegisterAccountVariables } from "./types/RegisterAccount";
+import { SignInWithSocialMedia,SignInWithSocialMediaVariables } from "./types/SignInWithSocialMedia";
 
 export const fragmentUser = gql`
   fragment User on User {
@@ -112,3 +114,49 @@ export const TokenRefreshMutation = TypedMutation<
   RefreshToken,
   RefreshTokenVariables
 >(refreshToken);
+
+const accountRegisterMutation = gql`
+  mutation RegisterAccount(
+    $email: String!
+    $password: String!
+    $redirectUrl: String!
+  ) {
+    accountRegister(
+      input: { email: $email, password: $password, redirectUrl: $redirectUrl }
+    ) {
+      errors {
+        field
+        message
+      }
+      requiresConfirmation
+    }
+  }
+`;
+
+export const TypedAccountRegisterMutation = TypedMutation<
+  RegisterAccount,
+  RegisterAccountVariables
+>(accountRegisterMutation);
+
+const socialAuth = gql`
+  ${fragmentUser}
+  mutation SocialAuth($accessToken: String!,$provider: String!, $email: String,$uid:String) {
+    socialAuth(accessToken: $accessToken, provider: $provider, email: $email,uid:$uid){
+      token
+      social{
+        user{
+          ...User
+        }
+      }
+      error{
+        field
+        message
+      }
+    }
+  }
+`;
+
+export const TypedSocialAuthMutation = TypedMutation<
+  SignInWithSocialMedia,
+  SignInWithSocialMediaVariables
+>(socialAuth);
