@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import SVG from "react-inlinesvg";
 
-import backgroundArt from "@assets/images/login-background.svg";
+// import backgroundArt from "@assets/images/login-background.svg";
 // import saleorDarkLogo from "@assets/images/logo-dark.svg";
 // import saleorLightLogo from "@assets/images/logo-light.svg";
 import sitarriLogo from "@assets/images/Sitarri.svg";
@@ -45,12 +45,12 @@ const useStyles = makeStyles(
       width: "100%"
     },
     root: {
-      [theme.breakpoints.up("lg")]: {
-        gridTemplateColumns: "376px 1fr"
-      },
-      "@media (min-width: 1440px)": {
-        gridTemplateColumns: "520px 1fr"
-      },
+      // [theme.breakpoints.up("lg")]: {
+      //   gridTemplateColumns: "376px 1fr"
+      // },
+      // "@media (min-width: 1440px)": {
+      //   gridTemplateColumns: "520px 1fr"
+      // },
       display: "grid",
       gridTemplateColumns: "1fr",
       height: "100vh",
@@ -82,9 +82,9 @@ const Layout: React.FC = props => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.sidebar}>
+      {/* <div className={classes.sidebar}>
         <SVG className={classes.sidebarArt} src={backgroundArt} />
-      </div>
+      </div> */}
       <div className={classes.mainPanel}>
         <div className={classes.mainPanelContent}>
           <SVG
