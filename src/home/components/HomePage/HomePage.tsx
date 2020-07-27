@@ -183,6 +183,7 @@ const useStyles = makeStyles(
       "&:focus":{
         outline: 'none',
       },
+      cursor: 'pointer',
       position: 'relative',
     },
     employeaccessinput: {

@@ -59,6 +59,42 @@ const useStyles = makeStyles(
       padding: 0,
       textAlign: "center",
     },
+    ce:{
+      color: '#fff',
+      fontWeight: 400,
+      margin: '3px 0px 0px',
+      textAlign: 'center',
+    },
+    emailButton:{
+      "& span":{
+      "& svg": {
+        "& path":{
+          fill: 'white',
+        },
+        margin: '0 2rem 0 0',
+      },
+      alignItems: 'center',
+      display: "flex",
+      fontSize: '400 14.3333px Arial',
+      left: '0.3rem',
+      position: 'absolute',
+      textTransform: 'capitalize',
+      top: '3px',
+      transform: 'none',
+      width: '100%',
+      },
+      alignItems: 'center',
+      backgroundColor: '#f3492b !important',
+      borderRadius: '4px',
+      display: 'flex',
+      height: '40px',
+      justifyContent: 'center',
+      margin: '1rem 0',
+      padding: '1.1666rem !important',
+      position: 'relative',
+      textTransform: 'capitalize',
+      width: '100%',
+    },
     facebookLoginButton: {
       "& button": {
         "& i":{
@@ -128,6 +164,25 @@ const useStyles = makeStyles(
       textTransform: "capitalize",
       width: "100%",
     },
+    line: {
+      "& span":{
+        background: '#fafafa',
+        height: '20px',
+        left: '47%',
+        padding: '0 5px',
+        position: 'absolute',
+        right: '0',
+        textAlign: 'center',
+        textTransform: 'lowercase',
+        top: '-11px',
+        width: '32px',
+        },
+      background: '#80808059',
+      height: '1px',
+      margin: '0.5rem 0 1.5rem',
+      position: 'relative',
+      width: '100%',
+    },
     link: {
       color: theme.palette.primary.main,
       cursor: "pointer",
@@ -157,6 +212,23 @@ const useStyles = makeStyles(
       borderRadius: theme.spacing(),
       marginBottom: theme.spacing(3),
       padding: theme.spacing(1.5)
+    },
+    passwordEye: {
+      borderLeft: '1px solid #cccccc78',
+      cursor: 'pointer',
+      height: '49px',
+      padding: '0.7rem 0.3rem',
+      position: 'absolute',
+      right: ' 0',
+      width: '40px',
+    },
+    passwordInput: {
+        display: 'flex',
+        position: 'relative',
+    },
+    tc:{
+      color: '#6e6f6f',
+      fontSize: '12px',
     },
     ulink: {
       cursor: "pointer",
@@ -229,8 +301,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
       <div className={classes.bodyHead}>
             <p>Log in</p>
             <Button onClick={() => { setEmailClick(false); setRegisterClick(false) }} className={classes.backBtn}>
-              <SVG
-                src={backicon}
+              <SVG src={backicon}
               />
             </Button>
           </div>
@@ -258,7 +329,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             />
             <FormSpacer />
             {passwordType ? (
-              <div className="passwordInput">
+              <div className={classes.passwordInput}>
                 <TextField
                   fullWidth
                   autoComplete="password"
@@ -274,14 +345,13 @@ const LoginCard: React.FC<LoginCardProps> = props => {
                   }}
                 />
                 <span onClick={onPasswordEyeIconClick}>
-                <SVG
-                  src={removeImg}
-                  className="passwordEye"
+                <SVG src={removeImg}
+                  className={classes.passwordEye}
                 />
                 </span>
               </div>
             ) : (
-                <div className="passwordInput">
+                <div className={classes.passwordInput}>
                   <TextField
                     fullWidth
                     autoComplete="password"
@@ -297,9 +367,8 @@ const LoginCard: React.FC<LoginCardProps> = props => {
                     }}
                   />
                 <span onClick={onPasswordEyeIconClick}>
-                <SVG
-                    src={removeImgg}
-                    className="passwordEye"
+                <SVG src={removeImgg}
+                    className={classes.passwordEye}
                   />
                   </span>
                 </div>
@@ -378,11 +447,11 @@ const LoginCard: React.FC<LoginCardProps> = props => {
                 cookiePolicy={"single_host_origin"}
               />
               <br /><br />
-              <div className="line"><span>OR</span></div>
-              <Button className="emailButton" onClick={() => setEmailClick(true)}>
-                <span><SVG path={emailImg} /></span>
-                <p className="ce">Continue with Email</p></Button>
-              <p className="tc">By continuing you agree to our <Link to="" className="statementSection">T&Cs</Link> and<Link to="" className="statementSection"> Privacy Policy</Link>.</p>
+              <div className={classes.line}><span>OR</span></div>
+              <Button className={classes.emailButton} onClick={() => setEmailClick(true)}>
+                <span><SVG src={emailImg} /></span>
+                <p className={classes.ce}>Continue with Email</p></Button>
+              <p className={classes.tc}>By continuing you agree to our <Link to="" className="statementSection">T&Cs</Link> and<Link to="" className="statementSection"> Privacy Policy</Link>.</p>
             </>
           }
     </>
