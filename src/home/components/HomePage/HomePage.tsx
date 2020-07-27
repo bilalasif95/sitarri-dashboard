@@ -76,16 +76,22 @@ const useStyles = makeStyles(
       border:'1px solid transparent',
       color: '#000',
       display: 'block',
-      marginTop: '42px',
-      padding: '13px 10px',
+      marginTop: '0px',
+      padding: '11.8px 10px',
       width: '100%', 
     },
     businesscard: {
       backgroundImage: 'Linear-gradient(#fe9725, #f65216)',
     },
     businessimgbox: {
+      "& svg":{
+        marginTop: '-6px',
+        width: '100%',
+        
+      },
       display: 'flex',
       justifyContent: 'flex-end',
+      overflow: 'hidden',
     },
     businessmodal: {
       display: 'block',
@@ -95,6 +101,7 @@ const useStyles = makeStyles(
     },
     businessmodalcont: {
       backgroundColor: '#fafafa',
+      overflowY: 'hidden',
       paddingBottom: '130px',
     },
     businessmodaltextarea:{
@@ -122,7 +129,6 @@ const useStyles = makeStyles(
     },
     cardbtn: {
       display: 'block',
-      marginTop: '50px',
       padding: '13px 10px',
       width: '100%',
     },
@@ -143,8 +149,16 @@ const useStyles = makeStyles(
     cards: {
       display: 'flex',
       justifyContent: 'space-between',
-      margin: '0px auto',
-      width: '80%',
+      width: '100%',
+    },
+    cardshomepage: {
+      "::-webkit-scrollbar": {
+        width: '4px',
+    },
+      padding: '0px !important',  
+    },
+    cardtext: {
+      height: '145px',
     },
     choosefile: {
       "& input":{
@@ -357,7 +371,7 @@ function createChoices(intl: IntlShape): RadioGroupFieldChoice[] {
     },
     {
       label: intl.formatMessage({
-        defaultMessage: "I have an online store",
+        defaultMessage:"I have an online store",
         description: "I have an online store"
       }),
       value: "Online"
@@ -530,11 +544,14 @@ const HomePage: React.FC<HomePageProps> = props => {
         PaperProps={{
           style: {
             backgroundColor: 'transparent',
+            margin: '0px',
+            overflow: 'hidden',
             overflowY: "visible",
+            width: '80%', 
          },
         }}
       >
-        <DialogContent>
+        <DialogContent className={classes.cardshomepage}>
           <div className={classes.cards}>
             <div className={`${classes.claimcard} ${classes.mycard}`}>
             <h3 className={classes.cardhead}>Claim Business</h3>
@@ -543,8 +560,10 @@ const HomePage: React.FC<HomePageProps> = props => {
               {/* <img width="170" height="40" src={sitarriLogo}></img> */}
               </div>
               <div className={classes.cardContent}>
+              <div className={classes.cardtext}>
               <h4 className={classes.cardhead1}>Claim a business already on Sitarri</h4>
               <p>If you own or manage a business that is already on Sitarri, click below to take control</p>
+              </div>
               <Button className={classes.cardbtn} color="primary" variant="contained" onClick={()=>{setClaimBusinessModal(true); setOpen(false);setOpenClaimBusinessModal(true)}}>
               <span className={classes.btntext}>Claim Business</span>
               </Button>
@@ -557,8 +576,10 @@ const HomePage: React.FC<HomePageProps> = props => {
               </div>
               {/* <img width="170" height="40" src={sitarriLogo}></img> */}
               <div className={classes.cardContent}>
+              <div className={classes.cardtext}>
               <h4 className={classes.cardhead1}>Add a business to Sitarri</h4>
               <p>If you own or manage a business, click below to add it to Sitarri</p>
+              </div>
               <Button className={classes.businessbtn} color="primary" variant="contained" onClick={()=> {setAddBusinessModal(true);setOpenAddBusinessModal(true);setOpen(false)}}>
               <span className={classes.cardbtntext}>Add Business</span>
               </Button>
@@ -571,9 +592,11 @@ const HomePage: React.FC<HomePageProps> = props => {
               </div>
               {/* <img width="170" height="40" src={sitarriLogo}></img> */}
               <div className={classes.cardContent}>
+              <div className={classes.cardtext}>
               <h4 className={classes.cardhead1}>Staff member of a business</h4>
               <p>Request employee access to a business listed to Sitarri</p>
-              <Button className={classes.cardbtn} color="primary" variant="contained" onClick={()=>{setEmployeeAccessModal(true);setOpen(false);setOpenEmployeeAccessModal(true)}}>
+              </div>
+              <Button className={`${classes.cardbtn}`} color="primary" variant="contained" onClick={()=>{setEmployeeAccessModal(true);setOpen(false);setOpenEmployeeAccessModal(true)}}>
               <span className={classes.btntext}>Make employee account</span>
               </Button>
               </div>
