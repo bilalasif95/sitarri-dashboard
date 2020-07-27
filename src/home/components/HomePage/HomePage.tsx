@@ -95,6 +95,7 @@ const useStyles = makeStyles(
     },
     businessmodalcont: {
       backgroundColor: '#fafafa',
+      overflowY: 'hidden',
       paddingBottom: '130px',
     },
     businessmodaltextarea:{

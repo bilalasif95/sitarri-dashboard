@@ -113,11 +113,12 @@ class AuthProvider extends React.Component<
   }
 
   componentWillReceiveProps(props: AuthProviderProps) {
-    const { tokenAuth, tokenVerify } = props;
+    const { socialTokenAuth,tokenAuth, tokenVerify } = props;
     const tokenAuthOpts = tokenAuth[1];
+    const socialTokenAuthOpts = socialTokenAuth[1];
     const tokenVerifyOpts = tokenVerify[1];
 
-    if (tokenAuthOpts.error || tokenVerifyOpts.error) {
+    if (tokenAuthOpts.error || tokenVerifyOpts.error || socialTokenAuthOpts.error) {
       this.logout();
     }
     if (tokenAuthOpts.data) {
@@ -130,6 +131,33 @@ class AuthProvider extends React.Component<
           tokenAuthOpts.data.tokenCreate.token,
           this.state.persistToken
         );
+      }
+    } else {
+      if (maybe(() => tokenVerifyOpts.data.tokenVerify === null)) {
+        this.logout();
+      } else {
+        const user = maybe(() => tokenVerifyOpts.data.tokenVerify.user);
+        if (!!user) {
+          this.setState({ user });
+        }
+      }
+    }
+
+    if (socialTokenAuthOpts.data) {
+      if(socialTokenAuthOpts.data.socialAuth.social === null){
+        this.logout();
+      }
+      else{
+        const user = socialTokenAuthOpts.data.socialAuth.social.user;
+        // FIXME: Now we set state also when auth fails and returned user is
+        // `null`, because the LoginView uses this `null` to display error.
+        this.setState({ user });
+        if (user) {
+          setAuthToken(
+            socialTokenAuthOpts.data.socialAuth.token,
+            this.state.persistToken
+          );
+        }
       }
     } else {
       if (maybe(() => tokenVerifyOpts.data.tokenVerify === null)) {
@@ -196,10 +224,6 @@ class AuthProvider extends React.Component<
     tokenAuthFn({ variables: { accessToken,email, provider,uid } }).then(result => {
       if (result && result.data.socialAuth.error === null) {
         saveCredentials(result.data.socialAuth.social.user, email);
-        setAuthToken(
-          result.data.socialAuth.token,
-          this.state.persistToken
-        );
       }
       else {
         this.setState({errors: [result.data.socialAuth.error]})
