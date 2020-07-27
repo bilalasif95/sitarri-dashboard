@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 
 import { accountErrorFragment } from "@saleor/customers/mutations";
 import { TypedMutation } from "../mutations";
+import { AccountConfirm,AccountConfirmVariables } from "./types/AccountConfirm";
 import {
   RequestPasswordReset,
   RequestPasswordResetVariables
@@ -160,3 +161,19 @@ export const TypedSocialAuthMutation = TypedMutation<
   SignInWithSocialMedia,
   SignInWithSocialMediaVariables
 >(socialAuth);
+
+const accountConfirmMutation = gql`
+  mutation AccountConfirm($email: String!, $token: String!) {
+    confirmAccount(email: $email, token: $token) {
+      errors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+export const TypedAccountConfirmMutation = TypedMutation<
+  AccountConfirm,
+  AccountConfirmVariables
+>(accountConfirmMutation);

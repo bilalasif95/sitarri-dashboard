@@ -41,7 +41,8 @@ const styles = (theme: Theme) =>
       textAlign: "center"
     },
     loginButton: {
-      width: 140
+      textTransform: 'capitalize',
+      width: '100%',
     },
     panel: {
       "& span": {
@@ -51,12 +52,31 @@ const styles = (theme: Theme) =>
       borderRadius: theme.spacing(),
       marginBottom: theme.spacing(3),
       padding: theme.spacing(1.5)
+    },
+    passwordEye: {
+      borderLeft: "1px solid #cccccc78",
+      cursor: "pointer",
+      height: "49px",
+      padding: "0.7rem 0.3rem",
+      position: "absolute",
+      right: 0,
+      width: "40px",
+    },
+    passwordInput: {
+      "& input": {
+        width: "86.5%",
+      },
+      display: "flex",
+      position: "relative",
+    },
+    ulink: {
+      cursor: "pointer",
+      textDecoration: "underline",
     }
   });
 
 export interface LoginCardProps extends WithStyles<typeof styles> {
   error: any;
-  passwordMismatchError: string;
   success: string;
   disableLoginButton: boolean;
   menuBack: ()=>void;
@@ -68,7 +88,6 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
     classes,
     error,
     success,
-    passwordMismatchError,
     disableLoginButton,
     // onPasswordRecovery,
     menuBack,
@@ -79,7 +98,7 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
     const [passwordType, setPasswordType] = React.useState(true);
     const [confirmPasswordType, setConfirmPasswordType] = React.useState(true);
     const emailError = maybe(()=>error.filter(item => item.field === "email"))
-    const passwordError = maybe(()=>error.filter(item => item.field === "password"))
+    // const passwordError = maybe(()=>error.filter(item => item.field === "password"))
     const onPasswordEyeIconClick = () => {
       if (passwordType) {
         return setPasswordType(false);
@@ -98,9 +117,11 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
     return (
       <>
       <p>Sign up</p>
-      {passwordMismatchError !== "" && <div className={classes.errorMessages}>{passwordMismatchError}</div>}
       <Form initial={{ confirmPassword: "",email: "", password: "" }} onSubmit={onSubmit}>
-        {({ change: handleChange, data, submit: handleSubmit }) => (
+        {({ change: handleChange, data, submit: handleSubmit }) => {
+          const passwordError =
+          data.password !== data.confirmPassword && data.password.length > 0;
+          return (
           <>
             <TextField
               autoFocus
@@ -118,7 +139,7 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
             />
             <FormSpacer />
             {passwordType ? (
-              <div className="passwordInput">
+              <div className={classes.passwordInput}>
                 <TextField
                   fullWidth
                   error={maybe(()=>passwordError[0].message)}
@@ -138,12 +159,12 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
                 <span onClick={onPasswordEyeIconClick}>
                 <SVG
                   src={removeImg}
-                  className="passwordEye"
+                  className={classes.passwordEye}
                 />
                 </span>
               </div>
             ) : (
-                <div className="passwordInput">
+                <div className={classes.passwordInput}>
                   <TextField
                   fullWidth
                   error={maybe(()=>passwordError[0].message)}
@@ -163,20 +184,27 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
                 <span onClick={onPasswordEyeIconClick}>
                 <SVG
                     src={removeImgg}
-                    className="passwordEye"
+                    className={classes.passwordEye}
                   />
                   </span>
                 </div>
               )}
             <FormSpacer />
             {confirmPasswordType ? (
-              <div className="passwordInput">
+              <div className={classes.passwordInput}>
                 <TextField
                   fullWidth
                   autoComplete="confirmPassword"
                   label={intl.formatMessage({
                     defaultMessage: "Confirm Password"
                   })}
+                  error={passwordError}
+                  helperText={
+                    passwordError &&
+                    intl.formatMessage({
+                      defaultMessage: "Passwords do not match"
+                    })
+                  }
                   name="confirmPassword"
                   onChange={handleChange}
                   type="password"
@@ -188,14 +216,21 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
                 <span onClick={onConfirmPasswordEyeIconClick}>
                  <SVG
                   src={removeImg}
-                  className="passwordEye"
+                  className={classes.passwordEye}
                 />
                 </span>
               </div>
             ) : (
-                <div className="passwordInput">
+                <div className={classes.passwordInput}>
                   <TextField
                     fullWidth
+                    error={passwordError}
+                    helperText={
+                      passwordError &&
+                      intl.formatMessage({
+                        defaultMessage: "Passwords do not match"
+                      })
+                    }
                     autoComplete="confirmPassword"
                     label={intl.formatMessage({
                       defaultMessage: "Confirm Password"
@@ -211,7 +246,7 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
                 <span onClick={onConfirmPasswordEyeIconClick}>
                  <SVG
                   src={removeImg}
-                  className="passwordEye"
+                  className={classes.passwordEye}
                 />
                 </span>
               </div>
@@ -221,7 +256,7 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
               <Button
                 className={classes.loginButton}
                 color="primary"
-                disabled={disableLoginButton}
+                disabled={(passwordError && data.password.length > 0) || disableLoginButton}
                 variant="contained"
                 onClick={handleSubmit}
                 type="submit"
@@ -231,10 +266,10 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
               </Button>
             </div>
             <FormSpacer />
-            <div className="login__content__password-reminder">
+            <div>
               <p>
                 Already have an account?&nbsp;
-                <span className="u-link" onClick={()=> menuBack()}>
+                <span className={classes.ulink} onClick={()=> menuBack()}>
                   Login
                 </span>
               </p>
@@ -246,7 +281,8 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
               />
             </Typography> */}
           </>
-        )}
+        );
+      }}
       </Form>
       </>
     );

@@ -19,6 +19,8 @@ import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
 import { maybe} from "@saleor/misc";
 
+import { accountConfirmPath } from "../../urls";
+
 import RegisterForm from "./RegisterForm";
 
 export interface FormData {
@@ -248,7 +250,6 @@ const LoginCard: React.FC<LoginCardProps> = props => {
   const [emailClick, setEmailClick] = React.useState(false);
   const [registerClick, setRegisterClick] = React.useState(false);
   const [passwordType, setPasswordType] = React.useState(true);
-  const [passwordError,setPasswordError] = React.useState("");
   // const [errors, setErrors] = React.useState("");
   const classes = useStyles(props);
   const intl = useIntl();
@@ -283,13 +284,8 @@ const LoginCard: React.FC<LoginCardProps> = props => {
   };
   
   const handleSubmit = (data: FormData) => {
-    setPasswordError("");
-    if(data.password !== data.confirmPassword){
-      setPasswordError("Password doesn't match")
-    }
-    else {
-      signup(data.email, data.password,window.location.origin);
-    }
+      const redirectUrl = `${window.location.origin}${accountConfirmPath}`;
+      signup(data.email, data.password,redirectUrl);
   };
   const onPasswordEyeIconClick = () => {
     if (passwordType) {
@@ -415,7 +411,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
           {registerClick ?
             <RegisterForm error={errors}
             disableLoginButton={tokenAuthLoading}
-            onSubmit={handleSubmit} menuBack={menuBack} success={success} passwordMismatchError={passwordError} />
+            onSubmit={handleSubmit} menuBack={menuBack} success={success} />
             :
             <>
               <div className={classes.bodyHead}>
@@ -431,8 +427,8 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               {/* <div className="errorMessages">{errors}</div> */}
               <div className={classes.facebookLoginButton}>
               <FacebookLogin
-                // appId="1078436535883692"
-                appId="734952100605240"
+                appId="1078436535883692"
+                // appId="734952100605240"
                 // autoLoad={true}
                 fields="name,email,picture"
                 callback={responseFacebook}
@@ -442,8 +438,8 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               />
               </div>
               <GoogleLogin
-                // clientId="325319904531-ce20k86al4d3rtqhjd6heg9s551ksirg.apps.googleusercontent.com"
-                clientId="614159071131-65vivmhjqvlaig531abhllvk88uq5gqt.apps.googleusercontent.com"
+                clientId="325319904531-ce20k86al4d3rtqhjd6heg9s551ksirg.apps.googleusercontent.com"
+                // clientId="614159071131-65vivmhjqvlaig531abhllvk88uq5gqt.apps.googleusercontent.com"
                 buttonText="Continue with Google"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}

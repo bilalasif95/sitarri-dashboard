@@ -4,10 +4,12 @@ import { Route, Switch } from "react-router-dom";
 import Layout from "./components/Layout";
 import { User } from "./types/User";
 import {
+  accountConfirmPath,
   newPasswordPath,
   passwordResetPath,
   passwordResetSuccessPath
 } from "./urls";
+import AccountConfirm from "./views/AccountConfirm";
 import LoginView from "./views/Login";
 import NewPassword from "./views/NewPassword";
 import ResetPassword from "./views/ResetPassword";
@@ -52,6 +54,11 @@ const AuthRouter: React.FC<AuthRouterProps> = ({ hasToken }) => (
       <Route path={passwordResetPath} component={ResetPassword} />
       {!hasToken ? (
         <Route path={newPasswordPath} component={NewPassword} />
+      ) : (
+        <LoginLoading />
+      )}
+      {!hasToken ? (
+        <Route path={accountConfirmPath} component={AccountConfirm} />
       ) : (
         <LoginLoading />
       )}
