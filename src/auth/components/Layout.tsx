@@ -11,6 +11,11 @@ import useTheme from "@saleor/hooks/useTheme";
 
 const useStyles = makeStyles(
   theme => ({
+    DialogContent: {
+      "@media (min-width: 1440px)": {
+        padding: '0px !important',
+       },
+     },
     logo: {
       "& svg": {
         display: "block",
@@ -38,12 +43,13 @@ const useStyles = makeStyles(
       [theme.breakpoints.up("sm")]: {
         width: 328
       },
-      "@media (min-width: 1440px)": {
+      "@media (min-width: 1600px)": {
         width: 464
       },
       margin: "auto",
       width: "100%"
     },
+    
     root: {
       // [theme.breakpoints.up("lg")]: {
       //   gridTemplateColumns: "376px 1fr"
