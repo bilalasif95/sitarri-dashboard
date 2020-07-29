@@ -132,4 +132,5 @@ export interface Home {
   productsOutOfStock: Home_productsOutOfStock | null;
   productTopToday: Home_productTopToday | null;
   activities: Home_activities | null;
+  businesses: any;
 }

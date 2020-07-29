@@ -1,37 +1,41 @@
 import { parse as parseQs } from "qs";
-import React from "react";
+import * as React from "react";
 import { RouteComponentProps } from "react-router";
 
-import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
+// import useNavigator from "@saleor/hooks/useNavigator";
+// import useNotifier from "@saleor/hooks/useNotifier";
 import { TypedAccountConfirmMutation } from "../mutations";
 import { AccountConfirmUrlQueryParams } from "../urls";
 
-const AccountConfirm: React.FC<RouteComponentProps> = ({ location }) => {
-  const navigate = useNavigator();
-
-  const params: AccountConfirmUrlQueryParams = parseQs(location.search.substr(1));
-  const notify = useNotifier();
-  const displayConfirmationAlert = anyErrors => {
-    notify(
-      {
-        text:
+class AccountConfirm extends React.Component<RouteComponentProps> {
+  [x: string]: any;
+  params: AccountConfirmUrlQueryParams = parseQs(this.props.history.location.search.substr(1));
+  constructor(props) {
+    super(props);
+  }
+  // const notify = useNotifier();
+  // const navigate = useNavigator();
+  
+  displayConfirmationAlert = anyErrors => {
+    alert(
+      // {
+      //   text:
           anyErrors.length > 0
             ? anyErrors.map(error => error.message).join(" ")
-            : "You can now log in",
-        title: anyErrors.length > 0 ? "Error" : "Account confirmed",
-      },
+            : "Account confirmed. You can now log in",
+        // title: anyErrors.length > 0 ? "Error" : "Account confirmed",
+      // },
       // { type: anyErrors.length > 0 ? "error" : "success", timeout: 5000 }
     );
   };
 
-  React.useEffect(() => {
+  componentDidMount() {
     this.accountManagerFn({
-      variables: { email: params.email, token: params.token },
+      variables: { email: this.params.email, token: this.params.token },
     })
       .then(result => {
         const possibleErrors = result.data.confirmAccount.errors;
-        displayConfirmationAlert(possibleErrors);
+        this.displayConfirmationAlert(possibleErrors);
       })
       .catch(() => {
         const errors = [
@@ -39,39 +43,23 @@ const AccountConfirm: React.FC<RouteComponentProps> = ({ location }) => {
             message: "Something went wrong while activating your account.",
           },
         ];
-        displayConfirmationAlert(errors);
+        this.displayConfirmationAlert(errors);
       })
       .finally(() => {
-        navigate("/", true);
+        this.props.history.push("/");
       });
-  }, []);
+  }
+  render (){
   return (
     <TypedAccountConfirmMutation>
       {accountConfirm => {
-        // this.accountManagerFn = accountConfirm;
-        accountConfirm({
-          variables: { email: params.email, token: params.token },
-        })
-          .then(result => {
-            const possibleErrors = result.data.confirmAccount.errors;
-            displayConfirmationAlert(possibleErrors);
-          })
-          .catch(() => {
-            const errors = [
-              {
-                message: "Something went wrong while activating your account.",
-              },
-            ];
-            displayConfirmationAlert(errors);
-          })
-          .finally(() => {
-            navigate("/", true);
-          });
+        this.accountManagerFn = accountConfirm;
         return <div></div>;
       }}
     </TypedAccountConfirmMutation>
-  );
+    );
+  }
 };
 
-AccountConfirm.displayName = "AccountConfirm";
+// AccountConfirm.displayName = "AccountConfirm";
 export default AccountConfirm;

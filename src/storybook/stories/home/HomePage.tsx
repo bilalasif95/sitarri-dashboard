@@ -14,6 +14,7 @@ const shop = shopFixture(placeholderImage);
 
 const homePageProps: Omit<HomePageProps, "classes"> = {
   activities: shop.activities.edges.map(edge => edge.node),
+  businessNames: [],
   confirmButtonState:maybe(()=>undefined),
   countries:[],
   countryDisplayValue:"",

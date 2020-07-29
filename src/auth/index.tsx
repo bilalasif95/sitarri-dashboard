@@ -21,7 +21,7 @@ interface UserContext {
   success: string;
   login: (username: string, password: string) => void;
   socialAuth: (accessToken: string, provider:  string, email: string, uid: string) => void;
-  signup: (username: string, password: string,redirectUrl: string) => void;
+  signup: (username: string, password: string,redirectUrl: string,menuBack: any) => void;
   loginByToken: (token: string, user: User) => void;
   logout: () => void;
   tokenAuthLoading: boolean;

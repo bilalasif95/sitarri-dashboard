@@ -192,7 +192,7 @@ class AuthProvider extends React.Component<
     });
   };
 
-  signup = async (email: string, password: string,redirectUrl: string) => {
+  signup = async (email: string, password: string,redirectUrl: string,menuBack: any) => {
     const { signUpTokenAuth } = this.props;
     const [tokenAuthFn] = signUpTokenAuth;
     this.setState({
@@ -206,7 +206,7 @@ class AuthProvider extends React.Component<
           : "New user has been created"})
         setTimeout(()=> {
           this.setState({success: ""})
-          window.location.replace("/");
+          menuBack()
         },3000)
       }
       else {
