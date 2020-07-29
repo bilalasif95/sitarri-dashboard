@@ -36,7 +36,7 @@ import { appLoaderHeight, drawerWidth, drawerWidthExpanded } from "./consts";
 import MenuList from "./MenuList";
 import createMenuStructure from "./menuStructure";
 import ResponsiveDrawer from "./ResponsiveDrawer";
-import ThemeSwitch from "./ThemeSwitch";
+// import ThemeSwitch from "./ThemeSwitch";
 
 const useStyles = makeStyles(
   theme => ({
@@ -302,7 +302,8 @@ interface AppLayoutProps {
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const classes = useStyles({});
-  const { isDark, toggleTheme } = useTheme();
+  // const { isDark, toggleTheme } = useTheme();
+  const { isDark } = useTheme();
   const [isMenuSmall, setMenuSmall] = useLocalStorage("isMenuSmall", false);
   const [isDrawerOpened, setDrawerState] = React.useState(false);
   const [isMenuOpened, setMenuState] = React.useState(false);
@@ -428,11 +429,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                     <div ref={appHeaderAnchor} />
                     <div className={classes.spacer} />
                     <div className={classes.userBar}>
-                      <ThemeSwitch
+                      {/* <ThemeSwitch
                         className={classes.darkThemeSwitch}
                         checked={isDark}
                         onClick={toggleTheme}
-                      />
+                      /> */}
                       <div className={classes.userMenuContainer} ref={anchor}>
                         <Chip
                           avatar={

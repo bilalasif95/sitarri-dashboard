@@ -36,6 +36,14 @@ export interface CreateStore {
 
 export interface CreateStoreVariables {
   input: {
+    address?: {
+      city: string,
+      country: string,
+      latitude: any,
+      longitude: any,
+      postalCode: string,
+      streetAddress: string,
+    },
     business: string,
     category: string,
     description: string,

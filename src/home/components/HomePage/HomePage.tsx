@@ -56,7 +56,7 @@ import HomeAnalyticsCard from "../HomeAnalyticsCard";
 import HomeHeader from "../HomeHeader";
 import HomeNotificationTable from "../HomeNotificationTable/HomeNotificationTable";
 import HomeProductListCard from "../HomeProductListCard";
-import SingleAutocompleteSelectField, { SingleAutocompleteChoiceType } from "../../../components/SingleAutocompleteSelectField";
+import SingleAutocompleteSelectField from "../../../components/SingleAutocompleteSelectField";
 
 import { TypedShopInfoQuery } from "../../../../src/components/Shop/query";
 
@@ -95,9 +95,9 @@ const useStyles = makeStyles(
     },
     businessimgbox: {
       "& svg": {
-        marginTop: '-6px',
+        height: '100%',
+        marginTop: '-2px',
         width: '100%',
-
       },
       display: 'flex',
       justifyContent: 'flex-end',
@@ -245,6 +245,14 @@ const useStyles = makeStyles(
       }
     },
     imgbox: {
+      "& svg": {
+        height: '100%',
+        marginTop: '-2px',
+        width: '100%',
+      },
+      display: 'flex',
+      justifyContent: 'flex-start',
+      overflow: 'hidden',
       width: '100%',
     },
     inputbox: {
@@ -411,9 +419,6 @@ export interface HomePageProps extends UserPermissionProps {
   sales: Home_salesToday_gross;
   topProducts: Home_productTopToday_edges_node[];
   userName: string;
-  countries: SingleAutocompleteChoiceType[];
-  countryDisplayValue: string;
-  data: string;
   disabled?: boolean;
   confirmButtonState: ConfirmButtonTransitionState;
   // errors: FormErrors<keyof AddressTypeInput>;
@@ -421,15 +426,12 @@ export interface HomePageProps extends UserPermissionProps {
   onOrdersToFulfillClick: () => void;
   onProductClick: (productId: string, variantId: string) => void;
   onProductsOutOfStockClick: () => void;
-  onCountryChange(event: React.ChangeEvent<any>);
 }
 
 const HomePage: React.FC<HomePageProps> = props => {
   const {
-    countryDisplayValue,
     userName,
     confirmButtonState,
-    // data,
     disabled,
     businessNames,
     orders,
@@ -440,7 +442,6 @@ const HomePage: React.FC<HomePageProps> = props => {
     onOrdersToCaptureClick,
     onOrdersToFulfillClick,
     onProductsOutOfStockClick,
-    // onCountryChange,
     ordersToCapture,
     ordersToFulfill,
     productsOutOfStock,
@@ -461,8 +462,8 @@ const HomePage: React.FC<HomePageProps> = props => {
   const [openChooseLocationModal, setOpenChooseLocationModal] = React.useState(false);
   const [allDoneModal, setAllDoneModal] = React.useState(false);
   const [openAllDoneModal, setOpenAllDoneModal] = React.useState(false);
-  const [addAddressModal, setAddAddressModal] = React.useState(true);
-  const [openAddAddressModal, setOpenAddAddressModal] = React.useState(true);
+  const [addAddressModal, setAddAddressModal] = React.useState(false);
+  const [openAddAddressModal, setOpenAddAddressModal] = React.useState(false);
   const [importInformationModal, setImportInformationModal] = React.useState(false);
   const [openImportInformationModal, setOpenImportInformationModal] = React.useState(false);
   const [openAddBusinessModal, setOpenAddBusinessModal] = React.useState(false);
@@ -513,14 +514,18 @@ const HomePage: React.FC<HomePageProps> = props => {
   const { logout, user } = useUser();
   const choices = createChoices(intl);
   const initialForm: any = {
+    address: maybe(() => "", ""),
     business: maybe(() => "", ""),
     businessCategory: maybe(() => "", ""),
     businessName: maybe(() => "", ""),
+    city: maybe(() => "", ""),
+    country: maybe(() => "", ""),
     description: maybe(() => "", ""),
     email: maybe(() => "", ""),
     facebook: maybe(() => "", ""),
     instagram: maybe(() => "", ""),
     izettleAccessToken: maybe(() => "", ""),
+    postcode: maybe(() => "", ""),
     shopifyAccessToken: maybe(() => "", ""),
     shopifyURL: maybe(() => "", ""),
     squareAccessToken: maybe(() => "", ""),
@@ -587,6 +592,15 @@ const HomePage: React.FC<HomePageProps> = props => {
         setOpenImportInformationModal(true);
         setImportInformationModal(true);
       }
+    }
+  };
+
+  const onCreateStoreWithAddressCompleted = (data: CreateStore) => {
+    if (data.storeCreate.errors.length === 0) {
+      setAddressModal(true);
+      setAddAddressModal(false);
+      setAllDoneModal(true);
+      setOpenAllDoneModal(true);
     }
   };
 
@@ -1455,92 +1469,134 @@ const HomePage: React.FC<HomePageProps> = props => {
                 onClose={() => setAddAddressModal(false)}
                 open={openAddAddressModal}
               >
-                <Form initial={initialForm}>
-                  {({ change, data }) => (
-                    // const handleCountrySelect = createSingleAutocompleteSelectHandler(
-                    //   change,
-                    //   setCountryDisplayName,
-                    //   countryChoices
-                    // );
-                    // return (
+                <CreateStoreMutation onCompleted={onCreateStoreWithAddressCompleted}>
+                  {(storeCreate) => (
                     <>
-                      <DialogContent className={classes.businessmodalcont}>
-                        <div className={classes.businessmodal}>
-                          <ul className={classes.mylist}>
-                            <li className={classes.listitem}><span onClick={() => { setAddAddressModal(false); setOpenAddAddressModal(false); setChooseLocationModal(true); }}><SVG classname={classes.arrowlefticon} src={arrowleft} /></span><span className={classes.listtext}>What is the name of the business?</span></li>
-                          </ul>
-                          <div className={classes.inputbox}>
-                            <SVG src={location} />
-                            <SingleAutocompleteSelectField
-                              disabled={disabled}
-                              displayValue={countryDisplayValue}
-                              label={intl.formatMessage({
-                                defaultMessage: "Country"
-                              })}
-                              name="country"
-                              onChange={change}
-                              value={data.business}
-                              choices={countryChoices}
-                              InputProps={{
-                                autoComplete: "off"
-                              }}
-                            />
-                          </div>
-                          <div className={classes.businessmodaltextarea}>
-                            <TextField
-                              fullWidth
-                              multiline
-                              autoComplete="username"
-                              label="Street Address"
-                              name="email"
-                              onChange={change}
-                              value={data.email}
-                              inputProps={{
-                                "data-tc": "email"
-                              }}
-                            />
-                          </div>
-                          <div className={classes.businessmodaltextarea}>
-                            <TextField
-                              fullWidth
-                              autoComplete="username"
-                              label="Postcode"
-                              name="email"
-                              onChange={change}
-                              value={data.email}
-                              inputProps={{
-                                "data-tc": "email"
-                              }}
-                            />
-                          </div>
-                          <div className={classes.businessmodaltextarea}>
-                            <TextField
-                              fullWidth
-                              autoComplete="username"
-                              label="Town/City"
-                              name="email"
-                              onChange={change}
-                              value={data.email}
-                              inputProps={{
-                                "data-tc": "email"
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </DialogContent>
-                      <DialogActions className={classes.modalfooter}>
-                        <ConfirmButton
-                          transitionState={confirmButtonState}
-                          color="primary"
-                          variant="contained"
-                          onClick={() => { setAddressModal(true); setAddAddressModal(false); setAllDoneModal(true); setOpenAllDoneModal(true) }}
-                          className={classes.sendbtn} >
-                          <span>Next</span>
-                        </ConfirmButton>
-                      </DialogActions>
+                      <Form initial={initialForm} onSubmit={input =>
+                        storeCreate({
+                          variables: {
+                            input: {
+                              address: {
+                                city: input.city,
+                                country: input.country,
+                                latitude: 20.3,
+                                longitude: 30.4,
+                                postalCode: input.postcode,
+                                streetAddress: input.address,
+                              },
+                              business: businessID,
+                              category: businesscategory,
+                              description: businessDescription,
+                              facebookUrl: facebookURL,
+                              instagramUrl: instagramURL,
+                              maxPrice: 0,
+                              minPrice: 0,
+                              name: businessName,
+                              rating: 4,
+                              totalReviews: 10,
+                              twitterUrl: twitterURL,
+                              websiteUrl: websiteURL,
+                            }
+                          }
+                        })
+                      }>
+                        {({ change, data, submit }) => {
+                          const handleCountrySelect = createSingleAutocompleteSelectHandler(
+                            change,
+                            setCountryDisplayName,
+                            countryChoices
+                          );
+                          return (
+                            <>
+                              <DialogContent className={classes.businessmodalcont}>
+                                <div className={classes.businessmodal}>
+                                  <ul className={classes.mylist}>
+                                    <li className={classes.listitem}><span onClick={() => { setAddAddressModal(false); setOpenAddAddressModal(false); setChooseLocationModal(true); }}><SVG classname={classes.arrowlefticon} src={arrowleft} /></span><span className={classes.listtext}>What is the name of the business?</span></li>
+                                  </ul>
+                                  <div className={classes.inputbox}>
+                                    <SVG src={location} />
+                                    <SingleAutocompleteSelectField
+                                      disabled={disabled}
+                                      displayValue={countryDisplayName}
+                                      label={intl.formatMessage({
+                                        defaultMessage: "Country"
+                                      })}
+                                      name="country"
+                                      onChange={handleCountrySelect}
+                                      value={data.country}
+                                      choices={countryChoices}
+                                      InputProps={{
+                                        autoComplete: "off"
+                                      }}
+                                    />
+                                  </div>
+                                  <div className={classes.businessmodaltextarea}>
+                                    <TextField
+                                      fullWidth
+                                      multiline
+                                      autoComplete="address"
+                                      label="Street Address"
+                                      name="address"
+                                      onChange={change}
+                                      value={data.address}
+                                      inputProps={{
+                                        "data-tc": "address"
+                                      }}
+                                    />
+                                  </div>
+                                  <div className={classes.businessmodaltextarea}>
+                                    <TextField
+                                      fullWidth
+                                      autoComplete="postcode"
+                                      label="Postcode"
+                                      name="postcode"
+                                      onChange={change}
+                                      value={data.postcode}
+                                      inputProps={{
+                                        "data-tc": "postcode"
+                                      }}
+                                    />
+                                  </div>
+                                  <div className={classes.businessmodaltextarea}>
+                                    <TextField
+                                      fullWidth
+                                      autoComplete="city"
+                                      label="Town/City"
+                                      name="city"
+                                      onChange={change}
+                                      value={data.city}
+                                      inputProps={{
+                                        "data-tc": "city"
+                                      }}
+                                    />
+                                  </div>
+                                </div>
+                              </DialogContent>
+                              <DialogActions className={classes.modalfooter}>
+                                <ConfirmButton
+                                  transitionState={confirmButtonState}
+                                  color="primary"
+                                  variant="contained"
+                                  disabled={
+                                    data.country === "" ||
+                                    data.address === "" ||
+                                    data.postcode === "" ||
+                                    data.city === ""
+                                  }
+                                  onClick={() => {
+                                    submit();
+                                  }}
+                                  className={classes.sendbtn} >
+                                  <span>Next</span>
+                                </ConfirmButton>
+                              </DialogActions>
+                            </>
+                          )
+                        }}
+                      </Form>
                     </>
                   )}
-                </Form>
+                </CreateStoreMutation>
               </Dialog>
             )
           }}
