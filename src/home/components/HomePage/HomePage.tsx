@@ -467,8 +467,8 @@ const HomePage: React.FC<HomePageProps> = props => {
   const [openChooseLocationModal, setOpenChooseLocationModal] = React.useState(false);
   const [allDoneModal, setAllDoneModal] = React.useState(false);
   const [openAllDoneModal, setOpenAllDoneModal] = React.useState(false);
-  const [addAddressModal, setAddAddressModal] = React.useState(true);
-  const [openAddAddressModal, setOpenAddAddressModal] = React.useState(true);
+  const [addAddressModal, setAddAddressModal] = React.useState(false);
+  const [openAddAddressModal, setOpenAddAddressModal] = React.useState(false);
   const [importInformationModal, setImportInformationModal] = React.useState(false);
   const [openImportInformationModal, setOpenImportInformationModal] = React.useState(false);
   const [openAddBusinessModal, setOpenAddBusinessModal] = React.useState(false);
