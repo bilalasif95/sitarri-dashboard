@@ -27,6 +27,7 @@ interface AuthProviderOperationsProps {
   children: (props: {
     hasToken: boolean;
     isAuthenticated: boolean;
+    signUpTokenAuthLoading: boolean;
     tokenAuthLoading: boolean;
     tokenVerifyLoading: boolean;
     user: User;
@@ -70,6 +71,7 @@ interface AuthProviderProps {
   children: (props: {
     hasToken: boolean;
     isAuthenticated: boolean;
+    signUpTokenAuthLoading: boolean;
     tokenAuthLoading: boolean;
     tokenVerifyLoading: boolean;
     user: User;
@@ -262,8 +264,9 @@ class AuthProvider extends React.Component<
   };
 
   render() {
-    const { children, tokenAuth, tokenVerify } = this.props;
+    const { children,signUpTokenAuth, tokenAuth, tokenVerify } = this.props;
     const tokenAuthOpts = tokenAuth[1];
+    const signUpTokenAuthOpts = signUpTokenAuth[1];
     const tokenVerifyOpts = tokenVerify[1];
     const { errors,success,user } = this.state;
     const isAuthenticated = !!user;
@@ -275,6 +278,7 @@ class AuthProvider extends React.Component<
           login: this.login,
           loginByToken: this.loginByToken,
           logout: this.logout,
+          signUpTokenAuthLoading: signUpTokenAuthOpts.loading,
           signup: this.signup,
           socialAuth: this.socialAuth,
           success,
@@ -287,6 +291,7 @@ class AuthProvider extends React.Component<
         {children({
           hasToken: !!getAuthToken(),
           isAuthenticated,
+          signUpTokenAuthLoading: signUpTokenAuthOpts.loading,
           tokenAuthLoading: tokenAuthOpts.loading,
           tokenVerifyLoading: tokenVerifyOpts.loading,
           user

@@ -256,7 +256,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
   const menuBack = () => {
     setEmailClick(true)
   };
-  const { signup,socialAuth, errors,success, tokenAuthLoading } = useUser();
+  const { signup,socialAuth, errors,success,signUpTokenAuthLoading } = useUser();
   const responseFacebook = async response => {
     if (response.accessToken) {
       socialAuth(response.accessToken, "facebook","",response.id);
@@ -378,7 +378,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               <Button
                 className={classes.loginButton}
                 color="primary"
-                disabled={disableLoginButton}
+                disabled={disableLoginButton || data.email === "" || data.password === ""}
                 variant="contained"
                 onClick={handleSubmit}
                 type="submit"
@@ -410,7 +410,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
     <>
           {registerClick ?
             <RegisterForm error={errors}
-            disableLoginButton={tokenAuthLoading}
+            disableLoginButton={signUpTokenAuthLoading}
             onSubmit={handleSubmit} menuBack={menuBack} success={success} />
             :
             <>

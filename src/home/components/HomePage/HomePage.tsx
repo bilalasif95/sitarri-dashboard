@@ -9,6 +9,11 @@ import Dropzone from 'react-dropzone';
 import { IntlShape, useIntl } from "react-intl";
 import SVG from "react-inlinesvg";
 
+// import PlacesAutocomplete, {
+//   geocodeByAddress,
+//   getLatLng,
+// } from 'react-places-autocomplete';
+
 import claimBusiness from "@assets/images/Group 9355.svg";
 import email from "@assets/images/email.svg";
 import newBusiness from "@assets/images/Group 9685.svg";
@@ -462,8 +467,8 @@ const HomePage: React.FC<HomePageProps> = props => {
   const [openChooseLocationModal, setOpenChooseLocationModal] = React.useState(false);
   const [allDoneModal, setAllDoneModal] = React.useState(false);
   const [openAllDoneModal, setOpenAllDoneModal] = React.useState(false);
-  const [addAddressModal, setAddAddressModal] = React.useState(false);
-  const [openAddAddressModal, setOpenAddAddressModal] = React.useState(false);
+  const [addAddressModal, setAddAddressModal] = React.useState(true);
+  const [openAddAddressModal, setOpenAddAddressModal] = React.useState(true);
   const [importInformationModal, setImportInformationModal] = React.useState(false);
   const [openImportInformationModal, setOpenImportInformationModal] = React.useState(false);
   const [openAddBusinessModal, setOpenAddBusinessModal] = React.useState(false);
@@ -510,6 +515,7 @@ const HomePage: React.FC<HomePageProps> = props => {
   const [instagramURLError, setInstagramURLError] = React.useState<any>();
   const [twitterURLError, setTwitterURLError] = React.useState<any>();
   const [storeID, setStoreID] = React.useState("");
+  // const [getLocation, setGetLocation] = React.useState("");
   const intl = useIntl();
   const { logout, user } = useUser();
   const choices = createChoices(intl);
@@ -615,6 +621,10 @@ const HomePage: React.FC<HomePageProps> = props => {
       setImportInformationModal(false);
       setAllDoneModal(true);
       setOpenAllDoneModal(true);
+      setShopify(false);
+      setIzettle(false);
+      setVend(false);
+      setSquare(false);
     }
     else {
       if (platform === "IZETTLE") {
@@ -696,6 +706,16 @@ const HomePage: React.FC<HomePageProps> = props => {
     setVend(true);
   };
 
+  // const handleChange = address => {
+  //   setGetLocation(address)
+  // };
+
+  // const handleSelect = address => {
+  //   geocodeByAddress(address)
+  //     .then(results => getLatLng(results[0]))
+  //     .then(latLng => console.log('Success', latLng))
+  //     .catch(error => console.error('Error', error));
+  // };
   return (
     <Container>
       <HomeHeader userName={userName} />
@@ -836,7 +856,7 @@ const HomePage: React.FC<HomePageProps> = props => {
           open={openClaimBusinessModal}
         >
           <ClaimBusinessMutation onCompleted={onClaimBusinessCompleted}>
-            {(requestClaimBusiness) => (
+            {(requestClaimBusiness, requestClaimBusinessOpts) => (
               <>
                 <Form initial={initialForm} onSubmit={input =>
                   requestClaimBusiness({
@@ -886,7 +906,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                             transitionState={confirmButtonState}
                             color="primary"
                             variant="contained"
-                            disabled={data.business === ""}
+                            disabled={requestClaimBusinessOpts.loading || data.business === ""}
                             onClick={() => { submit() }}
                             className={classes.confirmbtn} >
                             <span>Manage Business</span>
@@ -941,7 +961,7 @@ const HomePage: React.FC<HomePageProps> = props => {
           open={openEmployeeAccessModal}
         >
           <EmployeeAccessMutation onCompleted={onEmployeeAccessCompleted}>
-            {(requestEmployeeAccess) => (
+            {(requestEmployeeAccess, requestEmployeeAccessOpts) => (
               <>
                 <Form initial={initialForm} onSubmit={input =>
                   requestEmployeeAccess({
@@ -1011,7 +1031,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                             transitionState={confirmButtonState}
                             color="primary"
                             variant="contained"
-                            disabled={data.email === "" || data.business === ""}
+                            disabled={requestEmployeeAccessOpts.loading || data.email === "" || data.business === ""}
                             onClick={() => { submit() }}
                             className={classes.sendbtn} >
                             <span>Send</span>
@@ -1066,7 +1086,7 @@ const HomePage: React.FC<HomePageProps> = props => {
           open={openAddBusinessModal}
         >
           <CreateBusinessMutation onCompleted={onCreateBusinessCompleted}>
-            {(businessCreate) => (
+            {(businessCreate, businessCreateOpts) => (
               <>
                 <Form initial={initialForm} onSubmit={input =>
                   businessCreate({
@@ -1123,7 +1143,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                         <ConfirmButton
                           transitionState={confirmButtonState}
                           color="primary"
-                          disabled={data.businessName === ""}
+                          disabled={businessCreateOpts.loading || data.businessName === ""}
                           variant="contained"
                           onClick={() => submit()}
                           className={classes.sendbtn} >
@@ -1378,7 +1398,7 @@ const HomePage: React.FC<HomePageProps> = props => {
           open={openChooseLocationModal}
         >
           <CreateStoreMutation onCompleted={onCreateStoreCompleted}>
-            {(storeCreate) => (
+            {(storeCreate, storeCreateOpts) => (
               <>
                 <Form initial={initialForm} onSubmit={() =>
                   storeCreate({
@@ -1426,7 +1446,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                           transitionState={confirmButtonState}
                           color="primary"
                           variant="contained"
-                          disabled={data.type === ""}
+                          disabled={storeCreateOpts.loading || data.type === ""}
                           onClick={() => {
                             setType(data.type);
                             if (data.type === "Online" || data.type === "No") {
@@ -1470,7 +1490,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                 open={openAddAddressModal}
               >
                 <CreateStoreMutation onCompleted={onCreateStoreWithAddressCompleted}>
-                  {(storeCreate) => (
+                  {(storeCreate, storeCreateOpts) => (
                     <>
                       <Form initial={initialForm} onSubmit={input =>
                         storeCreate({
@@ -1511,8 +1531,46 @@ const HomePage: React.FC<HomePageProps> = props => {
                               <DialogContent className={classes.businessmodalcont}>
                                 <div className={classes.businessmodal}>
                                   <ul className={classes.mylist}>
-                                    <li className={classes.listitem}><span onClick={() => { setAddAddressModal(false); setOpenAddAddressModal(false); setChooseLocationModal(true); }}><SVG classname={classes.arrowlefticon} src={arrowleft} /></span><span className={classes.listtext}>What is the name of the business?</span></li>
+                                    <li className={classes.listitem}><span onClick={() => { setAddAddressModal(false); setOpenAddAddressModal(false); setChooseLocationModal(true); }}><SVG classname={classes.arrowlefticon} src={arrowleft} /></span><span className={classes.listtext}>What is the Address?</span></li>
                                   </ul>
+                                  {/* <PlacesAutocomplete
+                                    value={getLocation}
+                                    onChange={handleChange}
+                                    onSelect={handleSelect}
+                                  >
+                                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                      <div>
+                                        <input
+                                          {...getInputProps({
+                                            className: 'location-search-input',
+                                            placeholder: 'Search Places ...',
+                                          })}
+                                        />
+                                        <div className="autocomplete-dropdown-container">
+                                          {loading && <div>Loading...</div>}
+                                          {suggestions.map(suggestion => {
+                                            const className = suggestion.active
+                                              ? 'suggestion-item--active'
+                                              : 'suggestion-item';
+                                            // inline style for demonstration purpose
+                                            const style = suggestion.active
+                                              ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                              : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                            return (
+                                              <div
+                                                {...getSuggestionItemProps(suggestion, {
+                                                  className,
+                                                  style,
+                                                })}
+                                              >
+                                                <span>{suggestion.description}</span>
+                                              </div>
+                                            );
+                                          })}
+                                        </div>
+                                      </div>
+                                    )}
+                                  </PlacesAutocomplete> */}
                                   <div className={classes.inputbox}>
                                     <SVG src={location} />
                                     <SingleAutocompleteSelectField
@@ -1578,6 +1636,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                                   color="primary"
                                   variant="contained"
                                   disabled={
+                                    storeCreateOpts.loading ||
                                     data.country === "" ||
                                     data.address === "" ||
                                     data.postcode === "" ||
@@ -1659,7 +1718,7 @@ const HomePage: React.FC<HomePageProps> = props => {
           open={openImportInformationModal}
         >
           <ProductBulkCreateMutation onCompleted={onProductBulkCreateCompleted}>
-            {(productBulkCreate) => (
+            {(productBulkCreate, productBulkCreateOpts) => (
               <>
                 <Form initial={initialForm} onSubmit={input =>
                   productBulkCreate({
@@ -1692,6 +1751,10 @@ const HomePage: React.FC<HomePageProps> = props => {
                               setImportInformationModal(false);
                               setChooseLocationModal(true);
                               setOpenImportInformationModal(false);
+                              setShopify(false);
+                              setIzettle(false);
+                              setVend(false);
+                              setSquare(false);
                             }}>
                               <SVG classname={classes.arrowlefticon} src={arrowleft} /></span><span className={classes.listtext}>Import Business Information</span></li>
                           </ul>
@@ -1839,6 +1902,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                           color="primary"
                           variant="contained"
                           disabled={
+                            productBulkCreateOpts.loading ||
                             (!izettle || data.izettleAccessToken === "") &&
                             (!square || data.squareAccessToken === "") &&
                             (!shopify || data.shopifyAccessToken === "" || data.shopifyURL === "") &&
@@ -1852,7 +1916,16 @@ const HomePage: React.FC<HomePageProps> = props => {
                           transitionState={confirmButtonState}
                           color="primary"
                           variant="contained"
-                          onClick={() => { setSkip(true); setImportInformationModal(false); setAllDoneModal(true); setOpenAllDoneModal(true) }}
+                          onClick={() => {
+                            setSkip(true);
+                            setShopify(false);
+                            setIzettle(false);
+                            setVend(false);
+                            setSquare(false);
+                            setImportInformationModal(false);
+                            setAllDoneModal(true);
+                            setOpenAllDoneModal(true);
+                          }}
                           className={classes.skipbtn}>
                           <span>Skip for now</span>
                         </ConfirmButton>

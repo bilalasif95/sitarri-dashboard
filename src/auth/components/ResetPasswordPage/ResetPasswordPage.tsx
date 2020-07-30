@@ -109,7 +109,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
           <Button
             className={classes.submit}
             color="primary"
-            disabled={disabled}
+            disabled={disabled || data.email === ""}
             variant="contained"
             onClick={handleSubmit}
             type="submit"

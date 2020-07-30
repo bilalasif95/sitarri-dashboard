@@ -24,6 +24,7 @@ interface UserContext {
   signup: (username: string, password: string,redirectUrl: string,menuBack: any) => void;
   loginByToken: (token: string, user: User) => void;
   logout: () => void;
+  signUpTokenAuthLoading: boolean,
   tokenAuthLoading: boolean;
   tokenRefresh: () => Promise<void>;
   tokenVerifyLoading: boolean;
@@ -35,6 +36,7 @@ export const UserContext = React.createContext<UserContext>({
   login: undefined,
   loginByToken: undefined,
   logout: undefined,
+  signUpTokenAuthLoading: false,
   signup: undefined,
   socialAuth: undefined,
   success: "",

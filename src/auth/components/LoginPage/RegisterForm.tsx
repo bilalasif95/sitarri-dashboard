@@ -256,7 +256,7 @@ const LoginCard = withStyles(styles, { name: "LoginCard" })(
               <Button
                 className={classes.loginButton}
                 color="primary"
-                disabled={(passwordError && data.password.length > 0) || disableLoginButton}
+                disabled={(passwordError && data.password.length > 0) || disableLoginButton || data.email === "" || data.password === "" || data.confirmPassword === ""}
                 variant="contained"
                 onClick={handleSubmit}
                 type="submit"
