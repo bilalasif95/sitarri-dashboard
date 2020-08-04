@@ -17,7 +17,7 @@ import Form from "@saleor/components/Form";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
-import { maybe} from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 
 import { accountConfirmPath } from "../../urls";
 
@@ -32,7 +32,7 @@ export interface FormData {
 const useStyles = makeStyles(
   theme => ({
     backBtn: {
-      "& hover":{
+      "& hover": {
         background: "transparent",
       },
       "& span": {
@@ -59,29 +59,29 @@ const useStyles = makeStyles(
       padding: 0,
       textAlign: "center",
     },
-    ce:{
+    ce: {
       color: '#fff',
       fontWeight: 400,
       margin: '3px 0px 0px',
       textAlign: 'center',
     },
-    emailButton:{
-      "& span":{
-      "& svg": {
-        "& path":{
-          fill: 'white',
+    emailButton: {
+      "& span": {
+        "& svg": {
+          "& path": {
+            fill: 'white',
+          },
+          margin: '0 2rem 0 0',
         },
-        margin: '0 2rem 0 0',
-      },
-      alignItems: 'center',
-      display: "flex",
-      fontSize: '400 14.3333px Arial',
-      left: '0.3rem',
-      position: 'absolute',
-      textTransform: 'capitalize',
-      top: '3px',
-      transform: 'none',
-      width: '100%',
+        alignItems: 'center',
+        display: "flex",
+        fontSize: '400 14.3333px Arial',
+        left: '0.3rem',
+        position: 'absolute',
+        textTransform: 'capitalize',
+        top: '3px',
+        transform: 'none',
+        width: '100%',
       },
       alignItems: 'center',
       backgroundColor: '#f3492b !important',
@@ -97,7 +97,7 @@ const useStyles = makeStyles(
     },
     facebookLoginButton: {
       "& button": {
-        "& i":{
+        "& i": {
           fontSize: "20px",
           left: "1.5rem",
           margin: "0 2rem 0 0",
@@ -118,10 +118,10 @@ const useStyles = makeStyles(
       }
     },
     forgotBtn: {
-      "& hover":{
+      "& hover": {
         background: "transparent",
       },
-      "& span":{
+      "& span": {
         color: "#414141",
         fontWeight: 400,
         textTransform: "capitalize"
@@ -141,7 +141,7 @@ const useStyles = makeStyles(
         position: "absolute",
         top: "10px",
       },
-      "& fa":{
+      "& fa": {
         fontSize: "20px",
         margin: "0 2rem 0 0",
       },
@@ -165,7 +165,7 @@ const useStyles = makeStyles(
       width: "100%",
     },
     line: {
-      "& span":{
+      "& span": {
         background: '#fafafa',
         height: '20px',
         left: '47%',
@@ -176,7 +176,7 @@ const useStyles = makeStyles(
         textTransform: 'lowercase',
         top: '-11px',
         width: '32px',
-        },
+      },
       background: '#80808059',
       height: '1px',
       margin: '0.5rem 0 1.5rem',
@@ -189,7 +189,7 @@ const useStyles = makeStyles(
       textAlign: "center"
     },
     loginButton: {
-      "& hover":{
+      "& hover": {
         background: "#f74b2c",
       },
       "& span": {
@@ -197,7 +197,7 @@ const useStyles = makeStyles(
         fontWeight: 400,
         textTransform: "capitalize",
       },
-      background:"#f74b2c",
+      background: "#f74b2c",
       borderRadius: "4px",
       boxShadow: "none !important",
       color: "#fff",
@@ -223,10 +223,10 @@ const useStyles = makeStyles(
       width: '40px',
     },
     passwordInput: {
-        display: 'flex',
-        position: 'relative',
+      display: 'flex',
+      position: 'relative',
     },
-    tc:{
+    tc: {
       color: '#6e6f6f',
       fontSize: '12px',
     },
@@ -256,10 +256,10 @@ const LoginCard: React.FC<LoginCardProps> = props => {
   const menuBack = () => {
     setEmailClick(true)
   };
-  const { signup,socialAuth, errors,success,signUpTokenAuthLoading } = useUser();
+  const { signup, socialAuth, errors, success, signUpTokenAuthLoading } = useUser();
   const responseFacebook = async response => {
     if (response.accessToken) {
-      socialAuth(response.accessToken, "facebook","",response.id);
+      socialAuth(response.accessToken, "facebook", "", response.id);
       // const authenticated = await socialAuth({ accessToken: response.accessToken, provider: "facebook", email: "", uid: response.id });
       // if (authenticated && authenticated.data.socialAuth.error === null) {
       //   setAuthToken(authenticated.data.socialAuth.token);
@@ -272,20 +272,20 @@ const LoginCard: React.FC<LoginCardProps> = props => {
 
   const responseGoogle = async response => {
     if (response.accessToken) {
-      socialAuth(response.accessToken, "google-oauth2",response.profileObj.email,"");
-    //   const authenticated = await socialAuth({ accessToken: response.accessToken, provider: "google-oauth2", email: response.profileObj.email, uid: "" });
-    //   if (authenticated && authenticated.data.socialAuth.error === null) {
-    //     setAuthToken(authenticated.data.socialAuth.token);
-    //   }
-    //   else {
-    //     setErrors(authenticated.data.socialAuth.error.message)
-    //   }
+      socialAuth(response.accessToken, "google-oauth2", response.profileObj.email, "");
+      //   const authenticated = await socialAuth({ accessToken: response.accessToken, provider: "google-oauth2", email: response.profileObj.email, uid: "" });
+      //   if (authenticated && authenticated.data.socialAuth.error === null) {
+      //     setAuthToken(authenticated.data.socialAuth.token);
+      //   }
+      //   else {
+      //     setErrors(authenticated.data.socialAuth.error.message)
+      //   }
     }
   };
-  
+
   const handleSubmit = (data: FormData) => {
-      const redirectUrl = `${window.location.origin}${accountConfirmPath}`;
-      signup(data.email, data.password,redirectUrl,menuBack);
+    const redirectUrl = `${window.location.origin}${accountConfirmPath}`;
+    signup(data.email, data.password, redirectUrl, menuBack);
   };
   const onPasswordEyeIconClick = () => {
     if (passwordType) {
@@ -293,125 +293,125 @@ const LoginCard: React.FC<LoginCardProps> = props => {
     }
     setPasswordType(true);
   };
-  const emailError = maybe(()=>errors.filter(item => item.field === "email"))
+  const emailError = maybe(() => errors.filter(item => item.field === "email"))
   return (
     <div>
-    {emailClick ?
-    <>
-      <div className={classes.bodyHead}>
+      {emailClick ?
+        <>
+          <div className={classes.bodyHead}>
             <p>Log in</p>
             <Button onClick={() => { setEmailClick(false); setRegisterClick(false) }} className={classes.backBtn}>
               <SVG src={backicon}
               />
             </Button>
           </div>
-      <Form initial={{ confirmPassword:"",email: "", password: "" }} onSubmit={onSubmit}>
-        {({ change: handleChange, data, submit: handleSubmit }) => (
-          <>
-            {error && (
-              <div className={classes.panel}>
-                <Typography variant="caption">
-                  <FormattedMessage defaultMessage="Sorry, your username and/or password are incorrect. Please try again." />
-                </Typography>
-              </div>
-            )}
-            <TextField
-              autoFocus
-              fullWidth
-              autoComplete="username"
-              label={intl.formatMessage(commonMessages.email)}
-              name="email"
-              onChange={handleChange}
-              value={data.email}
-              inputProps={{
-                "data-tc": "email"
-              }}
-            />
-            <FormSpacer />
-            {passwordType ? (
-              <div className={classes.passwordInput}>
+          <Form initial={{ confirmPassword: "", email: "", password: "" }} onSubmit={onSubmit}>
+            {({ change: handleChange, data, submit: handleSubmit }) => (
+              <>
+                {error && (
+                  <div className={classes.panel}>
+                    <Typography variant="caption">
+                      <FormattedMessage defaultMessage="Sorry, your username and/or password are incorrect. Please try again." />
+                    </Typography>
+                  </div>
+                )}
                 <TextField
+                  autoFocus
                   fullWidth
-                  autoComplete="password"
-                  label={intl.formatMessage({
-                    defaultMessage: "Password"
-                  })}
-                  name="password"
+                  autoComplete="username"
+                  label={intl.formatMessage(commonMessages.email)}
+                  name="email"
                   onChange={handleChange}
-                  type="password"
-                  value={data.password}
+                  value={data.email}
                   inputProps={{
-                    "data-tc": "password"
+                    "data-tc": "email"
                   }}
                 />
-                <span onClick={onPasswordEyeIconClick}>
-                <SVG src={removeImg}
-                  className={classes.passwordEye}
-                />
-                </span>
-              </div>
-            ) : (
-                <div className={classes.passwordInput}>
-                  <TextField
-                    fullWidth
-                    autoComplete="password"
-                    label={intl.formatMessage({
-                      defaultMessage: "Password"
-                    })}
-                    name="password"
-                    onChange={handleChange}
-                    type="text"
-                    value={data.password}
-                    inputProps={{
-                      "data-tc": "password"
-                    }}
-                  />
-                <span onClick={onPasswordEyeIconClick}>
-                <SVG src={removeImgg}
-                    className={classes.passwordEye}
-                  />
-                  </span>
+                <FormSpacer />
+                {passwordType ? (
+                  <div className={classes.passwordInput}>
+                    <TextField
+                      fullWidth
+                      autoComplete="password"
+                      label={intl.formatMessage({
+                        defaultMessage: "Password"
+                      })}
+                      name="password"
+                      onChange={handleChange}
+                      type="password"
+                      value={data.password}
+                      inputProps={{
+                        "data-tc": "password"
+                      }}
+                    />
+                    <span onClick={onPasswordEyeIconClick}>
+                      <SVG src={removeImg}
+                        className={classes.passwordEye}
+                      />
+                    </span>
+                  </div>
+                ) : (
+                    <div className={classes.passwordInput}>
+                      <TextField
+                        fullWidth
+                        autoComplete="password"
+                        label={intl.formatMessage({
+                          defaultMessage: "Password"
+                        })}
+                        name="password"
+                        onChange={handleChange}
+                        type="text"
+                        value={data.password}
+                        inputProps={{
+                          "data-tc": "password"
+                        }}
+                      />
+                      <span onClick={onPasswordEyeIconClick}>
+                        <SVG src={removeImgg}
+                          className={classes.passwordEye}
+                        />
+                      </span>
+                    </div>
+                  )}
+                <FormSpacer />
+                <div className={classes.buttonContainer}>
+                  <Button
+                    className={classes.loginButton}
+                    color="primary"
+                    disabled={disableLoginButton || data.email === "" || data.password === ""}
+                    variant="contained"
+                    onClick={handleSubmit}
+                    type="submit"
+                    data-tc="submit"
+                  >
+                    <FormattedMessage defaultMessage="Login" description="button" />
+                  </Button>
                 </div>
-              )}
-            <FormSpacer />
-            <div className={classes.buttonContainer}>
-              <Button
-                className={classes.loginButton}
-                color="primary"
-                disabled={disableLoginButton || data.email === "" || data.password === ""}
-                variant="contained"
-                onClick={handleSubmit}
-                type="submit"
-                data-tc="submit"
-              >
-                <FormattedMessage defaultMessage="Login" description="button" />
-              </Button>
-            </div>
-            <Button onClick={onPasswordRecovery} className={classes.forgotBtn}>Forgot Password?</Button>
-            {/* <FormSpacer /> */}
-            {/* <Typography className={classes.link} onClick={onPasswordRecovery}>
+                <Button onClick={onPasswordRecovery} className={classes.forgotBtn}>Forgot Password?</Button>
+                {/* <FormSpacer /> */}
+                {/* <Typography className={classes.link} onClick={onPasswordRecovery}>
               <FormattedMessage
                 defaultMessage="Reset your password"
                 description="button"
               />
             </Typography> */}
-          </>
-        )}
-      </Form>
-      <div>
-        <p>Don't have an account?&nbsp;
+              </>
+            )}
+          </Form>
+          <div>
+            <p>Don't have an account?&nbsp;
           <span className={classes.ulink} onClick={() => { setRegisterClick(true); setEmailClick(false) }}>
-            Sign up
+                Sign up
           </span>
-        </p>
-      </div>
-      </>
-    : 
-    <>
+            </p>
+          </div>
+        </>
+        :
+        <>
           {registerClick ?
             <RegisterForm error={errors}
-            disableLoginButton={signUpTokenAuthLoading}
-            onSubmit={handleSubmit} menuBack={menuBack} success={success} />
+              disableLoginButton={signUpTokenAuthLoading}
+              onSubmit={handleSubmit} menuBack={menuBack} success={success} />
             :
             <>
               <div className={classes.bodyHead}>
@@ -420,22 +420,22 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               {emailError && emailError.length !== 0 && (
                 <div className={classes.panel}>
                   <Typography variant="caption">
-                    {maybe(()=>emailError[0].message)}
+                    {maybe(() => emailError[0].message)}
                   </Typography>
                 </div>
               )}
               {/* <div className="errorMessages">{errors}</div> */}
               <div className={classes.facebookLoginButton}>
-              <FacebookLogin
-                appId="1078436535883692"
-                // appId="734952100605240"
-                // autoLoad={true}
-                fields="name,email,picture"
-                callback={responseFacebook}
-                textButton="Continue with Facebook"              
-                // buttonText="Login"
-                icon="fab fa-facebook-square"
-              />
+                <FacebookLogin
+                  appId="1078436535883692"
+                  // appId="734952100605240"
+                  // autoLoad={true}
+                  fields="name,email,picture"
+                  callback={responseFacebook}
+                  textButton="Continue with Facebook"
+                  // buttonText="Login"
+                  icon="fab fa-facebook-square"
+                />
               </div>
               <GoogleLogin
                 clientId="325319904531-ce20k86al4d3rtqhjd6heg9s551ksirg.apps.googleusercontent.com"
@@ -454,8 +454,8 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               <p className={classes.tc}>By continuing you agree to our <Link to="" className="statementSection">T&Cs</Link> and<Link to="" className="statementSection"> Privacy Policy</Link>.</p>
             </>
           }
-    </>
-    }
+        </>
+      }
     </div>
   );
 };

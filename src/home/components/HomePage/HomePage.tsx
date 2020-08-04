@@ -13,6 +13,10 @@ import SVG from "react-inlinesvg";
 //   geocodeByAddress,
 //   getLatLng,
 // } from 'react-places-autocomplete';
+import {
+  geocodeByAddress,
+  getLatLng,
+} from 'react-places-autocomplete';
 
 import claimBusiness from "@assets/images/Group 9355.svg";
 import email from "@assets/images/email.svg";
@@ -275,6 +279,10 @@ const useStyles = makeStyles(
       alignItems: 'center',
       display: 'flex',
     },
+    latlngError: {
+      color: "red",
+      textAlign: "center",
+    },
     listitem: {
       "& svg": {
         cursor: 'pointer',
@@ -478,6 +486,7 @@ const HomePage: React.FC<HomePageProps> = props => {
   const [openAddInformationModal, setOpenAddInformationModal] = React.useState(false);
   const [businessNamesArray, setBusinessNamesArray] = React.useState([]);
   const [logo, setLogo] = React.useState<any>();
+  const [logoFile, setLogoFile] = React.useState<any>();
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
     maybe(() => "", "")
   );
@@ -516,6 +525,8 @@ const HomePage: React.FC<HomePageProps> = props => {
   const [twitterURLError, setTwitterURLError] = React.useState<any>();
   const [storeID, setStoreID] = React.useState("");
   // const [getLocation, setGetLocation] = React.useState("");
+  const [latlngError, setlatLngError] = React.useState("");
+  const [latLngLoading, setlatLngLoading] = React.useState(false);
   const intl = useIntl();
   const { logout, user } = useUser();
   const choices = createChoices(intl);
@@ -710,7 +721,7 @@ const HomePage: React.FC<HomePageProps> = props => {
   //   setGetLocation(address)
   // };
 
-  // const handleSelect = address => {
+  // const handleSelect = (address) => {
   //   geocodeByAddress(address)
   //     .then(results => getLatLng(results[0]))
   //     .then(latLng => console.log('Success', latLng))
@@ -1314,6 +1325,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                       <div className={classes.fileuploadcont}>
                         <Dropzone accept="image/*" multiple={false} onDrop={acceptedFiles => {
                           if (acceptedFiles && acceptedFiles[0]) {
+                            setLogoFile(acceptedFiles[0]);
                             const reader = new FileReader();
                             reader.onload = e => {
                               setLogo(e.target.result)
@@ -1409,11 +1421,12 @@ const HomePage: React.FC<HomePageProps> = props => {
                         description: businessDescription,
                         facebookUrl: facebookURL,
                         instagramUrl: instagramURL,
-                        maxPrice: 0,
-                        minPrice: 0,
+                        logo: logoFile,
+                        // maxPrice: 0,
+                        // minPrice: 0,
                         name: businessName,
-                        rating: 4,
-                        totalReviews: 10,
+                        // rating: 4,
+                        // totalReviews: 10,
                         twitterUrl: twitterURL,
                         websiteUrl: websiteURL,
                       }
@@ -1492,33 +1505,46 @@ const HomePage: React.FC<HomePageProps> = props => {
                 <CreateStoreMutation onCompleted={onCreateStoreWithAddressCompleted}>
                   {(storeCreate, storeCreateOpts) => (
                     <>
-                      <Form initial={initialForm} onSubmit={input =>
-                        storeCreate({
-                          variables: {
-                            input: {
-                              address: {
-                                city: input.city,
-                                country: input.country,
-                                latitude: 20.3,
-                                longitude: 30.4,
-                                postalCode: input.postcode,
-                                streetAddress: input.address,
-                              },
-                              business: businessID,
-                              category: businesscategory,
-                              description: businessDescription,
-                              facebookUrl: facebookURL,
-                              instagramUrl: instagramURL,
-                              maxPrice: 0,
-                              minPrice: 0,
-                              name: businessName,
-                              rating: 4,
-                              totalReviews: 10,
-                              twitterUrl: twitterURL,
-                              websiteUrl: websiteURL,
-                            }
-                          }
-                        })
+                      <Form initial={initialForm} onSubmit={input => {
+                        setlatLngError("")
+                        setlatLngLoading(true)
+                        geocodeByAddress(input.address + "," + input.city + "," + countryDisplayName)
+                          .then(results => getLatLng(results[0]))
+                          .then(latLng => {
+                            setlatLngLoading(false)
+                            storeCreate({
+                              variables: {
+                                input: {
+                                  address: {
+                                    city: input.city,
+                                    country: input.country,
+                                    latitude: latLng.lat,
+                                    longitude: latLng.lng,
+                                    postalCode: input.postcode,
+                                    streetAddress: input.address,
+                                  },
+                                  business: businessID,
+                                  category: businesscategory,
+                                  description: businessDescription,
+                                  facebookUrl: facebookURL,
+                                  instagramUrl: instagramURL,
+                                  logo: logoFile,
+                                  // maxPrice: 0,
+                                  // minPrice: 0,
+                                  name: businessName,
+                                  // rating: 4,
+                                  // totalReviews: 10,
+                                  twitterUrl: twitterURL,
+                                  websiteUrl: websiteURL,
+                                }
+                              }
+                            })
+                          })
+                          .catch(error => {
+                            setlatLngLoading(false)
+                            setlatLngError(error)
+                          })
+                      }
                       }>
                         {({ change, data, submit }) => {
                           const handleCountrySelect = createSingleAutocompleteSelectHandler(
@@ -1531,22 +1557,56 @@ const HomePage: React.FC<HomePageProps> = props => {
                               <DialogContent className={classes.businessmodalcont}>
                                 <div className={classes.businessmodal}>
                                   <ul className={classes.mylist}>
-                                    <li className={classes.listitem}><span onClick={() => { setAddAddressModal(false); setOpenAddAddressModal(false); setChooseLocationModal(true); }}><SVG classname={classes.arrowlefticon} src={arrowleft} /></span><span className={classes.listtext}>What is the Address?</span></li>
+                                    <li className={classes.listitem}><span onClick={() => { setlatLngError(""); setAddAddressModal(false); setOpenAddAddressModal(false); setChooseLocationModal(true); }}><SVG classname={classes.arrowlefticon} src={arrowleft} /></span><span className={classes.listtext}>What is the Address?</span></li>
                                   </ul>
-                                  {/* <PlacesAutocomplete
+                                  <div className={classes.inputbox}>
+                                    <SVG src={location} />
+                                    <SingleAutocompleteSelectField
+                                      disabled={disabled}
+                                      displayValue={countryDisplayName}
+                                      label={intl.formatMessage({
+                                        defaultMessage: "Country"
+                                      })}
+                                      name="country"
+                                      onChange={handleCountrySelect}
+                                      value={data.country}
+                                      choices={countryChoices}
+                                      InputProps={{
+                                        autoComplete: "off"
+                                      }}
+                                    />
+                                  </div>
+                                  <div className={classes.businessmodaltextarea}>
+                                    {/* <PlacesAutocomplete
                                     value={getLocation}
                                     onChange={handleChange}
                                     onSelect={handleSelect}
                                   >
                                     {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                                      <div>
-                                        <input
+                                      <div> */}
+                                    <TextField
+                                      fullWidth
+                                      multiline
+                                      autoComplete="address"
+                                      label="Street Address"
+                                      name="address"
+                                      onChange={change}
+                                      value={data.address}
+                                      inputProps={{
+                                        "data-tc": "address"
+                                      }}
+                                    // {...getInputProps({
+                                    //   className: 'location-search-input',
+                                    //   // placeholder: 'Street Address',
+                                    // })}
+                                    />
+                                    {/* <input
                                           {...getInputProps({
                                             className: 'location-search-input',
-                                            placeholder: 'Search Places ...',
+                                            placeholder: 'Street Address',
                                           })}
-                                        />
-                                        <div className="autocomplete-dropdown-container">
+                                        /> */}
+                                    {/* <div className="autocomplete-dropdown-container">
                                           {loading && <div>Loading...</div>}
                                           {suggestions.map(suggestion => {
                                             const className = suggestion.active
@@ -1571,36 +1631,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                                       </div>
                                     )}
                                   </PlacesAutocomplete> */}
-                                  <div className={classes.inputbox}>
-                                    <SVG src={location} />
-                                    <SingleAutocompleteSelectField
-                                      disabled={disabled}
-                                      displayValue={countryDisplayName}
-                                      label={intl.formatMessage({
-                                        defaultMessage: "Country"
-                                      })}
-                                      name="country"
-                                      onChange={handleCountrySelect}
-                                      value={data.country}
-                                      choices={countryChoices}
-                                      InputProps={{
-                                        autoComplete: "off"
-                                      }}
-                                    />
-                                  </div>
-                                  <div className={classes.businessmodaltextarea}>
-                                    <TextField
-                                      fullWidth
-                                      multiline
-                                      autoComplete="address"
-                                      label="Street Address"
-                                      name="address"
-                                      onChange={change}
-                                      value={data.address}
-                                      inputProps={{
-                                        "data-tc": "address"
-                                      }}
-                                    />
+
                                   </div>
                                   <div className={classes.businessmodaltextarea}>
                                     <TextField
@@ -1628,6 +1659,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                                       }}
                                     />
                                   </div>
+                                  {latlngError && <div className={classes.businessmodaltextarea}><p className={classes.latlngError}>Invalid Address.</p></div>}
                                 </div>
                               </DialogContent>
                               <DialogActions className={classes.modalfooter}>
@@ -1636,6 +1668,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                                   color="primary"
                                   variant="contained"
                                   disabled={
+                                    latLngLoading ||
                                     storeCreateOpts.loading ||
                                     data.country === "" ||
                                     data.address === "" ||

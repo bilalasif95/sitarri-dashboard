@@ -49,12 +49,13 @@ export interface CreateStoreVariables {
     description: string,
     facebookUrl: string,
     instagramUrl: string,
-    maxPrice: any;
-    minPrice: any;
+    logo: any,
+    // maxPrice: any;
+    // minPrice: any;
     name: string,
-    rating: any;
+    // rating: any;
     twitterUrl: string,
-    totalReviews: any;
+    // totalReviews: any;
     websiteUrl: string,
   };
 }

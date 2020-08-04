@@ -15,7 +15,7 @@ import { commonMessages } from "@saleor/intl";
 const useStyles = makeStyles(
   theme => ({
     backBtn: {
-      "& hover":{
+      "& hover": {
         background: "transparent",
       },
       "& span": {
@@ -70,58 +70,58 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
 
   return (
     <>
-    <div className={classes.bodyHead}>
-            <p>Reset your Password</p>
-            <Button onClick={() => navigate("/")} className={classes.backBtn}>
-              <SVG
-                src={backicon}
+      <div className={classes.bodyHead}>
+        <p>Reset your Password</p>
+        <Button onClick={() => navigate("/")} className={classes.backBtn}>
+          <SVG
+            src={backicon}
+          />
+        </Button>
+      </div>
+      <Form initial={{ email: "" }} onSubmit={onSubmit}>
+        {({ change: handleChange, data, submit: handleSubmit }) => (
+          <>
+            {!!error && (
+              <div className={classes.panel}>
+                <Typography variant="caption" className={classes.errorText}>
+                  {error}
+                </Typography>
+              </div>
+            )}
+            <Typography>
+              <FormattedMessage defaultMessage="Please provide us your email address so we can share you a link to reset your password." />
+            </Typography>
+            <FormSpacer />
+            <TextField
+              autoFocus
+              disabled={disabled}
+              fullWidth
+              autoComplete="username"
+              label={intl.formatMessage(commonMessages.email)}
+              name="email"
+              onChange={handleChange}
+              value={data.email}
+              inputProps={{
+                "data-tc": "email"
+              }}
+            />
+            <FormSpacer />
+            <Button
+              className={classes.submit}
+              color="primary"
+              disabled={disabled || data.email === ""}
+              variant="contained"
+              onClick={handleSubmit}
+              type="submit"
+            >
+              <FormattedMessage
+                defaultMessage="Send Instructions"
+                description="password reset, button"
               />
             </Button>
-          </div>
-    <Form initial={{ email: "" }} onSubmit={onSubmit}>
-      {({ change: handleChange, data, submit: handleSubmit }) => (
-        <>
-          {!!error && (
-            <div className={classes.panel}>
-              <Typography variant="caption" className={classes.errorText}>
-                {error}
-              </Typography>
-            </div>
-          )}
-          <Typography>
-            <FormattedMessage defaultMessage="Please provide us your email address so we can share you a link to reset your password." />
-          </Typography>
-          <FormSpacer />
-          <TextField
-            autoFocus
-            disabled={disabled}
-            fullWidth
-            autoComplete="username"
-            label={intl.formatMessage(commonMessages.email)}
-            name="email"
-            onChange={handleChange}
-            value={data.email}
-            inputProps={{
-              "data-tc": "email"
-            }}
-          />
-          <FormSpacer />
-          <Button
-            className={classes.submit}
-            color="primary"
-            disabled={disabled || data.email === ""}
-            variant="contained"
-            onClick={handleSubmit}
-            type="submit"
-          >
-            <FormattedMessage
-              defaultMessage="Send Instructions"
-              description="password reset, button"
-            />
-          </Button>
-        </>
-      )}
-    </Form>
+          </>
+        )}
+      </Form>
     </>
   );
 };
