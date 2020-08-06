@@ -1,8 +1,8 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import urlJoin from "url-join";
+// import urlJoin from "url-join";
 
-import { APP_MOUNT_URI } from "@saleor/config";
+// import { APP_MOUNT_URI } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { commonMessages } from "@saleor/intl";
 import ResetPasswordPage, {
@@ -10,7 +10,8 @@ import ResetPasswordPage, {
 } from "../components/ResetPasswordPage";
 import { RequestPasswordResetMutation } from "../mutations";
 import { RequestPasswordReset } from "../types/RequestPasswordReset";
-import { newPasswordUrl, passwordResetSuccessUrl } from "../urls";
+// import { newPasswordPath,newPasswordUrl, passwordResetSuccessUrl } from "../urls";
+import { newPasswordPath, passwordResetSuccessUrl } from "../urls";
 
 const ResetPasswordView: React.FC = () => {
   const [error, setError] = React.useState<string>();
@@ -41,11 +42,12 @@ const ResetPasswordView: React.FC = () => {
           requestPasswordReset({
             variables: {
               email: data.email,
-              redirectUrl: urlJoin(
-                window.location.origin,
-                APP_MOUNT_URI === "/" ? "" : APP_MOUNT_URI,
-                newPasswordUrl().replace(/\?/, "")
-              )
+              redirectUrl: window.location.origin+"/#"+newPasswordPath,
+              // urlJoin(
+              //   window.location.origin,
+              //   APP_MOUNT_URI === "/" ? "" : APP_MOUNT_URI,
+              //   newPasswordUrl().replace(/\?/, "")
+              // )
             }
           });
 

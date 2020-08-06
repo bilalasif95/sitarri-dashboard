@@ -7,6 +7,7 @@ import {
   ProductStatus
 } from "@saleor/products/components/ProductListPage";
 import { UseSearchResult } from "@saleor/hooks/makeSearch";
+import useUser from "@saleor/hooks/useUser";
 import {
   SearchCategories,
   SearchCategoriesVariables
@@ -195,6 +196,7 @@ export function getFilterOpts(
 export function getFilterVariables(
   params: ProductListUrlFilters
 ): ProductFilterInput {
+  const { user } = useUser();
   return {
     attributes: !!params.attributes
       ? Object.keys(params.attributes).map(key => ({
@@ -221,7 +223,8 @@ export function getFilterVariables(
     stockAvailability:
       params.stockStatus !== undefined
         ? findValueInEnum(params.stockStatus, StockAvailability)
-        : null
+        : null,
+    store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
   };
 }
 

@@ -284,7 +284,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
   };
 
   const handleSubmit = (data: FormData) => {
-    const redirectUrl = `${window.location.origin}${accountConfirmPath}`;
+    const redirectUrl = `${window.location.origin+"/#"}${accountConfirmPath}`;
     signup(data.email, data.password, redirectUrl, menuBack);
   };
   const onPasswordEyeIconClick = () => {

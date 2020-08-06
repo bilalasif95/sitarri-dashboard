@@ -10,7 +10,7 @@ import { ApolloProvider } from "react-apollo";
 import { render } from "react-dom";
 import ErrorBoundary from "react-error-boundary";
 import { useIntl } from "react-intl";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { HashRouter, Route, Switch } from "react-router-dom";
 
 import Navigator from "@saleor/components/Navigator";
 import useAppState from "@saleor/hooks/useAppState";
@@ -125,7 +125,7 @@ const App: React.FC = () => {
 
   return (
     <ApolloProvider client={apolloClient}>
-      <BrowserRouter basename={APP_MOUNT_URI}>
+      <HashRouter basename={APP_MOUNT_URI}>
         <ThemeProvider isDefaultDark={isDark}>
           <DateProvider>
             <LocaleProvider>
@@ -139,7 +139,7 @@ const App: React.FC = () => {
             </LocaleProvider>
           </DateProvider>
         </ThemeProvider>
-      </BrowserRouter>
+      </HashRouter>
     </ApolloProvider>
   );
 };
@@ -279,12 +279,12 @@ const Routes: React.FC = () => {
                       hasPermission(item.permission, user)
                     )
                   ).length > 0 && (
-                    <SectionRoute
-                      exact
-                      path="/configuration"
-                      component={ConfigurationSection}
-                    />
-                  )}
+                      <SectionRoute
+                        exact
+                        path="/configuration"
+                        component={ConfigurationSection}
+                      />
+                    )}
                   <Route component={NotFound} />
                 </Switch>
               </ErrorBoundary>
@@ -292,8 +292,8 @@ const Routes: React.FC = () => {
           ) : hasToken && tokenVerifyLoading ? (
             <LoginLoading />
           ) : (
-            <Auth hasToken={hasToken} />
-          )
+                <Auth hasToken={hasToken} />
+              )
         }
       </AuthProvider>
     </>

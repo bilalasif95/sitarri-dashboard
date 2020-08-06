@@ -91,6 +91,21 @@ const home = gql`
 `;
 export const HomePageQuery = TypedQuery<Home, {}>(home);
 
+const businessNames = gql`
+  query {
+    businesses(first: 100) {
+      edges {
+        node {
+          id
+          name
+          description
+        }
+      }
+    }
+  }
+`;
+export const BusinessNamesQuery = TypedQuery<any, {}>(businessNames);
+
 export const claimBusinessMutation = gql`
   mutation ClaimBusinessMutation($input: RequestClaimBusinessInput!) {
     requestClaimBusiness(input: $input) {

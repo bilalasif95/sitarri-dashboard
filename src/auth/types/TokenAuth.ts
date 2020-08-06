@@ -33,6 +33,7 @@ export interface TokenAuth_tokenCreate_user {
   lastName: string;
   userPermissions: (TokenAuth_tokenCreate_user_userPermissions | null)[] | null;
   avatar: TokenAuth_tokenCreate_user_avatar | null;
+  businessUser: any;
 }
 
 export interface TokenAuth_tokenCreate {

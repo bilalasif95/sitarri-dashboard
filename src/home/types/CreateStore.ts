@@ -53,6 +53,7 @@ export interface CreateStoreVariables {
     // maxPrice: any;
     // minPrice: any;
     name: string,
+    phone: string;
     // rating: any;
     twitterUrl: string,
     // totalReviews: any;

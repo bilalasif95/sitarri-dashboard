@@ -6,6 +6,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
+import useUser from "@saleor/hooks/useUser";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
@@ -64,6 +65,8 @@ export const ProductCreateView: React.FC = () => {
     }
   };
 
+  const { user } = useUser();
+
   return (
     <TypedProductCreateMutation onCompleted={handleSuccess}>
       {(productCreate, productCreateOpts) => {
@@ -95,6 +98,7 @@ export const ProductCreateView: React.FC = () => {
                 quantity: parseInt(stock.value, 0),
                 warehouse: stock.id
               })),
+              store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
               trackInventory: formData.trackInventory
             }
           });

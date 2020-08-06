@@ -1,4 +1,5 @@
 import { decimal } from "@saleor/misc";
+import useUser from "@saleor/hooks/useUser";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import { ProductImageCreateVariables } from "@saleor/products/types/ProductImageCreate";
@@ -14,6 +15,7 @@ export function createUpdateHandler(
   updateProduct: (variables: ProductUpdateVariables) => void,
   updateSimpleProduct: (variables: SimpleProductUpdateVariables) => void
 ) {
+  const { user } = useUser();
   return (data: ProductUpdatePageSubmitData) => {
     const productVariables: ProductUpdateVariables = {
       attributes: data.attributes.map(attribute => ({
@@ -33,7 +35,8 @@ export function createUpdateHandler(
       seo: {
         description: data.seoDescription,
         title: data.seoTitle
-      }
+      },
+      store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
     };
 
     if (product.productType.hasVariants) {

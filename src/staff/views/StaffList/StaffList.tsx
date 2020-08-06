@@ -1,13 +1,15 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import urlJoin from "url-join";
+// import urlJoin from "url-join";
 
-import { newPasswordUrl } from "@saleor/auth/urls";
+// import { newPasswordUrl } from "@saleor/auth/urls";
+import { newPasswordPath } from "@saleor/auth/urls";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
-import { APP_MOUNT_URI, DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+// import { APP_MOUNT_URI, DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -159,11 +161,12 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
                 email: variables.email,
                 firstName: variables.firstName,
                 lastName: variables.lastName,
-                redirectUrl: urlJoin(
-                  window.location.origin,
-                  APP_MOUNT_URI === "/" ? "" : APP_MOUNT_URI,
-                  newPasswordUrl().replace(/\?/, "")
-                )
+                redirectUrl: window.location.origin+"/#"+newPasswordPath,
+                // urlJoin(
+                //   window.location.origin+"/#",
+                //   APP_MOUNT_URI === "/" ? "" : APP_MOUNT_URI,
+                //   newPasswordUrl().replace(/\?/, "")
+                // )
               }
             }
           });

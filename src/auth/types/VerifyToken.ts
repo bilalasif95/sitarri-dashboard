@@ -27,6 +27,7 @@ export interface VerifyToken_tokenVerify_user {
   lastName: string;
   userPermissions: (VerifyToken_tokenVerify_user_userPermissions | null)[] | null;
   avatar: VerifyToken_tokenVerify_user_avatar | null;
+  businessUser: any;
 }
 
 export interface VerifyToken_tokenVerify {

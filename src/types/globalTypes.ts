@@ -1188,6 +1188,7 @@ export interface ProductFilterInput {
   search?: string | null;
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
+  store?: string | null;
 }
 
 export interface ProductOrder {

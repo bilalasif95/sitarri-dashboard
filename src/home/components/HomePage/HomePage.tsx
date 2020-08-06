@@ -26,7 +26,7 @@ import arrowleft from "@assets/images/arrow-left.svg";
 import inputicon from "@assets/images/inputicon.svg";
 import location from "@assets/images/location.svg";
 import search from "@assets/images/search.svg";
-// import phone from "@assets/images/phone.svg";
+import phone from "@assets/images/phone.svg";
 import globe from "@assets/images/globe.svg";
 import facebook from "@assets/images/facebook.svg";
 import instagram from "@assets/images/instagram.svg";
@@ -490,11 +490,11 @@ const HomePage: React.FC<HomePageProps> = props => {
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
     maybe(() => "", "")
   );
-  const onClose = () => setOpen(false);
-  const onClaimBusinessClaimClose = () => setClaimBusinessModal(false);
-  const onClaimBusinessClaimThanksClose = () => setClaimBusinessThanksModal(false);
-  const onEmployeeAccessClose = () => setOpenEmployeeAccessModal(false);
-  const onEmployeeAccessThanksModalClose = () => setEmployeeAccessThanksModal(false);
+  // const onClose = () => setOpen(false);
+  // const onClaimBusinessClaimClose = () => setClaimBusinessModal(false);
+  // const onClaimBusinessClaimThanksClose = () => setClaimBusinessThanksModal(false);
+  // const onEmployeeAccessClose = () => setOpenEmployeeAccessModal(false);
+  // const onEmployeeAccessThanksModalClose = () => setEmployeeAccessThanksModal(false);
   const [employeeAccessEmailError, setEmployeeAccessEmailError] = React.useState([]);
   const [createBusinessNameError, setCreateBusinessNameError] = React.useState([]);
   const [izettleAccessTokenError, setIzettleAccessTokenError] = React.useState([]);
@@ -508,6 +508,7 @@ const HomePage: React.FC<HomePageProps> = props => {
   const [businessDescription, setBusinessDescription] = React.useState("");
   const [businesscategory, setBusinessCategory] = React.useState("");
   const [facebookURL, setFacebookURL] = React.useState("");
+  const [phoneNumber, setPhone] = React.useState("");
   const [instagramURL, setInstagramURL] = React.useState("");
   const [twitterURL, setTwitterURL] = React.useState("");
   const [websiteURL, setWebsiteURL] = React.useState("");
@@ -520,6 +521,7 @@ const HomePage: React.FC<HomePageProps> = props => {
   const [typeOf, setType] = React.useState("");
   const [platform, setPlatform] = React.useState("");
   const [websiteURLError, setWebsiteURLError] = React.useState<any>();
+  const [phoneError, setPhoneError] = React.useState<any>();
   const [facebookURLError, setFacebookURLError] = React.useState<any>();
   const [instagramURLError, setInstagramURLError] = React.useState<any>();
   const [twitterURLError, setTwitterURLError] = React.useState<any>();
@@ -542,6 +544,7 @@ const HomePage: React.FC<HomePageProps> = props => {
     facebook: maybe(() => "", ""),
     instagram: maybe(() => "", ""),
     izettleAccessToken: maybe(() => "", ""),
+    phone: maybe(() => "", ""),
     postcode: maybe(() => "", ""),
     shopifyAccessToken: maybe(() => "", ""),
     shopifyURL: maybe(() => "", ""),
@@ -793,77 +796,79 @@ const HomePage: React.FC<HomePageProps> = props => {
           </RequirePermissions>
         </div>
       </Grid>
-      <Dialog
-        onClose={onClose}
-        open={open}
-        maxWidth="xl"
-        fullWidth
-        PaperProps={{
-          style: {
-            backgroundColor: 'transparent',
-            margin: '0px',
-            overflow: 'hidden',
-            overflowY: "visible",
-            width: '80%',
-          },
-        }}
-      >
-        <DialogContent className={classes.cardshomepage}>
-          <div className={classes.cards}>
-            <div className={`${classes.claimcard} ${classes.mycard}`}>
-              <h3 className={classes.cardhead}>Claim Business</h3>
-              <div className={classes.imgbox}>
-                <SVG src={claimBusiness} />
-              </div>
-              <div className={classes.cardContent}>
-                <div className={classes.cardtext}>
-                  <h4 className={classes.cardhead1}>Claim a business already on Sitarri</h4>
-                  <p>If you own or manage a business that is already on Sitarri, click below to take control</p>
+      {user.businessUser.edges.length === 0 &&
+        <Dialog
+          // onClose={onClose}
+          open={open}
+          maxWidth="xl"
+          fullWidth
+          PaperProps={{
+            style: {
+              backgroundColor: 'transparent',
+              margin: '0px',
+              overflow: 'hidden',
+              overflowY: "visible",
+              width: '80%',
+            },
+          }}
+        >
+          <DialogContent className={classes.cardshomepage}>
+            <div className={classes.cards}>
+              <div className={`${classes.claimcard} ${classes.mycard}`}>
+                <h3 className={classes.cardhead}>Claim Business</h3>
+                <div className={classes.imgbox}>
+                  <SVG src={claimBusiness} />
                 </div>
-                <Button className={classes.cardbtn} color="primary" variant="contained" onClick={() => { setClaimBusinessModal(true); setOpen(false); setOpenClaimBusinessModal(true) }}>
-                  <span className={classes.btntext}>Claim Business</span>
-                </Button>
+                <div className={classes.cardContent}>
+                  <div className={classes.cardtext}>
+                    <h4 className={classes.cardhead1}>Claim a business already on Sitarri</h4>
+                    <p>If you own or manage a business that is already on Sitarri, click below to take control</p>
+                  </div>
+                  <Button className={classes.cardbtn} color="primary" variant="contained" onClick={() => { setClaimBusinessModal(true); setOpen(false); setOpenClaimBusinessModal(true) }}>
+                    <span className={classes.btntext}>Claim Business</span>
+                  </Button>
+                </div>
+              </div>
+              <div className={`${classes.businesscard} ${classes.mycard}`}>
+                <h3 className={classes.cardhead}>New Business</h3>
+                <div className={classes.businessimgbox}>
+                  <SVG src={employeeAccess} />
+                </div>
+                <div className={classes.cardContent}>
+                  <div className={classes.cardtext}>
+                    <h4 className={classes.cardhead1}>Add a business to Sitarri</h4>
+                    <p>If you own or manage a business, click below to add it to Sitarri</p>
+                  </div>
+                  <Button className={classes.businessbtn} color="primary" variant="contained" onClick={() => { setAddBusinessModal(true); setOpenAddBusinessModal(true); setOpen(false) }}>
+                    <span className={classes.cardbtntext}>Add Business</span>
+                  </Button>
+                </div>
+              </div>
+              <div className={`${classes.employeecard} ${classes.mycard}`}>
+                <h3 className={classes.cardhead}>Employee Access</h3>
+                <div className={classes.imgbox}>
+                  <SVG src={newBusiness} />
+                </div>
+                <div className={classes.cardContent}>
+                  <div className={classes.cardtext}>
+                    <h4 className={classes.cardhead1}>Staff member of a business</h4>
+                    <p>Request employee access to a business listed to Sitarri</p>
+                  </div>
+                  <Button className={`${classes.cardbtn}`} color="primary" variant="contained" onClick={() => { setEmployeeAccessModal(true); setOpen(false); setOpenEmployeeAccessModal(true) }}>
+                    <span className={classes.btntext}>Make employee account</span>
+                  </Button>
+                </div>
               </div>
             </div>
-            <div className={`${classes.businesscard} ${classes.mycard}`}>
-              <h3 className={classes.cardhead}>New Business</h3>
-              <div className={classes.businessimgbox}>
-                <SVG src={employeeAccess} />
-              </div>
-              <div className={classes.cardContent}>
-                <div className={classes.cardtext}>
-                  <h4 className={classes.cardhead1}>Add a business to Sitarri</h4>
-                  <p>If you own or manage a business, click below to add it to Sitarri</p>
-                </div>
-                <Button className={classes.businessbtn} color="primary" variant="contained" onClick={() => { setAddBusinessModal(true); setOpenAddBusinessModal(true); setOpen(false) }}>
-                  <span className={classes.cardbtntext}>Add Business</span>
-                </Button>
-              </div>
-            </div>
-            <div className={`${classes.employeecard} ${classes.mycard}`}>
-              <h3 className={classes.cardhead}>Employee Access</h3>
-              <div className={classes.imgbox}>
-                <SVG src={newBusiness} />
-              </div>
-              <div className={classes.cardContent}>
-                <div className={classes.cardtext}>
-                  <h4 className={classes.cardhead1}>Staff member of a business</h4>
-                  <p>Request employee access to a business listed to Sitarri</p>
-                </div>
-                <Button className={`${classes.cardbtn}`} color="primary" variant="contained" onClick={() => { setEmployeeAccessModal(true); setOpen(false); setOpenEmployeeAccessModal(true) }}>
-                  <span className={classes.btntext}>Make employee account</span>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+          </DialogContent>
+        </Dialog>
+      }
 
       {claimBusinessModal && (
         <Dialog
           maxWidth="sm"
           fullWidth
-          onClose={onClaimBusinessClaimClose}
+          // onClose={onClaimBusinessClaimClose}
           open={openClaimBusinessModal}
         >
           <ClaimBusinessMutation onCompleted={onClaimBusinessCompleted}>
@@ -875,7 +880,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                       input: {
                         business: input.business,
                         email: user.email,
-                        redirectUrl: window.location.origin,
+                        redirectUrl: window.location.origin+"/#/",
                       }
                     }
                   })
@@ -937,7 +942,7 @@ const HomePage: React.FC<HomePageProps> = props => {
         <Dialog
           maxWidth="sm"
           fullWidth
-          onClose={onClaimBusinessClaimThanksClose}
+          // onClose={onClaimBusinessClaimThanksClose}
           open={openClaimBusinessThanksModal}
         >
           <DialogContent className={classes.businessmodalcont}>
@@ -968,7 +973,7 @@ const HomePage: React.FC<HomePageProps> = props => {
         <Dialog
           maxWidth="sm"
           fullWidth
-          onClose={onEmployeeAccessClose}
+          // onClose={onEmployeeAccessClose}
           open={openEmployeeAccessModal}
         >
           <EmployeeAccessMutation onCompleted={onEmployeeAccessCompleted}>
@@ -980,7 +985,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                       input: {
                         business: input.business,
                         email: input.email,
-                        redirectUrl: window.location.origin,
+                        redirectUrl: window.location.origin+"/#/",
                       }
                     }
                   })
@@ -1062,7 +1067,7 @@ const HomePage: React.FC<HomePageProps> = props => {
         <Dialog
           maxWidth="sm"
           fullWidth
-          onClose={onEmployeeAccessThanksModalClose}
+          // onClose={onEmployeeAccessThanksModalClose}
           open={openEmployeeAccessThanksModal}
         >
           <DialogContent className={classes.businessmodalcont}>
@@ -1093,7 +1098,7 @@ const HomePage: React.FC<HomePageProps> = props => {
         <Dialog
           maxWidth="sm"
           fullWidth
-          onClose={() => setAddBusinessModal(false)}
+          // onClose={() => setAddBusinessModal(false)}
           open={openAddBusinessModal}
         >
           <CreateBusinessMutation onCompleted={onCreateBusinessCompleted}>
@@ -1174,7 +1179,7 @@ const HomePage: React.FC<HomePageProps> = props => {
         <Dialog
           maxWidth="sm"
           fullWidth
-          onClose={() => setChooseCategoryModal(false)}
+          // onClose={() => setChooseCategoryModal(false)}
           open={openChooseCategoryModal}
         >
           <Form initial={initialForm}>
@@ -1228,7 +1233,7 @@ const HomePage: React.FC<HomePageProps> = props => {
         <Dialog
           maxWidth="sm"
           fullWidth
-          onClose={() => setAddInformationModal(false)}
+          // onClose={() => setAddInformationModal(false)}
           open={openAddInformationModal}
         >
           <Form initial={initialForm}>
@@ -1242,6 +1247,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                         setFacebookURLError("");
                         setInstagramURLError("");
                         setTwitterURLError("");
+                        setPhoneError("");
                         setLogo("");
                         setAddInformationModal(false);
                         setOpenAddInformationModal(false);
@@ -1252,10 +1258,28 @@ const HomePage: React.FC<HomePageProps> = props => {
                       <p>Help customers get in touch and recognise your<br /> business by including this info on your listing</p>
                     </div>
                     <div className={`${classes.inputbox} ${classes.employeaccessinput}`}>
-                      <SVG src={globe} />
+                      <SVG src={phone} />
                       <TextField
                         fullWidth
                         autoFocus
+                        required
+                        autoComplete="phone"
+                        label="Phone Number"
+                        name="phone"
+                        error={phoneError}
+                        helperText={phoneError}
+                        type="tel"
+                        onChange={change}
+                        value={data.phone}
+                        inputProps={{
+                          "data-tc": "phone"
+                        }}
+                      />
+                    </div>
+                    <div className={`${classes.inputbox} ${classes.employeaccessinput}`}>
+                      <SVG src={globe} />
+                      <TextField
+                        fullWidth
                         autoComplete="website"
                         label="Website"
                         name="website"
@@ -1360,33 +1384,40 @@ const HomePage: React.FC<HomePageProps> = props => {
                     color="primary"
                     variant="contained"
                     onClick={() => {
-                      if (data.website !== "" && !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(data.website)) {
-                        setWebsiteURLError("Invalid Website URL.");
+                      if (data.phone !== "" && !/\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\d{1,14}$/.test(data.phone)) {
+                        setPhoneError("Invalid Phone Number.");
                       }
                       else {
-                        setWebsiteURLError("");
-                        if (data.facebook !== "" && !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(data.facebook)) {
-                          setFacebookURLError("Invalid Facebook URL.");
+                        setPhoneError("");
+                        if (data.website !== "" && !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(data.website)) {
+                          setWebsiteURLError("Invalid Website URL.");
                         }
                         else {
-                          setFacebookURLError("");
-                          if (data.instagram !== "" && !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(data.instagram)) {
-                            setInstagramURLError("Invalid Twitter URL.");
+                          setWebsiteURLError("");
+                          if (data.facebook !== "" && !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(data.facebook)) {
+                            setFacebookURLError("Invalid Facebook URL.");
                           }
                           else {
-                            setInstagramURLError("");
-                            if (data.twitter !== "" && !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(data.twitter)) {
-                              setTwitterURLError("Invalid Instagram URL.");
+                            setFacebookURLError("");
+                            if (data.instagram !== "" && !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(data.instagram)) {
+                              setInstagramURLError("Invalid Twitter URL.");
                             }
                             else {
-                              setTwitterURLError("");
-                              setFacebookURL(data.facebook);
-                              setInstagramURL(data.instagram);
-                              setWebsiteURL(data.website);
-                              setTwitterURL(data.twitter);
-                              setAddInformationModal(false);
-                              setChooseLocationModal(true);
-                              setOpenChooseLocationModal(true);
+                              setInstagramURLError("");
+                              if (data.twitter !== "" && !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(data.twitter)) {
+                                setTwitterURLError("Invalid Instagram URL.");
+                              }
+                              else {
+                                setTwitterURLError("");
+                                setFacebookURL(data.facebook);
+                                setInstagramURL(data.instagram);
+                                setWebsiteURL(data.website);
+                                setTwitterURL(data.twitter);
+                                setPhone(data.phone);
+                                setAddInformationModal(false);
+                                setChooseLocationModal(true);
+                                setOpenChooseLocationModal(true);
+                              }
                             }
                           }
                         }
@@ -1406,7 +1437,7 @@ const HomePage: React.FC<HomePageProps> = props => {
         <Dialog
           maxWidth="sm"
           fullWidth
-          onClose={() => setChooseLocationModal(false)}
+          // onClose={() => setChooseLocationModal(false)}
           open={openChooseLocationModal}
         >
           <CreateStoreMutation onCompleted={onCreateStoreCompleted}>
@@ -1427,6 +1458,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                         name: businessName,
                         // rating: 4,
                         // totalReviews: 10,
+                        phone: phoneNumber,
                         twitterUrl: twitterURL,
                         websiteUrl: websiteURL,
                       }
@@ -1499,7 +1531,7 @@ const HomePage: React.FC<HomePageProps> = props => {
               <Dialog
                 maxWidth="sm"
                 fullWidth
-                onClose={() => setAddAddressModal(false)}
+                // onClose={() => setAddAddressModal(false)}
                 open={openAddAddressModal}
               >
                 <CreateStoreMutation onCompleted={onCreateStoreWithAddressCompleted}>
@@ -1534,6 +1566,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                                   name: businessName,
                                   // rating: 4,
                                   // totalReviews: 10,
+                                  phone: phoneNumber,
                                   twitterUrl: twitterURL,
                                   websiteUrl: websiteURL,
                                 }
@@ -1699,7 +1732,7 @@ const HomePage: React.FC<HomePageProps> = props => {
         <Dialog
           maxWidth="sm"
           fullWidth
-          onClose={() => setAllDoneModal(false)}
+          // onClose={() => setAllDoneModal(false)}
           open={openAllDoneModal}
         >
           <DialogContent className={classes.businessmodalcont}>
@@ -1747,7 +1780,7 @@ const HomePage: React.FC<HomePageProps> = props => {
         <Dialog
           maxWidth="sm"
           fullWidth
-          onClose={() => setImportInformationModal(false)}
+          // onClose={() => setImportInformationModal(false)}
           open={openImportInformationModal}
         >
           <ProductBulkCreateMutation onCompleted={onProductBulkCreateCompleted}>

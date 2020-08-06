@@ -27,4 +27,5 @@ export interface User {
   lastName: string;
   userPermissions: (User_userPermissions | null)[] | null;
   avatar: User_avatar | null;
+  businessUser: any;
 }

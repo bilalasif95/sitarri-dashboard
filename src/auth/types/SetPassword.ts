@@ -33,6 +33,7 @@ export interface SetPassword_setPassword_user {
   lastName: string;
   userPermissions: (SetPassword_setPassword_user_userPermissions | null)[] | null;
   avatar: SetPassword_setPassword_user_avatar | null;
+  businessUser: any;
 }
 
 export interface SetPassword_setPassword {

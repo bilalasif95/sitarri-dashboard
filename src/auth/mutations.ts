@@ -20,6 +20,22 @@ export const fragmentUser = gql`
     email
     firstName
     lastName
+    businessUser(first: 100) {
+      edges {
+        node {
+          id
+          name
+          businessStore(first: 100) {
+            edges {
+              node {
+                id
+                name
+              }
+            }
+          }
+        }
+      }
+    }
     userPermissions {
       code
       name

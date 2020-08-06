@@ -14,6 +14,7 @@ const user = {
     __typename: staffMember.avatar.__typename,
     url: staffMember.avatar.url
   },
+  businessUser: [],
   email: staffMember.email,
   firstName: "Adam Evan",
   id: staffMember.id,
