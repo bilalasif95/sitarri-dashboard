@@ -76,7 +76,7 @@ const useStyles = makeStyles(
         alignItems: 'center',
         display: "flex",
         fontSize: '400 14.3333px Arial',
-        left: '0.3rem',
+        left: '0.4rem',
         position: 'absolute',
         textTransform: 'capitalize',
         top: '3px',
@@ -98,7 +98,7 @@ const useStyles = makeStyles(
     facebookLoginButton: {
       "& button": {
         "& i": {
-          fontSize: "20px",
+          fontSize: "22px",
           left: "1.5rem",
           margin: "0 2rem 0 0",
           position: "absolute",
@@ -135,7 +135,7 @@ const useStyles = makeStyles(
     googleLoginButton: {
       "& div": {
         borderRadius: "unset !important",
-        left: "1.3rem",
+        left: "1.4rem",
         marginRight: "2rem !important",
         padding: "0 !important",
         position: "absolute",

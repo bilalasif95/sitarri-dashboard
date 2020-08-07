@@ -122,7 +122,7 @@ const useStyles = makeStyles(
     businessmodalcont: {
       backgroundColor: '#fafafa',
       // overflowY: 'hidden',
-      paddingBottom: '130px',
+      paddingBottom: '30px',
     },
     businessmodaltextarea: {
       "& label": {
@@ -157,7 +157,8 @@ const useStyles = makeStyles(
       textTransform: 'capitalize',
     },
     cardhead: {
-      fontSize: '22px',
+      fontSize: '18px',
+      fontWeight: 500,
       position: 'absolute',
       textAlign: 'center',
       top: '1rem',
@@ -217,6 +218,11 @@ const useStyles = makeStyles(
         outline: 'none',
       },
       cursor: 'pointer',
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "center",
+      minHeight: '180px',
+      padding:" 2rem 0",
       position: 'relative',
     },
     employeaccessinput: {
@@ -390,8 +396,9 @@ const useStyles = makeStyles(
       color: '#000',
       fontSize: '16px',
       margin: '0px',
-      padding: '65px 0px',
+      padding: '15px 0px',
       textAlign: 'center',
+      width:'100%',
     },
   }),
 
@@ -462,7 +469,7 @@ const HomePage: React.FC<HomePageProps> = props => {
     userPermissions
   } = props;
   const classes = useStyles(props);
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const [openClaimBusinessModal, setOpenClaimBusinessModal] = React.useState(false);
   const [claimBusinessModal, setClaimBusinessModal] = React.useState(false);
   const [claimBusinessThanksModal, setClaimBusinessThanksModal] = React.useState(false);
@@ -797,11 +804,11 @@ const HomePage: React.FC<HomePageProps> = props => {
           </RequirePermissions>
         </div>
       </Grid>
-      {user.businessUser.edges.length === 0 &&
+      {/* {user.businessUser.edges.length === 0 && */}
         <Dialog
           // onClose={onClose}
           open={open}
-          maxWidth="xl"
+          maxWidth="md"
           fullWidth
           PaperProps={{
             style: {
@@ -863,7 +870,7 @@ const HomePage: React.FC<HomePageProps> = props => {
             </div>
           </DialogContent>
         </Dialog>
-      }
+      {/* } */}
 
       {claimBusinessModal && (
         <Dialog
