@@ -9,9 +9,12 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
-import MultiAutocompleteSelectField, {
+import {
   MultiAutocompleteChoiceType
 } from "@saleor/components/MultiAutocompleteSelectField";
+// import MultiAutocompleteSelectField, {
+//   MultiAutocompleteChoiceType
+// } from "@saleor/components/MultiAutocompleteSelectField";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
@@ -75,22 +78,22 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
     canChangeType,
     categories,
     categoryInputDisplayValue,
-    collections,
-    collectionsInputDisplayValue,
+    // collections,
+    // collectionsInputDisplayValue,
     data,
     disabled,
     errors,
     fetchCategories,
-    fetchCollections,
+    // fetchCollections,
     fetchMoreCategories,
-    fetchMoreCollections,
+    // fetchMoreCollections,
     fetchMoreProductTypes,
     fetchProductTypes,
     productType,
     productTypeInputDisplayValue,
     productTypes,
     onCategoryChange,
-    onCollectionChange,
+    // onCollectionChange,
     onProductTypeChange
   } = props;
 
@@ -174,7 +177,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
           data-tc="category"
           {...fetchMoreCategories}
         />
-        <FormSpacer />
+        {/* <FormSpacer />
         <Hr />
         <FormSpacer />
         <MultiAutocompleteSelectField
@@ -198,7 +201,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
           fetchChoices={fetchCollections}
           data-tc="collections"
           {...fetchMoreCollections}
-        />
+        /> */}
       </CardContent>
     </Card>
   );

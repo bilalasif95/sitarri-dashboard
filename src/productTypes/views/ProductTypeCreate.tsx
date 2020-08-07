@@ -4,6 +4,7 @@ import { useIntl } from "react-intl";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import useUser from "@saleor/hooks/useUser";
 import { maybe } from "../../misc";
 import ProductTypeCreatePage, {
   ProductTypeForm
@@ -17,7 +18,7 @@ export const ProductTypeCreate: React.FC = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-
+  const { user } = useUser();
   const handleCreateSuccess = (updateData: ProductTypeCreateMutation) => {
     if (updateData.productTypeCreate.errors.length === 0) {
       notify({
@@ -38,6 +39,7 @@ export const ProductTypeCreate: React.FC = () => {
                 hasVariants: false,
                 isShippingRequired: formData.isShippingRequired,
                 name: formData.name,
+                store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
                 taxCode: formData.taxType,
                 weight: formData.weight
               }

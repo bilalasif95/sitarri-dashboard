@@ -60,6 +60,7 @@
     "react-intl": "^3.1.8",
     "react-jss": "^10.0.0",
     "react-moment": "^0.9.7",
+    "react-phone-number-input": "^3.0.25",
     "react-places-autocomplete": "^7.3.0",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",

@@ -12,6 +12,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
+import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import NotFoundPage from "@saleor/components/NotFoundPage";
@@ -64,7 +65,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     params.ids
   );
   const intl = useIntl();
-
+  const { user } = useUser();
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const { data, loading, refetch } = useCategoryDetailsQuery({
     displayLoader: true,
@@ -188,7 +189,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                   variables: {
                     id,
                     input: {
-                      backgroundImage: null
+                      backgroundImage: null,
+                      store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
                     }
                   }
                 })
@@ -198,7 +200,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                   variables: {
                     id,
                     input: {
-                      backgroundImage: file
+                      backgroundImage: file,
+                      store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
                     }
                   }
                 })
@@ -218,7 +221,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                       seo: {
                         description: formData.seoDescription,
                         title: formData.seoTitle
-                      }
+                      },
+                      store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
                     }
                   }
                 })
