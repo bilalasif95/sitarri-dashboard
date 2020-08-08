@@ -9,16 +9,14 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
-import {
+import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType
 } from "@saleor/components/MultiAutocompleteSelectField";
-// import MultiAutocompleteSelectField, {
-//   MultiAutocompleteChoiceType
-// } from "@saleor/components/MultiAutocompleteSelectField";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { ChangeEvent } from "@saleor/hooks/useForm";
+import useUser from "@saleor/hooks/useUser";
 import { maybe } from "@saleor/misc";
 import { FetchMoreProps } from "@saleor/types";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
@@ -78,28 +76,28 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
     canChangeType,
     categories,
     categoryInputDisplayValue,
-    // collections,
-    // collectionsInputDisplayValue,
+    collections,
+    collectionsInputDisplayValue,
     data,
     disabled,
     errors,
     fetchCategories,
-    // fetchCollections,
+    fetchCollections,
     fetchMoreCategories,
-    // fetchMoreCollections,
+    fetchMoreCollections,
     fetchMoreProductTypes,
     fetchProductTypes,
     productType,
     productTypeInputDisplayValue,
     productTypes,
     onCategoryChange,
-    // onCollectionChange,
+    onCollectionChange,
     onProductTypeChange
   } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
-
+  const { user } = useUser();
   const formErrors = getFormErrors(
     ["productType", "category", "collections"],
     errors
@@ -132,32 +130,32 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
             {...fetchMoreProductTypes}
           />
         ) : (
-          <>
-            <Typography className={classes.label} variant="caption">
-              <FormattedMessage defaultMessage="Product Type" />
-            </Typography>
-            <Typography>{maybe(() => productType.name, "...")}</Typography>
-            <CardSpacer />
-            <Typography className={classes.label} variant="caption">
-              <FormattedMessage defaultMessage="Product Type" />
-            </Typography>
-            <Typography>
-              {maybe(
-                () =>
-                  productType.hasVariants
-                    ? intl.formatMessage({
+            <>
+              <Typography className={classes.label} variant="caption">
+                <FormattedMessage defaultMessage="Product Type" />
+              </Typography>
+              <Typography>{maybe(() => productType.name, "...")}</Typography>
+              <CardSpacer />
+              <Typography className={classes.label} variant="caption">
+                <FormattedMessage defaultMessage="Product Type" />
+              </Typography>
+              <Typography>
+                {maybe(
+                  () =>
+                    productType.hasVariants
+                      ? intl.formatMessage({
                         defaultMessage: "Configurable",
                         description: "product is configurable"
                       })
-                    : intl.formatMessage({
+                      : intl.formatMessage({
                         defaultMessage: "Simple",
                         description: "product is not configurable"
                       }),
-                "..."
-              )}
-            </Typography>
-          </>
-        )}
+                  "..."
+                )}
+              </Typography>
+            </>
+          )}
         <FormSpacer />
         <Hr />
         <FormSpacer />
@@ -177,31 +175,35 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
           data-tc="category"
           {...fetchMoreCategories}
         />
-        {/* <FormSpacer />
-        <Hr />
-        <FormSpacer />
-        <MultiAutocompleteSelectField
-          displayValues={collectionsInputDisplayValue}
-          error={!!formErrors.collections}
-          label={intl.formatMessage({
-            defaultMessage: "Collections"
-          })}
-          choices={disabled ? [] : collections}
-          name="collections"
-          value={data.collections}
-          helperText={
-            getProductErrorMessage(formErrors.collections, intl) ||
-            intl.formatMessage({
-              defaultMessage:
-                "*Optional. Adding product to collection helps users find it.",
-              description: "field is optional"
-            })
-          }
-          onChange={onCollectionChange}
-          fetchChoices={fetchCollections}
-          data-tc="collections"
-          {...fetchMoreCollections}
-        /> */}
+        {user.isSuperuser && (
+          <>
+            <FormSpacer />
+            <Hr />
+            <FormSpacer />
+            <MultiAutocompleteSelectField
+              displayValues={collectionsInputDisplayValue}
+              error={!!formErrors.collections}
+              label={intl.formatMessage({
+                defaultMessage: "Collections"
+              })}
+              choices={disabled ? [] : collections}
+              name="collections"
+              value={data.collections}
+              helperText={
+                getProductErrorMessage(formErrors.collections, intl) ||
+                intl.formatMessage({
+                  defaultMessage:
+                    "*Optional. Adding product to collection helps users find it.",
+                  description: "field is optional"
+                })
+              }
+              onChange={onCollectionChange}
+              fetchChoices={fetchCollections}
+              data-tc="collections"
+              {...fetchMoreCollections}
+            />
+          </>
+        )}
       </CardContent>
     </Card>
   );

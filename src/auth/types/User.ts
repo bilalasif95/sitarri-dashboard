@@ -28,4 +28,5 @@ export interface User {
   userPermissions: (User_userPermissions | null)[] | null;
   avatar: User_avatar | null;
   businessUser: any;
+  isSuperuser: boolean;
 }
