@@ -214,15 +214,18 @@ const useStyles = makeStyles(
       padding: theme.spacing(1.5)
     },
     passwordEye: {
-      borderLeft: '1px solid #cccccc78',
+      // borderLeft: '1px solid #cccccc78',
       cursor: 'pointer',
-      height: '49px',
-      padding: '0.7rem 0.3rem',
+      height: '50px',
+      padding: '0.8rem 0.3rem',
       position: 'absolute',
       right: ' 0',
       width: '40px',
     },
     passwordInput: {
+      "& input": {
+        width: "81%",
+      },
       display: 'flex',
       position: 'relative',
     },
