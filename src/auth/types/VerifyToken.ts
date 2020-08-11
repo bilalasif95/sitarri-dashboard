@@ -28,6 +28,7 @@ export interface VerifyToken_tokenVerify_user {
   userPermissions: (VerifyToken_tokenVerify_user_userPermissions | null)[] | null;
   avatar: VerifyToken_tokenVerify_user_avatar | null;
   businessUser: any;
+  isSuperuser: boolean;
 }
 
 export interface VerifyToken_tokenVerify {

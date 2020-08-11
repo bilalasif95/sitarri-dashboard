@@ -154,6 +154,7 @@ export interface TokenAuth_tokenCreate_user {
   lastName: string;
   userPermissions: any;
   businessUser: any;
+  isSuperuser: boolean;
   // isStaff: boolean;
   // defaultShippingAddress: TokenAuth_tokenCreate_user_defaultShippingAddress | null;
   // defaultBillingAddress: TokenAuth_tokenCreate_user_defaultBillingAddress | null;

@@ -19,6 +19,7 @@ const user = {
   firstName: "Adam Evan",
   id: staffMember.id,
   isStaff: true,
+  isSuperuser: true,
   lastName: "Newton",
   note: null,
   userPermissions: staffMember.userPermissions

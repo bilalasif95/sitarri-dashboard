@@ -9,6 +9,7 @@ import Dropzone from 'react-dropzone';
 import { IntlShape, useIntl } from "react-intl";
 import SVG from "react-inlinesvg";
 
+import { isValidPhoneNumber } from 'react-phone-number-input';
 // import PlacesAutocomplete, {
 //   geocodeByAddress,
 //   getLatLng,
@@ -221,7 +222,7 @@ const useStyles = makeStyles(
       flexWrap: "wrap",
       justifyContent: "center",
       minHeight: '180px',
-      padding:" 2rem 0",
+      padding: " 2rem 0",
       position: 'relative',
     },
     employeaccessinput: {
@@ -397,7 +398,7 @@ const useStyles = makeStyles(
       margin: '0px',
       padding: '15px 0px',
       textAlign: 'center',
-      width:'100%',
+      width: '100%',
     },
   }),
 
@@ -468,7 +469,7 @@ const HomePage: React.FC<HomePageProps> = props => {
     userPermissions
   } = props;
   const classes = useStyles(props);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const [openClaimBusinessModal, setOpenClaimBusinessModal] = React.useState(false);
   const [claimBusinessModal, setClaimBusinessModal] = React.useState(false);
   const [claimBusinessThanksModal, setClaimBusinessThanksModal] = React.useState(false);
@@ -803,7 +804,7 @@ const HomePage: React.FC<HomePageProps> = props => {
           </RequirePermissions>
         </div>
       </Grid>
-      {/* {user.businessUser.edges.length === 0 && */}
+      {user.businessUser.edges.length === 0 &&
         <Dialog
           // onClose={onClose}
           open={open}
@@ -869,7 +870,7 @@ const HomePage: React.FC<HomePageProps> = props => {
             </div>
           </DialogContent>
         </Dialog>
-      {/* } */}
+      }
 
       {claimBusinessModal && (
         <Dialog
@@ -887,7 +888,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                       input: {
                         business: input.business,
                         email: user.email,
-                        redirectUrl: window.location.origin+"/#/",
+                        redirectUrl: window.location.origin + "/#/",
                       }
                     }
                   })
@@ -992,7 +993,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                       input: {
                         business: input.business,
                         email: input.email,
-                        redirectUrl: window.location.origin+"/#/",
+                        redirectUrl: window.location.origin + "/#/",
                       }
                     }
                   })
@@ -1271,7 +1272,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                         autoFocus
                         required
                         autoComplete="phone"
-                        label="Phone Number"
+                        label="Phone Number (+921234567890)"
                         name="phone"
                         error={phoneError}
                         helperText={phoneError}
@@ -1389,9 +1390,13 @@ const HomePage: React.FC<HomePageProps> = props => {
                   <ConfirmButton
                     transitionState={confirmButtonState}
                     color="primary"
+                    disabled={data.phone === ""}
                     variant="contained"
                     onClick={() => {
-                      if (data.phone !== "" && !/\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\d{1,14}$/.test(data.phone)) {
+                      // if (data.phone !== "" && !/\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\d{1,14}$/.test(data.phone)) {
+                      //   setPhoneError("Invalid Phone Number.");
+                      // }
+                      if (isValidPhoneNumber(data.phone) === false) {
                         setPhoneError("Invalid Phone Number.");
                       }
                       else {
@@ -1981,7 +1986,16 @@ const HomePage: React.FC<HomePageProps> = props => {
                             (!shopify || data.shopifyAccessToken === "" || data.shopifyURL === "") &&
                             (!vend || data.vendAccessToken === "" || data.vendURL === "")
                           }
-                          onClick={() => { submit(); setSkip(true); }}
+                          onClick={() => {
+                            setIzettleAccessTokenError([]);
+                            setSquareAccessTokenError([]);
+                            setShopifyAccessTokenError([]);
+                            setShopifyURLError([]);
+                            setVendAccessTokenError([]);
+                            setVendURLError([]);
+                            submit();
+                            setSkip(true);
+                          }}
                           className={classes.sendbtn}>
                           <span>Next</span>
                         </ConfirmButton>

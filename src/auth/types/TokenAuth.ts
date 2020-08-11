@@ -34,6 +34,7 @@ export interface TokenAuth_tokenCreate_user {
   userPermissions: (TokenAuth_tokenCreate_user_userPermissions | null)[] | null;
   avatar: TokenAuth_tokenCreate_user_avatar | null;
   businessUser: any;
+  isSuperuser: boolean;
 }
 
 export interface TokenAuth_tokenCreate {

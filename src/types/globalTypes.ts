@@ -899,6 +899,7 @@ export interface CatalogueInput {
 export interface CategoryFilterInput {
   search?: string | null;
   ids?: (string | null)[] | null;
+  store?: string | null;
 }
 
 export interface CategoryInput {
@@ -909,6 +910,7 @@ export interface CategoryInput {
   seo?: SeoInput | null;
   backgroundImage?: any | null;
   backgroundImageAlt?: string | null;
+  store: string | null;
 }
 
 export interface CategorySortingInput {
@@ -1207,6 +1209,7 @@ export interface ProductTypeFilterInput {
   configurable?: ProductTypeConfigurable | null;
   productType?: ProductTypeEnum | null;
   ids?: (string | null)[] | null;
+  store?: string | null;
 }
 
 export interface ProductTypeInput {
@@ -1218,6 +1221,7 @@ export interface ProductTypeInput {
   isShippingRequired?: boolean | null;
   isDigital?: boolean | null;
   weight?: any | null;
+  store: string | null;
   taxCode?: string | null;
 }
 

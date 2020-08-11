@@ -20,6 +20,7 @@ export const fragmentUser = gql`
     email
     firstName
     lastName
+    isSuperuser
     businessUser(first: 100) {
       edges {
         node {

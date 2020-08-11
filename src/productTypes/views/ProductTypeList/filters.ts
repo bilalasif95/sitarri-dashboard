@@ -3,6 +3,7 @@ import {
   ProductTypeConfigurable,
   ProductTypeEnum
 } from "@saleor/types/globalTypes";
+import useUser from "@saleor/hooks/useUser";
 import { IFilterElement } from "@saleor/components/Filter";
 import { maybe, findValueInEnum } from "@saleor/misc";
 import {
@@ -42,6 +43,7 @@ export function getFilterOpts(
 export function getFilterVariables(
   params: ProductTypeListUrlFilters
 ): ProductTypeFilterInput {
+  const { user } = useUser();
   return {
     configurable: params.configurable
       ? findValueInEnum(params.configurable, ProductTypeConfigurable)
@@ -49,7 +51,8 @@ export function getFilterVariables(
     productType: params.type
       ? findValueInEnum(params.type, ProductTypeEnum)
       : undefined,
-    search: params.query
+    search: params.query,
+    store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
   };
 }
 
