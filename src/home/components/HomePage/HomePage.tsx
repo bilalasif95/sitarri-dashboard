@@ -471,7 +471,7 @@ const HomePage: React.FC<HomePageProps> = props => {
     userPermissions
   } = props;
   const classes = useStyles(props);
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const [openClaimBusinessModal, setOpenClaimBusinessModal] = React.useState(false);
   const [claimBusinessModal, setClaimBusinessModal] = React.useState(false);
   const [claimBusinessThanksModal, setClaimBusinessThanksModal] = React.useState(false);
@@ -540,7 +540,7 @@ const HomePage: React.FC<HomePageProps> = props => {
   const [latlngError, setlatLngError] = React.useState("");
   const [latLngLoading, setlatLngLoading] = React.useState(false);
   const intl = useIntl();
-  const { logout, user,verifyToken } = useUser();
+  const { logout, user, verifyToken } = useUser();
   const choices = createChoices(intl);
   const initialForm: any = {
     address: maybe(() => "", ""),
@@ -1198,7 +1198,11 @@ const HomePage: React.FC<HomePageProps> = props => {
                 <DialogContent className={classes.businessmodalcont}>
                   <div className={classes.businessmodal}>
                     <ul className={classes.mylist}>
-                      <li className={classes.listitem}><span onClick={() => { setChooseCategoryModal(false); setOpenChooseCategoryModal(false); setAddBusinessModal(true); }}><SVG className={classes.arrowlefticon} src={arrowleft} /></span><span className={classes.listtext}>Choose the category that best</span></li>
+                      <li className={classes.listitem}>
+                        {/* <span onClick={() => { setChooseCategoryModal(false); setOpenChooseCategoryModal(false); setAddBusinessModal(true); }}>
+                          <SVG className={classes.arrowlefticon} src={arrowleft} />
+                        </span> */}
+                        <span className={classes.listtext}>Choose the category that best</span></li>
                     </ul>
                     <div className={classes.thanksmodaltext}>
                       <p>This helps customer find you if they are looking for <br /> a business like yours</p>
