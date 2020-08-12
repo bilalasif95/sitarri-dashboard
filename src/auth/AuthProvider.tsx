@@ -100,6 +100,7 @@ interface AuthProviderProps {
 
 interface AuthProviderState {
   errors: any;
+  loginErrors: any;
   user: User;
   persistToken: boolean;
   success: string;
@@ -111,7 +112,7 @@ class AuthProvider extends React.Component<
   > {
   constructor(props) {
     super(props);
-    this.state = { errors: undefined, persistToken: false, success: "", user: undefined };
+    this.state = { errors: undefined,loginErrors: undefined, persistToken: false, success: "", user: undefined };
   }
 
   componentWillReceiveProps(props: AuthProviderProps) {
@@ -214,10 +215,17 @@ class AuthProvider extends React.Component<
   login = async (email: string, password: string) => {
     const { tokenAuth } = this.props;
     const [tokenAuthFn] = tokenAuth;
-
+    this.setState({
+      loginErrors: []
+    })
     tokenAuthFn({ variables: { email, password } }).then(result => {
       if (result && !result.data.tokenCreate.errors.length) {
         saveCredentials(result.data.tokenCreate.user, password);
+      }
+      else {
+        this.setState({
+          loginErrors: result.data.tokenCreate.accountErrors
+        })
       }
     });
   };
@@ -298,7 +306,7 @@ class AuthProvider extends React.Component<
     const tokenAuthOpts = tokenAuth[1];
     const signUpTokenAuthOpts = signUpTokenAuth[1];
     const tokenVerifyOpts = tokenVerify[1];
-    const { errors, success, user } = this.state;
+    const { errors, loginErrors, success, user } = this.state;
     const isAuthenticated = !!user;
 
     return (
@@ -307,6 +315,7 @@ class AuthProvider extends React.Component<
           errors,
           login: this.login,
           loginByToken: this.loginByToken,
+          loginErrors,
           logout: this.logout,
           signUpTokenAuthLoading: signUpTokenAuthOpts.loading,
           signup: this.signup,
@@ -315,7 +324,8 @@ class AuthProvider extends React.Component<
           tokenAuthLoading: tokenAuthOpts.loading,
           tokenRefresh: this.refreshToken,
           tokenVerifyLoading: tokenVerifyOpts.loading,
-          user
+          user,
+          verifyToken: this.verifyToken,
         }}
       >
         {children({

@@ -249,7 +249,8 @@ export interface LoginCardProps {
 }
 
 const LoginCard: React.FC<LoginCardProps> = props => {
-  const { error, disableLoginButton, onPasswordRecovery, onSubmit } = props;
+  // const { error, disableLoginButton, onPasswordRecovery, onSubmit } = props;
+  const { disableLoginButton, onPasswordRecovery, onSubmit } = props;
   const [emailClick, setEmailClick] = React.useState(false);
   const [registerClick, setRegisterClick] = React.useState(false);
   const [passwordType, setPasswordType] = React.useState(true);
@@ -259,7 +260,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
   const menuBack = () => {
     setEmailClick(true)
   };
-  const { signup, socialAuth, errors, success, signUpTokenAuthLoading } = useUser();
+  const { signup, socialAuth, errors, success,loginErrors, signUpTokenAuthLoading } = useUser();
   const responseFacebook = async response => {
     if (response.accessToken) {
       socialAuth(response.accessToken, "facebook", "", response.id);
@@ -296,7 +297,9 @@ const LoginCard: React.FC<LoginCardProps> = props => {
     }
     setPasswordType(true);
   };
-  const emailError = maybe(() => errors.filter(item => item.field === "email"))
+  const emailError = maybe(() => errors.filter(item => item.field === "email"));
+  const loginEmailError = maybe(() => loginErrors.filter(item => item.field === "email"));
+  const loginPasswordError = maybe(() => loginErrors.filter(item => item.field === "password"));
   return (
     <div>
       {emailClick ?
@@ -311,19 +314,21 @@ const LoginCard: React.FC<LoginCardProps> = props => {
           <Form initial={{ confirmPassword: "", email: "", password: "" }} onSubmit={onSubmit}>
             {({ change: handleChange, data, submit: handleSubmit }) => (
               <>
-                {error && (
+                {/* {error && (
                   <div className={classes.panel}>
                     <Typography variant="caption">
                       <FormattedMessage defaultMessage="Sorry, your username and/or password are incorrect. Please try again." />
                     </Typography>
                   </div>
-                )}
+                )} */}
                 <TextField
                   autoFocus
                   fullWidth
                   autoComplete="username"
                   label={intl.formatMessage(commonMessages.email)}
                   name="email"
+                  error={maybe(()=>loginEmailError[0].message)}
+                  helperText={maybe(()=>loginEmailError[0].message)}
                   onChange={handleChange}
                   value={data.email}
                   inputProps={{
@@ -340,6 +345,8 @@ const LoginCard: React.FC<LoginCardProps> = props => {
                         defaultMessage: "Password"
                       })}
                       name="password"
+                      error={maybe(()=>loginPasswordError[0].message)}
+                      helperText={maybe(()=>loginPasswordError[0].message)}
                       onChange={handleChange}
                       type="password"
                       value={data.password}
@@ -362,6 +369,8 @@ const LoginCard: React.FC<LoginCardProps> = props => {
                           defaultMessage: "Password"
                         })}
                         name="password"
+                        error={maybe(()=>loginPasswordError[0].message)}
+                        helperText={maybe(()=>loginPasswordError[0].message)}
                         onChange={handleChange}
                         type="text"
                         value={data.password}

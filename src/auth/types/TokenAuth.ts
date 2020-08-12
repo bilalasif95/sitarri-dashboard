@@ -42,6 +42,7 @@ export interface TokenAuth_tokenCreate {
   token: string | null;
   errors: TokenAuth_tokenCreate_errors[];
   user: TokenAuth_tokenCreate_user | null;
+  accountErrors: any;
 }
 
 export interface TokenAuth {

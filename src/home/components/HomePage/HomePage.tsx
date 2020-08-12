@@ -78,6 +78,8 @@ import { EmployeeAccess } from "../../types/EmployeeAccess";
 import { CreateBusiness } from "../../types/CreateBusiness";
 import { ProductBulkCreate } from "../../types/ProductBulkCreate";
 
+import { getAuthToken } from "../../../auth/utils";
+
 const useStyles = makeStyles(
   theme => ({
     arrowlefticon: {
@@ -538,7 +540,7 @@ const HomePage: React.FC<HomePageProps> = props => {
   const [latlngError, setlatLngError] = React.useState("");
   const [latLngLoading, setlatLngLoading] = React.useState(false);
   const intl = useIntl();
-  const { logout, user } = useUser();
+  const { logout, user,verifyToken } = useUser();
   const choices = createChoices(intl);
   const initialForm: any = {
     address: maybe(() => "", ""),
@@ -563,7 +565,7 @@ const HomePage: React.FC<HomePageProps> = props => {
     vendURL: maybe(() => "", ""),
     website: maybe(() => "", ""),
   };
-
+  const token = getAuthToken();
   React.useEffect(() => {
     const businessNameArray = [];
     maybe(() => businessNames.map(name => {
@@ -1780,7 +1782,7 @@ const HomePage: React.FC<HomePageProps> = props => {
               color="primary"
               variant="contained"
               type="submit"
-              onClick={() => { setAllDoneModal(false); setOpenAllDoneModal(false) }}
+              onClick={() => { verifyToken(token); setAllDoneModal(false); setOpenAllDoneModal(false) }}
               className={classes.confirmbtn}>
               <span>Go to dashboard</span>
             </ConfirmButton>

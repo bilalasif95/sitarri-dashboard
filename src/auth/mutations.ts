@@ -56,6 +56,10 @@ export const tokenAuthMutation = gql`
         field
         message
       }
+      accountErrors {
+        field
+        message
+      }
       user {
         ...User
       }
