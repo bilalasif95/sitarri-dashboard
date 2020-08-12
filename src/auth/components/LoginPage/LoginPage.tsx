@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -228,6 +228,9 @@ const useStyles = makeStyles(
       },
       display: 'flex',
       position: 'relative',
+    },
+    statementSection: {
+      color: "#fa906e",
     },
     tc: {
       color: '#6e6f6f',
@@ -463,7 +466,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               <Button className={classes.emailButton} onClick={() => setEmailClick(true)}>
                 <span><SVG src={emailImg} /></span>
                 <p className={classes.ce}>Continue with Email</p></Button>
-              <p className={classes.tc}>By continuing you agree to our <Link to="" className="statementSection">T&Cs</Link> and<Link to="" className="statementSection"> Privacy Policy</Link>.</p>
+              <p className={classes.tc}>By continuing you agree to our <span className={classes.statementSection}>T&Cs</span> and<span className={classes.statementSection}> Privacy Policy</span>.</p>
             </>
           }
         </>

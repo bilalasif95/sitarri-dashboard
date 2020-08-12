@@ -31,6 +31,7 @@ export const fragmentUser = gql`
               node {
                 id
                 name
+                description
               }
             }
           }

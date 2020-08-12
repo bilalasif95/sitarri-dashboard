@@ -471,7 +471,7 @@ const HomePage: React.FC<HomePageProps> = props => {
     userPermissions
   } = props;
   const classes = useStyles(props);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const [openClaimBusinessModal, setOpenClaimBusinessModal] = React.useState(false);
   const [claimBusinessModal, setClaimBusinessModal] = React.useState(false);
   const [claimBusinessThanksModal, setClaimBusinessThanksModal] = React.useState(false);
@@ -806,7 +806,7 @@ const HomePage: React.FC<HomePageProps> = props => {
           </RequirePermissions>
         </div>
       </Grid>
-      {user.businessUser.edges.length === 0 &&
+      {(user.businessUser.edges.length === 0 || (user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges.length === 0)) &&
         <Dialog
           // onClose={onClose}
           open={open}
@@ -849,7 +849,19 @@ const HomePage: React.FC<HomePageProps> = props => {
                     <h4 className={classes.cardhead1}>Add a business to Sitarri</h4>
                     <p>If you own or manage a business, click below to add it to Sitarri</p>
                   </div>
-                  <Button className={classes.businessbtn} color="primary" variant="contained" onClick={() => { setAddBusinessModal(true); setOpenAddBusinessModal(true); setOpen(false) }}>
+                  <Button className={classes.businessbtn} color="primary" variant="contained" onClick={() => {
+                    if (user.businessUser.edges.length === 0) {
+                      setAddBusinessModal(true); setOpenAddBusinessModal(true); setOpen(false)
+                    }
+                    else {
+                      setOpen(false);
+                      setBusinessID(user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.id);
+                      setBusinessName(user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.name);
+                      setBusinessDescription(user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.description);
+                      setChooseCategoryModal(true);
+                      setOpenChooseCategoryModal(true);
+                    }
+                  }}>
                     <span className={classes.cardbtntext}>Add Business</span>
                   </Button>
                 </div>
