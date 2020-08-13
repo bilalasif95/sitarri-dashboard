@@ -30,7 +30,7 @@ interface UserContext {
   tokenRefresh: () => Promise<void>;
   tokenVerifyLoading: boolean;
   user?: User;
-  verifyToken: (token: string) => void;
+  verifyTokenAndSetData: (token: string) => void;
 }
 
 export const UserContext = React.createContext<UserContext>({
@@ -46,7 +46,7 @@ export const UserContext = React.createContext<UserContext>({
   tokenAuthLoading: false,
   tokenRefresh: undefined,
   tokenVerifyLoading: false,
-  verifyToken: undefined
+  verifyTokenAndSetData: undefined
 });
 
 interface AuthRouterProps {

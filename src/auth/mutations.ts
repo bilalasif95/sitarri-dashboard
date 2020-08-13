@@ -3,6 +3,8 @@ import gql from "graphql-tag";
 import { accountErrorFragment } from "@saleor/customers/mutations";
 import { TypedMutation } from "../mutations";
 import { AccountConfirm,AccountConfirmVariables } from "./types/AccountConfirm";
+import { ClaimBusiness, ClaimBusinessVariables} from "./types/ClaimBusinessConfirm";
+import { EmployeeAccess, EmployeeAccessVariables } from "./types/EmployeeAccessConfirm";
 import {
   RequestPasswordReset,
   RequestPasswordResetVariables
@@ -199,3 +201,37 @@ export const TypedAccountConfirmMutation = TypedMutation<
   AccountConfirm,
   AccountConfirmVariables
 >(accountConfirmMutation);
+
+const claimBusinessConfirmMutation = gql`
+  mutation ClaimBusiness($email: String!, $business: ID!) {
+    claimBusiness(input: {email: $email, business: $business, status: ACCEPTED}) {
+      message
+      businessErrors{
+        field
+        message
+      }
+    }
+  }
+`;
+
+export const TypedClaimBusinessConfirmMutation = TypedMutation<
+  ClaimBusiness,
+  ClaimBusinessVariables
+>(claimBusinessConfirmMutation);
+
+const employeeAccessConfirmMutation = gql`
+  mutation EmployeeAccess($email: String!, $business: ID!) {
+    employeeAccess(input: {email: $email, business: $business, status: ACCEPTED}) {
+      message
+      businessErrors{
+        field
+        message
+      }
+    }
+  }
+`;
+
+export const TypedEmployeeAccessConfirmMutation = TypedMutation<
+  EmployeeAccess,
+  EmployeeAccessVariables
+>(employeeAccessConfirmMutation);

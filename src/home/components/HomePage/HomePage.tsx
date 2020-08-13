@@ -80,6 +80,8 @@ import { ProductBulkCreate } from "../../types/ProductBulkCreate";
 
 import { getAuthToken } from "../../../auth/utils";
 
+import { claimBusinessConfirmPath, employeeAccessConfirmPath } from "../../../auth/urls";
+
 const useStyles = makeStyles(
   theme => ({
     arrowlefticon: {
@@ -540,7 +542,7 @@ const HomePage: React.FC<HomePageProps> = props => {
   const [latlngError, setlatLngError] = React.useState("");
   const [latLngLoading, setlatLngLoading] = React.useState(false);
   const intl = useIntl();
-  const { logout, user, verifyToken } = useUser();
+  const { logout, user, verifyTokenAndSetData } = useUser();
   const choices = createChoices(intl);
   const initialForm: any = {
     address: maybe(() => "", ""),
@@ -902,7 +904,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                       input: {
                         business: input.business,
                         email: user.email,
-                        redirectUrl: window.location.origin + "/#/",
+                        redirectUrl: `${window.location.origin + "/#"}${claimBusinessConfirmPath}`,
                       }
                     }
                   })
@@ -1007,7 +1009,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                       input: {
                         business: input.business,
                         email: input.email,
-                        redirectUrl: window.location.origin + "/#/",
+                        redirectUrl: `${window.location.origin + "/#"}${employeeAccessConfirmPath}`,
                       }
                     }
                   })
@@ -1798,7 +1800,7 @@ const HomePage: React.FC<HomePageProps> = props => {
               color="primary"
               variant="contained"
               type="submit"
-              onClick={() => { verifyToken(token); setAllDoneModal(false); setOpenAllDoneModal(false) }}
+              onClick={() => { verifyTokenAndSetData(token); setAllDoneModal(false); setOpenAllDoneModal(false) }}
               className={classes.confirmbtn}>
               <span>Go to dashboard</span>
             </ConfirmButton>

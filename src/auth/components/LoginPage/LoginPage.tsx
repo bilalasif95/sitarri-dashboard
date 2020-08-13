@@ -231,6 +231,7 @@ const useStyles = makeStyles(
     },
     statementSection: {
       color: "#fa906e",
+      textDecoration: "none"
     },
     tc: {
       color: '#6e6f6f',
@@ -466,7 +467,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               <Button className={classes.emailButton} onClick={() => setEmailClick(true)}>
                 <span><SVG src={emailImg} /></span>
                 <p className={classes.ce}>Continue with Email</p></Button>
-              <p className={classes.tc}>By continuing you agree to our <span className={classes.statementSection}>T&Cs</span> and<span className={classes.statementSection}> Privacy Policy</span>.</p>
+              <p className={classes.tc}>By continuing you agree to our <a className={classes.statementSection} href="https://sitarri.com/#/page/terms-and-conditions/" target="_blank" rel="noopener noreferrer">T&Cs</a> and <a className={classes.statementSection} href="https://sitarri.com/#/page/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a></p>
             </>
           }
         </>

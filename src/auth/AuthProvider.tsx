@@ -287,8 +287,14 @@ class AuthProvider extends React.Component<
   verifyToken = (token: string) => {
     const { tokenVerify } = this.props;
     const [tokenVerifyFn] = tokenVerify;
-
     return tokenVerifyFn({ variables: { token } });
+  };
+
+  verifyTokenAndSetData = (token: string) => {
+    const { tokenVerify } = this.props;
+    const [tokenVerifyFn] = tokenVerify;
+    const response = tokenVerifyFn({ variables: { token } });
+    return response.then(result => this.setState({ user: result.data.tokenVerify.user }))
   };
 
   refreshToken = async () => {
@@ -325,7 +331,7 @@ class AuthProvider extends React.Component<
           tokenRefresh: this.refreshToken,
           tokenVerifyLoading: tokenVerifyOpts.loading,
           user,
-          verifyToken: this.verifyToken,
+          verifyTokenAndSetData: this.verifyTokenAndSetData,
         }}
       >
         {children({
