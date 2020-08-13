@@ -366,11 +366,7 @@ class AuthProvider extends React.Component<
           tokenRefresh: this.refreshToken,
           tokenVerifyLoading: tokenVerifyOpts.loading,
           user,
-<<<<<<< HEAD
           verifyTokenAndSetData: this.verifyTokenAndSetData,
-=======
-          verifyToken: this.verifyToken
->>>>>>> 3db719cb9bceddc82a6dde48ce900f6a55808307
         }}
       >
         {children({
