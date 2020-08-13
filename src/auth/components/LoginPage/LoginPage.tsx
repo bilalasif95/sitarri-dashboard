@@ -33,23 +33,23 @@ const useStyles = makeStyles(
   theme => ({
     backBtn: {
       "& hover": {
-        background: "transparent",
+        background: "transparent"
       },
       "& span": {
         color: "#414141",
-        textAlign: 'left',
-        textTransform: "capitalize",
+        textAlign: "left",
+        textTransform: "capitalize"
       },
       borderRadius: "4px",
       boxShadow: "none !important",
       padding: "0.5rem 0",
-      width: "50px",
+      width: "50px"
     },
     bodyHead: {
       alignItems: "center",
       display: "flex",
       justifyContent: "space-between",
-      margin: "0 0 1rem",
+      margin: "0 0 1rem"
     },
     buttonContainer: {
       display: "flex",
@@ -57,43 +57,43 @@ const useStyles = makeStyles(
       marginBottom: "2rem",
       marginTop: "2rem",
       padding: 0,
-      textAlign: "center",
+      textAlign: "center"
     },
     ce: {
-      color: '#fff',
+      color: "#fff",
       fontWeight: 400,
-      margin: '3px 0px 0px',
-      textAlign: 'center',
+      margin: "3px 0px 0px",
+      textAlign: "center"
     },
     emailButton: {
       "& span": {
         "& svg": {
           "& path": {
-            fill: 'white',
+            fill: "white"
           },
-          margin: '0 2rem 0 0',
+          margin: "0 2rem 0 0"
         },
-        alignItems: 'center',
+        alignItems: "center",
         display: "flex",
-        fontSize: '400 14.3333px Arial',
-        left: '0.4rem',
-        position: 'absolute',
-        textTransform: 'capitalize',
-        top: '3px',
-        transform: 'none',
-        width: '100%',
+        fontSize: "400 14.3333px Arial",
+        left: "0.4rem",
+        position: "absolute",
+        textTransform: "capitalize",
+        top: "3px",
+        transform: "none",
+        width: "100%"
       },
-      alignItems: 'center',
-      backgroundColor: '#f3492b !important',
-      borderRadius: '4px',
-      display: 'flex',
-      height: '40px',
-      justifyContent: 'center',
-      margin: '1rem 0',
-      padding: '1.1666rem !important',
-      position: 'relative',
-      textTransform: 'capitalize',
-      width: '100%',
+      alignItems: "center",
+      backgroundColor: "#f3492b !important",
+      borderRadius: "4px",
+      display: "flex",
+      height: "40px",
+      justifyContent: "center",
+      margin: "1rem 0",
+      padding: "1.1666rem !important",
+      position: "relative",
+      textTransform: "capitalize",
+      width: "100%"
     },
     facebookLoginButton: {
       "& button": {
@@ -101,7 +101,7 @@ const useStyles = makeStyles(
           fontSize: "22px",
           left: "1.5rem",
           margin: "0 2rem 0 0",
-          position: "absolute",
+          position: "absolute"
         },
         alignItems: "center",
         border: "none !important",
@@ -114,12 +114,12 @@ const useStyles = makeStyles(
         padding: "0.7rem 0.5rem !important",
         position: "relative",
         textTransform: "capitalize",
-        width: "100%",
+        width: "100%"
       }
     },
     forgotBtn: {
       "& hover": {
-        background: "transparent",
+        background: "transparent"
       },
       "& span": {
         color: "#414141",
@@ -130,7 +130,7 @@ const useStyles = makeStyles(
       border: "1px solid #cccccc78",
       borderRadius: "4px",
       boxShadow: "none !important",
-      width: "100%",
+      width: "100%"
     },
     googleLoginButton: {
       "& div": {
@@ -139,15 +139,15 @@ const useStyles = makeStyles(
         marginRight: "2rem !important",
         padding: "0 !important",
         position: "absolute",
-        top: "10px",
+        top: "10px"
       },
       "& fa": {
         fontSize: "20px",
-        margin: "0 2rem 0 0",
+        margin: "0 2rem 0 0"
       },
       "& span": {
         fontWeight: 400,
-        padding: "0 !important",
+        padding: "0 !important"
       },
       alignItems: "center",
       border: "1px solid #cccccc78 !important",
@@ -162,26 +162,26 @@ const useStyles = makeStyles(
       padding: "0.55rem 0.5rem !important",
       position: "relative",
       textTransform: "capitalize",
-      width: "100%",
+      width: "100%"
     },
     line: {
       "& span": {
-        background: '#fafafa',
-        height: '20px',
-        left: '47%',
-        padding: '0 5px',
-        position: 'absolute',
-        right: '0',
-        textAlign: 'center',
-        textTransform: 'lowercase',
-        top: '-11px',
-        width: '32px',
+        background: "#fafafa",
+        height: "20px",
+        left: "47%",
+        padding: "0 5px",
+        position: "absolute",
+        right: "0",
+        textAlign: "center",
+        textTransform: "lowercase",
+        top: "-11px",
+        width: "32px"
       },
-      background: '#80808059',
-      height: '1px',
-      margin: '0.5rem 0 1.5rem',
-      position: 'relative',
-      width: '100%',
+      background: "#80808059",
+      height: "1px",
+      margin: "0.5rem 0 1.5rem",
+      position: "relative",
+      width: "100%"
     },
     link: {
       color: theme.palette.primary.main,
@@ -190,19 +190,19 @@ const useStyles = makeStyles(
     },
     loginButton: {
       "& hover": {
-        background: "#f74b2c",
+        background: "#f74b2c"
       },
       "& span": {
         color: "#fff",
         fontWeight: 400,
-        textTransform: "capitalize",
+        textTransform: "capitalize"
       },
       background: "#f74b2c",
       borderRadius: "4px",
       boxShadow: "none !important",
       color: "#fff",
       textTransform: "capitalize",
-      width: "100%",
+      width: "100%"
     },
     panel: {
       "& span": {
@@ -215,30 +215,30 @@ const useStyles = makeStyles(
     },
     passwordEye: {
       // borderLeft: '1px solid #cccccc78',
-      cursor: 'pointer',
-      height: '50px',
-      padding: '0.8rem 0.3rem',
-      position: 'absolute',
-      right: ' 0',
-      width: '40px',
+      cursor: "pointer",
+      height: "50px",
+      padding: "0.8rem 0.3rem",
+      position: "absolute",
+      right: " 0",
+      width: "40px"
     },
     passwordInput: {
       "& input": {
-        width: "81%",
+        width: "81%"
       },
-      display: 'flex',
-      position: 'relative',
+      display: "flex",
+      position: "relative"
     },
     statementSection: {
-      color: "#fa906e",
+      color: "#fa906e"
     },
     tc: {
-      color: '#6e6f6f',
-      fontSize: '12px',
+      color: "#6e6f6f",
+      fontSize: "12px"
     },
     ulink: {
       cursor: "pointer",
-      textDecoration: "underline",
+      textDecoration: "underline"
     }
   }),
   { name: "LoginCard" }
@@ -261,10 +261,19 @@ const LoginCard: React.FC<LoginCardProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
   const menuBack = () => {
-    setEmailClick(true)
+    setEmailClick(true);
   };
-  const { signup, socialAuth, errors, success,loginErrors, signUpTokenAuthLoading } = useUser();
+  const {
+    signup,
+    socialAuth,
+    errors,
+    success,
+    loginErrors,
+    signUpTokenAuthLoading
+  } = useUser();
+
   const responseFacebook = async response => {
+    localStorage.setItem("loginType", "Social");
     if (response.accessToken) {
       socialAuth(response.accessToken, "facebook", "", response.id);
       // const authenticated = await socialAuth({ accessToken: response.accessToken, provider: "facebook", email: "", uid: response.id });
@@ -278,8 +287,14 @@ const LoginCard: React.FC<LoginCardProps> = props => {
   };
 
   const responseGoogle = async response => {
+    localStorage.setItem("loginType", "Social");
     if (response.accessToken) {
-      socialAuth(response.accessToken, "google-oauth2", response.profileObj.email, "");
+      socialAuth(
+        response.accessToken,
+        "google-oauth2",
+        response.profileObj.email,
+        ""
+      );
       //   const authenticated = await socialAuth({ accessToken: response.accessToken, provider: "google-oauth2", email: response.profileObj.email, uid: "" });
       //   if (authenticated && authenticated.data.socialAuth.error === null) {
       //     setAuthToken(authenticated.data.socialAuth.token);
@@ -291,7 +306,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
   };
 
   const handleSubmit = (data: FormData) => {
-    const redirectUrl = `${window.location.origin+"/#"}${accountConfirmPath}`;
+    const redirectUrl = `${window.location.origin + "/#"}${accountConfirmPath}`;
     signup(data.email, data.password, redirectUrl, menuBack);
   };
   const onPasswordEyeIconClick = () => {
@@ -301,20 +316,32 @@ const LoginCard: React.FC<LoginCardProps> = props => {
     setPasswordType(true);
   };
   const emailError = maybe(() => errors.filter(item => item.field === "email"));
-  const loginEmailError = maybe(() => loginErrors.filter(item => item.field === "email"));
-  const loginPasswordError = maybe(() => loginErrors.filter(item => item.field === "password"));
+  const loginEmailError = maybe(() =>
+    loginErrors.filter(item => item.field === "email")
+  );
+  const loginPasswordError = maybe(() =>
+    loginErrors.filter(item => item.field === "password")
+  );
   return (
     <div>
-      {emailClick ?
+      {emailClick ? (
         <>
           <div className={classes.bodyHead}>
             <p>Log in</p>
-            <Button onClick={() => { setEmailClick(false); setRegisterClick(false) }} className={classes.backBtn}>
-              <SVG src={backicon}
-              />
+            <Button
+              onClick={() => {
+                setEmailClick(false);
+                setRegisterClick(false);
+              }}
+              className={classes.backBtn}
+            >
+              <SVG src={backicon} />
             </Button>
           </div>
-          <Form initial={{ confirmPassword: "", email: "", password: "" }} onSubmit={onSubmit}>
+          <Form
+            initial={{ confirmPassword: "", email: "", password: "" }}
+            onSubmit={onSubmit}
+          >
             {({ change: handleChange, data, submit: handleSubmit }) => (
               <>
                 {/* {error && (
@@ -330,8 +357,8 @@ const LoginCard: React.FC<LoginCardProps> = props => {
                   autoComplete="username"
                   label={intl.formatMessage(commonMessages.email)}
                   name="email"
-                  error={maybe(()=>loginEmailError[0].message)}
-                  helperText={maybe(()=>loginEmailError[0].message)}
+                  error={maybe(() => loginEmailError[0].message)}
+                  helperText={maybe(() => loginEmailError[0].message)}
                   onChange={handleChange}
                   value={data.email}
                   inputProps={{
@@ -348,8 +375,8 @@ const LoginCard: React.FC<LoginCardProps> = props => {
                         defaultMessage: "Password"
                       })}
                       name="password"
-                      error={maybe(()=>loginPasswordError[0].message)}
-                      helperText={maybe(()=>loginPasswordError[0].message)}
+                      error={maybe(() => loginPasswordError[0].message)}
+                      helperText={maybe(() => loginPasswordError[0].message)}
                       onChange={handleChange}
                       type="password"
                       value={data.password}
@@ -358,51 +385,59 @@ const LoginCard: React.FC<LoginCardProps> = props => {
                       }}
                     />
                     <span onClick={onPasswordEyeIconClick}>
-                      <SVG src={removeImg}
-                        className={classes.passwordEye}
-                      />
+                      <SVG src={removeImg} className={classes.passwordEye} />
                     </span>
                   </div>
                 ) : (
-                    <div className={classes.passwordInput}>
-                      <TextField
-                        fullWidth
-                        autoComplete="password"
-                        label={intl.formatMessage({
-                          defaultMessage: "Password"
-                        })}
-                        name="password"
-                        error={maybe(()=>loginPasswordError[0].message)}
-                        helperText={maybe(()=>loginPasswordError[0].message)}
-                        onChange={handleChange}
-                        type="text"
-                        value={data.password}
-                        inputProps={{
-                          "data-tc": "password"
-                        }}
-                      />
-                      <span onClick={onPasswordEyeIconClick}>
-                        <SVG src={removeImgg}
-                          className={classes.passwordEye}
-                        />
-                      </span>
-                    </div>
-                  )}
+                  <div className={classes.passwordInput}>
+                    <TextField
+                      fullWidth
+                      autoComplete="password"
+                      label={intl.formatMessage({
+                        defaultMessage: "Password"
+                      })}
+                      name="password"
+                      error={maybe(() => loginPasswordError[0].message)}
+                      helperText={maybe(() => loginPasswordError[0].message)}
+                      onChange={handleChange}
+                      type="text"
+                      value={data.password}
+                      inputProps={{
+                        "data-tc": "password"
+                      }}
+                    />
+                    <span onClick={onPasswordEyeIconClick}>
+                      <SVG src={removeImgg} className={classes.passwordEye} />
+                    </span>
+                  </div>
+                )}
                 <FormSpacer />
                 <div className={classes.buttonContainer}>
                   <Button
                     className={classes.loginButton}
                     color="primary"
-                    disabled={disableLoginButton || data.email === "" || data.password === ""}
+                    disabled={
+                      disableLoginButton ||
+                      data.email === "" ||
+                      data.password === ""
+                    }
                     variant="contained"
                     onClick={handleSubmit}
                     type="submit"
                     data-tc="submit"
                   >
-                    <FormattedMessage defaultMessage="Login" description="button" />
+                    <FormattedMessage
+                      defaultMessage="Login"
+                      description="button"
+                    />
                   </Button>
                 </div>
-                <Button onClick={onPasswordRecovery} className={classes.forgotBtn}>Forgot Password?</Button>
+                <Button
+                  onClick={onPasswordRecovery}
+                  className={classes.forgotBtn}
+                >
+                  Forgot Password?
+                </Button>
                 {/* <FormSpacer /> */}
                 {/* <Typography className={classes.link} onClick={onPasswordRecovery}>
               <FormattedMessage
@@ -414,20 +449,31 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             )}
           </Form>
           <div>
-            <p>Don't have an account?&nbsp;
-          <span className={classes.ulink} onClick={() => { setRegisterClick(true); setEmailClick(false) }}>
+            <p>
+              Don't have an account?&nbsp;
+              <span
+                className={classes.ulink}
+                onClick={() => {
+                  setRegisterClick(true);
+                  setEmailClick(false);
+                }}
+              >
                 Sign up
-          </span>
+              </span>
             </p>
           </div>
         </>
-        :
+      ) : (
         <>
-          {registerClick ?
-            <RegisterForm error={errors}
+          {registerClick ? (
+            <RegisterForm
+              error={errors}
               disableLoginButton={signUpTokenAuthLoading}
-              onSubmit={handleSubmit} menuBack={menuBack} success={success} />
-            :
+              onSubmit={handleSubmit}
+              menuBack={menuBack}
+              success={success}
+            />
+          ) : (
             <>
               <div className={classes.bodyHead}>
                 <p>Sign up or Log in</p>
@@ -442,8 +488,8 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               {/* <div className="errorMessages">{errors}</div> */}
               <div className={classes.facebookLoginButton}>
                 <FacebookLogin
-                  appId="1078436535883692"
-                  // appId="734952100605240"
+                  // appId="1078436535883692"
+                  appId="734952100605240"
                   // autoLoad={true}
                   fields="name,email,picture"
                   callback={responseFacebook}
@@ -453,24 +499,41 @@ const LoginCard: React.FC<LoginCardProps> = props => {
                 />
               </div>
               <GoogleLogin
-                clientId="325319904531-ce20k86al4d3rtqhjd6heg9s551ksirg.apps.googleusercontent.com"
-                // clientId="614159071131-65vivmhjqvlaig531abhllvk88uq5gqt.apps.googleusercontent.com"
+                // clientId="325319904531-ce20k86al4d3rtqhjd6heg9s551ksirg.apps.googleusercontent.com"
+                clientId="614159071131-65vivmhjqvlaig531abhllvk88uq5gqt.apps.googleusercontent.com"
                 buttonText="Continue with Google"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
                 className={classes.googleLoginButton}
                 cookiePolicy={"single_host_origin"}
               />
-              <br /><br />
-              <div className={classes.line}><span>OR</span></div>
-              <Button className={classes.emailButton} onClick={() => setEmailClick(true)}>
-                <span><SVG src={emailImg} /></span>
-                <p className={classes.ce}>Continue with Email</p></Button>
-              <p className={classes.tc}>By continuing you agree to our <span className={classes.statementSection}>T&Cs</span> and<span className={classes.statementSection}> Privacy Policy</span>.</p>
+              <br />
+              <br />
+              <div className={classes.line}>
+                <span>OR</span>
+              </div>
+              <Button
+                className={classes.emailButton}
+                onClick={() => setEmailClick(true)}
+              >
+                <span>
+                  <SVG src={emailImg} />
+                </span>
+                <p className={classes.ce}>Continue with Email</p>
+              </Button>
+              <p className={classes.tc}>
+                By continuing you agree to our{" "}
+                <span className={classes.statementSection}>T&Cs</span> and
+                <span className={classes.statementSection}>
+                  {" "}
+                  Privacy Policy
+                </span>
+                .
+              </p>
             </>
-          }
+          )}
         </>
-      }
+      )}
     </div>
   );
 };

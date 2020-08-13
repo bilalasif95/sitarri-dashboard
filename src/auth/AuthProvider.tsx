@@ -14,8 +14,14 @@ import {
   TokenRefreshMutation,
   TypedSocialAuthMutation
 } from "./mutations";
-import { RegisterAccount, RegisterAccountVariables } from "./types/RegisterAccount";
-import { SignInWithSocialMedia, SignInWithSocialMediaVariables } from "./types/SignInWithSocialMedia";
+import {
+  RegisterAccount,
+  RegisterAccountVariables
+} from "./types/RegisterAccount";
+import {
+  SignInWithSocialMedia,
+  SignInWithSocialMediaVariables
+} from "./types/SignInWithSocialMedia";
 import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
 import { User } from "./types/User";
 import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
@@ -36,36 +42,36 @@ interface AuthProviderOperationsProps {
 const AuthProviderOperations: React.FC<AuthProviderOperationsProps> = ({
   children
 }) => (
-    <TypedTokenAuthMutation>
-      {(...tokenAuth) => (
-        <TypedAccountRegisterMutation>
-          {(...signUpTokenAuth) => (
-            <TypedSocialAuthMutation>
-              {(...socialTokenAuth) => (
-                <TypedVerifyTokenMutation>
-                  {(...tokenVerify) => (
-                    <TokenRefreshMutation>
-                      {(...tokenRefresh) => (
-                        <AuthProvider
-                          signUpTokenAuth={signUpTokenAuth}
-                          socialTokenAuth={socialTokenAuth}
-                          tokenAuth={tokenAuth}
-                          tokenVerify={tokenVerify}
-                          tokenRefresh={tokenRefresh}
-                        >
-                          {children}
-                        </AuthProvider>
-                      )}
-                    </TokenRefreshMutation>
-                  )}
-                </TypedVerifyTokenMutation>
-              )}
-            </TypedSocialAuthMutation>
-          )}
-        </TypedAccountRegisterMutation>
-      )}
-    </TypedTokenAuthMutation>
-  );
+  <TypedTokenAuthMutation>
+    {(...tokenAuth) => (
+      <TypedAccountRegisterMutation>
+        {(...signUpTokenAuth) => (
+          <TypedSocialAuthMutation>
+            {(...socialTokenAuth) => (
+              <TypedVerifyTokenMutation>
+                {(...tokenVerify) => (
+                  <TokenRefreshMutation>
+                    {(...tokenRefresh) => (
+                      <AuthProvider
+                        signUpTokenAuth={signUpTokenAuth}
+                        socialTokenAuth={socialTokenAuth}
+                        tokenAuth={tokenAuth}
+                        tokenVerify={tokenVerify}
+                        tokenRefresh={tokenRefresh}
+                      >
+                        {children}
+                      </AuthProvider>
+                    )}
+                  </TokenRefreshMutation>
+                )}
+              </TypedVerifyTokenMutation>
+            )}
+          </TypedSocialAuthMutation>
+        )}
+      </TypedAccountRegisterMutation>
+    )}
+  </TypedTokenAuthMutation>
+);
 
 interface AuthProviderProps {
   children: (props: {
@@ -109,10 +115,16 @@ interface AuthProviderState {
 class AuthProvider extends React.Component<
   AuthProviderProps,
   AuthProviderState
-  > {
+> {
   constructor(props) {
     super(props);
-    this.state = { errors: undefined,loginErrors: undefined, persistToken: false, success: "", user: undefined };
+    this.state = {
+      errors: undefined,
+      loginErrors: undefined,
+      persistToken: false,
+      success: "",
+      user: undefined
+    };
   }
 
   componentWillReceiveProps(props: AuthProviderProps) {
@@ -121,15 +133,19 @@ class AuthProvider extends React.Component<
     const socialTokenAuthOpts = socialTokenAuth[1];
     const tokenVerifyOpts = tokenVerify[1];
 
-    if (tokenAuthOpts.error || tokenVerifyOpts.error || socialTokenAuthOpts.error) {
+    if (
+      tokenAuthOpts.error ||
+      tokenVerifyOpts.error ||
+      socialTokenAuthOpts.error
+    ) {
       this.logout();
     }
-    if (socialTokenAuthOpts.data) {
-      if (socialTokenAuthOpts.data.socialAuth.social === null) {
-        this.logout();
-      }
-      else {
+
+    if (localStorage.getItem("loginType") === "Social") {
+      if (socialTokenAuthOpts.data) {
         const user = socialTokenAuthOpts.data.socialAuth.social.user;
+        //  const user2 = tokenAuthOpts.data.tokenCreate.user;
+        //   console.log("yyyyyyyyyyyyyyy",user,"user2user2user2user2user2",user2)
         // FIXME: Now we set state also when auth fails and returned user is
         // `null`, because the LoginView uses this `null` to display error.
         this.setState({ user });
@@ -140,27 +156,34 @@ class AuthProvider extends React.Component<
           );
         }
       }
-    }
-    else {
-      if (maybe(() => tokenVerifyOpts.data.tokenVerify === null)) {
-        this.logout();
+    } else {
+      if (tokenAuthOpts.data) {
+        const user = tokenAuthOpts.data.tokenCreate.user;
+
+        // FIXME: Now we set state also when auth fails and returned user is
+        // `null`, because the LoginView uses this `null` to display error.
+        this.setState({ user });
+        if (user) {
+          setAuthToken(
+            tokenAuthOpts.data.tokenCreate.token,
+            this.state.persistToken
+          );
+        }
       } else {
-        const user = maybe(() => tokenVerifyOpts.data.tokenVerify.user);
-        if (!!user) {
-          this.setState({ user });
+        if (maybe(() => tokenVerifyOpts.data.tokenVerify === null)) {
+          this.logout();
+        } else {
+          const user = maybe(() => tokenVerifyOpts.data.tokenVerify.user);
+          if (!!user) {
+            this.setState({ user });
+          }
         }
       }
     }
-    if (tokenAuthOpts.data && !socialTokenAuthOpts.data) {
-      const user = tokenAuthOpts.data.tokenCreate.user;
-      // FIXME: Now we set state also when auth fails and returned user is
-      // `null`, because the LoginView uses this `null` to display error.
-      this.setState({ user });
-      if (user) {
-        setAuthToken(
-          tokenAuthOpts.data.tokenCreate.token,
-          this.state.persistToken
-        );
+
+    if (socialTokenAuthOpts.data) {
+      if (socialTokenAuthOpts.data.socialAuth.social === null) {
+        this.logout();
       }
     } else {
       if (maybe(() => tokenVerifyOpts.data.tokenVerify === null)) {
@@ -172,6 +195,7 @@ class AuthProvider extends React.Component<
         }
       }
     }
+
     // if (socialTokenAuthOpts.data) {
 
     //   if(socialTokenAuthOpts.data.socialAuth.social === null){
@@ -189,7 +213,7 @@ class AuthProvider extends React.Component<
     //       );
     //     }
     //   }
-    // } 
+    // }
     // else {
     //   if (maybe(() => tokenVerifyOpts.data.tokenVerify === null)) {
     //     this.logout();
@@ -217,58 +241,69 @@ class AuthProvider extends React.Component<
     const [tokenAuthFn] = tokenAuth;
     this.setState({
       loginErrors: []
-    })
+    });
     tokenAuthFn({ variables: { email, password } }).then(result => {
       if (result && !result.data.tokenCreate.errors.length) {
         saveCredentials(result.data.tokenCreate.user, password);
-      }
-      else {
+      } else {
         this.setState({
           loginErrors: result.data.tokenCreate.accountErrors
-        })
+        });
       }
     });
   };
 
-  signup = async (email: string, password: string, redirectUrl: string, menuBack: any) => {
+  signup = async (
+    email: string,
+    password: string,
+    redirectUrl: string,
+    menuBack: any
+  ) => {
     const { signUpTokenAuth } = this.props;
     const [tokenAuthFn] = signUpTokenAuth;
     this.setState({
       errors: [],
-      success: "",
-    })
-    tokenAuthFn({ variables: { email, password, redirectUrl } }).then(result => {
-      if (result && !result.data.accountRegister.errors.length) {
-        this.setState({
-          success: result.data.accountRegister.requiresConfirmation
-            ? "Please check your e-mail for further instructions"
-            : "New user has been created"
-        })
-        setTimeout(() => {
-          this.setState({ success: "" })
-          menuBack()
-        }, 3000)
-      }
-      else {
-        this.setState({ errors: result.data.accountRegister.errors })
-      }
+      success: ""
     });
+    tokenAuthFn({ variables: { email, password, redirectUrl } }).then(
+      result => {
+        if (result && !result.data.accountRegister.errors.length) {
+          this.setState({
+            success: result.data.accountRegister.requiresConfirmation
+              ? "Please check your e-mail for further instructions"
+              : "New user has been created"
+          });
+          setTimeout(() => {
+            this.setState({ success: "" });
+            menuBack();
+          }, 3000);
+        } else {
+          this.setState({ errors: result.data.accountRegister.errors });
+        }
+      }
+    );
   };
 
-  socialAuth = async (accessToken: string, provider: string, email: string, uid: string) => {
+  socialAuth = async (
+    accessToken: string,
+    provider: string,
+    email: string,
+    uid: string
+  ) => {
     const { socialTokenAuth } = this.props;
     const [tokenAuthFn] = socialTokenAuth;
     this.setState({
-      errors: [],
-    })
-    tokenAuthFn({ variables: { accessToken, email, provider, uid } }).then(result => {
-      if (result && result.data.socialAuth.error === null) {
-        saveCredentials(result.data.socialAuth.social.user, email);
-      }
-      else {
-        this.setState({ errors: [result.data.socialAuth.error] })
-      }
+      errors: []
     });
+    tokenAuthFn({ variables: { accessToken, email, provider, uid } }).then(
+      result => {
+        if (result && result.data.socialAuth.error === null) {
+          saveCredentials(result.data.socialAuth.social.user, email);
+        } else {
+          this.setState({ errors: [result.data.socialAuth.error] });
+        }
+      }
+    );
   };
 
   loginByToken = (token: string, user: User) => {
@@ -325,7 +360,7 @@ class AuthProvider extends React.Component<
           tokenRefresh: this.refreshToken,
           tokenVerifyLoading: tokenVerifyOpts.loading,
           user,
-          verifyToken: this.verifyToken,
+          verifyToken: this.verifyToken
         }}
       >
         {children({
