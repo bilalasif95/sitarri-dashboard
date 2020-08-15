@@ -2,9 +2,18 @@ import gql from "graphql-tag";
 
 import { accountErrorFragment } from "@saleor/customers/mutations";
 import { TypedMutation } from "../mutations";
-import { AccountConfirm,AccountConfirmVariables } from "./types/AccountConfirm";
-import { ClaimBusiness, ClaimBusinessVariables} from "./types/ClaimBusinessConfirm";
-import { EmployeeAccess, EmployeeAccessVariables } from "./types/EmployeeAccessConfirm";
+import {
+  AccountConfirm,
+  AccountConfirmVariables
+} from "./types/AccountConfirm";
+import {
+  ClaimBusiness,
+  ClaimBusinessVariables
+} from "./types/ClaimBusinessConfirm";
+import {
+  EmployeeAccess,
+  EmployeeAccessVariables
+} from "./types/EmployeeAccessConfirm";
 import {
   RequestPasswordReset,
   RequestPasswordResetVariables
@@ -13,8 +22,14 @@ import { SetPassword, SetPasswordVariables } from "./types/SetPassword";
 import { TokenAuth, TokenAuthVariables } from "./types/TokenAuth";
 import { VerifyToken, VerifyTokenVariables } from "./types/VerifyToken";
 import { RefreshToken, RefreshTokenVariables } from "./types/RefreshToken";
-import { RegisterAccount,RegisterAccountVariables } from "./types/RegisterAccount";
-import { SignInWithSocialMedia,SignInWithSocialMediaVariables } from "./types/SignInWithSocialMedia";
+import {
+  RegisterAccount,
+  RegisterAccountVariables
+} from "./types/RegisterAccount";
+import {
+  SignInWithSocialMedia,
+  SignInWithSocialMediaVariables
+} from "./types/SignInWithSocialMedia";
 
 export const fragmentUser = gql`
   fragment User on User {
@@ -165,15 +180,25 @@ export const TypedAccountRegisterMutation = TypedMutation<
 
 const socialAuth = gql`
   ${fragmentUser}
-  mutation SocialAuth($accessToken: String!,$provider: String!, $email: String,$uid:String) {
-    socialAuth(accessToken: $accessToken, provider: $provider, email: $email,uid:$uid){
+  mutation SocialAuth(
+    $accessToken: String!
+    $provider: String!
+    $email: String
+    $uid: String
+  ) {
+    socialAuth(
+      accessToken: $accessToken
+      provider: $provider
+      email: $email
+      uid: $uid
+    ) {
       token
-      social{
-        user{
+      social {
+        user {
           ...User
         }
       }
-      error{
+      error {
         field
         message
       }
@@ -204,9 +229,11 @@ export const TypedAccountConfirmMutation = TypedMutation<
 
 const claimBusinessConfirmMutation = gql`
   mutation ClaimBusiness($email: String!, $business: ID!) {
-    claimBusiness(input: {email: $email, business: $business, status: ACCEPTED}) {
+    claimBusiness(
+      input: { email: $email, business: $business, status: ACCEPTED }
+    ) {
       message
-      businessErrors{
+      businessErrors {
         field
         message
       }
@@ -221,9 +248,11 @@ export const TypedClaimBusinessConfirmMutation = TypedMutation<
 
 const employeeAccessConfirmMutation = gql`
   mutation EmployeeAccess($email: String!, $business: ID!) {
-    employeeAccess(input: {email: $email, business: $business, status: ACCEPTED}) {
+    employeeAccess(
+      input: { email: $email, business: $business, status: ACCEPTED }
+    ) {
       message
-      businessErrors{
+      businessErrors {
         field
         message
       }

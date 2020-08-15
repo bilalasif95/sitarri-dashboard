@@ -9,21 +9,23 @@ import { ClaimBusinessConfirmUrlQueryParams } from "../urls";
 
 class EmployeeAccessConfirm extends React.Component<RouteComponentProps> {
   [x: string]: any;
-  params: ClaimBusinessConfirmUrlQueryParams = parseQs(this.props.history.location.search.substr(1));
+  params: ClaimBusinessConfirmUrlQueryParams = parseQs(
+    this.props.history.location.search.substr(1)
+  );
   constructor(props) {
     super(props);
   }
   // const notify = useNotifier();
   // const navigate = useNavigator();
-  
+
   displayConfirmationAlert = anyErrors => {
     alert(
       // {
       //   text:
-          anyErrors.length > 0
-            ? anyErrors.map(error => error.message).join(" ")
-            : "Employee Access is given.",
-        // title: anyErrors.length > 0 ? "Error" : "Account confirmed",
+      anyErrors.length > 0
+        ? anyErrors.map(error => error.message).join(" ")
+        : "Employee Access is given."
+      // title: anyErrors.length > 0 ? "Error" : "Account confirmed",
       // },
       // { type: anyErrors.length > 0 ? "error" : "success", timeout: 5000 }
     );
@@ -31,7 +33,7 @@ class EmployeeAccessConfirm extends React.Component<RouteComponentProps> {
 
   componentDidMount() {
     this.accountManagerFn({
-      variables: { business: this.params.business, email: this.params.email },
+      variables: { business: this.params.business, email: this.params.email }
     })
       .then(result => {
         const possibleErrors = result.data.employeeAccess.businessErrors;
@@ -40,8 +42,8 @@ class EmployeeAccessConfirm extends React.Component<RouteComponentProps> {
       .catch(() => {
         const errors = [
           {
-            message: "Something went wrong while activating your account.",
-          },
+            message: "Something went wrong while activating your account."
+          }
         ];
         this.displayConfirmationAlert(errors);
       })
@@ -49,17 +51,17 @@ class EmployeeAccessConfirm extends React.Component<RouteComponentProps> {
         this.props.history.push("/");
       });
   }
-  render (){
-  return (
-    <TypedEmployeeAccessConfirmMutation>
-      {employeeAccess => {
-        this.accountManagerFn = employeeAccess;
-        return <div></div>;
-      }}
-    </TypedEmployeeAccessConfirmMutation>
+  render() {
+    return (
+      <TypedEmployeeAccessConfirmMutation>
+        {employeeAccess => {
+          this.accountManagerFn = employeeAccess;
+          return <div></div>;
+        }}
+      </TypedEmployeeAccessConfirmMutation>
     );
   }
-};
+}
 
 // AccountConfirm.displayName = "AccountConfirm";
 export default EmployeeAccessConfirm;

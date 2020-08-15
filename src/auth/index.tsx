@@ -21,11 +21,21 @@ interface UserContext {
   loginErrors: any;
   success: string;
   login: (username: string, password: string) => void;
-  socialAuth: (accessToken: string, provider:  string, email: string, uid: string) => void;
-  signup: (username: string, password: string,redirectUrl: string,menuBack: any) => void;
+  socialAuth: (
+    accessToken: string,
+    provider: string,
+    email: string,
+    uid: string
+  ) => void;
+  signup: (
+    username: string,
+    password: string,
+    redirectUrl: string,
+    menuBack: any
+  ) => void;
   loginByToken: (token: string, user: User) => void;
   logout: () => void;
-  signUpTokenAuthLoading: boolean,
+  signUpTokenAuthLoading: boolean;
   tokenAuthLoading: boolean;
   tokenRefresh: () => Promise<void>;
   tokenVerifyLoading: boolean;

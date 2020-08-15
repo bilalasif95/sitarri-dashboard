@@ -98,9 +98,9 @@ const useStyles = makeStyles(
     facebookLoginButton: {
       "& button": {
         "& i": {
-          fontSize: "22px",
-          left: "1.5rem",
-          margin: "0 2rem 0 0",
+          fontSize: "26px",
+          left: "1.2rem",
+          margin: "2px 2rem 0 0",
           position: "absolute"
         },
         alignItems: "center",
@@ -135,15 +135,15 @@ const useStyles = makeStyles(
     googleLoginButton: {
       "& div": {
         borderRadius: "unset !important",
-        left: "1.4rem",
+        left: "1.2rem",
         marginRight: "2rem !important",
         padding: "0 !important",
         position: "absolute",
         top: "10px"
       },
       "& fa": {
-        fontSize: "20px",
-        margin: "0 2rem 0 0"
+        fontSize: "26px",
+        margin: "2px 2rem 0 0"
       },
       "& span": {
         fontWeight: 400,
@@ -508,12 +508,40 @@ const LoginCard: React.FC<LoginCardProps> = props => {
                 className={classes.googleLoginButton}
                 cookiePolicy={"single_host_origin"}
               />
-              <br /><br />
-              <div className={classes.line}><span>OR</span></div>
-              <Button className={classes.emailButton} onClick={() => setEmailClick(true)}>
-                <span><SVG src={emailImg} /></span>
-                <p className={classes.ce}>Continue with Email</p></Button>
-              <p className={classes.tc}>By continuing you agree to our <a className={classes.statementSection} href="https://sitarri.com/#/page/terms-and-conditions/" target="_blank" rel="noopener noreferrer">T&Cs</a> and <a className={classes.statementSection} href="https://sitarri.com/#/page/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a></p>
+              <br />
+              <br />
+              <div className={classes.line}>
+                <span>OR</span>
+              </div>
+              <Button
+                className={classes.emailButton}
+                onClick={() => setEmailClick(true)}
+              >
+                <span>
+                  <SVG src={emailImg} />
+                </span>
+                <p className={classes.ce}>Continue with Email</p>
+              </Button>
+              <p className={classes.tc}>
+                By continuing you agree to our{" "}
+                <a
+                  className={classes.statementSection}
+                  href="https://sitarri.com/#/page/terms-and-conditions/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  T&Cs
+                </a>{" "}
+                and{" "}
+                <a
+                  className={classes.statementSection}
+                  href="https://sitarri.com/#/page/privacy-policy/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Privacy Policy
+                </a>
+              </p>
             </>
           )}
         </>

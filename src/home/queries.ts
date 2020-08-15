@@ -5,10 +5,19 @@ import { TypedQuery } from "../queries";
 import { Home } from "./types/Home";
 
 import { ClaimBusiness, ClaimBusinessVariables } from "./types/ClaimBusiness";
-import { CreateBusiness, CreateBusinessVariables } from "./types/CreateBusiness";
+import {
+  CreateBusiness,
+  CreateBusinessVariables
+} from "./types/CreateBusiness";
 import { CreateStore, CreateStoreVariables } from "./types/CreateStore";
-import { EmployeeAccess, EmployeeAccessVariables } from "./types/EmployeeAccess";
-import { ProductBulkCreate, ProductBulkCreateVariables } from "./types/ProductBulkCreate";
+import {
+  EmployeeAccess,
+  EmployeeAccessVariables
+} from "./types/EmployeeAccess";
+import {
+  ProductBulkCreate,
+  ProductBulkCreateVariables
+} from "./types/ProductBulkCreate";
 
 const home = gql`
   query Home {
@@ -149,11 +158,11 @@ export const CreateBusinessMutation = TypedMutation<
 export const createStoreMutation = gql`
   mutation CreateStoreMutation($input: StoreCreateInput!) {
     storeCreate(input: $input) {
-      store{
+      store {
         id
         name
       }
-      errors{
+      errors {
         field
         message
       }

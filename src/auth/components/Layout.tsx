@@ -13,15 +13,15 @@ const useStyles = makeStyles(
   theme => ({
     DialogContent: {
       "@media (min-width: 1440px)": {
-        padding: '0px !important',
-       },
-     },
+        padding: "0px !important"
+      }
+    },
     logo: {
       "& svg": {
         display: "block",
         height: 40,
         marginBottom: theme.spacing(4),
-        width: '170px',
+        width: "170px"
       }
     },
     mainPanel: {
@@ -29,9 +29,9 @@ const useStyles = makeStyles(
         padding: theme.spacing(2)
       },
       background: theme.palette.background.paper,
-      display: "flex",
-      flexDirection: "column",
-      height: "100vh",
+      // display: "flex",
+      // flexDirection: "column",
+      // height: "100vh",
       justifyContent: "center",
       padding: theme.spacing(6),
       width: "100%"
@@ -49,7 +49,7 @@ const useStyles = makeStyles(
       margin: "auto",
       width: "100%"
     },
-    
+
     root: {
       // [theme.breakpoints.up("lg")]: {
       //   gridTemplateColumns: "376px 1fr"

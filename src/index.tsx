@@ -62,7 +62,10 @@ import WarehouseSection from "./warehouses";
 import ClaimBusinessConfirm from "./auth/views/ClaimBusinessConfirm";
 import EmployeeAccessConfirm from "./auth/views/EmployeeAccessConfirm";
 
-import { claimBusinessConfirmPath,employeeAccessConfirmPath } from "./auth/urls";
+import {
+  claimBusinessConfirmPath,
+  employeeAccessConfirmPath
+} from "./auth/urls";
 
 interface ResponseError extends ErrorResponse {
   networkError?: Error & {
@@ -294,12 +297,12 @@ const Routes: React.FC = () => {
                       hasPermission(item.permission, user)
                     )
                   ).length > 0 && (
-                      <SectionRoute
-                        exact
-                        path="/configuration"
-                        component={ConfigurationSection}
-                      />
-                    )}
+                    <SectionRoute
+                      exact
+                      path="/configuration"
+                      component={ConfigurationSection}
+                    />
+                  )}
                   <Route component={NotFound} />
                 </Switch>
               </ErrorBoundary>
@@ -307,8 +310,8 @@ const Routes: React.FC = () => {
           ) : hasToken && tokenVerifyLoading ? (
             <LoginLoading />
           ) : (
-                <Auth hasToken={hasToken} />
-              )
+            <Auth hasToken={hasToken} />
+          )
         }
       </AuthProvider>
     </>
