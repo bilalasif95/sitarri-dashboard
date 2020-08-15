@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -229,6 +229,10 @@ const useStyles = makeStyles(
       display: "flex",
       position: "relative"
     },
+    statementSection: {
+      color: "#fa906e",
+      textDecoration: "none"
+    },
     tc: {
       color: "#6e6f6f",
       fontSize: "12px"
@@ -249,7 +253,8 @@ export interface LoginCardProps {
 }
 
 const LoginCard: React.FC<LoginCardProps> = props => {
-  const { error, disableLoginButton, onPasswordRecovery, onSubmit } = props;
+  // const { error, disableLoginButton, onPasswordRecovery, onSubmit } = props;
+  const { disableLoginButton, onPasswordRecovery, onSubmit } = props;
   const [emailClick, setEmailClick] = React.useState(false);
   const [registerClick, setRegisterClick] = React.useState(false);
   const [passwordType, setPasswordType] = React.useState(true);
@@ -264,9 +269,12 @@ const LoginCard: React.FC<LoginCardProps> = props => {
     socialAuth,
     errors,
     success,
+    loginErrors,
     signUpTokenAuthLoading
   } = useUser();
+
   const responseFacebook = async response => {
+    localStorage.setItem("loginType", "Social");
     if (response.accessToken) {
       socialAuth(response.accessToken, "facebook", "", response.id);
       // const authenticated = await socialAuth({ accessToken: response.accessToken, provider: "facebook", email: "", uid: response.id });
@@ -280,6 +288,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
   };
 
   const responseGoogle = async response => {
+    localStorage.setItem("loginType", "Social");
     if (response.accessToken) {
       socialAuth(
         response.accessToken,
@@ -308,6 +317,12 @@ const LoginCard: React.FC<LoginCardProps> = props => {
     setPasswordType(true);
   };
   const emailError = maybe(() => errors.filter(item => item.field === "email"));
+  const loginEmailError = maybe(() =>
+    loginErrors.filter(item => item.field === "email")
+  );
+  const loginPasswordError = maybe(() =>
+    loginErrors.filter(item => item.field === "password")
+  );
   return (
     <div>
       {emailClick ? (
@@ -330,19 +345,21 @@ const LoginCard: React.FC<LoginCardProps> = props => {
           >
             {({ change: handleChange, data, submit: handleSubmit }) => (
               <>
-                {error && (
+                {/* {error && (
                   <div className={classes.panel}>
                     <Typography variant="caption">
                       <FormattedMessage defaultMessage="Sorry, your username and/or password are incorrect. Please try again." />
                     </Typography>
                   </div>
-                )}
+                )} */}
                 <TextField
                   autoFocus
                   fullWidth
                   autoComplete="username"
                   label={intl.formatMessage(commonMessages.email)}
                   name="email"
+                  error={maybe(() => loginEmailError[0].message)}
+                  helperText={maybe(() => loginEmailError[0].message)}
                   onChange={handleChange}
                   value={data.email}
                   inputProps={{
@@ -359,6 +376,8 @@ const LoginCard: React.FC<LoginCardProps> = props => {
                         defaultMessage: "Password"
                       })}
                       name="password"
+                      error={maybe(() => loginPasswordError[0].message)}
+                      helperText={maybe(() => loginPasswordError[0].message)}
                       onChange={handleChange}
                       type="password"
                       value={data.password}
@@ -379,6 +398,8 @@ const LoginCard: React.FC<LoginCardProps> = props => {
                         defaultMessage: "Password"
                       })}
                       name="password"
+                      error={maybe(() => loginPasswordError[0].message)}
+                      helperText={maybe(() => loginPasswordError[0].message)}
                       onChange={handleChange}
                       type="text"
                       value={data.password}
@@ -503,15 +524,23 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               </Button>
               <p className={classes.tc}>
                 By continuing you agree to our{" "}
-                <Link to="" className="statementSection">
+                <a
+                  className={classes.statementSection}
+                  href="https://sitarri.com/#/page/terms-and-conditions/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   T&Cs
-                </Link>{" "}
-                and
-                <Link to="" className="statementSection">
-                  {" "}
+                </a>{" "}
+                and{" "}
+                <a
+                  className={classes.statementSection}
+                  href="https://sitarri.com/#/page/privacy-policy/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Privacy Policy
-                </Link>
-                .
+                </a>
               </p>
             </>
           )}

@@ -5,10 +5,19 @@ import { TypedQuery } from "../queries";
 import { Home } from "./types/Home";
 
 import { ClaimBusiness, ClaimBusinessVariables } from "./types/ClaimBusiness";
-import { CreateBusiness, CreateBusinessVariables } from "./types/CreateBusiness";
+import {
+  CreateBusiness,
+  CreateBusinessVariables
+} from "./types/CreateBusiness";
 import { CreateStore, CreateStoreVariables } from "./types/CreateStore";
-import { EmployeeAccess, EmployeeAccessVariables } from "./types/EmployeeAccess";
-import { ProductBulkCreate, ProductBulkCreateVariables } from "./types/ProductBulkCreate";
+import {
+  EmployeeAccess,
+  EmployeeAccessVariables
+} from "./types/EmployeeAccess";
+import {
+  ProductBulkCreate,
+  ProductBulkCreateVariables
+} from "./types/ProductBulkCreate";
 
 const home = gql`
   query Home {
@@ -21,74 +30,76 @@ const home = gql`
         }
       }
     }
-    salesToday: ordersTotal(period: TODAY) {
-      gross {
-        amount
-        currency
-      }
-    }
-    ordersToday: orders(created: TODAY) {
-      totalCount
-    }
-    ordersToFulfill: orders(status: READY_TO_FULFILL) {
-      totalCount
-    }
-    ordersToCapture: orders(status: READY_TO_CAPTURE) {
-      totalCount
-    }
-    productsOutOfStock: products(stockAvailability: OUT_OF_STOCK) {
-      totalCount
-    }
-    productTopToday: reportProductSales(period: TODAY, first: 5) {
-      edges {
-        node {
-          id
-          revenue(period: TODAY) {
-            gross {
-              amount
-              currency
-            }
-          }
-          attributes {
-            values {
-              id
-              name
-            }
-          }
-          product {
-            id
-            name
-            thumbnail {
-              url
-            }
-          }
-          quantityOrdered
-        }
-      }
-    }
-    activities: homepageEvents(last: 10) {
-      edges {
-        node {
-          amount
-          composedId
-          date
-          email
-          emailType
-          id
-          message
-          orderNumber
-          oversoldItems
-          quantity
-          type
-          user {
-            id
-            email
-          }
-        }
-      }
-    }
   }
 `;
+
+// salesToday: ordersTotal(period: TODAY) {
+//   gross {
+//     amount
+//     currency
+//   }
+// }
+// ordersToday: orders(created: TODAY) {
+//   totalCount
+// }
+// ordersToFulfill: orders(status: READY_TO_FULFILL) {
+//   totalCount
+// }
+// ordersToCapture: orders(status: READY_TO_CAPTURE) {
+//   totalCount
+// }
+// productsOutOfStock: products(stockAvailability: OUT_OF_STOCK) {
+//   totalCount
+// }
+// productTopToday: reportProductSales(period: TODAY, first: 5) {
+//   edges {
+//     node {
+//       id
+//       revenue(period: TODAY) {
+//         gross {
+//           amount
+//           currency
+//         }
+//       }
+//       attributes {
+//         values {
+//           id
+//           name
+//         }
+//       }
+//       product {
+//         id
+//         name
+//         thumbnail {
+//           url
+//         }
+//       }
+//       quantityOrdered
+//     }
+//   }
+// }
+// activities: homepageEvents(last: 10) {
+//   edges {
+//     node {
+//       amount
+//       composedId
+//       date
+//       email
+//       emailType
+//       id
+//       message
+//       orderNumber
+//       oversoldItems
+//       quantity
+//       type
+//       user {
+//         id
+//         email
+//       }
+//     }
+//   }
+// }
+
 export const HomePageQuery = TypedQuery<Home, {}>(home);
 
 export const claimBusinessMutation = gql`
@@ -147,11 +158,11 @@ export const CreateBusinessMutation = TypedMutation<
 export const createStoreMutation = gql`
   mutation CreateStoreMutation($input: StoreCreateInput!) {
     storeCreate(input: $input) {
-      store{
+      store {
         id
         name
       }
-      errors{
+      errors {
         field
         message
       }

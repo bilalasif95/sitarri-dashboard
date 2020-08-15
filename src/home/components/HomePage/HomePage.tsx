@@ -85,6 +85,13 @@ import { EmployeeAccess } from "../../types/EmployeeAccess";
 import { CreateBusiness } from "../../types/CreateBusiness";
 import { ProductBulkCreate } from "../../types/ProductBulkCreate";
 
+import { getAuthToken } from "../../../auth/utils";
+
+import {
+  claimBusinessConfirmPath,
+  employeeAccessConfirmPath
+} from "../../../auth/urls";
+
 const useStyles = makeStyles(
   theme => ({
     arrowlefticon: {
@@ -585,7 +592,7 @@ const HomePage: React.FC<HomePageProps> = props => {
   const [latlngError, setlatLngError] = React.useState("");
   const [latLngLoading, setlatLngLoading] = React.useState(false);
   const intl = useIntl();
-  const { logout, user } = useUser();
+  const { logout, user, verifyTokenAndSetData } = useUser();
   const choices = createChoices(intl);
   const initialForm: any = {
     address: maybe(() => "", ""),
@@ -610,7 +617,7 @@ const HomePage: React.FC<HomePageProps> = props => {
     vendURL: maybe(() => "", ""),
     website: maybe(() => "", "")
   };
-
+  const token = getAuthToken();
   React.useEffect(() => {
     const businessNameArray = [];
     maybe(() =>
@@ -891,7 +898,10 @@ const HomePage: React.FC<HomePageProps> = props => {
           </RequirePermissions>
         </div>
       </Grid>
-      {user.businessUser.edges.length === 0 && (
+      {(user.businessUser.edges.length === 0 ||
+        (user.businessUser.edges[0] &&
+          user.businessUser.edges[0].node.businessStore.edges.length ===
+            0)) && (
         <Dialog
           // onClose={onClose}
           open={open}
@@ -958,9 +968,30 @@ const HomePage: React.FC<HomePageProps> = props => {
                     color="primary"
                     variant="contained"
                     onClick={() => {
-                      setAddBusinessModal(true);
-                      setOpenAddBusinessModal(true);
-                      setOpen(false);
+                      if (user.businessUser.edges.length === 0) {
+                        setAddBusinessModal(true);
+                        setOpenAddBusinessModal(true);
+                        setOpen(false);
+                      } else {
+                        setOpen(false);
+                        setBusinessID(
+                          user.businessUser.edges &&
+                            user.businessUser.edges[0] &&
+                            user.businessUser.edges[0].node.id
+                        );
+                        setBusinessName(
+                          user.businessUser.edges &&
+                            user.businessUser.edges[0] &&
+                            user.businessUser.edges[0].node.name
+                        );
+                        setBusinessDescription(
+                          user.businessUser.edges &&
+                            user.businessUser.edges[0] &&
+                            user.businessUser.edges[0].node.description
+                        );
+                        setChooseCategoryModal(true);
+                        setOpenChooseCategoryModal(true);
+                      }
                     }}
                   >
                     <span className={classes.cardbtntext}>Add Business</span>
@@ -1020,7 +1051,8 @@ const HomePage: React.FC<HomePageProps> = props => {
                         input: {
                           business: input.business,
                           email: user.email,
-                          redirectUrl: window.location.origin + "/#/"
+                          redirectUrl: `${window.location.origin +
+                            "/#"}${claimBusinessConfirmPath}`
                         }
                       }
                     })
@@ -1168,7 +1200,8 @@ const HomePage: React.FC<HomePageProps> = props => {
                         input: {
                           business: input.business,
                           email: input.email,
-                          redirectUrl: window.location.origin + "/#/"
+                          redirectUrl: `${window.location.origin +
+                            "/#"}${employeeAccessConfirmPath}`
                         }
                       }
                     })
@@ -1453,18 +1486,9 @@ const HomePage: React.FC<HomePageProps> = props => {
                   <div className={classes.businessmodal}>
                     <ul className={classes.mylist}>
                       <li className={classes.listitem}>
-                        <span
-                          onClick={() => {
-                            setChooseCategoryModal(false);
-                            setOpenChooseCategoryModal(false);
-                            setAddBusinessModal(true);
-                          }}
-                        >
-                          <SVG
-                            className={classes.arrowlefticon}
-                            src={arrowleft}
-                          />
-                        </span>
+                        {/* <span onClick={() => { setChooseCategoryModal(false); setOpenChooseCategoryModal(false); setAddBusinessModal(true); }}>
+                          <SVG className={classes.arrowlefticon} src={arrowleft} />
+                        </span> */}
                         <span className={classes.listtext}>
                           Choose the category that best
                         </span>
@@ -2187,6 +2211,7 @@ const HomePage: React.FC<HomePageProps> = props => {
               variant="contained"
               type="submit"
               onClick={() => {
+                verifyTokenAndSetData(token);
                 setAllDoneModal(false);
                 setOpenAllDoneModal(false);
               }}

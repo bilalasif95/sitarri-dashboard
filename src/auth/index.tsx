@@ -18,23 +18,36 @@ import LoginLoading from "./components/LoginLoading";
 
 interface UserContext {
   errors: any;
+  loginErrors: any;
   success: string;
   login: (username: string, password: string) => void;
-  socialAuth: (accessToken: string, provider:  string, email: string, uid: string) => void;
-  signup: (username: string, password: string,redirectUrl: string,menuBack: any) => void;
+  socialAuth: (
+    accessToken: string,
+    provider: string,
+    email: string,
+    uid: string
+  ) => void;
+  signup: (
+    username: string,
+    password: string,
+    redirectUrl: string,
+    menuBack: any
+  ) => void;
   loginByToken: (token: string, user: User) => void;
   logout: () => void;
-  signUpTokenAuthLoading: boolean,
+  signUpTokenAuthLoading: boolean;
   tokenAuthLoading: boolean;
   tokenRefresh: () => Promise<void>;
   tokenVerifyLoading: boolean;
   user?: User;
+  verifyTokenAndSetData: (token: string) => void;
 }
 
 export const UserContext = React.createContext<UserContext>({
   errors: undefined,
   login: undefined,
   loginByToken: undefined,
+  loginErrors: undefined,
   logout: undefined,
   signUpTokenAuthLoading: false,
   signup: undefined,
@@ -42,7 +55,8 @@ export const UserContext = React.createContext<UserContext>({
   success: "",
   tokenAuthLoading: false,
   tokenRefresh: undefined,
-  tokenVerifyLoading: false
+  tokenVerifyLoading: false,
+  verifyTokenAndSetData: undefined
 });
 
 interface AuthRouterProps {

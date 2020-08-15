@@ -9,7 +9,10 @@ const LoginView: React.FC = () => {
   const navigate = useNavigator();
   const { login, user, tokenAuthLoading } = useUser();
 
-  const handleSubmit = (data: FormData) => login(data.email, data.password);
+  const handleSubmit = (data: FormData) => {
+    localStorage.setItem("loginType", "Simple");
+    login(data.email, data.password);
+  };
 
   return (
     <LoginPage
