@@ -3,7 +3,7 @@ import Chip from "@material-ui/core/Chip";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Grow from "@material-ui/core/Grow";
 import Hidden from "@material-ui/core/Hidden";
-import LinearProgress from "@material-ui/core/LinearProgress";
+// import LinearProgress from "@material-ui/core/LinearProgress";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/MenuList";
 import Paper from "@material-ui/core/Paper";
@@ -143,10 +143,10 @@ const useStyles = makeStyles(
         position: "absolute",
         top: "50%",
         transform: "translate(-50%,-50%)",
-        width: '170px',
+        width: "170px"
       },
       // background: theme.palette.secondary.main,
-      background: '#111212',
+      background: "#111212",
       display: "block",
       height: 80,
       position: "relative"
@@ -405,8 +405,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
               [classes.contentToggle]: isMenuSmall
             })}
           >
+            {/* <LinearProgress className={classes.appLoader} color="primary" /> */}
             {appState.loading ? (
-              <LinearProgress className={classes.appLoader} color="primary" />
+              <div className={classes.appLoaderPlaceholder} />
             ) : (
               <div className={classes.appLoaderPlaceholder} />
             )}

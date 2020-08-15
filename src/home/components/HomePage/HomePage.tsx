@@ -5,19 +5,16 @@ import DialogContent from "@material-ui/core/DialogContent";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import React from "react";
-import Dropzone from 'react-dropzone';
+import Dropzone from "react-dropzone";
 import { IntlShape, useIntl } from "react-intl";
 import SVG from "react-inlinesvg";
 
-import { isValidPhoneNumber } from 'react-phone-number-input';
+import { isValidPhoneNumber } from "react-phone-number-input";
 // import PlacesAutocomplete, {
 //   geocodeByAddress,
 //   getLatLng,
 // } from 'react-places-autocomplete';
-import {
-  geocodeByAddress,
-  getLatLng,
-} from 'react-places-autocomplete';
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 import claimBusiness from "@assets/images/Group 9355.svg";
 import email from "@assets/images/email.svg";
@@ -38,13 +35,17 @@ import saleimg4 from "@assets/images/saleimg4.svg";
 import twitter from "@assets/images/twitter.svg";
 import uploadicon from "@assets/images/uploadicon.svg";
 import CardSpacer from "@saleor/components/CardSpacer";
-import ConfirmButton, { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
+import ConfirmButton, {
+  ConfirmButtonTransitionState
+} from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import Money from "@saleor/components/Money";
-import RadioGroupField, { RadioGroupFieldChoice } from "@saleor/components/RadioGroupField";
+import RadioGroupField, {
+  RadioGroupFieldChoice
+} from "@saleor/components/RadioGroupField";
 import RequirePermissions from "@saleor/components/RequirePermissions";
 import Skeleton from "@saleor/components/Skeleton";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -70,7 +71,13 @@ import SingleAutocompleteSelectField from "../../../components/SingleAutocomplet
 
 import { TypedShopInfoQuery } from "../../../../src/components/Shop/query";
 
-import { ClaimBusinessMutation, CreateBusinessMutation, CreateStoreMutation, EmployeeAccessMutation, ProductBulkCreateMutation } from "../../queries";
+import {
+  ClaimBusinessMutation,
+  CreateBusinessMutation,
+  CreateStoreMutation,
+  EmployeeAccessMutation,
+  ProductBulkCreateMutation
+} from "../../queries";
 
 import { ClaimBusiness } from "../../types/ClaimBusiness";
 import { CreateStore } from "../../types/CreateStore";
@@ -80,61 +87,64 @@ import { ProductBulkCreate } from "../../types/ProductBulkCreate";
 
 import { getAuthToken } from "../../../auth/utils";
 
-import { claimBusinessConfirmPath, employeeAccessConfirmPath } from "../../../auth/urls";
+import {
+  claimBusinessConfirmPath,
+  employeeAccessConfirmPath
+} from "../../../auth/urls";
 
 const useStyles = makeStyles(
   theme => ({
     arrowlefticon: {
-      left: '0',
-      position: 'absolute',
+      left: "0",
+      position: "absolute"
     },
     btntext: {
-      textTransform: 'capitalize',
+      textTransform: "capitalize"
     },
     businessbtn: {
       "&:hover": {
-        backgroundColor: 'transparent',
-        border: '1px solid #000',
+        backgroundColor: "transparent",
+        border: "1px solid #000"
       },
-      backgroundColor: '#fff',
-      border: '1px solid transparent',
-      color: '#000',
-      display: 'block',
-      marginTop: '0px',
-      padding: '11.8px 10px',
-      width: '100%',
+      backgroundColor: "#fff",
+      border: "1px solid transparent",
+      color: "#000",
+      display: "block",
+      marginTop: "0px",
+      padding: "11.8px 10px",
+      width: "100%"
     },
     businesscard: {
-      backgroundImage: 'Linear-gradient(#fe9725, #f65216)',
+      backgroundImage: "Linear-gradient(#fe9725, #f65216)"
     },
     businessimgbox: {
       "& svg": {
-        height: '100%',
-        marginTop: '-2px',
-        width: '100%',
+        height: "100%",
+        marginTop: "-2px",
+        width: "100%"
       },
-      display: 'flex',
-      justifyContent: 'flex-end',
-      overflow: 'hidden',
+      display: "flex",
+      justifyContent: "flex-end",
+      overflow: "hidden"
     },
     businessmodal: {
-      display: 'block',
-      margin: '0px auto',
-      paddingTop: '30px;',
-      width: '80%',
+      display: "block",
+      margin: "0px auto",
+      paddingTop: "30px;",
+      width: "80%"
     },
     businessmodalcont: {
-      backgroundColor: '#fafafa',
+      backgroundColor: "#fafafa",
       // overflowY: 'hidden',
-      paddingBottom: '30px',
+      paddingBottom: "30px"
     },
     businessmodaltextarea: {
       "& label": {
-        overflowX: 'visible',
+        overflowX: "visible"
       },
-      marginLeft: '47px',
-      marginTop: '30px',
-      width: '89%',
+      marginLeft: "47px",
+      marginTop: "30px",
+      width: "89%"
     },
     cardContainer: {
       display: "grid",
@@ -148,262 +158,264 @@ const useStyles = makeStyles(
       }
     },
     cardContent: {
-      padding: '30px 15px 100px 15px',
-      width: '100%',
+      padding: "0 1rem 1rem",
+      width: "100%"
     },
     cardbtn: {
-      display: 'block',
-      padding: '13px 10px',
-      width: '100%',
+      display: "block",
+      padding: "13px 10px",
+      width: "100%"
     },
     cardbtntext: {
-      color: '#000',
-      textTransform: 'capitalize',
+      color: "#000",
+      textTransform: "capitalize"
     },
     cardhead: {
-      fontSize: '18px',
+      fontSize: "18px",
       fontWeight: 500,
-      position: 'absolute',
-      textAlign: 'center',
-      top: '1rem',
-      width: '100%',
+      position: "absolute",
+      textAlign: "center",
+      top: "1rem",
+      width: "100%"
     },
     cardhead1: {
-      fontSize: '18px',
+      fontSize: "18px",
+      fontWeight: 500,
+      margin: "0.2rem 0"
     },
     cards: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      width: '100%',
+      display: "flex",
+      justifyContent: "space-between",
+      width: "100%"
     },
     cardshomepage: {
       "::-webkit-scrollbar": {
-        width: '4px',
+        width: "4px"
       },
-      padding: '0px !important',
+      padding: "0px !important"
     },
     cardtext: {
-      height: '145px',
+      height: "145px"
     },
     choosefile: {
       "& input": {
-        backgroundColor: '#eaeaea',
-        padding: '60px 0px !important',
-      },
+        backgroundColor: "#eaeaea",
+        padding: "60px 0px !important"
+      }
     },
     chooseoption: {
-      margin: '0px auto',
-      marginTop: '50px !important',
-      width: '80%',
+      margin: "0px auto",
+      marginTop: "50px !important",
+      width: "80%"
     },
     claimcard: {
-      backgroundColor: '#fff',
+      backgroundColor: "#fff"
     },
     confirmbtn: {
       "& span": {
-        textTransform: 'capitalize',
+        textTransform: "capitalize"
       },
-      padding: '13px 12px',
+      padding: "13px 12px"
     },
     dropzonecontent: {
       "& Svg": {
-        height: '50px',
-        left: '0',
-        margin: '0px auto',
-        position: 'absolute',
-        right: '0',
-        top: '95px',
-        width: '80px',
+        height: "50px",
+        left: "0",
+        margin: "0px auto",
+        position: "absolute",
+        right: "0",
+        top: "95px",
+        width: "80px"
       },
       "& path": {
-        fill: '#a1a1a1',
+        fill: "#a1a1a1"
       },
       "&:focus": {
-        outline: 'none',
+        outline: "none"
       },
-      cursor: 'pointer',
+      cursor: "pointer",
       display: "flex",
       flexWrap: "wrap",
       justifyContent: "center",
-      minHeight: '180px',
+      minHeight: "180px",
       padding: " 2rem 0",
-      position: 'relative',
+      position: "relative"
     },
     employeaccessinput: {
-      paddingTop: '30px',
+      paddingTop: "30px"
     },
     employeecard: {
-      backgroundColor: '#fff',
+      backgroundColor: "#fff"
     },
     filepreview: {
       "& img": {
-        borderRadius: '5px',
-        height: '100px',
-        width: '100px',
+        borderRadius: "5px",
+        height: "100px",
+        width: "100px"
       },
-      backgroundColor: '#695ccd',
-      borderRadius: '5px',
-      height: '100px',
-      width: '100px',
+      backgroundColor: "#695ccd",
+      borderRadius: "5px",
+      height: "100px",
+      width: "100px"
     },
     fileupload: {
-      marginTop: '30px',
+      marginTop: "30px"
     },
     fileuploadcont: {
       "& section": {
         "&:focus": {
-          outline: 'none',
-        },
+          outline: "none"
+        }
       },
-      backgroundColor: '#eaeaea',
-      border: '1px dashed #707070',
-      borderRadius: '7px',
+      backgroundColor: "#eaeaea",
+      border: "1px dashed #707070",
+      borderRadius: "7px"
     },
     icon: {
       "& path": {
-        fill: theme.palette.primary.main,
+        fill: theme.palette.primary.main
       }
     },
     imgbox: {
       "& svg": {
-        height: '100%',
-        marginTop: '-2px',
-        width: '100%',
+        height: "100%",
+        marginTop: "-2px",
+        width: "100%"
       },
-      display: 'flex',
-      justifyContent: 'flex-start',
-      overflow: 'hidden',
-      width: '100%',
+      display: "flex",
+      justifyContent: "flex-start",
+      overflow: "hidden",
+      width: "100%"
     },
     inputbox: {
       "& label": {
-        overflowX: 'visible',
+        overflowX: "visible"
       },
       "& svg": {
         "& path": {
-          fill: 'red',
+          fill: "red"
         },
-        height: '25px',
-        width: '34pt',
+        height: "25px",
+        width: "34pt"
       },
 
-      alignItems: 'center',
-      display: 'flex',
+      alignItems: "center",
+      display: "flex"
     },
     latlngError: {
       color: "red",
-      textAlign: "center",
+      textAlign: "center"
     },
     listitem: {
       "& svg": {
-        cursor: 'pointer',
-        left: '-45px',
-        position: 'absolute',
-        top: '4px',
+        cursor: "pointer",
+        left: "-45px",
+        position: "absolute",
+        top: "4px"
       },
-      position: 'relative',
-      textAlign: 'center',
+      position: "relative",
+      textAlign: "center"
     },
     listtext: {
-      color: '#000',
-      fontSize: '20px',
+      color: "#000",
+      fontSize: "20px"
     },
     modalfooter: {
-      backgroundColor: '#fafafa',
-      borderTop: 'none',
-      paddingTop: '40px',
+      backgroundColor: "#fafafa",
+      borderTop: "none",
+      paddingTop: "40px"
     },
     mycard: {
-      borderRadius: '10px',
-      padding: '0',
-      position: 'relative',
-      width: '32%',
+      borderRadius: "10px",
+      padding: "0",
+      position: "relative",
+      width: "32%"
       // height: '100vh',
     },
     mylist: {
-      listStyleType: 'none',
-      marginBottom: '40px',
+      listStyleType: "none",
+      marginBottom: "40px"
     },
     selectinput: {
-      border: 'none',
+      border: "none"
     },
     selectpoint: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      marginBottom: '15px',
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: "15px"
     },
     selectpointcontent: {
-      backgroundColor: '#fff',
-      borderRadius: '4px',
-      padding: '10px 15px',
-      width: '49%',
+      backgroundColor: "#fff",
+      borderRadius: "4px",
+      padding: "10px 15px",
+      width: "49%"
     },
     selectpointheading: {
-      marginBottom: '30px',
-      marginTop: '30px',
+      marginBottom: "30px",
+      marginTop: "30px"
     },
     selectpointinput: {
       "& label": {
-        overflowX: 'visible',
-      },
+        overflowX: "visible"
+      }
     },
     selectpointinputgroup: {
-      marginTop: '20px',
+      marginTop: "20px"
     },
     selectpointlist: {
-      '& h4': {
-        margin: '0px !important',
+      "& h4": {
+        margin: "0px !important"
       },
       "& li": {
-        fontSize: '11px',
-        paddingRight: '80px',
-        position: 'relative',
+        fontSize: "11px",
+        paddingRight: "80px",
+        position: "relative"
       },
       "& svg": {
-        position: 'absolute',
-        right: '2px',
-        top: '-19px',
-        width: '65px',
+        position: "absolute",
+        right: "2px",
+        top: "-19px",
+        width: "65px"
       },
       cursor: "pointer",
-      listStyleType: 'none',
-      marginTop: '0px',
-      paddingLeft: '0px',
+      listStyleType: "none",
+      marginTop: "0px",
+      paddingLeft: "0px"
     },
     sendbtn: {
-      padding: '13px 30px',
-      textTransform: 'capitalize',
+      padding: "13px 30px",
+      textTransform: "capitalize"
     },
     skipbtn: {
       "& span": {
-        color: '#000',
+        color: "#000"
       },
       "&:hover": {
-        backgroundColor: '#fff !important',
+        backgroundColor: "#fff !important"
       },
-      backgroundColor: '#fff',
-      border: '1px solid #f3f3f3',
+      backgroundColor: "#fff",
+      border: "1px solid #f3f3f3",
 
-      padding: '13px 30px',
-      textTransform: 'capitalize',
+      padding: "13px 30px",
+      textTransform: "capitalize"
     },
     thanksmodallist: {
-      textAlign: 'center',
+      textAlign: "center"
     },
     thanksmodaltext: {
       "& p": {
-        marginTop: '20px',
-        textAlign: 'center',
+        marginTop: "20px",
+        textAlign: "center"
       }
     },
     uploadtext: {
-      color: '#000',
-      fontSize: '16px',
-      margin: '0px',
-      padding: '15px 0px',
-      textAlign: 'center',
-      width: '100%',
-    },
+      color: "#000",
+      fontSize: "16px",
+      margin: "0px",
+      padding: "15px 0px",
+      textAlign: "center",
+      width: "100%"
+    }
   }),
 
   { name: "HomePage" }
@@ -474,28 +486,55 @@ const HomePage: React.FC<HomePageProps> = props => {
   } = props;
   const classes = useStyles(props);
   const [open, setOpen] = React.useState(true);
-  const [openClaimBusinessModal, setOpenClaimBusinessModal] = React.useState(false);
+  const [openClaimBusinessModal, setOpenClaimBusinessModal] = React.useState(
+    false
+  );
   const [claimBusinessModal, setClaimBusinessModal] = React.useState(false);
-  const [claimBusinessThanksModal, setClaimBusinessThanksModal] = React.useState(false);
-  const [openClaimBusinessThanksModal, setOpenClaimBusinessThanksModal] = React.useState(false);
+  const [
+    claimBusinessThanksModal,
+    setClaimBusinessThanksModal
+  ] = React.useState(false);
+  const [
+    openClaimBusinessThanksModal,
+    setOpenClaimBusinessThanksModal
+  ] = React.useState(false);
   const [employeeAccessModal, setEmployeeAccessModal] = React.useState(false);
-  const [openEmployeeAccessModal, setOpenEmployeeAccessModal] = React.useState(false);
-  const [employeeAccessThanksModal, setEmployeeAccessThanksModal] = React.useState(false);
-  const [openEmployeeAccessThanksModal, setOpenEmployeeAccessThanksModal] = React.useState(false);
+  const [openEmployeeAccessModal, setOpenEmployeeAccessModal] = React.useState(
+    false
+  );
+  const [
+    employeeAccessThanksModal,
+    setEmployeeAccessThanksModal
+  ] = React.useState(false);
+  const [
+    openEmployeeAccessThanksModal,
+    setOpenEmployeeAccessThanksModal
+  ] = React.useState(false);
   const [addBusinessModal, setAddBusinessModal] = React.useState(false);
   const [chooseLocationModal, setChooseLocationModal] = React.useState(false);
-  const [openChooseLocationModal, setOpenChooseLocationModal] = React.useState(false);
+  const [openChooseLocationModal, setOpenChooseLocationModal] = React.useState(
+    false
+  );
   const [allDoneModal, setAllDoneModal] = React.useState(false);
   const [openAllDoneModal, setOpenAllDoneModal] = React.useState(false);
   const [addAddressModal, setAddAddressModal] = React.useState(false);
   const [openAddAddressModal, setOpenAddAddressModal] = React.useState(false);
-  const [importInformationModal, setImportInformationModal] = React.useState(false);
-  const [openImportInformationModal, setOpenImportInformationModal] = React.useState(false);
+  const [importInformationModal, setImportInformationModal] = React.useState(
+    false
+  );
+  const [
+    openImportInformationModal,
+    setOpenImportInformationModal
+  ] = React.useState(false);
   const [openAddBusinessModal, setOpenAddBusinessModal] = React.useState(false);
   const [chooseCategoryModal, setChooseCategoryModal] = React.useState(false);
-  const [openChooseCategoryModal, setOpenChooseCategoryModal] = React.useState(false);
+  const [openChooseCategoryModal, setOpenChooseCategoryModal] = React.useState(
+    false
+  );
   const [addInformationModal, setAddInformationModal] = React.useState(false);
-  const [openAddInformationModal, setOpenAddInformationModal] = React.useState(false);
+  const [openAddInformationModal, setOpenAddInformationModal] = React.useState(
+    false
+  );
   const [businessNamesArray, setBusinessNamesArray] = React.useState([]);
   const [logo, setLogo] = React.useState<any>();
   const [logoFile, setLogoFile] = React.useState<any>();
@@ -507,11 +546,22 @@ const HomePage: React.FC<HomePageProps> = props => {
   // const onClaimBusinessClaimThanksClose = () => setClaimBusinessThanksModal(false);
   // const onEmployeeAccessClose = () => setOpenEmployeeAccessModal(false);
   // const onEmployeeAccessThanksModalClose = () => setEmployeeAccessThanksModal(false);
-  const [employeeAccessEmailError, setEmployeeAccessEmailError] = React.useState([]);
-  const [createBusinessNameError, setCreateBusinessNameError] = React.useState([]);
-  const [izettleAccessTokenError, setIzettleAccessTokenError] = React.useState([]);
-  const [squareAccessTokenError, setSquareAccessTokenError] = React.useState([]);
-  const [shopifyAccessTokenError, setShopifyAccessTokenError] = React.useState([]);
+  const [
+    employeeAccessEmailError,
+    setEmployeeAccessEmailError
+  ] = React.useState([]);
+  const [createBusinessNameError, setCreateBusinessNameError] = React.useState(
+    []
+  );
+  const [izettleAccessTokenError, setIzettleAccessTokenError] = React.useState(
+    []
+  );
+  const [squareAccessTokenError, setSquareAccessTokenError] = React.useState(
+    []
+  );
+  const [shopifyAccessTokenError, setShopifyAccessTokenError] = React.useState(
+    []
+  );
   const [vendAccessTokenError, setVendAccessTokenError] = React.useState([]);
   const [shopifyURLError, setShopifyURLError] = React.useState([]);
   const [vendURLError, setVendURLError] = React.useState([]);
@@ -565,16 +615,18 @@ const HomePage: React.FC<HomePageProps> = props => {
     type: maybe(() => "", ""),
     vendAccessToken: maybe(() => "", ""),
     vendURL: maybe(() => "", ""),
-    website: maybe(() => "", ""),
+    website: maybe(() => "", "")
   };
   const token = getAuthToken();
   React.useEffect(() => {
     const businessNameArray = [];
-    maybe(() => businessNames.map(name => {
-      businessNameArray.push({ label: name.node.name, value: name.node.id })
-    }))
-    setBusinessNamesArray(businessNameArray)
-  }, [businessNames])
+    maybe(() =>
+      businessNames.map(name => {
+        businessNameArray.push({ label: name.node.name, value: name.node.id });
+      })
+    );
+    setBusinessNamesArray(businessNameArray);
+  }, [businessNames]);
 
   const onClaimBusinessCompleted = (data: ClaimBusiness) => {
     if (data.requestClaimBusiness.businessErrors.length === 0) {
@@ -585,19 +637,22 @@ const HomePage: React.FC<HomePageProps> = props => {
   };
 
   const onEmployeeAccessCompleted = (data: EmployeeAccess) => {
-    setEmployeeAccessEmailError([])
+    setEmployeeAccessEmailError([]);
     if (data.requestEmployeeAccess.businessErrors.length === 0) {
       setEmployeeAccessModal(false);
       setEmployeeAccessThanksModal(true);
       setOpenEmployeeAccessThanksModal(true);
-    }
-    else {
-      setEmployeeAccessEmailError(data.requestEmployeeAccess.businessErrors.filter(item => item.field === "email"))
+    } else {
+      setEmployeeAccessEmailError(
+        data.requestEmployeeAccess.businessErrors.filter(
+          item => item.field === "email"
+        )
+      );
     }
   };
 
   const onCreateBusinessCompleted = (data: CreateBusiness) => {
-    setCreateBusinessNameError([])
+    setCreateBusinessNameError([]);
     if (data.businessCreate.businessErrors.length === 0) {
       setAddBusinessModal(false);
       setChooseCategoryModal(true);
@@ -605,9 +660,10 @@ const HomePage: React.FC<HomePageProps> = props => {
       setBusinessID(data.businessCreate.business.id);
       setBusinessName(data.businessCreate.business.name);
       setBusinessDescription(data.businessCreate.business.description);
-    }
-    else {
-      setCreateBusinessNameError(data.businessCreate.businessErrors.filter(item => item.field === "name"))
+    } else {
+      setCreateBusinessNameError(
+        data.businessCreate.businessErrors.filter(item => item.field === "name")
+      );
     }
   };
 
@@ -618,8 +674,7 @@ const HomePage: React.FC<HomePageProps> = props => {
         setChooseLocationModal(false);
         setAllDoneModal(true);
         setOpenAllDoneModal(true);
-      }
-      else {
+      } else {
         setChooseLocationModal(false);
         setOpenImportInformationModal(true);
         setImportInformationModal(true);
@@ -651,21 +706,44 @@ const HomePage: React.FC<HomePageProps> = props => {
       setIzettle(false);
       setVend(false);
       setSquare(false);
-    }
-    else {
+    } else {
       if (platform === "IZETTLE") {
-        setIzettleAccessTokenError(data.productBulkCreate.productErrors.filter(item => item.field === "accessToken"))
+        setIzettleAccessTokenError(
+          data.productBulkCreate.productErrors.filter(
+            item => item.field === "accessToken"
+          )
+        );
       }
       if (platform === "SQUAREUP") {
-        setSquareAccessTokenError(data.productBulkCreate.productErrors.filter(item => item.field === "accessToken"))
+        setSquareAccessTokenError(
+          data.productBulkCreate.productErrors.filter(
+            item => item.field === "accessToken"
+          )
+        );
       }
       if (platform === "SHOPIFY") {
-        setShopifyAccessTokenError(data.productBulkCreate.productErrors.filter(item => item.field === "accessToken"))
-        setShopifyURLError(data.productBulkCreate.productErrors.filter(item => item.field === "url"))
+        setShopifyAccessTokenError(
+          data.productBulkCreate.productErrors.filter(
+            item => item.field === "accessToken"
+          )
+        );
+        setShopifyURLError(
+          data.productBulkCreate.productErrors.filter(
+            item => item.field === "url"
+          )
+        );
       }
       if (platform === "VENDHQ") {
-        setVendAccessTokenError(data.productBulkCreate.productErrors.filter(item => item.field === "accessToken"))
-        setVendURLError(data.productBulkCreate.productErrors.filter(item => item.field === "url"))
+        setVendAccessTokenError(
+          data.productBulkCreate.productErrors.filter(
+            item => item.field === "accessToken"
+          )
+        );
+        setVendURLError(
+          data.productBulkCreate.productErrors.filter(
+            item => item.field === "url"
+          )
+        );
       }
     }
   };
@@ -755,23 +833,35 @@ const HomePage: React.FC<HomePageProps> = props => {
             <div className={classes.cardContainer}>
               <HomeAnalyticsCard
                 title={"Sales"}
-                icon={<Sales className={classes.icon} fontSize={"inherit"} viewBox="0 0 64 64" />}
+                icon={
+                  <Sales
+                    className={classes.icon}
+                    fontSize={"inherit"}
+                    viewBox="0 0 64 64"
+                  />
+                }
               >
                 {sales ? (
                   <Money money={sales} />
                 ) : (
-                    <Skeleton style={{ width: "5em" }} />
-                  )}
+                  <Skeleton style={{ width: "5em" }} />
+                )}
               </HomeAnalyticsCard>
               <HomeAnalyticsCard
                 title={"Orders"}
-                icon={<Orders className={classes.icon} fontSize={"inherit"} viewBox="0 0 64 64" />}
+                icon={
+                  <Orders
+                    className={classes.icon}
+                    fontSize={"inherit"}
+                    viewBox="0 0 64 64"
+                  />
+                }
               >
                 {orders === undefined ? (
                   <Skeleton style={{ width: "5em" }} />
                 ) : (
-                    orders
-                  )}
+                  orders
+                )}
               </HomeAnalyticsCard>
             </div>
           </RequirePermissions>
@@ -808,7 +898,10 @@ const HomePage: React.FC<HomePageProps> = props => {
           </RequirePermissions>
         </div>
       </Grid>
-      {(user.businessUser.edges.length === 0 || (user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges.length === 0)) &&
+      {(user.businessUser.edges.length === 0 ||
+        (user.businessUser.edges[0] &&
+          user.businessUser.edges[0].node.businessStore.edges.length ===
+            0)) && (
         <Dialog
           // onClose={onClose}
           open={open}
@@ -816,12 +909,12 @@ const HomePage: React.FC<HomePageProps> = props => {
           fullWidth
           PaperProps={{
             style: {
-              backgroundColor: 'transparent',
-              margin: '0px',
-              overflow: 'hidden',
+              backgroundColor: "transparent",
+              margin: "0px",
+              overflow: "hidden",
               overflowY: "visible",
-              width: '80%',
-            },
+              width: "80%"
+            }
           }}
         >
           <DialogContent className={classes.cardshomepage}>
@@ -833,10 +926,24 @@ const HomePage: React.FC<HomePageProps> = props => {
                 </div>
                 <div className={classes.cardContent}>
                   <div className={classes.cardtext}>
-                    <h4 className={classes.cardhead1}>Claim a business already on Sitarri</h4>
-                    <p>If you own or manage a business that is already on Sitarri, click below to take control</p>
+                    <h4 className={classes.cardhead1}>
+                      Claim a business already on Sitarri
+                    </h4>
+                    <p>
+                      If you own or manage a business that is already on
+                      Sitarri, click below to take control
+                    </p>
                   </div>
-                  <Button className={classes.cardbtn} color="primary" variant="contained" onClick={() => { setClaimBusinessModal(true); setOpen(false); setOpenClaimBusinessModal(true) }}>
+                  <Button
+                    className={classes.cardbtn}
+                    color="primary"
+                    variant="contained"
+                    onClick={() => {
+                      setClaimBusinessModal(true);
+                      setOpen(false);
+                      setOpenClaimBusinessModal(true);
+                    }}
+                  >
                     <span className={classes.btntext}>Claim Business</span>
                   </Button>
                 </div>
@@ -848,22 +955,45 @@ const HomePage: React.FC<HomePageProps> = props => {
                 </div>
                 <div className={classes.cardContent}>
                   <div className={classes.cardtext}>
-                    <h4 className={classes.cardhead1}>Add a business to Sitarri</h4>
-                    <p>If you own or manage a business, click below to add it to Sitarri</p>
+                    <h4 className={classes.cardhead1}>
+                      Add a business to Sitarri
+                    </h4>
+                    <p>
+                      If you own or manage a business, click below to add it to
+                      Sitarri
+                    </p>
                   </div>
-                  <Button className={classes.businessbtn} color="primary" variant="contained" onClick={() => {
-                    if (user.businessUser.edges.length === 0) {
-                      setAddBusinessModal(true); setOpenAddBusinessModal(true); setOpen(false)
-                    }
-                    else {
-                      setOpen(false);
-                      setBusinessID(user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.id);
-                      setBusinessName(user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.name);
-                      setBusinessDescription(user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.description);
-                      setChooseCategoryModal(true);
-                      setOpenChooseCategoryModal(true);
-                    }
-                  }}>
+                  <Button
+                    className={classes.businessbtn}
+                    color="primary"
+                    variant="contained"
+                    onClick={() => {
+                      if (user.businessUser.edges.length === 0) {
+                        setAddBusinessModal(true);
+                        setOpenAddBusinessModal(true);
+                        setOpen(false);
+                      } else {
+                        setOpen(false);
+                        setBusinessID(
+                          user.businessUser.edges &&
+                            user.businessUser.edges[0] &&
+                            user.businessUser.edges[0].node.id
+                        );
+                        setBusinessName(
+                          user.businessUser.edges &&
+                            user.businessUser.edges[0] &&
+                            user.businessUser.edges[0].node.name
+                        );
+                        setBusinessDescription(
+                          user.businessUser.edges &&
+                            user.businessUser.edges[0] &&
+                            user.businessUser.edges[0].node.description
+                        );
+                        setChooseCategoryModal(true);
+                        setOpenChooseCategoryModal(true);
+                      }
+                    }}
+                  >
                     <span className={classes.cardbtntext}>Add Business</span>
                   </Button>
                 </div>
@@ -875,18 +1005,33 @@ const HomePage: React.FC<HomePageProps> = props => {
                 </div>
                 <div className={classes.cardContent}>
                   <div className={classes.cardtext}>
-                    <h4 className={classes.cardhead1}>Staff member of a business</h4>
-                    <p>Request employee access to a business listed to Sitarri</p>
+                    <h4 className={classes.cardhead1}>
+                      Staff member of a business
+                    </h4>
+                    <p>
+                      Request employee access to a business listed to Sitarri
+                    </p>
                   </div>
-                  <Button className={`${classes.cardbtn}`} color="primary" variant="contained" onClick={() => { setEmployeeAccessModal(true); setOpen(false); setOpenEmployeeAccessModal(true) }}>
-                    <span className={classes.btntext}>Make employee account</span>
+                  <Button
+                    className={`${classes.cardbtn}`}
+                    color="primary"
+                    variant="contained"
+                    onClick={() => {
+                      setEmployeeAccessModal(true);
+                      setOpen(false);
+                      setOpenEmployeeAccessModal(true);
+                    }}
+                  >
+                    <span className={classes.btntext}>
+                      Make employee account
+                    </span>
                   </Button>
                 </div>
               </div>
             </div>
           </DialogContent>
         </Dialog>
-      }
+      )}
 
       {claimBusinessModal && (
         <Dialog
@@ -898,17 +1043,21 @@ const HomePage: React.FC<HomePageProps> = props => {
           <ClaimBusinessMutation onCompleted={onClaimBusinessCompleted}>
             {(requestClaimBusiness, requestClaimBusinessOpts) => (
               <>
-                <Form initial={initialForm} onSubmit={input =>
-                  requestClaimBusiness({
-                    variables: {
-                      input: {
-                        business: input.business,
-                        email: user.email,
-                        redirectUrl: `${window.location.origin + "/#"}${claimBusinessConfirmPath}`,
+                <Form
+                  initial={initialForm}
+                  onSubmit={input =>
+                    requestClaimBusiness({
+                      variables: {
+                        input: {
+                          business: input.business,
+                          email: user.email,
+                          redirectUrl: `${window.location.origin +
+                            "/#"}${claimBusinessConfirmPath}`
+                        }
                       }
-                    }
-                  })
-                }>
+                    })
+                  }
+                >
                   {({ change, data, submit }) => {
                     const handleCountrySelect = createSingleAutocompleteSelectHandler(
                       change,
@@ -920,7 +1069,22 @@ const HomePage: React.FC<HomePageProps> = props => {
                         <DialogContent className={classes.businessmodalcont}>
                           <div className={classes.businessmodal}>
                             <ul className={classes.mylist}>
-                              <li className={classes.listitem}><span onClick={() => { setClaimBusinessModal(false); setOpen(true) }}><SVG classname={classes.arrowlefticon} src={arrowleft} /></span><span className={classes.listtext}>What is the name of the business?</span></li>
+                              <li className={classes.listitem}>
+                                <span
+                                  onClick={() => {
+                                    setClaimBusinessModal(false);
+                                    setOpen(true);
+                                  }}
+                                >
+                                  <SVG
+                                    classname={classes.arrowlefticon}
+                                    src={arrowleft}
+                                  />
+                                </span>
+                                <span className={classes.listtext}>
+                                  What is the name of the business?
+                                </span>
+                              </li>
                             </ul>
                             <div className={classes.inputbox}>
                               <SVG src={inputicon} />
@@ -946,9 +1110,15 @@ const HomePage: React.FC<HomePageProps> = props => {
                             transitionState={confirmButtonState}
                             color="primary"
                             variant="contained"
-                            disabled={requestClaimBusinessOpts.loading || data.business === ""}
-                            onClick={() => { submit() }}
-                            className={classes.confirmbtn} >
+                            disabled={
+                              requestClaimBusinessOpts.loading ||
+                              data.business === ""
+                            }
+                            onClick={() => {
+                              submit();
+                            }}
+                            className={classes.confirmbtn}
+                          >
                             <span>Manage Business</span>
                           </ConfirmButton>
                         </DialogActions>
@@ -972,10 +1142,25 @@ const HomePage: React.FC<HomePageProps> = props => {
           <DialogContent className={classes.businessmodalcont}>
             <div className={classes.businessmodal}>
               <ul className={`${classes.mylist} ${classes.thanksmodallist}`}>
-                <li className={classes.listitem}><span onClick={() => { setClaimBusinessThanksModal(false); setOpenClaimBusinessModal(true); setClaimBusinessModal(true); }}><SVG classname={classes.arrowlefticon} src={arrowleft} /></span><span className={classes.listtext}>Thank You!!</span></li>
+                <li className={classes.listitem}>
+                  <span
+                    onClick={() => {
+                      setClaimBusinessThanksModal(false);
+                      setOpenClaimBusinessModal(true);
+                      setClaimBusinessModal(true);
+                    }}
+                  >
+                    <SVG classname={classes.arrowlefticon} src={arrowleft} />
+                  </span>
+                  <span className={classes.listtext}>Thank You!!</span>
+                </li>
               </ul>
               <div className={classes.thanksmodaltext}>
-                <p>We will review your request and notify you by email.<br />It can take up to two business days for approval</p>
+                <p>
+                  We will review your request and notify you by email.
+                  <br />
+                  It can take up to two business days for approval
+                </p>
               </div>
             </div>
           </DialogContent>
@@ -985,8 +1170,12 @@ const HomePage: React.FC<HomePageProps> = props => {
               color="primary"
               variant="contained"
               type="submit"
-              onClick={() => { logout(); setClaimBusinessThanksModal(false) }}
-              className={classes.confirmbtn}>
+              onClick={() => {
+                logout();
+                setClaimBusinessThanksModal(false);
+              }}
+              className={classes.confirmbtn}
+            >
               <span>Back to login</span>
             </ConfirmButton>
           </DialogActions>
@@ -1003,17 +1192,21 @@ const HomePage: React.FC<HomePageProps> = props => {
           <EmployeeAccessMutation onCompleted={onEmployeeAccessCompleted}>
             {(requestEmployeeAccess, requestEmployeeAccessOpts) => (
               <>
-                <Form initial={initialForm} onSubmit={input =>
-                  requestEmployeeAccess({
-                    variables: {
-                      input: {
-                        business: input.business,
-                        email: input.email,
-                        redirectUrl: `${window.location.origin + "/#"}${employeeAccessConfirmPath}`,
+                <Form
+                  initial={initialForm}
+                  onSubmit={input =>
+                    requestEmployeeAccess({
+                      variables: {
+                        input: {
+                          business: input.business,
+                          email: input.email,
+                          redirectUrl: `${window.location.origin +
+                            "/#"}${employeeAccessConfirmPath}`
+                        }
                       }
-                    }
-                  })
-                }>
+                    })
+                  }
+                >
                   {({ change, data, submit }) => {
                     const handleCountrySelect = createSingleAutocompleteSelectHandler(
                       change,
@@ -1025,12 +1218,33 @@ const HomePage: React.FC<HomePageProps> = props => {
                         <DialogContent className={classes.businessmodalcont}>
                           <div className={classes.businessmodal}>
                             <ul className={classes.mylist}>
-                              <li className={classes.listitem}><span onClick={() => { setEmployeeAccessEmailError([]); setEmployeeAccessModal(false); setOpen(true) }}><SVG classname={classes.arrowlefticon} src={arrowleft} /></span><span className={classes.listtext}>What is the email address of the</span></li>
+                              <li className={classes.listitem}>
+                                <span
+                                  onClick={() => {
+                                    setEmployeeAccessEmailError([]);
+                                    setEmployeeAccessModal(false);
+                                    setOpen(true);
+                                  }}
+                                >
+                                  <SVG
+                                    classname={classes.arrowlefticon}
+                                    src={arrowleft}
+                                  />
+                                </span>
+                                <span className={classes.listtext}>
+                                  What is the email address of the
+                                </span>
+                              </li>
                             </ul>
                             <div className={classes.thanksmodaltext}>
-                              <p>The business owner or manager will have to approve <br /> your access</p>
+                              <p>
+                                The business owner or manager will have to
+                                approve <br /> your access
+                              </p>
                             </div>
-                            <div className={`${classes.inputbox} ${classes.employeaccessinput}`}>
+                            <div
+                              className={`${classes.inputbox} ${classes.employeaccessinput}`}
+                            >
                               <SVG src={inputicon} />
                               <SingleAutocompleteSelectField
                                 disabled={disabled}
@@ -1047,14 +1261,20 @@ const HomePage: React.FC<HomePageProps> = props => {
                                 }}
                               />
                             </div>
-                            <div className={`${classes.inputbox} ${classes.employeaccessinput}`}>
+                            <div
+                              className={`${classes.inputbox} ${classes.employeaccessinput}`}
+                            >
                               <SVG src={email} />
                               <TextField
                                 fullWidth
                                 required
                                 autoComplete="username"
-                                error={maybe(() => employeeAccessEmailError[0].message)}
-                                helperText={maybe(() => employeeAccessEmailError[0].message)}
+                                error={maybe(
+                                  () => employeeAccessEmailError[0].message
+                                )}
+                                helperText={maybe(
+                                  () => employeeAccessEmailError[0].message
+                                )}
                                 label={intl.formatMessage(commonMessages.email)}
                                 name="email"
                                 onChange={change}
@@ -1071,9 +1291,16 @@ const HomePage: React.FC<HomePageProps> = props => {
                             transitionState={confirmButtonState}
                             color="primary"
                             variant="contained"
-                            disabled={requestEmployeeAccessOpts.loading || data.email === "" || data.business === ""}
-                            onClick={() => { submit() }}
-                            className={classes.sendbtn} >
+                            disabled={
+                              requestEmployeeAccessOpts.loading ||
+                              data.email === "" ||
+                              data.business === ""
+                            }
+                            onClick={() => {
+                              submit();
+                            }}
+                            className={classes.sendbtn}
+                          >
                             <span>Send</span>
                           </ConfirmButton>
                         </DialogActions>
@@ -1097,10 +1324,24 @@ const HomePage: React.FC<HomePageProps> = props => {
           <DialogContent className={classes.businessmodalcont}>
             <div className={classes.businessmodal}>
               <ul className={`${classes.mylist} ${classes.thanksmodallist}`}>
-                <li className={classes.listitem}><span onClick={() => { setEmployeeAccessThanksModal(false); setOpenEmployeeAccessModal(true); setEmployeeAccessModal(true) }}><SVG classname={classes.arrowlefticon} src={arrowleft} /></span><span className={classes.listtext}>Sent!!</span></li>
+                <li className={classes.listitem}>
+                  <span
+                    onClick={() => {
+                      setEmployeeAccessThanksModal(false);
+                      setOpenEmployeeAccessModal(true);
+                      setEmployeeAccessModal(true);
+                    }}
+                  >
+                    <SVG classname={classes.arrowlefticon} src={arrowleft} />
+                  </span>
+                  <span className={classes.listtext}>Sent!!</span>
+                </li>
               </ul>
               <div className={classes.thanksmodaltext}>
-                <p>We will notify you by email when you have been <br /> granted access</p>
+                <p>
+                  We will notify you by email when you have been <br /> granted
+                  access
+                </p>
               </div>
             </div>
           </DialogContent>
@@ -1110,8 +1351,12 @@ const HomePage: React.FC<HomePageProps> = props => {
               color="primary"
               variant="contained"
               type="submit"
-              onClick={() => { logout(); setEmployeeAccessThanksModal(false) }}
-              className={classes.confirmbtn}>
+              onClick={() => {
+                logout();
+                setEmployeeAccessThanksModal(false);
+              }}
+              className={classes.confirmbtn}
+            >
               <span>Back to login</span>
             </ConfirmButton>
           </DialogActions>
@@ -1128,22 +1373,42 @@ const HomePage: React.FC<HomePageProps> = props => {
           <CreateBusinessMutation onCompleted={onCreateBusinessCompleted}>
             {(businessCreate, businessCreateOpts) => (
               <>
-                <Form initial={initialForm} onSubmit={input =>
-                  businessCreate({
-                    variables: {
-                      input: {
-                        description: input.description,
-                        name: input.businessName,
+                <Form
+                  initial={initialForm}
+                  onSubmit={input =>
+                    businessCreate({
+                      variables: {
+                        input: {
+                          description: input.description,
+                          name: input.businessName
+                        }
                       }
-                    }
-                  })
-                }>
+                    })
+                  }
+                >
                   {({ change, data, submit }) => (
                     <>
                       <DialogContent className={classes.businessmodalcont}>
                         <div className={classes.businessmodal}>
                           <ul className={classes.mylist}>
-                            <li className={classes.listitem}><span onClick={() => { setCreateBusinessNameError([]); setAddBusinessModal(false); setOpenAddBusinessModal(false); setOpen(true); }}><SVG classname={classes.arrowlefticon} src={arrowleft} /></span><span className={classes.listtext}>What is the name of the business?</span></li>
+                            <li className={classes.listitem}>
+                              <span
+                                onClick={() => {
+                                  setCreateBusinessNameError([]);
+                                  setAddBusinessModal(false);
+                                  setOpenAddBusinessModal(false);
+                                  setOpen(true);
+                                }}
+                              >
+                                <SVG
+                                  classname={classes.arrowlefticon}
+                                  src={arrowleft}
+                                />
+                              </span>
+                              <span className={classes.listtext}>
+                                What is the name of the business?
+                              </span>
+                            </li>
                           </ul>
                           <div className={classes.inputbox}>
                             <SVG src={inputicon} />
@@ -1151,8 +1416,12 @@ const HomePage: React.FC<HomePageProps> = props => {
                               autoFocus
                               required
                               fullWidth
-                              error={maybe(() => createBusinessNameError[0].message)}
-                              helperText={maybe(() => createBusinessNameError[0].message)}
+                              error={maybe(
+                                () => createBusinessNameError[0].message
+                              )}
+                              helperText={maybe(
+                                () => createBusinessNameError[0].message
+                              )}
                               autoComplete="businessName"
                               label="Business Name"
                               name="businessName"
@@ -1183,10 +1452,14 @@ const HomePage: React.FC<HomePageProps> = props => {
                         <ConfirmButton
                           transitionState={confirmButtonState}
                           color="primary"
-                          disabled={businessCreateOpts.loading || data.businessName === ""}
+                          disabled={
+                            businessCreateOpts.loading ||
+                            data.businessName === ""
+                          }
                           variant="contained"
                           onClick={() => submit()}
-                          className={classes.sendbtn} >
+                          className={classes.sendbtn}
+                        >
                           <span>Next</span>
                         </ConfirmButton>
                       </DialogActions>
@@ -1216,12 +1489,20 @@ const HomePage: React.FC<HomePageProps> = props => {
                         {/* <span onClick={() => { setChooseCategoryModal(false); setOpenChooseCategoryModal(false); setAddBusinessModal(true); }}>
                           <SVG className={classes.arrowlefticon} src={arrowleft} />
                         </span> */}
-                        <span className={classes.listtext}>Choose the category that best</span></li>
+                        <span className={classes.listtext}>
+                          Choose the category that best
+                        </span>
+                      </li>
                     </ul>
                     <div className={classes.thanksmodaltext}>
-                      <p>This helps customer find you if they are looking for <br /> a business like yours</p>
+                      <p>
+                        This helps customer find you if they are looking for{" "}
+                        <br /> a business like yours
+                      </p>
                     </div>
-                    <div className={`${classes.inputbox} ${classes.employeaccessinput}`}>
+                    <div
+                      className={`${classes.inputbox} ${classes.employeaccessinput}`}
+                    >
                       <SVG src={search} />
                       <TextField
                         autoFocus
@@ -1246,8 +1527,14 @@ const HomePage: React.FC<HomePageProps> = props => {
                     color="primary"
                     variant="contained"
                     disabled={data.businessCategory === ""}
-                    onClick={() => { setBusinessCategory(data.businessCategory); setChooseCategoryModal(false); setAddInformationModal(true); setOpenAddInformationModal(true) }}
-                    className={classes.sendbtn} >
+                    onClick={() => {
+                      setBusinessCategory(data.businessCategory);
+                      setChooseCategoryModal(false);
+                      setAddInformationModal(true);
+                      setOpenAddInformationModal(true);
+                    }}
+                    className={classes.sendbtn}
+                  >
                     <span>Next</span>
                   </ConfirmButton>
                 </DialogActions>
@@ -1270,22 +1557,39 @@ const HomePage: React.FC<HomePageProps> = props => {
                 <DialogContent className={classes.businessmodalcont}>
                   <div className={classes.businessmodal}>
                     <ul className={classes.mylist}>
-                      <li className={classes.listitem}><span onClick={() => {
-                        setWebsiteURLError("");
-                        setFacebookURLError("");
-                        setInstagramURLError("");
-                        setTwitterURLError("");
-                        setPhoneError("");
-                        setLogo("");
-                        setAddInformationModal(false);
-                        setOpenAddInformationModal(false);
-                        setChooseCategoryModal(true);
-                      }}><SVG classname={classes.arrowlefticon} src={arrowleft} /></span><span className={classes.listtext}>What information do you want to</span></li>
+                      <li className={classes.listitem}>
+                        <span
+                          onClick={() => {
+                            setWebsiteURLError("");
+                            setFacebookURLError("");
+                            setInstagramURLError("");
+                            setTwitterURLError("");
+                            setPhoneError("");
+                            setLogo("");
+                            setAddInformationModal(false);
+                            setOpenAddInformationModal(false);
+                            setChooseCategoryModal(true);
+                          }}
+                        >
+                          <SVG
+                            classname={classes.arrowlefticon}
+                            src={arrowleft}
+                          />
+                        </span>
+                        <span className={classes.listtext}>
+                          What information do you want to
+                        </span>
+                      </li>
                     </ul>
                     <div className={classes.thanksmodaltext}>
-                      <p>Help customers get in touch and recognise your<br /> business by including this info on your listing</p>
+                      <p>
+                        Help customers get in touch and recognise your
+                        <br /> business by including this info on your listing
+                      </p>
                     </div>
-                    <div className={`${classes.inputbox} ${classes.employeaccessinput}`}>
+                    <div
+                      className={`${classes.inputbox} ${classes.employeaccessinput}`}
+                    >
                       <SVG src={phone} />
                       <TextField
                         fullWidth
@@ -1304,7 +1608,9 @@ const HomePage: React.FC<HomePageProps> = props => {
                         }}
                       />
                     </div>
-                    <div className={`${classes.inputbox} ${classes.employeaccessinput}`}>
+                    <div
+                      className={`${classes.inputbox} ${classes.employeaccessinput}`}
+                    >
                       <SVG src={globe} />
                       <TextField
                         fullWidth
@@ -1321,7 +1627,9 @@ const HomePage: React.FC<HomePageProps> = props => {
                         }}
                       />
                     </div>
-                    <div className={`${classes.inputbox} ${classes.employeaccessinput}`}>
+                    <div
+                      className={`${classes.inputbox} ${classes.employeaccessinput}`}
+                    >
                       <SVG src={facebook} />
                       <TextField
                         fullWidth
@@ -1338,7 +1646,9 @@ const HomePage: React.FC<HomePageProps> = props => {
                         }}
                       />
                     </div>
-                    <div className={`${classes.inputbox} ${classes.employeaccessinput}`}>
+                    <div
+                      className={`${classes.inputbox} ${classes.employeaccessinput}`}
+                    >
                       <SVG src={instagram} />
                       <TextField
                         fullWidth
@@ -1355,7 +1665,9 @@ const HomePage: React.FC<HomePageProps> = props => {
                         }}
                       />
                     </div>
-                    <div className={`${classes.inputbox} ${classes.employeaccessinput}`}>
+                    <div
+                      className={`${classes.inputbox} ${classes.employeaccessinput}`}
+                    >
                       <SVG src={twitter} />
                       <TextField
                         fullWidth
@@ -1375,22 +1687,31 @@ const HomePage: React.FC<HomePageProps> = props => {
                     <div className={classes.fileupload}>
                       <p>Business Logo</p>
                       <div className={classes.fileuploadcont}>
-                        <Dropzone accept="image/*" multiple={false} onDrop={acceptedFiles => {
-                          if (acceptedFiles && acceptedFiles[0]) {
-                            setLogoFile(acceptedFiles[0]);
-                            const reader = new FileReader();
-                            reader.onload = e => {
-                              setLogo(e.target.result)
-                            };
-                            reader.readAsDataURL(acceptedFiles[0]);
-                          }
-                        }}>
+                        <Dropzone
+                          accept="image/*"
+                          multiple={false}
+                          onDrop={acceptedFiles => {
+                            if (acceptedFiles && acceptedFiles[0]) {
+                              setLogoFile(acceptedFiles[0]);
+                              const reader = new FileReader();
+                              reader.onload = e => {
+                                setLogo(e.target.result);
+                              };
+                              reader.readAsDataURL(acceptedFiles[0]);
+                            }
+                          }}
+                        >
                           {({ getRootProps, getInputProps }) => (
                             <section>
-                              <div {...getRootProps()} className={classes.dropzonecontent}>
+                              <div
+                                {...getRootProps()}
+                                className={classes.dropzonecontent}
+                              >
                                 <input {...getInputProps()} />
 
-                                <p className={classes.uploadtext}>Drag and drop an image here or click</p>
+                                <p className={classes.uploadtext}>
+                                  Drag and drop an image here or click
+                                </p>
                                 <SVG src={uploadicon} />
                               </div>
                             </section>
@@ -1418,28 +1739,43 @@ const HomePage: React.FC<HomePageProps> = props => {
                       // }
                       if (isValidPhoneNumber(data.phone) === false) {
                         setPhoneError("Invalid Phone Number.");
-                      }
-                      else {
+                      } else {
                         setPhoneError("");
-                        if (data.website !== "" && !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(data.website)) {
+                        if (
+                          data.website !== "" &&
+                          !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(
+                            data.website
+                          )
+                        ) {
                           setWebsiteURLError("Invalid Website URL.");
-                        }
-                        else {
+                        } else {
                           setWebsiteURLError("");
-                          if (data.facebook !== "" && !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(data.facebook)) {
+                          if (
+                            data.facebook !== "" &&
+                            !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(
+                              data.facebook
+                            )
+                          ) {
                             setFacebookURLError("Invalid Facebook URL.");
-                          }
-                          else {
+                          } else {
                             setFacebookURLError("");
-                            if (data.instagram !== "" && !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(data.instagram)) {
+                            if (
+                              data.instagram !== "" &&
+                              !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(
+                                data.instagram
+                              )
+                            ) {
                               setInstagramURLError("Invalid Twitter URL.");
-                            }
-                            else {
+                            } else {
                               setInstagramURLError("");
-                              if (data.twitter !== "" && !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(data.twitter)) {
+                              if (
+                                data.twitter !== "" &&
+                                !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(
+                                  data.twitter
+                                )
+                              ) {
                                 setTwitterURLError("Invalid Instagram URL.");
-                              }
-                              else {
+                              } else {
                                 setTwitterURLError("");
                                 setFacebookURL(data.facebook);
                                 setInstagramURL(data.instagram);
@@ -1455,7 +1791,8 @@ const HomePage: React.FC<HomePageProps> = props => {
                         }
                       }
                     }}
-                    className={classes.sendbtn} >
+                    className={classes.sendbtn}
+                  >
                     <span>Next</span>
                   </ConfirmButton>
                 </DialogActions>
@@ -1475,37 +1812,59 @@ const HomePage: React.FC<HomePageProps> = props => {
           <CreateStoreMutation onCompleted={onCreateStoreCompleted}>
             {(storeCreate, storeCreateOpts) => (
               <>
-                <Form initial={initialForm} onSubmit={() =>
-                  storeCreate({
-                    variables: {
-                      input: {
-                        business: businessID,
-                        category: businesscategory,
-                        description: businessDescription,
-                        facebookUrl: facebookURL,
-                        instagramUrl: instagramURL,
-                        logo: logoFile,
-                        // maxPrice: 0,
-                        // minPrice: 0,
-                        name: businessName,
-                        // rating: 4,
-                        // totalReviews: 10,
-                        phone: phoneNumber,
-                        twitterUrl: twitterURL,
-                        websiteUrl: websiteURL,
+                <Form
+                  initial={initialForm}
+                  onSubmit={() =>
+                    storeCreate({
+                      variables: {
+                        input: {
+                          business: businessID,
+                          category: businesscategory,
+                          description: businessDescription,
+                          facebookUrl: facebookURL,
+                          instagramUrl: instagramURL,
+                          logo: logoFile,
+                          // maxPrice: 0,
+                          // minPrice: 0,
+                          name: businessName,
+                          // rating: 4,
+                          // totalReviews: 10,
+                          phone: phoneNumber,
+                          twitterUrl: twitterURL,
+                          websiteUrl: websiteURL
+                        }
                       }
-                    }
-                  })
-                }>
+                    })
+                  }
+                >
                   {({ change, data, submit }) => (
                     <>
                       <DialogContent className={classes.businessmodalcont}>
                         <div className={classes.businessmodal}>
                           <ul className={classes.mylist}>
-                            <li className={classes.listitem}><span onClick={() => { setChooseLocationModal(false); setOpenChooseLocationModal(false); setAddInformationModal(true); }}><SVG classname={classes.arrowlefticon} src={arrowleft} /></span><span className={classes.listtext}>Do you want to add a location</span></li>
+                            <li className={classes.listitem}>
+                              <span
+                                onClick={() => {
+                                  setChooseLocationModal(false);
+                                  setOpenChooseLocationModal(false);
+                                  setAddInformationModal(true);
+                                }}
+                              >
+                                <SVG
+                                  classname={classes.arrowlefticon}
+                                  src={arrowleft}
+                                />
+                              </span>
+                              <span className={classes.listtext}>
+                                Do you want to add a location
+                              </span>
+                            </li>
                           </ul>
                           <div className={classes.thanksmodaltext}>
-                            <p>This helps customer find you if they are looking for <br /> a business like yours</p>
+                            <p>
+                              This helps customer find you if they are looking
+                              for <br /> a business like yours
+                            </p>
                           </div>
                           <div className={classes.chooseoption}>
                             <RadioGroupField
@@ -1528,14 +1887,14 @@ const HomePage: React.FC<HomePageProps> = props => {
                             setType(data.type);
                             if (data.type === "Online" || data.type === "No") {
                               submit();
-                            }
-                            else {
+                            } else {
                               setChooseLocationModal(false);
                               setOpenAddAddressModal(true);
                               setAddAddressModal(true);
                             }
                           }}
-                          className={classes.sendbtn} >
+                          className={classes.sendbtn}
+                        >
                           <span>Next</span>
                         </ConfirmButton>
                       </DialogActions>
@@ -1566,51 +1925,61 @@ const HomePage: React.FC<HomePageProps> = props => {
                 // onClose={() => setAddAddressModal(false)}
                 open={openAddAddressModal}
               >
-                <CreateStoreMutation onCompleted={onCreateStoreWithAddressCompleted}>
+                <CreateStoreMutation
+                  onCompleted={onCreateStoreWithAddressCompleted}
+                >
                   {(storeCreate, storeCreateOpts) => (
                     <>
-                      <Form initial={initialForm} onSubmit={input => {
-                        setlatLngError("")
-                        setlatLngLoading(true)
-                        geocodeByAddress(input.address + "," + input.city + "," + countryDisplayName)
-                          .then(results => getLatLng(results[0]))
-                          .then(latLng => {
-                            setlatLngLoading(false)
-                            storeCreate({
-                              variables: {
-                                input: {
-                                  address: {
-                                    city: input.city,
-                                    country: input.country,
-                                    latitude: latLng.lat,
-                                    longitude: latLng.lng,
-                                    postalCode: input.postcode,
-                                    streetAddress: input.address,
-                                  },
-                                  business: businessID,
-                                  category: businesscategory,
-                                  description: businessDescription,
-                                  facebookUrl: facebookURL,
-                                  instagramUrl: instagramURL,
-                                  logo: logoFile,
-                                  // maxPrice: 0,
-                                  // minPrice: 0,
-                                  name: businessName,
-                                  // rating: 4,
-                                  // totalReviews: 10,
-                                  phone: phoneNumber,
-                                  twitterUrl: twitterURL,
-                                  websiteUrl: websiteURL,
+                      <Form
+                        initial={initialForm}
+                        onSubmit={input => {
+                          setlatLngError("");
+                          setlatLngLoading(true);
+                          geocodeByAddress(
+                            input.address +
+                              "," +
+                              input.city +
+                              "," +
+                              countryDisplayName
+                          )
+                            .then(results => getLatLng(results[0]))
+                            .then(latLng => {
+                              setlatLngLoading(false);
+                              storeCreate({
+                                variables: {
+                                  input: {
+                                    address: {
+                                      city: input.city,
+                                      country: input.country,
+                                      latitude: latLng.lat,
+                                      longitude: latLng.lng,
+                                      postalCode: input.postcode,
+                                      streetAddress: input.address
+                                    },
+                                    business: businessID,
+                                    category: businesscategory,
+                                    description: businessDescription,
+                                    facebookUrl: facebookURL,
+                                    instagramUrl: instagramURL,
+                                    logo: logoFile,
+                                    // maxPrice: 0,
+                                    // minPrice: 0,
+                                    name: businessName,
+                                    // rating: 4,
+                                    // totalReviews: 10,
+                                    phone: phoneNumber,
+                                    twitterUrl: twitterURL,
+                                    websiteUrl: websiteURL
+                                  }
                                 }
-                              }
+                              });
                             })
-                          })
-                          .catch(error => {
-                            setlatLngLoading(false)
-                            setlatLngError(error)
-                          })
-                      }
-                      }>
+                            .catch(error => {
+                              setlatLngLoading(false);
+                              setlatLngError(error);
+                            });
+                        }}
+                      >
                         {({ change, data, submit }) => {
                           const handleCountrySelect = createSingleAutocompleteSelectHandler(
                             change,
@@ -1619,10 +1988,29 @@ const HomePage: React.FC<HomePageProps> = props => {
                           );
                           return (
                             <>
-                              <DialogContent className={classes.businessmodalcont}>
+                              <DialogContent
+                                className={classes.businessmodalcont}
+                              >
                                 <div className={classes.businessmodal}>
                                   <ul className={classes.mylist}>
-                                    <li className={classes.listitem}><span onClick={() => { setlatLngError(""); setAddAddressModal(false); setOpenAddAddressModal(false); setChooseLocationModal(true); }}><SVG classname={classes.arrowlefticon} src={arrowleft} /></span><span className={classes.listtext}>What is the Address?</span></li>
+                                    <li className={classes.listitem}>
+                                      <span
+                                        onClick={() => {
+                                          setlatLngError("");
+                                          setAddAddressModal(false);
+                                          setOpenAddAddressModal(false);
+                                          setChooseLocationModal(true);
+                                        }}
+                                      >
+                                        <SVG
+                                          classname={classes.arrowlefticon}
+                                          src={arrowleft}
+                                        />
+                                      </span>
+                                      <span className={classes.listtext}>
+                                        What is the Address?
+                                      </span>
+                                    </li>
                                   </ul>
                                   <div className={classes.inputbox}>
                                     <SVG src={location} />
@@ -1641,7 +2029,9 @@ const HomePage: React.FC<HomePageProps> = props => {
                                       }}
                                     />
                                   </div>
-                                  <div className={classes.businessmodaltextarea}>
+                                  <div
+                                    className={classes.businessmodaltextarea}
+                                  >
                                     {/* <PlacesAutocomplete
                                     value={getLocation}
                                     onChange={handleChange}
@@ -1660,10 +2050,10 @@ const HomePage: React.FC<HomePageProps> = props => {
                                       inputProps={{
                                         "data-tc": "address"
                                       }}
-                                    // {...getInputProps({
-                                    //   className: 'location-search-input',
-                                    //   // placeholder: 'Street Address',
-                                    // })}
+                                      // {...getInputProps({
+                                      //   className: 'location-search-input',
+                                      //   // placeholder: 'Street Address',
+                                      // })}
                                     />
                                     {/* <input
                                           {...getInputProps({
@@ -1696,9 +2086,10 @@ const HomePage: React.FC<HomePageProps> = props => {
                                       </div>
                                     )}
                                   </PlacesAutocomplete> */}
-
                                   </div>
-                                  <div className={classes.businessmodaltextarea}>
+                                  <div
+                                    className={classes.businessmodaltextarea}
+                                  >
                                     <TextField
                                       fullWidth
                                       autoComplete="postcode"
@@ -1711,7 +2102,9 @@ const HomePage: React.FC<HomePageProps> = props => {
                                       }}
                                     />
                                   </div>
-                                  <div className={classes.businessmodaltextarea}>
+                                  <div
+                                    className={classes.businessmodaltextarea}
+                                  >
                                     <TextField
                                       fullWidth
                                       autoComplete="city"
@@ -1724,7 +2117,15 @@ const HomePage: React.FC<HomePageProps> = props => {
                                       }}
                                     />
                                   </div>
-                                  {latlngError && <div className={classes.businessmodaltextarea}><p className={classes.latlngError}>Invalid Address.</p></div>}
+                                  {latlngError && (
+                                    <div
+                                      className={classes.businessmodaltextarea}
+                                    >
+                                      <p className={classes.latlngError}>
+                                        Invalid Address.
+                                      </p>
+                                    </div>
+                                  )}
                                 </div>
                               </DialogContent>
                               <DialogActions className={classes.modalfooter}>
@@ -1743,19 +2144,20 @@ const HomePage: React.FC<HomePageProps> = props => {
                                   onClick={() => {
                                     submit();
                                   }}
-                                  className={classes.sendbtn} >
+                                  className={classes.sendbtn}
+                                >
                                   <span>Next</span>
                                 </ConfirmButton>
                               </DialogActions>
                             </>
-                          )
+                          );
                         }}
                       </Form>
                     </>
                   )}
                 </CreateStoreMutation>
               </Dialog>
-            )
+            );
           }}
         </TypedShopInfoQuery>
       )}
@@ -1770,27 +2172,35 @@ const HomePage: React.FC<HomePageProps> = props => {
           <DialogContent className={classes.businessmodalcont}>
             <div className={classes.businessmodal}>
               <ul className={`${classes.mylist} ${classes.thanksmodallist}`}>
-                <li className={classes.listitem}><span onClick={() => {
-                  if (skip) {
-                    setAllDoneModal(false);
-                    setOpenAllDoneModal(false);
-                    setImportInformationModal(true);
-                  }
-                  else if (addressModal) {
-                    setAllDoneModal(false);
-                    setOpenAllDoneModal(false);
-                    setAddAddressModal(true);
-                  }
-                  else {
-                    setAllDoneModal(false);
-                    setOpenAllDoneModal(false);
-                    setChooseLocationModal(true);
-                  }
-                }}>
-                  <SVG classname={classes.arrowlefticon} src={arrowleft} /></span><span className={classes.listtext}>All done!!!!</span></li>
+                <li className={classes.listitem}>
+                  <span
+                    onClick={() => {
+                      if (skip) {
+                        setAllDoneModal(false);
+                        setOpenAllDoneModal(false);
+                        setImportInformationModal(true);
+                      } else if (addressModal) {
+                        setAllDoneModal(false);
+                        setOpenAllDoneModal(false);
+                        setAddAddressModal(true);
+                      } else {
+                        setAllDoneModal(false);
+                        setOpenAllDoneModal(false);
+                        setChooseLocationModal(true);
+                      }
+                    }}
+                  >
+                    <SVG classname={classes.arrowlefticon} src={arrowleft} />
+                  </span>
+                  <span className={classes.listtext}>All done!!!!</span>
+                </li>
               </ul>
               <div className={classes.thanksmodaltext}>
-                <p>We've set your business listing, now you can use<br /> the dashboard to add products, photos and more to<br /> your listing</p>
+                <p>
+                  We've set your business listing, now you can use
+                  <br /> the dashboard to add products, photos and more to
+                  <br /> your listing
+                </p>
               </div>
             </div>
           </DialogContent>
@@ -1818,64 +2228,107 @@ const HomePage: React.FC<HomePageProps> = props => {
           <ProductBulkCreateMutation onCompleted={onProductBulkCreateCompleted}>
             {(productBulkCreate, productBulkCreateOpts) => (
               <>
-                <Form initial={initialForm} onSubmit={input =>
-                  productBulkCreate({
-                    variables: {
-                      input: {
-                        accessToken: platform === "IZETTLE" ? input.izettleAccessToken :
-                          platform === "SQUAREUP" ? input.squareAccessToken :
-                            platform === "SHOPIFY" ? input.shopifyAccessToken :
-                              platform === "VENDHQ" ? input.vendAccessToken : "",
-                        platform,
-                        store: storeID,
-                        url: platform === "SHOPIFY" ? input.shopifyURL :
-                          platform === "VENDHQ" ? input.vendURL : "",
+                <Form
+                  initial={initialForm}
+                  onSubmit={input =>
+                    productBulkCreate({
+                      variables: {
+                        input: {
+                          accessToken:
+                            platform === "IZETTLE"
+                              ? input.izettleAccessToken
+                              : platform === "SQUAREUP"
+                              ? input.squareAccessToken
+                              : platform === "SHOPIFY"
+                              ? input.shopifyAccessToken
+                              : platform === "VENDHQ"
+                              ? input.vendAccessToken
+                              : "",
+                          platform,
+                          store: storeID,
+                          url:
+                            platform === "SHOPIFY"
+                              ? input.shopifyURL
+                              : platform === "VENDHQ"
+                              ? input.vendURL
+                              : ""
+                        }
                       }
-                    }
-                  })
-                }>
+                    })
+                  }
+                >
                   {({ change, data, submit }) => (
                     <>
                       <DialogContent className={classes.businessmodalcont}>
                         <div className={classes.businessmodal}>
-                          <ul className={`${classes.mylist} ${classes.thanksmodallist}`}>
-                            <li className={classes.listitem}><span onClick={() => {
-                              setIzettleAccessTokenError([]);
-                              setSquareAccessTokenError([]);
-                              setShopifyAccessTokenError([]);
-                              setShopifyURLError([]);
-                              setVendAccessTokenError([]);
-                              setVendURLError([]);
-                              setImportInformationModal(false);
-                              setChooseLocationModal(true);
-                              setOpenImportInformationModal(false);
-                              setShopify(false);
-                              setIzettle(false);
-                              setVend(false);
-                              setSquare(false);
-                            }}>
-                              <SVG classname={classes.arrowlefticon} src={arrowleft} /></span><span className={classes.listtext}>Import Business Information</span></li>
+                          <ul
+                            className={`${classes.mylist} ${classes.thanksmodallist}`}
+                          >
+                            <li className={classes.listitem}>
+                              <span
+                                onClick={() => {
+                                  setIzettleAccessTokenError([]);
+                                  setSquareAccessTokenError([]);
+                                  setShopifyAccessTokenError([]);
+                                  setShopifyURLError([]);
+                                  setVendAccessTokenError([]);
+                                  setVendURLError([]);
+                                  setImportInformationModal(false);
+                                  setChooseLocationModal(true);
+                                  setOpenImportInformationModal(false);
+                                  setShopify(false);
+                                  setIzettle(false);
+                                  setVend(false);
+                                  setSquare(false);
+                                }}
+                              >
+                                <SVG
+                                  classname={classes.arrowlefticon}
+                                  src={arrowleft}
+                                />
+                              </span>
+                              <span className={classes.listtext}>
+                                Import Business Information
+                              </span>
+                            </li>
                           </ul>
                           <div className={classes.thanksmodaltext}>
-                            <p>Integrate your point of sale system with Sittari to save time <br /> and keep your business information updated automatically</p>
+                            <p>
+                              Integrate your point of sale system with Sittari
+                              to save time <br /> and keep your business
+                              information updated automatically
+                            </p>
                           </div>
                         </div>
-                        <h3 className={classes.selectpointheading}>Select Your Point of Sale Provider</h3>
+                        <h3 className={classes.selectpointheading}>
+                          Select Your Point of Sale Provider
+                        </h3>
                         <div className={classes.selectpoint}>
                           <div className={classes.selectpointcontent}>
-                            <ul className={classes.selectpointlist} onClick={onIzettleClicked}>
+                            <ul
+                              className={classes.selectpointlist}
+                              onClick={onIzettleClicked}
+                            >
                               <h4>Izettle</h4>
-                              <li>Leading payment and POS<br /> provider for small business<SVG src={saleimg1} /></li>
+                              <li>
+                                Leading payment and POS
+                                <br /> provider for small business
+                                <SVG src={saleimg1} />
+                              </li>
                             </ul>
-                            {izettle &&
+                            {izettle && (
                               <div className={classes.selectpointinput}>
                                 <div>
                                   <TextField
                                     fullWidth
                                     autoComplete="izettleAccessToken"
                                     label="Access Token"
-                                    error={maybe(() => izettleAccessTokenError[0].message)}
-                                    helperText={maybe(() => izettleAccessTokenError[0].message)}
+                                    error={maybe(
+                                      () => izettleAccessTokenError[0].message
+                                    )}
+                                    helperText={maybe(
+                                      () => izettleAccessTokenError[0].message
+                                    )}
                                     name="izettleAccessToken"
                                     onChange={change}
                                     value={data.izettleAccessToken}
@@ -1885,22 +2338,33 @@ const HomePage: React.FC<HomePageProps> = props => {
                                   />
                                 </div>
                               </div>
-                            }
+                            )}
                           </div>
                           <div className={classes.selectpointcontent}>
-                            <ul className={classes.selectpointlist} onClick={onSquareClicked}>
+                            <ul
+                              className={classes.selectpointlist}
+                              onClick={onSquareClicked}
+                            >
                               <h4>Square</h4>
-                              <li>Leading payment and POS<br /> provider for small business<SVG src={saleimg2} /></li>
+                              <li>
+                                Leading payment and POS
+                                <br /> provider for small business
+                                <SVG src={saleimg2} />
+                              </li>
                             </ul>
-                            {square &&
+                            {square && (
                               <div className={classes.selectpointinput}>
                                 <div>
                                   <TextField
                                     fullWidth
                                     autoComplete="squareAccessToken"
                                     label="Access Token"
-                                    error={maybe(() => squareAccessTokenError[0].message)}
-                                    helperText={maybe(() => squareAccessTokenError[0].message)}
+                                    error={maybe(
+                                      () => squareAccessTokenError[0].message
+                                    )}
+                                    helperText={maybe(
+                                      () => squareAccessTokenError[0].message
+                                    )}
                                     name="squareAccessToken"
                                     onChange={change}
                                     value={data.squareAccessToken}
@@ -1910,24 +2374,35 @@ const HomePage: React.FC<HomePageProps> = props => {
                                   />
                                 </div>
                               </div>
-                            }
+                            )}
                           </div>
                         </div>
                         <div className={classes.selectpoint}>
                           <div className={classes.selectpointcontent}>
-                            <ul className={classes.selectpointlist} onClick={onShopifyClicked}>
+                            <ul
+                              className={classes.selectpointlist}
+                              onClick={onShopifyClicked}
+                            >
                               <h4>Shopify</h4>
-                              <li>Global e-commerce and POS company focused on retail<SVG src={saleimg3} /></li>
+                              <li>
+                                Global e-commerce and POS company focused on
+                                retail
+                                <SVG src={saleimg3} />
+                              </li>
                             </ul>
-                            {shopify &&
+                            {shopify && (
                               <div className={classes.selectpointinput}>
                                 <div>
                                   <TextField
                                     fullWidth
                                     autoComplete="shopifyAccessToken"
                                     label="Access Token"
-                                    error={maybe(() => shopifyAccessTokenError[0].message)}
-                                    helperText={maybe(() => shopifyAccessTokenError[0].message)}
+                                    error={maybe(
+                                      () => shopifyAccessTokenError[0].message
+                                    )}
+                                    helperText={maybe(
+                                      () => shopifyAccessTokenError[0].message
+                                    )}
                                     name="shopifyAccessToken"
                                     onChange={change}
                                     value={data.shopifyAccessToken}
@@ -1940,8 +2415,12 @@ const HomePage: React.FC<HomePageProps> = props => {
                                     fullWidth
                                     autoComplete="shopifyURL"
                                     label="URL"
-                                    error={maybe(() => shopifyURLError[0].message)}
-                                    helperText={maybe(() => shopifyURLError[0].message)}
+                                    error={maybe(
+                                      () => shopifyURLError[0].message
+                                    )}
+                                    helperText={maybe(
+                                      () => shopifyURLError[0].message
+                                    )}
                                     name="shopifyURL"
                                     onChange={change}
                                     value={data.shopifyURL}
@@ -1951,22 +2430,32 @@ const HomePage: React.FC<HomePageProps> = props => {
                                   />
                                 </div>
                               </div>
-                            }
+                            )}
                           </div>
                           <div className={classes.selectpointcontent}>
-                            <ul className={classes.selectpointlist} onClick={onVendClicked}>
+                            <ul
+                              className={classes.selectpointlist}
+                              onClick={onVendClicked}
+                            >
                               <h4>Vend</h4>
-                              <li>Cloud based e-commerce and ePOS provider<SVG src={saleimg4} /></li>
+                              <li>
+                                Cloud based e-commerce and ePOS provider
+                                <SVG src={saleimg4} />
+                              </li>
                             </ul>
-                            {vend &&
+                            {vend && (
                               <div className={classes.selectpointinput}>
                                 <div>
                                   <TextField
                                     fullWidth
                                     autoComplete="vendAccessToken"
                                     label="Access Token"
-                                    error={maybe(() => vendAccessTokenError[0].message)}
-                                    helperText={maybe(() => vendAccessTokenError[0].message)}
+                                    error={maybe(
+                                      () => vendAccessTokenError[0].message
+                                    )}
+                                    helperText={maybe(
+                                      () => vendAccessTokenError[0].message
+                                    )}
                                     name="vendAccessToken"
                                     onChange={change}
                                     value={data.vendAccessToken}
@@ -1980,7 +2469,9 @@ const HomePage: React.FC<HomePageProps> = props => {
                                     autoComplete="vendURL"
                                     label="URL"
                                     error={maybe(() => vendURLError[0].message)}
-                                    helperText={maybe(() => vendURLError[0].message)}
+                                    helperText={maybe(
+                                      () => vendURLError[0].message
+                                    )}
                                     name="vendURL"
                                     onChange={change}
                                     value={data.vendURL}
@@ -1990,7 +2481,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                                   />
                                 </div>
                               </div>
-                            }
+                            )}
                           </div>
                         </div>
                       </DialogContent>
@@ -2001,10 +2492,14 @@ const HomePage: React.FC<HomePageProps> = props => {
                           variant="contained"
                           disabled={
                             productBulkCreateOpts.loading ||
-                            (!izettle || data.izettleAccessToken === "") &&
-                            (!square || data.squareAccessToken === "") &&
-                            (!shopify || data.shopifyAccessToken === "" || data.shopifyURL === "") &&
-                            (!vend || data.vendAccessToken === "" || data.vendURL === "")
+                            ((!izettle || data.izettleAccessToken === "") &&
+                              (!square || data.squareAccessToken === "") &&
+                              (!shopify ||
+                                data.shopifyAccessToken === "" ||
+                                data.shopifyURL === "") &&
+                              (!vend ||
+                                data.vendAccessToken === "" ||
+                                data.vendURL === ""))
                           }
                           onClick={() => {
                             setIzettleAccessTokenError([]);
@@ -2016,7 +2511,8 @@ const HomePage: React.FC<HomePageProps> = props => {
                             submit();
                             setSkip(true);
                           }}
-                          className={classes.sendbtn}>
+                          className={classes.sendbtn}
+                        >
                           <span>Next</span>
                         </ConfirmButton>
                         <ConfirmButton
@@ -2033,7 +2529,8 @@ const HomePage: React.FC<HomePageProps> = props => {
                             setAllDoneModal(true);
                             setOpenAllDoneModal(true);
                           }}
-                          className={classes.skipbtn}>
+                          className={classes.skipbtn}
+                        >
                           <span>Skip for now</span>
                         </ConfirmButton>
                       </DialogActions>

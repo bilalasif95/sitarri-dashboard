@@ -34,8 +34,10 @@ export interface ClaimBusinessConfirmUrlQueryParams {
 export const accountConfirmUrl = (params?: AccountConfirmUrlQueryParams) =>
   accountConfirmPath + "?" + stringifyQs(params);
 
-export const claimBusinessConfirmUrl = (params?: ClaimBusinessConfirmUrlQueryParams) =>
-  claimBusinessConfirmPath + "?" + stringifyQs(params);
+export const claimBusinessConfirmUrl = (
+  params?: ClaimBusinessConfirmUrlQueryParams
+) => claimBusinessConfirmPath + "?" + stringifyQs(params);
 
-export const employeeAccessConfirmUrl = (params?: ClaimBusinessConfirmUrlQueryParams) =>
-  employeeAccessConfirmPath + "?" + stringifyQs(params);
+export const employeeAccessConfirmUrl = (
+  params?: ClaimBusinessConfirmUrlQueryParams
+) => employeeAccessConfirmPath + "?" + stringifyQs(params);
