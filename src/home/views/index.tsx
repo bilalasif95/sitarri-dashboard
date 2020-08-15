@@ -14,7 +14,7 @@ const HomeSection = () => {
   const { user } = useUser();
 
   return (
-    <HomePageQuery displayLoader>
+    <HomePageQuery>
       {({ data }) => (
         <HomePage
           activities={maybe(() =>

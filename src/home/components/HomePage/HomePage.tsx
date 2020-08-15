@@ -1800,7 +1800,7 @@ const HomePage: React.FC<HomePageProps> = props => {
               color="primary"
               variant="contained"
               type="submit"
-              onClick={() => { verifyTokenAndSetData(token); setAllDoneModal(false); setOpenAllDoneModal(false) }}
+              onClick={() => { verifyTokenAndSetData(token); setAllDoneModal(false); setOpenAllDoneModal(false); window.location.reload() }}
               className={classes.confirmbtn}>
               <span>Go to dashboard</span>
             </ConfirmButton>
