@@ -317,6 +317,7 @@ class AuthProvider extends React.Component<
       navigator.credentials.preventSilentAccess();
     }
     removeAuthToken();
+    window.location.reload();
   };
 
   verifyToken = (token: string) => {
@@ -329,7 +330,9 @@ class AuthProvider extends React.Component<
     const { tokenVerify } = this.props;
     const [tokenVerifyFn] = tokenVerify;
     const response = tokenVerifyFn({ variables: { token } });
-    return response.then(result => this.setState({ user: result.data.tokenVerify.user }))
+    return response.then(result =>
+      this.setState({ user: result.data.tokenVerify.user })
+    );
   };
 
   refreshToken = async () => {
@@ -366,7 +369,7 @@ class AuthProvider extends React.Component<
           tokenRefresh: this.refreshToken,
           tokenVerifyLoading: tokenVerifyOpts.loading,
           user,
-          verifyTokenAndSetData: this.verifyTokenAndSetData,
+          verifyTokenAndSetData: this.verifyTokenAndSetData
         }}
       >
         {children({
