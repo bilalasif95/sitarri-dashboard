@@ -59,13 +59,13 @@ import WebhooksSection from "./webhooks";
 import { warehouseSection } from "./warehouses/urls";
 import WarehouseSection from "./warehouses";
 
-import ClaimBusinessConfirm from "./auth/views/ClaimBusinessConfirm";
-import EmployeeAccessConfirm from "./auth/views/EmployeeAccessConfirm";
+// import ClaimBusinessConfirm from "./auth/views/ClaimBusinessConfirm";
+// import EmployeeAccessConfirm from "./auth/views/EmployeeAccessConfirm";
 
-import {
-  claimBusinessConfirmPath,
-  employeeAccessConfirmPath
-} from "./auth/urls";
+// import {
+//   claimBusinessConfirmPath,
+//   employeeAccessConfirmPath
+// } from "./auth/urls";
 
 interface ResponseError extends ErrorResponse {
   networkError?: Error & {
@@ -197,21 +197,21 @@ const Routes: React.FC = () => {
                     path="/customers"
                     component={CustomerSection}
                   />
-                  <SectionRoute
+                  {/* <SectionRoute
                     // permissions={[PermissionEnum.MANAGE_USERS]}
                     path={claimBusinessConfirmPath}
                     component={ClaimBusinessConfirm}
-                  />
+                  /> */}
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_DISCOUNTS]}
                     path="/discounts"
                     component={DiscountSection}
                   />
-                  <SectionRoute
+                  {/* <SectionRoute
                     // permissions={[PermissionEnum.MANAGE_USERS]}
                     path={employeeAccessConfirmPath}
                     component={EmployeeAccessConfirm}
-                  />
+                  /> */}
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_PAGES]}
                     path="/pages"

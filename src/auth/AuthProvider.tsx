@@ -317,7 +317,8 @@ class AuthProvider extends React.Component<
       navigator.credentials.preventSilentAccess();
     }
     removeAuthToken();
-    window.location.reload();
+    window.location.replace("/");
+    // window.location.reload();
   };
 
   verifyToken = (token: string) => {

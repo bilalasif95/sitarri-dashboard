@@ -5,11 +5,15 @@ import Layout from "./components/Layout";
 import { User } from "./types/User";
 import {
   accountConfirmPath,
+  claimBusinessConfirmPath,
+  employeeAccessConfirmPath,
   newPasswordPath,
   passwordResetPath,
   passwordResetSuccessPath
 } from "./urls";
 import AccountConfirm from "./views/AccountConfirm";
+import ClaimBusinessConfirm from "./views/ClaimBusinessConfirm";
+import EmployeeAccessConfirm from "./views/EmployeeAccessConfirm";
 import LoginView from "./views/Login";
 import NewPassword from "./views/NewPassword";
 import ResetPassword from "./views/ResetPassword";
@@ -75,6 +79,16 @@ const AuthRouter: React.FC<AuthRouterProps> = ({ hasToken }) => (
       )}
       {!hasToken ? (
         <Route path={accountConfirmPath} component={AccountConfirm} />
+      ) : (
+        <LoginLoading />
+      )}
+      {!hasToken ? (
+        <Route path={claimBusinessConfirmPath} component={ClaimBusinessConfirm} />
+      ) : (
+        <LoginLoading />
+      )}
+      {!hasToken ? (
+        <Route path={employeeAccessConfirmPath} component={EmployeeAccessConfirm} />
       ) : (
         <LoginLoading />
       )}

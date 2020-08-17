@@ -42,7 +42,7 @@ class ClaimBusinessConfirm extends React.Component<RouteComponentProps> {
       .catch(() => {
         const errors = [
           {
-            message: "Something went wrong while activating your account."
+            message: "Something went wrong while claim business confirmation your account."
           }
         ];
         this.displayConfirmationAlert(errors);

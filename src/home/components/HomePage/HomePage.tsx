@@ -901,7 +901,7 @@ const HomePage: React.FC<HomePageProps> = props => {
       {(user.businessUser.edges.length === 0 ||
         (user.businessUser.edges[0] &&
           user.businessUser.edges[0].node.businessStore.edges.length ===
-            0)) && (
+            0)) && (!user.isSuperuser) && (
         <Dialog
           // onClose={onClose}
           open={open}

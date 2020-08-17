@@ -42,7 +42,7 @@ class EmployeeAccessConfirm extends React.Component<RouteComponentProps> {
       .catch(() => {
         const errors = [
           {
-            message: "Something went wrong while activating your account."
+            message: "Something went wrong while confirming employee access on your account."
           }
         ];
         this.displayConfirmationAlert(errors);
