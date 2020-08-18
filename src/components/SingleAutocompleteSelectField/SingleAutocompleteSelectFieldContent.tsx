@@ -17,7 +17,7 @@ import useElementScroll, {
 import { FetchMoreProps } from "@saleor/types";
 import Hr from "../Hr";
 
-const menuItemHeight = 46;
+// const menuItemHeight = 46;
 const maxMenuItems = 5;
 const offset = 24;
 
@@ -71,7 +71,8 @@ const useStyles = makeStyles(
       width: "100%"
     },
     content: {
-      maxHeight: menuItemHeight * maxMenuItems + theme.spacing(2),
+      // maxHeight: menuItemHeight * maxMenuItems + theme.spacing(2),
+      maxHeight: "120px",
       overflow: "scroll",
       padding: 8
     },

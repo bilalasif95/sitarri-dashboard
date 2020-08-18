@@ -127,6 +127,26 @@ const useStyles = makeStyles(
       justifyContent: "flex-end",
       overflow: "hidden"
     },
+    businessinputbox: {
+      "& div": {
+        "& .MuiPaper-rounded": {
+          position: 'relative'
+        }
+      },
+      "& label": {
+        overflowX: "visible"
+      },
+      "& svg": {
+        "& path": {
+          fill: "red"
+        },
+        height: "25px",
+        width: "34pt"
+      },
+
+      alignItems: "flex-start",
+      display: "flex"
+    },
     businessmodal: {
       display: "block",
       margin: "0px auto",
@@ -844,8 +864,8 @@ const HomePage: React.FC<HomePageProps> = props => {
                 {sales ? (
                   <Money money={sales} />
                 ) : (
-                  <Skeleton style={{ width: "5em" }} />
-                )}
+                    <Skeleton style={{ width: "5em" }} />
+                  )}
               </HomeAnalyticsCard>
               <HomeAnalyticsCard
                 title={"Orders"}
@@ -860,8 +880,8 @@ const HomePage: React.FC<HomePageProps> = props => {
                 {orders === undefined ? (
                   <Skeleton style={{ width: "5em" }} />
                 ) : (
-                  orders
-                )}
+                    orders
+                  )}
               </HomeAnalyticsCard>
             </div>
           </RequirePermissions>
@@ -901,137 +921,137 @@ const HomePage: React.FC<HomePageProps> = props => {
       {(user.businessUser.edges.length === 0 ||
         (user.businessUser.edges[0] &&
           user.businessUser.edges[0].node.businessStore.edges.length ===
-            0)) && (!user.isSuperuser) && (
-        <Dialog
-          // onClose={onClose}
-          open={open}
-          maxWidth="md"
-          fullWidth
-          PaperProps={{
-            style: {
-              backgroundColor: "transparent",
-              margin: "0px",
-              overflow: "hidden",
-              overflowY: "visible",
-              width: "80%"
-            }
-          }}
-        >
-          <DialogContent className={classes.cardshomepage}>
-            <div className={classes.cards}>
-              <div className={`${classes.claimcard} ${classes.mycard}`}>
-                <h3 className={classes.cardhead}>Claim Business</h3>
-                <div className={classes.imgbox}>
-                  <SVG src={claimBusiness} />
-                </div>
-                <div className={classes.cardContent}>
-                  <div className={classes.cardtext}>
-                    <h4 className={classes.cardhead1}>
-                      Claim a business already on Sitarri
-                    </h4>
-                    <p>
-                      If you own or manage a business that is already on
-                      Sitarri, click below to take control
-                    </p>
+          0)) && (!user.isSuperuser) && (
+          <Dialog
+            // onClose={onClose}
+            open={open}
+            maxWidth="md"
+            fullWidth
+            PaperProps={{
+              style: {
+                backgroundColor: "transparent",
+                margin: "0px",
+                overflow: "hidden",
+                overflowY: "visible",
+                width: "80%"
+              }
+            }}
+          >
+            <DialogContent className={classes.cardshomepage}>
+              <div className={classes.cards}>
+                <div className={`${classes.claimcard} ${classes.mycard}`}>
+                  <h3 className={classes.cardhead}>Claim Business</h3>
+                  <div className={classes.imgbox}>
+                    <SVG src={claimBusiness} />
                   </div>
-                  <Button
-                    className={classes.cardbtn}
-                    color="primary"
-                    variant="contained"
-                    onClick={() => {
-                      setClaimBusinessModal(true);
-                      setOpen(false);
-                      setOpenClaimBusinessModal(true);
-                    }}
-                  >
-                    <span className={classes.btntext}>Claim Business</span>
-                  </Button>
-                </div>
-              </div>
-              <div className={`${classes.businesscard} ${classes.mycard}`}>
-                <h3 className={classes.cardhead}>New Business</h3>
-                <div className={classes.businessimgbox}>
-                  <SVG src={employeeAccess} />
-                </div>
-                <div className={classes.cardContent}>
-                  <div className={classes.cardtext}>
-                    <h4 className={classes.cardhead1}>
-                      Add a business to Sitarri
+                  <div className={classes.cardContent}>
+                    <div className={classes.cardtext}>
+                      <h4 className={classes.cardhead1}>
+                        Claim a business already on Sitarri
                     </h4>
-                    <p>
-                      If you own or manage a business, click below to add it to
-                      Sitarri
+                      <p>
+                        If you own or manage a business that is already on
+                        Sitarri, click below to take control
                     </p>
+                    </div>
+                    <Button
+                      className={classes.cardbtn}
+                      color="primary"
+                      variant="contained"
+                      onClick={() => {
+                        setClaimBusinessModal(true);
+                        setOpen(false);
+                        setOpenClaimBusinessModal(true);
+                      }}
+                    >
+                      <span className={classes.btntext}>Claim Business</span>
+                    </Button>
                   </div>
-                  <Button
-                    className={classes.businessbtn}
-                    color="primary"
-                    variant="contained"
-                    onClick={() => {
-                      if (user.businessUser.edges.length === 0) {
-                        setAddBusinessModal(true);
-                        setOpenAddBusinessModal(true);
-                        setOpen(false);
-                      } else {
-                        setOpen(false);
-                        setBusinessID(
-                          user.businessUser.edges &&
+                </div>
+                <div className={`${classes.businesscard} ${classes.mycard}`}>
+                  <h3 className={classes.cardhead}>New Business</h3>
+                  <div className={classes.businessimgbox}>
+                    <SVG src={employeeAccess} />
+                  </div>
+                  <div className={classes.cardContent}>
+                    <div className={classes.cardtext}>
+                      <h4 className={classes.cardhead1}>
+                        Add a business to Sitarri
+                    </h4>
+                      <p>
+                        If you own or manage a business, click below to add it to
+                        Sitarri
+                    </p>
+                    </div>
+                    <Button
+                      className={classes.businessbtn}
+                      color="primary"
+                      variant="contained"
+                      onClick={() => {
+                        if (user.businessUser.edges.length === 0) {
+                          setAddBusinessModal(true);
+                          setOpenAddBusinessModal(true);
+                          setOpen(false);
+                        } else {
+                          setOpen(false);
+                          setBusinessID(
+                            user.businessUser.edges &&
                             user.businessUser.edges[0] &&
                             user.businessUser.edges[0].node.id
-                        );
-                        setBusinessName(
-                          user.businessUser.edges &&
+                          );
+                          setBusinessName(
+                            user.businessUser.edges &&
                             user.businessUser.edges[0] &&
                             user.businessUser.edges[0].node.name
-                        );
-                        setBusinessDescription(
-                          user.businessUser.edges &&
+                          );
+                          setBusinessDescription(
+                            user.businessUser.edges &&
                             user.businessUser.edges[0] &&
                             user.businessUser.edges[0].node.description
-                        );
-                        setChooseCategoryModal(true);
-                        setOpenChooseCategoryModal(true);
-                      }
-                    }}
-                  >
-                    <span className={classes.cardbtntext}>Add Business</span>
-                  </Button>
-                </div>
-              </div>
-              <div className={`${classes.employeecard} ${classes.mycard}`}>
-                <h3 className={classes.cardhead}>Employee Access</h3>
-                <div className={classes.imgbox}>
-                  <SVG src={newBusiness} />
-                </div>
-                <div className={classes.cardContent}>
-                  <div className={classes.cardtext}>
-                    <h4 className={classes.cardhead1}>
-                      Staff member of a business
-                    </h4>
-                    <p>
-                      Request employee access to a business listed to Sitarri
-                    </p>
+                          );
+                          setChooseCategoryModal(true);
+                          setOpenChooseCategoryModal(true);
+                        }
+                      }}
+                    >
+                      <span className={classes.cardbtntext}>Add Business</span>
+                    </Button>
                   </div>
-                  <Button
-                    className={`${classes.cardbtn}`}
-                    color="primary"
-                    variant="contained"
-                    onClick={() => {
-                      setEmployeeAccessModal(true);
-                      setOpen(false);
-                      setOpenEmployeeAccessModal(true);
-                    }}
-                  >
-                    <span className={classes.btntext}>
-                      Make employee account
+                </div>
+                <div className={`${classes.employeecard} ${classes.mycard}`}>
+                  <h3 className={classes.cardhead}>Employee Access</h3>
+                  <div className={classes.imgbox}>
+                    <SVG src={newBusiness} />
+                  </div>
+                  <div className={classes.cardContent}>
+                    <div className={classes.cardtext}>
+                      <h4 className={classes.cardhead1}>
+                        Staff member of a business
+                    </h4>
+                      <p>
+                        Request employee access to a business listed to Sitarri
+                    </p>
+                    </div>
+                    <Button
+                      className={`${classes.cardbtn}`}
+                      color="primary"
+                      variant="contained"
+                      onClick={() => {
+                        setEmployeeAccessModal(true);
+                        setOpen(false);
+                        setOpenEmployeeAccessModal(true);
+                      }}
+                    >
+                      <span className={classes.btntext}>
+                        Make employee account
                     </span>
-                  </Button>
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </DialogContent>
-        </Dialog>
-      )}
+            </DialogContent>
+          </Dialog>
+        )}
 
       {claimBusinessModal && (
         <Dialog
@@ -1086,8 +1106,8 @@ const HomePage: React.FC<HomePageProps> = props => {
                                 </span>
                               </li>
                             </ul>
-                            <div className={classes.inputbox}>
-                              <SVG src={inputicon} />
+                            <div className={classes.businessinputbox}>
+                              <SVG src={inputicon} style={{ marginTop: '0.8rem' }} />
                               <SingleAutocompleteSelectField
                                 disabled={disabled}
                                 displayValue={countryDisplayName}
@@ -1937,10 +1957,10 @@ const HomePage: React.FC<HomePageProps> = props => {
                           setlatLngLoading(true);
                           geocodeByAddress(
                             input.address +
-                              "," +
-                              input.city +
-                              "," +
-                              countryDisplayName
+                            "," +
+                            input.city +
+                            "," +
+                            countryDisplayName
                           )
                             .then(results => getLatLng(results[0]))
                             .then(latLng => {
@@ -2050,10 +2070,10 @@ const HomePage: React.FC<HomePageProps> = props => {
                                       inputProps={{
                                         "data-tc": "address"
                                       }}
-                                      // {...getInputProps({
-                                      //   className: 'location-search-input',
-                                      //   // placeholder: 'Street Address',
-                                      // })}
+                                    // {...getInputProps({
+                                    //   className: 'location-search-input',
+                                    //   // placeholder: 'Street Address',
+                                    // })}
                                     />
                                     {/* <input
                                           {...getInputProps({
@@ -2238,20 +2258,20 @@ const HomePage: React.FC<HomePageProps> = props => {
                             platform === "IZETTLE"
                               ? input.izettleAccessToken
                               : platform === "SQUAREUP"
-                              ? input.squareAccessToken
-                              : platform === "SHOPIFY"
-                              ? input.shopifyAccessToken
-                              : platform === "VENDHQ"
-                              ? input.vendAccessToken
-                              : "",
+                                ? input.squareAccessToken
+                                : platform === "SHOPIFY"
+                                  ? input.shopifyAccessToken
+                                  : platform === "VENDHQ"
+                                    ? input.vendAccessToken
+                                    : "",
                           platform,
                           store: storeID,
                           url:
                             platform === "SHOPIFY"
                               ? input.shopifyURL
                               : platform === "VENDHQ"
-                              ? input.vendURL
-                              : ""
+                                ? input.vendURL
+                                : ""
                         }
                       }
                     })
