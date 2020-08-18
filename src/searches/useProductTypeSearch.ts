@@ -9,7 +9,7 @@ import {
 
 export const searchProductTypes = gql`
   ${pageInfoFragment}
-  query SearchProductTypes($after: String, $first: Int!, $query: String!, $store: ID!) {
+  query SearchProductTypes($after: String, $first: Int!, $query: String!, $store: ID) {
     search: productTypes(
       after: $after
       first: $first

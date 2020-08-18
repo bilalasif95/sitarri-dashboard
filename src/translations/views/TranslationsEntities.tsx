@@ -6,6 +6,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
+import useUser from "@saleor/hooks/useUser";
 import { PAGINATE_BY } from "../../config";
 import { maybe } from "../../misc";
 import TranslationsEntitiesList from "../components/TranslationsEntitiesList";
@@ -57,7 +58,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
   const navigate = useNavigator();
   const paginate = usePaginator();
   const shop = useShop();
-
+  const { user } = useUser();
   if (Object.keys(TranslatableEntities).indexOf(params.tab) === -1) {
     navigate(
       "?" +
@@ -127,7 +128,8 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
     () => ({
       ...paginationState,
       filter: {
-        search: params.query
+        search: params.query,
+        store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
       },
       language: language as any
     }),
