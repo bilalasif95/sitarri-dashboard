@@ -149,7 +149,7 @@ export const productUpdateMutation = gql`
     $chargeTaxes: Boolean!
     $collections: [ID]
     $descriptionJson: JSONString
-    $store: ID!
+    $store: ID
     $isPublished: Boolean!
     $name: String
     $basePrice: Decimal
@@ -201,7 +201,7 @@ export const simpleProductUpdateMutation = gql`
     $descriptionJson: JSONString
     $isPublished: Boolean!
     $name: String
-    $store: ID!
+    $store: ID
     $basePrice: Decimal
     $productVariantId: ID!
     $productVariantInput: ProductVariantInput!
@@ -295,7 +295,7 @@ export const productCreateMutation = gql`
     $name: String!
     $basePrice: Decimal
     $productType: ID!
-    $store: ID!
+    $store: ID
     $sku: String
     $seo: SeoInput
     $stocks: [StockInput!]!
