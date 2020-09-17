@@ -147,9 +147,21 @@ export const buttonMessages = defineMessages({
 });
 
 export const sectionNames = defineMessages({
+  accountSettings: {
+    defaultMessage: "Account Settings",
+    description: "account settings section name"
+  },
   attributes: {
     defaultMessage: "Attributes",
     description: "attributes section name"
+  },
+  businessCategories: {
+    defaultMessage: "Business Categories",
+    description: "business categories section name"
+  },
+  businesses: {
+    defaultMessage: "Businesses",
+    description: "businesses section name"
   },
   categories: {
     defaultMessage: "Categories",
@@ -175,9 +187,17 @@ export const sectionNames = defineMessages({
     defaultMessage: "Home",
     description: "home section name"
   },
+  linkePOS: {
+    defaultMessage: "Link ePOS",
+    description: "link ePOS section name"
+  },
   navigation: {
     defaultMessage: "Navigation",
     description: "navigation section name"
+  },
+  notifications: {
+    defaultMessage: "Notifications",
+    description: "notifications section name"
   },
   orders: {
     defaultMessage: "Orders",
@@ -223,6 +243,14 @@ export const sectionNames = defineMessages({
     defaultMessage: "Staff Members",
     description: "staff section name"
   },
+  staffSettings: {
+    defaultMessage: "Staff Settings",
+    description: "staff settings section name"
+  },
+  stores: {
+    defaultMessage: "Stores",
+    description: "stores section name"
+  },
   taxes: {
     defaultMessage: "Taxes",
     description: "taxes section name"
@@ -230,6 +258,10 @@ export const sectionNames = defineMessages({
   translations: {
     defaultMessage: "Translations",
     description: "translations section name"
+  },
+  users: {
+    defaultMessage: "Users",
+    description: "users section name"
   },
   vouchers: {
     defaultMessage: "Vouchers",

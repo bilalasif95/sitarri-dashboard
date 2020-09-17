@@ -9,6 +9,7 @@ import { matchPath } from "react-router";
 import configureIcon from "@assets/images/menu-configure-icon.svg";
 import useTheme from "@saleor/hooks/useTheme";
 import { sectionNames } from "@saleor/intl";
+import { staffMemberDetailsUrl, staffListUrl } from "@saleor/staff/urls";
 import { User } from "../../auth/types/User";
 import {
   configurationMenuUrl,
@@ -128,7 +129,7 @@ const useStyles = makeStyles(
       opacity: 1,
       paddingLeft: 16,
       position: "absolute",
-      textTransform: "uppercase",
+      // textTransform: "uppercase",
       transition: "opacity 0.5s ease"
     },
     menuListItemTextHide: {
@@ -228,13 +229,15 @@ const MenuList: React.FC<MenuListProps> = props => {
       {/* FIXME: this .split("?")[0] looks gross */}
       {menuItems.map(menuItem => {
         const isActive = (menuItem: IMenuItem) =>
-          location.split("?")[0] === orderDraftListUrl().split("?")[0] &&
-          menuItem.url.split("?")[0] === orderListUrl().split("?")[0]
+          (location.split("?")[0] === orderDraftListUrl().split("?")[0] &&
+            menuItem.url.split("?")[0] === orderListUrl().split("?")[0]) || (
+              location.split("?")[0] === staffMemberDetailsUrl(user.id).split("?")[0] &&
+              menuItem.url.split("?")[0] === staffListUrl().split("?")[0])
             ? false
             : !!matchPath(location.split("?")[0], {
-                exact: menuItem.url.split("?")[0] === "/",
-                path: menuItem.url.split("?")[0]
-              });
+              exact: menuItem.url.split("?")[0] === "/",
+              path: menuItem.url.split("?")[0]
+            });
 
         if (
           menuItem.permission &&
@@ -332,7 +335,7 @@ const MenuList: React.FC<MenuListProps> = props => {
           </a>
         );
       })}
-      {renderConfigure && configutationMenu.length > 0 && (
+      {user.isSuperuser && renderConfigure && configutationMenu.length > 0 && (
         <a
           className={classes.menuListItem}
           href={createHref(configurationMenuUrl)}

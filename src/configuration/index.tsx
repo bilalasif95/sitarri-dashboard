@@ -2,6 +2,7 @@ import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { attributeListUrl } from "@saleor/attributes/urls";
+import { categoryListUrl } from "@saleor/businessCategories/urls";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
@@ -141,6 +142,16 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
         defaultMessage: "Miscellaneous"
       }),
       menuItems: [
+        {
+          description: intl.formatMessage({
+            defaultMessage: "View and update your business categories",
+            id: "configurationMenuBusinessCategories"
+          }),
+          icon: <Navigation fontSize="inherit" viewBox="0 0 44 44" />,
+          permission: PermissionEnum.MANAGE_MENUS,
+          title: intl.formatMessage(sectionNames.businessCategories),
+          url: categoryListUrl()
+        },
         {
           description: intl.formatMessage({
             defaultMessage: "Define how users can navigate through your store",

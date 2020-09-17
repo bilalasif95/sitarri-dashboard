@@ -17,15 +17,18 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import useLocale from "@saleor/hooks/useLocale";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
-import { getUserName } from "@saleor/misc";
+import { getUserName, maybe } from "@saleor/misc";
 import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
 import { FetchMoreProps, SearchPageProps } from "@saleor/types";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import { StaffErrorFragment } from "@saleor/staff/types/StaffErrorFragment";
 import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
+import BusinessOptions from "../BusinessOptions/BusinessOptions";
 import StaffPassword from "../StaffPassword/StaffPassword";
 import StaffPreferences from "../StaffPreferences";
 import StaffProperties from "../StaffProperties/StaffProperties";
+
+import { HomePageQuery } from "../../../home/queries";
 
 export interface StaffDetailsFormData {
   email: string;
@@ -132,6 +135,12 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                     <StaffPassword onChangePassword={onChangePassword} />
                   </>
                 )}
+                <CardSpacer />
+                <HomePageQuery>
+                  {({ data }) => (
+                    <BusinessOptions businessNames={maybe(() => data.businesses.edges)} />
+                  )}
+                </HomePageQuery>
               </div>
               <div>
                 {canEditPreferences && (

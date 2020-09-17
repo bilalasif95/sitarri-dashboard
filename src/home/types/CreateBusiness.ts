@@ -38,6 +38,6 @@ export interface CreateBusiness {
 export interface CreateBusinessVariables {
   input: {
     name: string;
-    description: string;
+    // description: string;
   };
 }

@@ -22,6 +22,9 @@ import AuthProvider from "./auth/AuthProvider";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import SectionRoute from "./auth/components/SectionRoute";
 import { hasPermission } from "./auth/misc";
+import BusinessesSection from "./businesses";
+import BusinessCategorySection from "./businessCategories";
+import { categorySectionUrl } from "./businessCategories/urls";
 import CategorySection from "./categories";
 import CollectionSection from "./collections";
 import AppLayout from "./components/AppLayout";
@@ -38,9 +41,11 @@ import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
 import HomePage from "./home";
 import { commonMessages } from "./intl";
+import LinkePOSSection from "./linkePOS";
 import NavigationSection from "./navigation";
 import { navigationSection } from "./navigation/urls";
 import { NotFound } from "./NotFound";
+import NotificationsSection from "./notifications";
 import OrdersSection from "./orders";
 import PageSection from "./pages";
 import PluginsSection from "./plugins";
@@ -52,9 +57,11 @@ import { serviceSection } from "./services/urls";
 import ShippingSection from "./shipping";
 import SiteSettingsSection from "./siteSettings";
 import StaffSection from "./staff";
+import StoresSection from "./stores";
 import TaxesSection from "./taxes";
 import TranslationsSection from "./translations";
 import { PermissionEnum } from "./types/globalTypes";
+import UsersSection from "./users";
 import WebhooksSection from "./webhooks";
 import { warehouseSection } from "./warehouses/urls";
 import WarehouseSection from "./warehouses";
@@ -183,9 +190,19 @@ const Routes: React.FC = () => {
                 <Switch>
                   <SectionRoute exact path="/" component={HomePage} />
                   <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_MENUS]}
+                    path={categorySectionUrl}
+                    component={BusinessCategorySection}
+                  />
+                  <SectionRoute
                     permissions={[PermissionEnum.MANAGE_PRODUCTS]}
                     path="/categories"
                     component={CategorySection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                    path="/stores"
+                    component={StoresSection}
                   />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_PRODUCTS]}
@@ -228,9 +245,19 @@ const Routes: React.FC = () => {
                     component={OrdersSection}
                   />
                   <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_MENUS]}
+                    path="/businesses"
+                    component={BusinessesSection}
+                  />
+                  <SectionRoute
                     permissions={[PermissionEnum.MANAGE_PRODUCTS]}
                     path="/products"
                     component={ProductSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_SETTINGS]}
+                    path="/notifications"
+                    component={NotificationsSection}
                   />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_PRODUCTS]}
@@ -241,6 +268,11 @@ const Routes: React.FC = () => {
                     permissions={[PermissionEnum.MANAGE_STAFF]}
                     path="/staff"
                     component={StaffSection}
+                  />
+                  <SectionRoute
+                    permissions={[PermissionEnum.MANAGE_STAFF]}
+                    path="/users"
+                    component={UsersSection}
                   />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_STAFF]}
@@ -256,6 +288,11 @@ const Routes: React.FC = () => {
                     permissions={[PermissionEnum.MANAGE_SETTINGS]}
                     path="/taxes"
                     component={TaxesSection}
+                  />
+                  <SectionRoute
+                    // permissions={[PermissionEnum.MANAGE_SETTINGS]}
+                    path="/ePOS"
+                    component={LinkePOSSection}
                   />
                   <SectionRoute
                     permissions={[PermissionEnum.MANAGE_SHIPPING]}

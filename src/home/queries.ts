@@ -18,6 +18,10 @@ import {
   ProductBulkCreate,
   ProductBulkCreateVariables
 } from "./types/ProductBulkCreate";
+import {
+  UpdateBusiness,
+  UpdateBusinessVariables
+} from "./types/UpdateBusiness";
 
 const home = gql`
   query Home {
@@ -154,6 +158,28 @@ export const CreateBusinessMutation = TypedMutation<
   CreateBusiness,
   CreateBusinessVariables
 >(createBusinessMutation);
+
+
+export const updateBusinessMutation = gql`
+  mutation UpdateBusinessMutation($input: BusinessUpdateInput!) {
+    businessUpdate(input: $input) {
+      business {
+        id
+        name
+        description
+      }
+      businessErrors {
+        field
+        code
+        message
+      }
+    }
+  }
+`;
+export const UpdateBusinessMutation = TypedMutation<
+  UpdateBusiness,
+  UpdateBusinessVariables
+>(updateBusinessMutation);
 
 export const createStoreMutation = gql`
   mutation CreateStoreMutation($input: StoreCreateInput!) {

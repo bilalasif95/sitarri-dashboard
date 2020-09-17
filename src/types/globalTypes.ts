@@ -910,7 +910,7 @@ export interface CategoryInput {
   seo?: SeoInput | null;
   backgroundImage?: any | null;
   backgroundImageAlt?: string | null;
-  store: string;
+  store?: string;
 }
 
 export interface CategorySortingInput {

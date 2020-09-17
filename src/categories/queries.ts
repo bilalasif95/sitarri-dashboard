@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 import makeQuery from "@saleor/hooks/makeQuery";
-import { pageInfoFragment } from "../queries";
+import { pageInfoFragment,TypedQuery } from "../queries";
 import {
   CategoryDetails,
   CategoryDetailsVariables
@@ -70,6 +70,41 @@ export const rootCategories = gql`
 `;
 export const useRootCategoriesQuery = makeQuery<RootCategories, {}>(
   rootCategories
+);
+
+const rootCategoriesinBusiness = gql`
+  ${categoryFragment}
+  ${pageInfoFragment}
+  query RootCategories(
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+    $filter: CategoryFilterInput
+    $sort: CategorySortingInput
+  ) {
+    categories(
+      level: 0
+      first: $first
+      after: $after
+      last: $last
+      before: $before
+      filter: $filter
+      sortBy: $sort
+    ) {
+      edges {
+        node {
+          ...CategoryFragment
+        }
+      }
+      pageInfo {
+        ...PageInfoFragment
+      }
+    }
+  }
+`;
+export const TypedCategoriesListQuery = TypedQuery<RootCategories, {}>(
+  rootCategoriesinBusiness
 );
 
 export const categoryDetails = gql`
