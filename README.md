@@ -1,10 +1,10 @@
 # Sitarri Dashboard
 
-A GraphQL-powered, single-page dashboard application for [Sitarri](https://admin.erocery.com).
+A GraphQL-powered, single-page dashboard application for [Sitarri](https://dev-dashboard.sitarri.co.uk/).
 
 ## Demo
 
-See the [public demo](https://admin.erocery.com/) of Sitarri Dashboard!
+See the [public demo](https://dev-dashboard.sitarri.co.uk/) of Sitarri Dashboard!
 
 Or launch the demo on a free Heroku instance.
 
@@ -17,7 +17,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 - Node.js 10.0+
-- A running instance of [Sitarri](https://admin.erocery.com).
+- A running instance of [Sitarri](https://dev-dashboard.sitarri.co.uk/).
 
 ### Installing
 

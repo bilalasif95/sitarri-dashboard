@@ -526,7 +526,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
                 By continuing you agree to our{" "}
                 <a
                   className={classes.statementSection}
-                  href="https://sitarri.com/#/page/terms-and-conditions/"
+                  href="https://dev.sitarri.co.uk/#/page/terms-and-conditions/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -535,7 +535,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
                 and{" "}
                 <a
                   className={classes.statementSection}
-                  href="https://sitarri.com/#/page/privacy-policy/"
+                  href="https://dev.sitarri.co.uk/#/page/privacy-policy/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
