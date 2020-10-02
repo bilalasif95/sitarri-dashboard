@@ -13,6 +13,7 @@ import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import { maybe } from "../../../misc";
 import { CategoryDetails_category } from "../../types/CategoryDetails";
+import TagsComponent from "./TagsComponent";
 
 interface CategoryDetailsFormProps {
   category?: CategoryDetails_category;
@@ -56,6 +57,8 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
             fullWidth
           />
         </div>
+        <FormSpacer />
+        <TagsComponent />
         <FormSpacer />
         <RichTextEditor
           disabled={disabled}
