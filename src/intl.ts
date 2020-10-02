@@ -74,6 +74,9 @@ export const commonMessages = defineMessages({
   status: {
     defaultMessage: "Status"
   },
+  storeOpeningClosingHours: {
+    defaultMessage: "Opening Hours"
+  },
   summary: {
     defaultMessage: "Summary"
   },
