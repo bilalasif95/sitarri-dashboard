@@ -1,15 +1,23 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { RawDraftContentState } from "draft-js";
+import Facebook from "@assets/images/facebook1.svg";
 import React from "react";
 import Dropzone from "react-dropzone";
 import SVG from "react-inlinesvg";
 import { useIntl } from "react-intl";
 
-import uploadicon from "@assets/images/uploadicon.svg";
+import Shield from "@assets/images/shield.svg";
+import Earth from "@assets/images/earth.svg";
+import Instagram from "@assets/images/instagram.svg";
+import Twitter from "@assets/images/twitter1.svg";
+import Tag from "@assets/images/tag.svg";
+import uploadicon from "@assets/images/uploadicon1.svg";
+
 // import CardTitle from "@saleor/components/CardTitle";
-import FormSpacer from "@saleor/components/FormSpacer";
+// import FormSpacer from "@saleor/components/FormSpacer";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 // import RichTextEditor from "@saleor/components/RichTextEditor";
 // import { commonMessages } from "@saleor/intl";
@@ -19,6 +27,193 @@ import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/single
 import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 
 import SingleAutocompleteSelectField from "../../../components/SingleAutocompleteSelectField";
+
+const useStyles = makeStyles(
+  theme => ({
+    "& img": {
+      background: "#e8ebeb",
+      borderRadius: "5px",
+      height: "60px",
+      width: "60px"
+    },
+    BusinessTitle: {
+      alignItems: "center",
+      display: "flex"
+    },
+    BusinessTypography: {
+      "& h3": {
+        fontSize: "20px",
+        marginBottom: "0px",
+        marginTop: "3px"
+      }
+    },
+    CategoryInput: {
+      "& input": {
+        paddingLeft: "16px !important"
+      },
+      "& label": {
+        marginLeft: "0px !important"
+      },
+      alignItems: "center",
+      display: "flex"
+    },
+    DropzoneOutline: {
+      "&:focus": {
+        border: "none",
+        outline: "none"
+      }
+    },
+    Form: {
+      display: "flex",
+      justifyContent: "space-between"
+    },
+
+    FormBox: {
+      "& .MuiFormControl-root": {
+        marginTop: "30px",
+        position: "relative",
+        width: "100%"
+      },
+      "& .MuiInputBase-fullWidth": {
+        width: "100%"
+      },
+
+      "& .MuiInputLabel-animated": {
+        marginLeft: "95px"
+      },
+      "& input": {
+        paddingLeft: "108px"
+      },
+      width: "30%"
+    },
+
+    ImgDropzone: {
+      "& p": {
+        color: "#000",
+        fontSize: "13px",
+        textAlign: "center"
+      },
+      "& svg": {
+        left: "45%",
+        position: "relative",
+        right: "0",
+        top: "50%"
+      },
+      background: "#eaeaea",
+      border: "1px dashed #a1a1a1",
+      borderRadius: "5px",
+      cursor: "pointer",
+      highlightedImageContainer: {
+        borderColor: theme.palette.primary.main
+      },
+      padding: "0px 10px"
+    },
+
+    InputIcons: {
+      marginRight: "10px",
+      marginTop: "33px"
+    },
+
+    InputPrepend: {
+      position: "relative"
+    },
+
+    PrependText: {
+      background: "#efefef",
+      borderBottomLeftRadius: "5px",
+      borderRight: "1px solid #9d9d9d",
+      borderTopLeftRadius: "5px",
+      fontSize: "8px",
+      left: "31px",
+      padding: "20px 8px",
+      position: "absolute",
+      top: "31px",
+      zIndex: 1
+    },
+    PreviewBox: {
+      background: "#e8ebeb",
+      borderRadius: "5px",
+      height: "60px",
+      image: {
+        height: "100%",
+        objectFit: "contain",
+        userSelect: "none",
+        width: "100%"
+      },
+      marginBottom: "1em",
+      width: "60px"
+    },
+    RemoveBtn: {
+      "& focus": {
+        outline: "none"
+      },
+      background: "#eb4c2b",
+      border: "none",
+      borderRadius: "5px",
+      color: "#fff",
+      cursor: "pointer",
+      display: "block",
+      fontSize: "12px",
+      imageContainer: {
+        background: "#ffffff",
+        border: "2px solid #eaeaea",
+        borderRadius: theme.spacing(),
+        cursor: "pointer",
+        height: 48,
+        overflow: "hidden",
+        padding: theme.spacing(0.5),
+        position: "relative"
+      },
+      margin: "0px auto",
+      padding: "5px 10px"
+    },
+    SocialIcons: {
+      alignItems: "center",
+      display: "flex"
+    },
+    TitleImg: {
+      background: "#e8ebeb",
+      borderRadius: "5px",
+      height: "60px",
+      marginRight: "25px",
+      width: "60px"
+    },
+    VerifiedImg: {
+      left: "0",
+      position: "absolute"
+    },
+    VerifiedList: {
+      listStyleType: "none",
+      paddingLeft: "0px"
+    },
+    VerifiedText: {
+      color: "#1873e4",
+      fontSize: "12px",
+      paddingLeft: " 25px",
+      position: "relative"
+    },
+    Website: {
+      "& input": {
+        paddingLeft: "50px !important"
+      },
+      "& label": {
+        marginLeft: "35px !important"
+      }
+    },
+    card: {
+      marginBottom: theme.spacing(2)
+    },
+    root: {
+      display: "grid",
+      gridColumnGap: theme.spacing(2),
+      gridRowGap: theme.spacing(1),
+      gridTemplateColumns: "repeat(4, 1fr)"
+    },
+
+    toolbar: { marginTop: -theme.spacing(0.5) }
+  }),
+  { name: "ProductDetailsForm" }
+);
 
 interface ProductDetailsFormProps {
   data: {
@@ -41,22 +236,29 @@ interface ProductDetailsFormProps {
   onChange(event: any);
 }
 
-export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
-  data,
-  disabled,
-  errors,
-  businessNames,
-  // initialDescription,
-  onChange
-}) => {
+export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
+  {
+    data,
+    disabled,
+    errors,
+    businessNames,
+    // initialDescription,
+    onChange
+  },
+  props
+) => {
   const intl = useIntl();
   const [businessNamesArray, setBusinessNamesArray] = React.useState([]);
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
     maybe(() => "", "")
   );
+  const classes = useStyles(props);
   const [logo, setLogo] = React.useState<any>();
   // const [logoFile, setLogoFile] = React.useState<any>();
-  const formErrors = getFormErrors(["website", "facebook", "instagram", "twitter"], errors);
+  const formErrors = getFormErrors(
+    ["website", "facebook", "instagram", "twitter"],
+    errors
+  );
   const handleCountrySelect = createSingleAutocompleteSelectHandler(
     onChange,
     setCountryDisplayName,
@@ -78,111 +280,161 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
         title={intl.formatMessage(commonMessages.generalInformations)}
       /> */}
       <CardContent>
-        <img />
-        <h3>Business Name</h3>
-        <p>Verified</p>
-
-        <SingleAutocompleteSelectField
-          disabled={disabled}
-          displayValue={countryDisplayName}
-          label={intl.formatMessage({
-            defaultMessage: "Business Category"
-          })}
-          name="businessCategory"
-          onChange={handleCountrySelect}
-          value={data.businessCategory}
-          choices={businessNamesArray}
-          InputProps={{
-            autoComplete: "off"
-          }}
-        />
-        <TextField
-          disabled={disabled}
-          label="Website"
-          name="website"
-          error={!!formErrors.website}
-          helperText={!!formErrors.website}
-          type="url"
-          onChange={onChange}
-          value={data.website}
-        />
-        <FormSpacer />
-        <TextField
-          disabled={disabled}
-          label="Facebook"
-          name="facebook"
-          error={!!formErrors.facebook}
-          helperText={!!formErrors.facebook}
-          type="url"
-          onChange={onChange}
-          value={data.facebook}
-        />
-        <TextField
-          disabled={disabled}
-          label="Instagram"
-          name="instagram"
-          error={!!formErrors.instagram}
-          helperText={!!formErrors.instagram}
-          type="url"
-          onChange={onChange}
-          value={data.instagram}
-        />
-        <FormSpacer />
-        <TextField
-          disabled={disabled}
-          label="Twitter"
-          name="twitter"
-          error={!!formErrors.twitter}
-          helperText={!!formErrors.twitter}
-          type="url"
-          onChange={onChange}
-          value={data.twitter}
-        />
-        <FormSpacer />
-        <div>
-          <p>Business Logo</p>
-          <div>
-            <Dropzone
-              accept="image/*"
-              multiple={false}
-              onDrop={acceptedFiles => {
-                if (acceptedFiles && acceptedFiles[0]) {
-                  data.logo = acceptedFiles[0];
-                  // setLogoFile(acceptedFiles[0]);
-                  const reader = new FileReader();
-                  reader.onload = e => {
-                    setLogo(e.target.result);
-                  };
-                  reader.readAsDataURL(acceptedFiles[0]);
-                }
-              }}
-            >
-              {({ getRootProps, getInputProps }) => (
-                <section>
-                  <div
-                    {...getRootProps()}
-                  >
-                    <input {...getInputProps()} />
-
-                    <p>
-                      Drag and drop an image here or click
-                                </p>
-                    <SVG src={uploadicon} />
-                  </div>
-                </section>
-              )}
-            </Dropzone>
+        <div className={classes.BusinessTitle}>
+          <div className={classes.TitleImg}>
+            {/* <img src={uploadicon} /> */}
+          </div>
+          <div className={classes.BusinessTypography}>
+            <h3>Business Name</h3>
+            <ul className={classes.VerifiedList}>
+              <li className={classes.VerifiedText}>
+                <SVG className={classes.VerifiedImg} src={Shield} />
+                Verified
+              </li>
+            </ul>
           </div>
         </div>
-        <div>
-          <p>Preview:</p>
-          <div>
-            {logo === "" ? "" : <img src={logo} />}
+
+        <div className={classes.Form}>
+          <div className={classes.FormBox}>
+            <div className={classes.CategoryInput}>
+              <SVG className={classes.InputIcons} src={Tag} />
+              <SingleAutocompleteSelectField
+                disabled={disabled}
+                displayValue={countryDisplayName}
+                label={intl.formatMessage({
+                  defaultMessage: "Business Category"
+                })}
+                name="businessCategory"
+                onChange={handleCountrySelect}
+                value={data.businessCategory}
+                choices={businessNamesArray}
+                InputProps={{
+                  autoComplete: "off"
+                }}
+              />
+            </div>
+
+            <div className={classes.InputPrepend}>
+              <div className={classes.PrependText}>www.facebook.com/</div>
+              <div className={classes.SocialIcons}>
+                <SVG className={classes.InputIcons} src={Facebook} />
+                <TextField
+                  disabled={disabled}
+                  label="Facebook"
+                  name="facebook"
+                  error={!!formErrors.facebook}
+                  helperText={!!formErrors.facebook}
+                  type="url"
+                  onChange={onChange}
+                  value={data.facebook}
+                />
+              </div>
+            </div>
+
+            <div className={classes.InputPrepend}>
+              <div className={classes.PrependText}>www.twitter.com/</div>
+              <div className={classes.SocialIcons}>
+                <SVG className={classes.InputIcons} src={Twitter} />
+                <TextField
+                  disabled={disabled}
+                  label="Twitter"
+                  name="twitter"
+                  error={!!formErrors.twitter}
+                  helperText={!!formErrors.twitter}
+                  type="url"
+                  onChange={onChange}
+                  value={data.twitter}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className={classes.FormBox}>
+            <div className={classes.InputPrepend}>
+              <div className={classes.PrependText}>www.</div>
+              <div className={classes.SocialIcons}>
+                <SVG className={classes.InputIcons} src={Earth} />
+                <TextField
+                  className={classes.Website}
+                  disabled={disabled}
+                  label="Website"
+                  name="website"
+                  error={!!formErrors.website}
+                  helperText={!!formErrors.website}
+                  type="url"
+                  onChange={onChange}
+                  value={data.website}
+                />
+              </div>
+            </div>
+
+            <div className={classes.InputPrepend}>
+              <div className={classes.PrependText}>www.instagram.com/</div>
+              <div className={classes.SocialIcons}>
+                <SVG className={classes.InputIcons} src={Instagram} />
+                <TextField
+                  disabled={disabled}
+                  label="Instagram"
+                  name="instagram"
+                  error={!!formErrors.instagram}
+                  helperText={!!formErrors.instagram}
+                  type="url"
+                  onChange={onChange}
+                  value={data.instagram}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className={classes.FormBox}>
+            <div>
+              <p>Business Logo</p>
+
+              <div className={classes.ImgDropzone}>
+                <Dropzone
+                  accept="image/*"
+                  multiple={false}
+                  onDrop={acceptedFiles => {
+                    if (acceptedFiles && acceptedFiles[0]) {
+                      data.logo = acceptedFiles[0];
+                      // setLogoFile(acceptedFiles[0]);
+                      const reader = new FileReader();
+                      reader.onload = e => {
+                        setLogo(e.target.result);
+                      };
+                      reader.readAsDataURL(acceptedFiles[0]);
+                    }
+                  }}
+                >
+                  {({ getRootProps, getInputProps }) => (
+                    <section className={classes.DropzoneOutline}>
+                      <div
+                        className={classes.DropzoneOutline}
+                        {...getRootProps()}
+                      >
+                        <input {...getInputProps()} />
+
+                        <p>Drag and drop an image here or click</p>
+                        <SVG src={uploadicon} />
+                      </div>
+                    </section>
+                  )}
+                </Dropzone>
+              </div>
+            </div>
+            <div>
+              <p>Preview:</p>
+              <div className={classes.PreviewBox}>
+                {logo === "" ? "" : <img src={logo} />}
+              </div>
+            </div>
+            <button className={classes.RemoveBtn} onClick={() => setLogo("")}>
+              Remove
+            </button>
           </div>
         </div>
-        <button onClick={() => setLogo("")}>
-          Remove
-        </button>
+
         {/* <RichTextEditor
           disabled={disabled}
           error={!!formErrors.descriptionJson}

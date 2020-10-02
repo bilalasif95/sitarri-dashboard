@@ -11,6 +11,7 @@ import { CardSpacer } from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
+import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
@@ -19,7 +20,9 @@ import { sectionNames } from "@saleor/intl";
 import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import { maybe } from "../../../misc";
 import { TabListActions } from "../../../types";
+import BusinessInformationOfSpecificStore from "../../components/BusinessInformationOfSpecificStore";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
+import StoreOpeningClosingHours from "../../components/StoreOpeningClosingHours";
 // import CategoryList from "../../components/CategoryList";
 import {
   CategoryDetails_category,
@@ -126,37 +129,39 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             {intl.formatMessage(sectionNames.stores)}
           </AppHeader>
           <PageHeader title={category ? category.name : undefined} />
-          <CategoryDetailsForm
-            category={category}
-            data={data}
-            disabled={disabled}
-            errors={errors}
-            onChange={change}
-          />
-          <CardSpacer />
-          <CategoryBackground
-            data={data}
-            onImageUpload={onImageUpload}
-            onImageDelete={onImageDelete}
-            image={maybe(() => category.backgroundImage)}
-            onChange={change}
-          />
-          <CardSpacer />
-          <SeoForm
-            helperText={intl.formatMessage({
-              defaultMessage:
-                "Add search engine title and description to make this category easier to find"
-            })}
-            title={data.seoTitle}
-            titlePlaceholder={data.name}
-            description={data.seoDescription}
-            descriptionPlaceholder={data.name}
-            loading={!category}
-            onChange={change}
-            disabled={disabled}
-          />
-          <CardSpacer />
-          {/* <TabContainer>
+          <Grid>
+            <div>
+              <CategoryDetailsForm
+                category={category}
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+              <CardSpacer />
+              <CategoryBackground
+                data={data}
+                onImageUpload={onImageUpload}
+                onImageDelete={onImageDelete}
+                image={maybe(() => category.backgroundImage)}
+                onChange={change}
+              />
+              <CardSpacer />
+              <SeoForm
+                helperText={intl.formatMessage({
+                  defaultMessage:
+                    "Add search engine title and description to make this category easier to find"
+                })}
+                title={data.seoTitle}
+                titlePlaceholder={data.name}
+                description={data.seoDescription}
+                descriptionPlaceholder={data.name}
+                loading={!category}
+                onChange={change}
+                disabled={disabled}
+              />
+              <CardSpacer />
+              {/* <TabContainer>
             <CategoriesTab
               isActive={currentTab === CategoryPageTab.categories}
               changeTab={changeTab}
@@ -176,7 +181,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               />
             </ProductsTab>
           </TabContainer> */}
-          {/* <CardSpacer />
+              {/* <CardSpacer />
           {currentTab === CategoryPageTab.categories && (
             <Card>
               <CardTitle
@@ -216,23 +221,43 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               />
             </Card>
           )} */}
-          {/* {currentTab === CategoryPageTab.products && ( */}
-            <CategoryProducts
-              categoryName={maybe(() => category.name)}
-              products={products}
-              disabled={disabled}
-              pageInfo={pageInfo}
-              onNextPage={onNextPage}
-              onPreviousPage={onPreviousPage}
-              onRowClick={onProductClick}
-              onAdd={onAddProduct}
-              toggle={toggle}
-              toggleAll={toggleAll}
-              selected={selected}
-              isChecked={isChecked}
-              toolbar={productListToolbar}
-            />
-          {/* )} */}
+              {/* {currentTab === CategoryPageTab.products && ( */}
+              <CategoryProducts
+                categoryName={maybe(() => category.name)}
+                products={products}
+                disabled={disabled}
+                pageInfo={pageInfo}
+                onNextPage={onNextPage}
+                onPreviousPage={onPreviousPage}
+                onRowClick={onProductClick}
+                onAdd={onAddProduct}
+                toggle={toggle}
+                toggleAll={toggleAll}
+                selected={selected}
+                isChecked={isChecked}
+                toolbar={productListToolbar}
+              />
+              {/* )} */}
+            </div>
+            <div>
+              <BusinessInformationOfSpecificStore
+                category={category}
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+              <CardSpacer />
+              <StoreOpeningClosingHours
+                category={category}
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+            </div>
+          </Grid>
+
           <SaveButtonBar
             onCancel={onBack}
             onDelete={onDelete}
