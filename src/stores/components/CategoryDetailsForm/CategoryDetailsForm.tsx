@@ -17,6 +17,7 @@ import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { maybe } from "../../../misc";
 import { CategoryDetails_category } from "../../types/CategoryDetails";
 import SingleAutocompleteSelectField from "../../../components/SingleAutocompleteSelectField";
+import TagsComponent from "./TagsComponent";
 
 const useStyles = makeStyles(
   theme => ({
@@ -111,7 +112,7 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = (
             name="description"
             onChange={onChange}
           />
-
+          <FormSpacer />
           <div className={classes.SelectCategory}>
             <p>Let customers know if they can visit your store</p>
             <SingleAutocompleteSelectField
@@ -127,63 +128,10 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = (
               InputProps={{
                 autoComplete: "off"
               }}
-            />
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardTitle
-          title={intl.formatMessage(commonMessages.generalInformations)}
-        />
-        <CardContent>
-          <div>
-            <TextField
-              label={intl.formatMessage({
-                defaultMessage: "Name"
-              })}
-              name="name"
-              disabled={disabled}
-              value={data && data.name}
-              onChange={onChange}
-              error={!!formErrors.name}
-              helperText={getProductErrorMessage(formErrors.name, intl)}
-              fullWidth
             />
           </div>
           <FormSpacer />
-          <RichTextEditor
-            disabled={disabled}
-            error={!!formErrors.descriptionJson}
-            helperText={getProductErrorMessage(
-              formErrors.descriptionJson,
-              intl
-            )}
-            label={intl.formatMessage({
-              defaultMessage: "Description"
-            })}
-            initial={maybe(() => JSON.parse(category.descriptionJson))}
-            name="description"
-            onChange={onChange}
-          />
-
-          <div className={classes.SelectCategory}>
-            <p>Let customers know if they can visit your store</p>
-            <SingleAutocompleteSelectField
-              disabled={disabled}
-              displayValue={countryDisplayName}
-              label={intl.formatMessage({
-                defaultMessage: "Online or Offline Store"
-              })}
-              name="businessCategory"
-              onChange={handleCountrySelect}
-              value={data.businessCategory}
-              choices={businessNamesArray}
-              InputProps={{
-                autoComplete: "off"
-              }}
-            />
-          </div>
+          <TagsComponent />
         </CardContent>
       </Card>
     </>
