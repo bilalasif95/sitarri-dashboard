@@ -22,6 +22,7 @@ import Twitter from "@assets/images/twitter1.svg";
 import uploadicon from "@assets/images/uploadicon1.svg";
 
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import NoImg from "@assets/images/noimg.svg";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import Scooter from "@assets/images/scooter.svg";
 import { CategoryDetails_category } from "../../types/CategoryDetails";
@@ -140,7 +141,7 @@ const useStyles = makeStyles(
       width: "60px"
     },
     RemoveBtn: {
-      "& focus": {
+      "&:focus": {
         outline: "none"
       },
       background: "#eb4c2b",
@@ -292,7 +293,11 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
         <div className={classes.BusinessDropbox}>
           <div className={classes.ImgPreviewBox}>
             <div className={classes.PreviewBox}>
-              {logo === "" ? "" : <img src={logo} />}
+              {logo === "" || logo === undefined ? (
+                <SVG src={NoImg} />
+              ) : (
+                <img src={logo} />
+              )}
             </div>
           </div>
 

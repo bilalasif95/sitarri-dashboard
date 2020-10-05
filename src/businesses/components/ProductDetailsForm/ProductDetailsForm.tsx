@@ -12,6 +12,7 @@ import { useIntl } from "react-intl";
 import Shield from "@assets/images/shield.svg";
 import Earth from "@assets/images/earth.svg";
 import Instagram from "@assets/images/instagram.svg";
+import NoImg from "@assets/images/noimg.svg";
 import Twitter from "@assets/images/twitter1.svg";
 import Tag from "@assets/images/tag.svg";
 import uploadicon from "@assets/images/uploadicon1.svg";
@@ -131,20 +132,21 @@ const useStyles = makeStyles(
       zIndex: 1
     },
     PreviewBox: {
+      "& img": {
+        borderRadius: "4px",
+        height: "60px",
+        // objectFit: "contain",
+        // userSelect: "none",
+        width: "60px"
+      },
       background: "#e8ebeb",
       borderRadius: "5px",
       height: "60px",
-      image: {
-        height: "100%",
-        objectFit: "contain",
-        userSelect: "none",
-        width: "100%"
-      },
       marginBottom: "1em",
       width: "60px"
     },
     RemoveBtn: {
-      "& focus": {
+      "&:focus": {
         outline: "none"
       },
       background: "#eb4c2b",
@@ -282,7 +284,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
       <CardContent>
         <div className={classes.BusinessTitle}>
           <div className={classes.TitleImg}>
-            {/* <img src={uploadicon} /> */}
+            <SVG src={NoImg} />
           </div>
           <div className={classes.BusinessTypography}>
             <h3>Business Name</h3>
@@ -426,7 +428,11 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
             <div>
               <p>Preview:</p>
               <div className={classes.PreviewBox}>
-                {logo === "" ? "" : <img src={logo} />}
+                {logo === "" || logo === undefined ? (
+                  <SVG src={NoImg} />
+                ) : (
+                  <img src={logo} />
+                )}
               </div>
             </div>
             <button className={classes.RemoveBtn} onClick={() => setLogo("")}>

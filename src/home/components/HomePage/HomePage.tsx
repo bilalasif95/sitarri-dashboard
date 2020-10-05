@@ -29,6 +29,7 @@ import search from "@assets/images/search.svg";
 import globe from "@assets/images/globe.svg";
 import facebook from "@assets/images/facebook.svg";
 import instagram from "@assets/images/instagram.svg";
+import NoImg from "@assets/images/noimg.svg";
 import saleimg1 from "@assets/images/saleimg1.svg";
 import saleimg2 from "@assets/images/saleimg2.svg";
 import saleimg3 from "@assets/images/saleimg3.svg";
@@ -133,7 +134,7 @@ const useStyles = makeStyles(
     businessinputbox: {
       "& div": {
         "& .MuiPaper-rounded": {
-          position: 'relative'
+          position: "relative"
         }
       },
       "& label": {
@@ -721,7 +722,7 @@ const HomePage: React.FC<HomePageProps> = props => {
       setOpenImportInformationModal(true);
       setImportInformationModal(true);
     }
-  }
+  };
 
   const onProductBulkCreateCompleted = (data: ProductBulkCreate) => {
     setIzettleAccessTokenError([]);
@@ -876,8 +877,8 @@ const HomePage: React.FC<HomePageProps> = props => {
                 {sales ? (
                   <Money money={sales} />
                 ) : (
-                    <Skeleton style={{ width: "5em" }} />
-                  )}
+                  <Skeleton style={{ width: "5em" }} />
+                )}
               </HomeAnalyticsCard>
               <HomeAnalyticsCard
                 title={"Orders"}
@@ -892,8 +893,8 @@ const HomePage: React.FC<HomePageProps> = props => {
                 {orders === undefined ? (
                   <Skeleton style={{ width: "5em" }} />
                 ) : (
-                    orders
-                  )}
+                  orders
+                )}
               </HomeAnalyticsCard>
             </div>
           </RequirePermissions>
@@ -932,8 +933,8 @@ const HomePage: React.FC<HomePageProps> = props => {
       </Grid>
       {(user.businessUser.edges.length === 0 ||
         (user.businessUser.edges[0] &&
-          user.businessUser.edges[0].node.businessStore.edges.length ===
-          0)) && (!user.isSuperuser) && (
+          user.businessUser.edges[0].node.businessStore.edges.length === 0)) &&
+        !user.isSuperuser && (
           <Dialog
             // onClose={onClose}
             open={open}
@@ -960,11 +961,11 @@ const HomePage: React.FC<HomePageProps> = props => {
                     <div className={classes.cardtext}>
                       <h4 className={classes.cardhead1}>
                         Claim a business already on Sitarri
-                    </h4>
+                      </h4>
                       <p>
                         If you own or manage a business that is already on
                         Sitarri, click below to take control
-                    </p>
+                      </p>
                     </div>
                     <Button
                       className={classes.cardbtn}
@@ -989,11 +990,11 @@ const HomePage: React.FC<HomePageProps> = props => {
                     <div className={classes.cardtext}>
                       <h4 className={classes.cardhead1}>
                         Add a business to Sitarri
-                    </h4>
+                      </h4>
                       <p>
-                        If you own or manage a business, click below to add it to
-                        Sitarri
-                    </p>
+                        If you own or manage a business, click below to add it
+                        to Sitarri
+                      </p>
                     </div>
                     <Button
                       className={classes.businessbtn}
@@ -1008,13 +1009,13 @@ const HomePage: React.FC<HomePageProps> = props => {
                           setOpen(false);
                           setBusinessID(
                             user.businessUser.edges &&
-                            user.businessUser.edges[0] &&
-                            user.businessUser.edges[0].node.id
+                              user.businessUser.edges[0] &&
+                              user.businessUser.edges[0].node.id
                           );
                           setBusinessName(
                             user.businessUser.edges &&
-                            user.businessUser.edges[0] &&
-                            user.businessUser.edges[0].node.name
+                              user.businessUser.edges[0] &&
+                              user.businessUser.edges[0].node.name
                           );
                           // setBusinessDescription(
                           //   user.businessUser.edges &&
@@ -1039,10 +1040,10 @@ const HomePage: React.FC<HomePageProps> = props => {
                     <div className={classes.cardtext}>
                       <h4 className={classes.cardhead1}>
                         Staff member of a business
-                    </h4>
+                      </h4>
                       <p>
                         Request employee access to a business listed to Sitarri
-                    </p>
+                      </p>
                     </div>
                     <Button
                       className={`${classes.cardbtn}`}
@@ -1056,7 +1057,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                     >
                       <span className={classes.btntext}>
                         Make employee account
-                    </span>
+                      </span>
                     </Button>
                   </div>
                 </div>
@@ -1119,7 +1120,10 @@ const HomePage: React.FC<HomePageProps> = props => {
                               </li>
                             </ul>
                             <div className={classes.businessinputbox}>
-                              <SVG src={inputicon} style={{ marginTop: '0.8rem' }} />
+                              <SVG
+                                src={inputicon}
+                                style={{ marginTop: "0.8rem" }}
+                              />
                               <SingleAutocompleteSelectField
                                 disabled={disabled}
                                 displayValue={countryDisplayName}
@@ -1529,19 +1533,19 @@ const HomePage: React.FC<HomePageProps> = props => {
                         </span> */}
                           <span className={classes.listtext}>
                             Choose the category that best
-                        </span>
+                          </span>
                         </li>
                       </ul>
                       <div className={classes.thanksmodaltext}>
                         <p>
                           This helps customer find you if they are looking for{" "}
                           <br /> a business like yours
-                      </p>
+                        </p>
                       </div>
                       <div
                         className={`${classes.businessinputbox} ${classes.employeaccessinput}`}
                       >
-                        <SVG src={search} style={{ marginTop: '0.8rem' }} />
+                        <SVG src={search} style={{ marginTop: "0.8rem" }} />
                         <SingleAutocompleteSelectField
                           disabled={disabled}
                           displayValue={countryDisplayName}
@@ -1592,7 +1596,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                     </ConfirmButton>
                   </DialogActions>
                 </>
-              )
+              );
             }}
           </Form>
         </Dialog>
@@ -1608,28 +1612,31 @@ const HomePage: React.FC<HomePageProps> = props => {
           <UpdateBusinessMutation onCompleted={onUpdateBusinessCompleted}>
             {(businessUpdate, businessUpdateOpts) => (
               <>
-                <Form initial={initialForm} onSubmit={input =>
-                  businessUpdate({
-                    variables: {
-                      input: {
-                        // business: businessID,
-                        category: businesscategory,
-                        // description: businessDescription,
-                        facebookUrl: input.facebook,
-                        instagramUrl: input.instagram,
-                        logo: logoFile,
-                        // maxPrice: 0,
-                        // minPrice: 0,
-                        name: businessName,
-                        // rating: 4,
-                        // totalReviews: 10,
-                        // phone: phoneNumber,
-                        twitterUrl: input.twitter,
-                        websiteUrl: input.website
+                <Form
+                  initial={initialForm}
+                  onSubmit={input =>
+                    businessUpdate({
+                      variables: {
+                        input: {
+                          // business: businessID,
+                          category: businesscategory,
+                          // description: businessDescription,
+                          facebookUrl: input.facebook,
+                          instagramUrl: input.instagram,
+                          logo: logoFile,
+                          // maxPrice: 0,
+                          // minPrice: 0,
+                          name: businessName,
+                          // rating: 4,
+                          // totalReviews: 10,
+                          // phone: phoneNumber,
+                          twitterUrl: input.twitter,
+                          websiteUrl: input.website
+                        }
                       }
-                    }
-                  })
-                }>
+                    })
+                  }
+                >
                   {({ change, data, submit }) => (
                     <>
                       <DialogContent className={classes.businessmodalcont}>
@@ -1656,14 +1663,15 @@ const HomePage: React.FC<HomePageProps> = props => {
                               </span>
                               <span className={classes.listtext}>
                                 What information do you want to
-                        </span>
+                              </span>
                             </li>
                           </ul>
                           <div className={classes.thanksmodaltext}>
                             <p>
                               Help customers get in touch and recognise your
-                        <br /> business by including this info on your listing
-                      </p>
+                              <br /> business by including this info on your
+                              listing
+                            </p>
                           </div>
                           {/* <div
                       className={`${classes.inputbox} ${classes.employeaccessinput}`}
@@ -1789,7 +1797,7 @@ const HomePage: React.FC<HomePageProps> = props => {
 
                                       <p className={classes.uploadtext}>
                                         Drag and drop an image here or click
-                                </p>
+                                      </p>
                                       <SVG src={uploadicon} />
                                     </div>
                                   </section>
@@ -1800,7 +1808,11 @@ const HomePage: React.FC<HomePageProps> = props => {
                           <div>
                             <p>Preview:</p>
                             <div className={classes.filepreview}>
-                              {logo === "" ? "" : <img src={logo} />}
+                              {logo === "" || logo === undefined ? (
+                                <SVG src={NoImg} />
+                              ) : (
+                                <img src={logo} />
+                              )}
                             </div>
                           </div>
                         </div>
@@ -1853,7 +1865,9 @@ const HomePage: React.FC<HomePageProps> = props => {
                                       data.twitter
                                     )
                                   ) {
-                                    setTwitterURLError("Invalid Instagram URL.");
+                                    setTwitterURLError(
+                                      "Invalid Instagram URL."
+                                    );
                                   } else {
                                     setTwitterURLError("");
                                     submit();
@@ -2293,8 +2307,14 @@ const HomePage: React.FC<HomePageProps> = props => {
               color="primary"
               variant="contained"
               type="submit"
-              onClick={() => { verifyTokenAndSetData(token); setAllDoneModal(false); setOpenAllDoneModal(false); window.location.reload() }}
-              className={classes.confirmbtn}>
+              onClick={() => {
+                verifyTokenAndSetData(token);
+                setAllDoneModal(false);
+                setOpenAllDoneModal(false);
+                window.location.reload();
+              }}
+              className={classes.confirmbtn}
+            >
               <span>Go to dashboard</span>
             </ConfirmButton>
           </DialogActions>
@@ -2321,20 +2341,20 @@ const HomePage: React.FC<HomePageProps> = props => {
                             platform === "IZETTLE"
                               ? input.izettleAccessToken
                               : platform === "SQUAREUP"
-                                ? input.squareAccessToken
-                                : platform === "SHOPIFY"
-                                  ? input.shopifyAccessToken
-                                  : platform === "VENDHQ"
-                                    ? input.vendAccessToken
-                                    : "",
+                              ? input.squareAccessToken
+                              : platform === "SHOPIFY"
+                              ? input.shopifyAccessToken
+                              : platform === "VENDHQ"
+                              ? input.vendAccessToken
+                              : "",
                           platform,
                           store: businessID,
                           url:
                             platform === "SHOPIFY"
                               ? input.shopifyURL
                               : platform === "VENDHQ"
-                                ? input.vendURL
-                                : ""
+                              ? input.vendURL
+                              : ""
                         }
                       }
                     })
