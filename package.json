@@ -46,6 +46,7 @@
     "keycode": "^2.2.0",
     "lodash": "^4.17.14",
     "lodash-es": "^4.17.14",
+    "material-ui-phone-number": "^2.2.6",
     "moment-timezone": "^0.5.26",
     "qs": "^6.9.0",
     "react": "^16.12.0",

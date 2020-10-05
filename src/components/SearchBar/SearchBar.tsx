@@ -15,6 +15,11 @@ export interface SearchBarProps extends SearchPageProps, TabPageProps {
 const useStyles = makeStyles(
   theme => ({
     root: {
+      "& .MuiOutlinedInput-input": {
+        "& ::placeholder": {
+          color: "#000"
+        }
+      },
       borderBottom: `1px solid ${theme.palette.divider}`,
       display: "flex",
       flexWrap: "wrap",

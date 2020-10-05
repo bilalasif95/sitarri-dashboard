@@ -22,6 +22,7 @@ import { maybe } from "../../../misc";
 import { TabListActions } from "../../../types";
 import BusinessInformationOfSpecificStore from "../../components/BusinessInformationOfSpecificStore";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
+import ContactInformationForm from "../../components/ContactInformationForm";
 import StoreOpeningClosingHours from "../../components/StoreOpeningClosingHours";
 // import CategoryList from "../../components/CategoryList";
 import {
@@ -132,6 +133,14 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
           <Grid>
             <div>
               <CategoryDetailsForm
+                category={category}
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+              <CardSpacer />
+              <ContactInformationForm
                 category={category}
                 data={data}
                 disabled={disabled}

@@ -10,6 +10,9 @@ export const commonMessages = defineMessages({
   catalog: {
     defaultMessage: "Catalog"
   },
+  contactInformation: {
+    defaultMessage: "Contact Information"
+  },
   dashboard: {
     defaultMessage: "Dashboard"
   },
@@ -73,6 +76,9 @@ export const commonMessages = defineMessages({
   },
   status: {
     defaultMessage: "Status"
+  },
+  storeOpeningClosingHours: {
+    defaultMessage: "Opening Hours"
   },
   summary: {
     defaultMessage: "Summary"

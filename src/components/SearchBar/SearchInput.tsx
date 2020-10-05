@@ -12,6 +12,9 @@ export interface SearchInputProps extends SearchPageProps {
 const useStyles = makeStyles(
   {
     input: {
+      "& ::placeholder": {
+        color: "#000 !important"
+      },
       padding: "10.5px 12px"
     },
     root: {
