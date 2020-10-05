@@ -1,25 +1,25 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { makeStyles } from "@material-ui/core/styles";
+// import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
+// import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import PriceField from "@saleor/components/PriceField";
 import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 
-const useStyles = makeStyles(
-  theme => ({
-    root: {
-      display: "grid",
-      gridColumnGap: theme.spacing(2),
-      gridTemplateColumns: "1fr 1fr"
-    }
-  }),
-  { name: "ProductPricing" }
-);
+// const useStyles = makeStyles(
+//   theme => ({
+//     root: {
+//       display: "grid",
+//       gridColumnGap: theme.spacing(2),
+//       gridTemplateColumns: "1fr 1fr"
+//     }
+//   }),
+//   { name: "ProductPricing" }
+// );
 
 interface ProductPricingProps {
   currency?: string;
@@ -35,7 +35,7 @@ interface ProductPricingProps {
 const ProductPricing: React.FC<ProductPricingProps> = props => {
   const { currency, data, disabled, errors, onChange } = props;
 
-  const classes = useStyles(props);
+  // const classes = useStyles(props);
   const intl = useIntl();
 
   const formErrors = getFormErrors(["basePrice"], errors);
@@ -48,7 +48,7 @@ const ProductPricing: React.FC<ProductPricingProps> = props => {
           description: "product pricing"
         })}
       >
-        <ControlledCheckbox
+        {/* <ControlledCheckbox
           name="chargeTaxes"
           label={intl.formatMessage({
             defaultMessage: "Charge taxes for this item"
@@ -56,10 +56,12 @@ const ProductPricing: React.FC<ProductPricingProps> = props => {
           checked={data.chargeTaxes}
           onChange={onChange}
           disabled={disabled}
-        />
+        /> */}
       </CardTitle>
       <CardContent>
-        <div className={classes.root}>
+        <div
+        // className={classes.root}
+        >
           <PriceField
             disabled={disabled}
             label={intl.formatMessage({

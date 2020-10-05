@@ -103,11 +103,8 @@ const TagsComponent = withStyles(styles, { name: "TagsComponent" })(
             const { tiles, tileIds } = this.state;
 
             const newTileId = (tileIds.length - 1) + 1;
-            
-            if(newTileId < 4){
-                tileIds.push(newTileId);
-                tiles[newTileId] = { text: tile };
-            }
+            tileIds.push(newTileId);
+            tiles[newTileId] = { text: tile };
 
             // reset the input value
             const currentValue = "";

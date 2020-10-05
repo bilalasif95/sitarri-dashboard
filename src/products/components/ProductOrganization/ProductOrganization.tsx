@@ -1,23 +1,21 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+// import Typography from "@material-ui/core/Typography";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
-import CardSpacer from "@saleor/components/CardSpacer";
+// import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
-import { FormSpacer } from "@saleor/components/FormSpacer";
-import Hr from "@saleor/components/Hr";
-import MultiAutocompleteSelectField, {
-  MultiAutocompleteChoiceType
-} from "@saleor/components/MultiAutocompleteSelectField";
+// import { FormSpacer } from "@saleor/components/FormSpacer";
+// import Hr from "@saleor/components/Hr";
+import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { ChangeEvent } from "@saleor/hooks/useForm";
-import useUser from "@saleor/hooks/useUser";
-import { maybe } from "@saleor/misc";
+// import useUser from "@saleor/hooks/useUser";
+// import { maybe } from "@saleor/misc";
 import { FetchMoreProps } from "@saleor/types";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
@@ -73,31 +71,31 @@ interface ProductOrganizationProps {
 
 const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
   const {
-    canChangeType,
+    // canChangeType,
     categories,
     categoryInputDisplayValue,
-    collections,
-    collectionsInputDisplayValue,
+    // collections,
+    // collectionsInputDisplayValue,
     data,
     disabled,
     errors,
     fetchCategories,
-    fetchCollections,
+    // fetchCollections,
     fetchMoreCategories,
-    fetchMoreCollections,
-    fetchMoreProductTypes,
-    fetchProductTypes,
-    productType,
-    productTypeInputDisplayValue,
-    productTypes,
+    // fetchMoreCollections,
+    // fetchMoreProductTypes,
+    // fetchProductTypes,
+    // productType,
+    // productTypeInputDisplayValue,
+    // productTypes,
     onCategoryChange,
-    onCollectionChange,
-    onProductTypeChange
+    // onCollectionChange,
+    // onProductTypeChange
   } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
-  const { user } = useUser();
+  // const { user } = useUser();
   const formErrors = getFormErrors(
     ["productType", "category", "collections"],
     errors
@@ -112,7 +110,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
         })}
       />
       <CardContent>
-        {canChangeType ? (
+        {/* {canChangeType ? (
           <SingleAutocompleteSelectField
             displayValue={productTypeInputDisplayValue}
             error={!!formErrors.productType}
@@ -158,7 +156,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
           )}
         <FormSpacer />
         <Hr />
-        <FormSpacer />
+        <FormSpacer /> */}
         <SingleAutocompleteSelectField
           displayValue={categoryInputDisplayValue}
           error={!!formErrors.category}
@@ -175,7 +173,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
           data-tc="category"
           {...fetchMoreCategories}
         />
-        {user.isSuperuser && (
+        {/* {user.isSuperuser && (
           <>
             <FormSpacer />
             <Hr />
@@ -203,7 +201,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
               {...fetchMoreCollections}
             />
           </>
-        )}
+        )} */}
       </CardContent>
     </Card>
   );

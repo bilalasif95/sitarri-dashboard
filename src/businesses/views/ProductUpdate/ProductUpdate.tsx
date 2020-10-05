@@ -210,7 +210,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params, listPa
       {attributes => (
         <TypedProductDetailsQuery displayLoader variables={{ id }}>
           {({ data, loading, refetch }) => {
-            const product = data?.product;
+            const product = data?.business;
 
             if (product === null) {
               return <NotFoundPage onBack={handleBack} />;
@@ -333,7 +333,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params, listPa
 
                   return (
                     <>
-                      <WindowTitle title={maybe(() => data.product.name)} />
+                      <WindowTitle title={maybe(() => data.business.name)} />
                       <ProductUpdatePage
                         categories={categories}
                         collections={collections}
@@ -342,7 +342,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params, listPa
                         fetchCategories={() => null}
                         fetchCollections={() => null}
                         saveButtonBarState={formTransitionState}
-                        images={maybe(() => data.product.images)}
+                        images={maybe(() => data.business.images)}
                         header={maybe(() => product.name)}
                         filterOpts={filterOpts}
                         params={listParams}

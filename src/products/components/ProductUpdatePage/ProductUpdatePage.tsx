@@ -34,22 +34,24 @@ import {
   getAttributeInputFromProduct,
   getChoices,
   getProductUpdatePageFormData,
-  getSelectedAttributesFromProduct,
-  ProductAttributeValueChoices,
+  // getSelectedAttributesFromProduct,
+  // ProductAttributeValueChoices,
   ProductUpdatePageFormData,
   getStockInputFromProduct
 } from "../../utils/data";
-import {
-  createAttributeChangeHandler,
-  createAttributeMultiChangeHandler
-} from "../../utils/handlers";
-import ProductAttributes, { ProductAttributeInput } from "../ProductAttributes";
+// import {
+//   createAttributeChangeHandler,
+//   createAttributeMultiChangeHandler
+// } from "../../utils/handlers";
+// import ProductAttributes, { ProductAttributeInput } from "../ProductAttributes";
+import { ProductAttributeInput } from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductImages from "../ProductImages";
 import ProductOrganization from "../ProductOrganization";
 import ProductPricing from "../ProductPricing";
-import ProductVariants from "../ProductVariants";
-import ProductStocks, { ProductStockInput } from "../ProductStocks";
+// import ProductVariants from "../ProductVariants";
+// import ProductStocks, { ProductStockInput } from "../ProductStocks";
+import { ProductStockInput } from "../ProductStocks";
 
 export interface ProductUpdatePageProps extends ListActions {
   errors: ProductErrorFragment[];
@@ -103,7 +105,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   product,
   saveButtonBarState,
   variants,
-  warehouses,
+  // warehouses,
   onBack,
   onDelete,
   onImageDelete,
@@ -112,14 +114,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onImageUpload,
   onSeoClick,
   onSubmit,
-  onVariantAdd,
-  onVariantsAdd,
-  onVariantShow,
-  isChecked,
-  selected,
-  toggle,
-  toggleAll,
-  toolbar
+  // onVariantAdd,
+  // onVariantsAdd,
+  // onVariantShow,
+  // isChecked,
+  // selected,
+  // toggle,
+  // toggleAll,
+  // toolbar
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -130,19 +132,22 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   const stockInput = React.useMemo(() => getStockInputFromProduct(product), [
     product
   ]);
-  const { change: changeAttributeData, data: attributes } = useFormset(
+  // const { change: changeAttributeData, data: attributes } = useFormset(
+  //   attributeInput
+  // );
+  const { data: attributes } = useFormset(
     attributeInput
   );
   const {
-    add: addStock,
-    change: changeStockData,
+    // add: addStock,
+    // change: changeStockData,
     data: stocks,
-    remove: removeStock
+    // remove: removeStock
   } = useFormset(stockInput);
 
-  const [selectedAttributes, setSelectedAttributes] = useStateFromProps<
-    ProductAttributeValueChoices[]
-  >(getSelectedAttributesFromProduct(product));
+  // const [selectedAttributes, setSelectedAttributes] = useStateFromProps<
+  //   ProductAttributeValueChoices[]
+  // >(getSelectedAttributesFromProduct(product));
 
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     maybe(() => product.category.name, "")
@@ -160,7 +165,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
   const currency = maybe(() => product.basePrice.currency);
-  const hasVariants = maybe(() => product.productType.hasVariants, false);
+  // const hasVariants = maybe(() => product.productType.hasVariants, false);
 
   const handleSubmit = (data: ProductUpdatePageFormData) => {
     const dataStocks = stocks.map(stock => stock.id);
@@ -184,7 +189,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
   return (
     <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>
-      {({ change, data, hasChanged, submit, triggerChange, toggleValue }) => {
+      {({ change, data, hasChanged, submit, toggleValue }) => {
+        // {({ change, data, hasChanged, submit, triggerChange, toggleValue }) => {
         const handleCollectionSelect = createMultiAutocompleteSelectHandler(
           toggleValue,
           setSelectedCollections,
@@ -196,20 +202,20 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
           setSelectedCategory,
           categories
         );
-        const handleAttributeChange = createAttributeChangeHandler(
-          changeAttributeData,
-          setSelectedAttributes,
-          selectedAttributes,
-          attributes,
-          triggerChange
-        );
-        const handleAttributeMultiChange = createAttributeMultiChangeHandler(
-          changeAttributeData,
-          setSelectedAttributes,
-          selectedAttributes,
-          attributes,
-          triggerChange
-        );
+        // const handleAttributeChange = createAttributeChangeHandler(
+        //   changeAttributeData,
+        //   setSelectedAttributes,
+        //   selectedAttributes,
+        //   attributes,
+        //   triggerChange
+        // );
+        // const handleAttributeMultiChange = createAttributeMultiChangeHandler(
+        //   changeAttributeData,
+        //   setSelectedAttributes,
+        //   selectedAttributes,
+        //   attributes,
+        //   triggerChange
+        // );
 
         return (
           <>
@@ -237,7 +243,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     onImageUpload={onImageUpload}
                   />
                   <CardSpacer />
-                  {attributes.length > 0 && (
+                  {/* {attributes.length > 0 && (
                     <ProductAttributes
                       attributes={attributes}
                       disabled={disabled}
@@ -245,14 +251,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       onMultiChange={handleAttributeMultiChange}
                     />
                   )}
-                  <CardSpacer />
-                  <ProductPricing
-                    currency={currency}
-                    data={data}
-                    disabled={disabled}
-                    errors={errors}
-                    onChange={change}
-                  />
                   <CardSpacer />
                   {hasVariants ? (
                     <ProductVariants
@@ -269,35 +267,35 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       toggleAll={toggleAll}
                     />
                   ) : (
-                    <ProductStocks
-                      data={data}
-                      disabled={disabled}
-                      errors={errors}
-                      stocks={stocks}
-                      warehouses={warehouses}
-                      onChange={(id, value) => {
-                        triggerChange();
-                        changeStockData(id, value);
-                      }}
-                      onFormDataChange={change}
-                      onWarehouseStockAdd={id => {
-                        triggerChange();
-                        addStock({
-                          data: null,
-                          id,
-                          label: warehouses.find(
-                            warehouse => warehouse.id === id
-                          ).name,
-                          value: "0"
-                        });
-                      }}
-                      onWarehouseStockDelete={id => {
-                        triggerChange();
-                        removeStock(id);
-                      }}
-                    />
-                  )}
-                  <CardSpacer />
+                      <ProductStocks
+                        data={data}
+                        disabled={disabled}
+                        errors={errors}
+                        stocks={stocks}
+                        warehouses={warehouses}
+                        onChange={(id, value) => {
+                          triggerChange();
+                          changeStockData(id, value);
+                        }}
+                        onFormDataChange={change}
+                        onWarehouseStockAdd={id => {
+                          triggerChange();
+                          addStock({
+                            data: null,
+                            id,
+                            label: warehouses.find(
+                              warehouse => warehouse.id === id
+                            ).name,
+                            value: "0"
+                          });
+                        }}
+                        onWarehouseStockDelete={id => {
+                          triggerChange();
+                          removeStock(id);
+                        }}
+                      />
+                    )}
+                  <CardSpacer /> */}
                   <SeoForm
                     title={data.seoTitle}
                     titlePlaceholder={data.name}
@@ -358,6 +356,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                         date: localizeDate(data.publicationDate)
                       }
                     )}
+                  />
+                  <CardSpacer />
+                  <ProductPricing
+                    currency={currency}
+                    data={data}
+                    disabled={disabled}
+                    errors={errors}
+                    onChange={change}
                   />
                 </div>
               </Grid>

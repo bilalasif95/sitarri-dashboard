@@ -198,7 +198,7 @@ export interface ProductDetails_product {
 }
 
 export interface ProductDetails {
-  product: ProductDetails_product | null;
+  business: any;
 }
 
 export interface ProductDetailsVariables {

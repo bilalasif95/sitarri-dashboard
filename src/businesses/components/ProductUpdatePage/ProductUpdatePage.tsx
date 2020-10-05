@@ -4,7 +4,7 @@ import Card from "@material-ui/core/Card";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { diff } from "fast-array-diff";
+// import { diff } from "fast-array-diff";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -67,7 +67,7 @@ import {
   // getSelectedAttributesFromProduct,
   // ProductAttributeValueChoices,
   ProductUpdatePageFormData,
-  getStockInputFromProduct
+  // getStockInputFromProduct
 } from "../../utils/data";
 // import {
 //   createAttributeChangeHandler,
@@ -256,9 +256,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     () => getAttributeInputFromProduct(product),
     [product]
   );
-  const stockInput = React.useMemo(() => getStockInputFromProduct(product), [
-    product
-  ]);
+  // const stockInput = React.useMemo(() => getStockInputFromProduct(product), [
+  //   product
+  // ]);
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -268,12 +268,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   const { data: attributes } = useFormset(
     attributeInput
   );
-  const {
-    // add: addStock,
-    // change: changeStockData,
-    data: stocks,
-    // remove: removeStock
-  } = useFormset(stockInput);
+  // const {
+  // add: addStock,
+  // change: changeStockData,
+  // data: stocks,
+  // remove: removeStock
+  // } = useFormset(stockInput);
 
   // const [selectedAttributes, setSelectedAttributes] = useStateFromProps<
   //   ProductAttributeValueChoices[]
@@ -328,22 +328,25 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   ];
 
   const handleSubmit = (data: ProductUpdatePageFormData) => {
-    const dataStocks = stocks.map(stock => stock.id);
-    const variantStocks = product.variants[0].stocks.map(
-      stock => stock.warehouse.id
-    );
-    const stockDiff = diff(variantStocks, dataStocks);
+    // const dataStocks = stocks.map(stock => stock.id);
+    // const variantStocks = product.variants[0].stocks.map(
+    //   stock => stock.warehouse.id
+    // );
+    // const stockDiff = diff(variantStocks, dataStocks);
 
     onSubmit({
       ...data,
-      addStocks: stocks.filter(stock =>
-        stockDiff.added.some(addedStock => addedStock === stock.id)
-      ),
+      addStocks: [],
+      // stocks.filter(stock =>
+      //   stockDiff.added.some(addedStock => addedStock === stock.id)
+      // ),
       attributes,
-      removeStocks: stockDiff.removed,
-      updateStocks: stocks.filter(
-        stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
-      )
+      removeStocks: [],
+      // stockDiff.removed,
+      updateStocks: [],
+      // stocks.filter(
+      //   stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
+      // )
     });
   };
 

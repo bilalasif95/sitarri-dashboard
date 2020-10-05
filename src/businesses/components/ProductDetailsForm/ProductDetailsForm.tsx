@@ -274,6 +274,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
     );
     setBusinessNamesArray(businessNameArray);
   }, [businessNames]);
+
   return (
     <Card>
       {/* <CardTitle
@@ -285,7 +286,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
             {/* <img src={uploadicon} /> */}
           </div>
           <div className={classes.BusinessTypography}>
-            <h3>Business Name</h3>
+            <h3>{data.name}</h3>
             <ul className={classes.VerifiedList}>
               <li className={classes.VerifiedText}>
                 <SVG className={classes.VerifiedImg} src={Shield} />

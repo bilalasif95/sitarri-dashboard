@@ -1,4 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
@@ -12,23 +15,31 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
 import { CategoryListUrlSortField } from "@saleor/categories/urls";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import { getArrowDirection } from "@saleor/utils/sort";
+import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+
+import {
+  categoryListUrl,
+  CategoryListUrlQueryParams,
+  CategoryListUrlDialog
+} from "../../urls";
 
 const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colName: {
-        width: 840
+        width: "auto"
       },
       colProducts: {
-        width: 160
+        width: 200
       },
       colSubcategories: {
-        width: 160
+        width: 200
       }
     },
     colName: {
@@ -49,16 +60,17 @@ const useStyles = makeStyles(
 
 interface CategoryListProps
   extends ListProps,
-    ListActions,
-    SortPage<CategoryListUrlSortField> {
+  ListActions,
+  SortPage<CategoryListUrlSortField> {
   categories?: CategoryFragment[];
   isRoot: boolean;
+  params: CategoryListUrlQueryParams;
   onAdd?();
 }
 
-const numberOfColumns = 4;
+const numberOfColumns = 5;
 
-const CategoryList: React.FC<CategoryListProps> = props => {
+const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
   const {
     categories,
     disabled,
@@ -79,7 +91,11 @@ const CategoryList: React.FC<CategoryListProps> = props => {
   } = props;
 
   const classes = useStyles(props);
-
+  const navigate = useNavigator();
+  const [openModal] = createDialogActionHandlers<
+    CategoryListUrlDialog,
+    CategoryListUrlQueryParams
+  >(navigate, categoryListUrl, params);
   return (
     <ResponsiveTable>
       <TableHead
@@ -116,7 +132,7 @@ const CategoryList: React.FC<CategoryListProps> = props => {
           }
         >
           <FormattedMessage
-            defaultMessage="Subcategories"
+            defaultMessage="Business"
             description="number of subcategories"
           />
         </TableCellHeader>
@@ -135,6 +151,14 @@ const CategoryList: React.FC<CategoryListProps> = props => {
           <FormattedMessage
             defaultMessage="No. of Products"
             description="number of products"
+          />
+        </TableCellHeader>
+        <TableCellHeader
+          className={classes.colProducts}
+        >
+          <FormattedMessage
+            defaultMessage="Actions"
+            description="category actions"
           />
         </TableCellHeader>
       </TableHead>
@@ -163,7 +187,7 @@ const CategoryList: React.FC<CategoryListProps> = props => {
               <TableRow
                 className={classes.tableRow}
                 hover={!!category}
-                onClick={category ? onRowClick(category.id) : undefined}
+                // onClick={category ? onRowClick(category.id) : undefined}
                 key={category ? category.id : "skeleton"}
                 selected={isSelected}
                 data-tc="id"
@@ -182,21 +206,41 @@ const CategoryList: React.FC<CategoryListProps> = props => {
                 </TableCell>
                 <TableCell className={classes.colSubcategories}>
                   {category &&
-                  category.children &&
-                  category.children.totalCount !== undefined ? (
-                    category.children.totalCount
-                  ) : (
-                    <Skeleton />
-                  )}
+                    category.children &&
+                    category.children.totalCount !== undefined ? (
+                      category.children.totalCount
+                    ) : (
+                      <Skeleton />
+                    )}
                 </TableCell>
                 <TableCell className={classes.colProducts}>
                   {category &&
-                  category.products &&
-                  category.products.totalCount !== undefined ? (
-                    category.products.totalCount
-                  ) : (
-                    <Skeleton />
-                  )}
+                    category.products &&
+                    category.products.totalCount !== undefined ? (
+                      category.products.totalCount
+                    ) : (
+                      <Skeleton />
+                    )}
+                </TableCell>
+                <TableCell className={classes.colProducts}>
+                  <IconButton
+                    color="primary"
+                    onClick={category ? onRowClick(category.id) : undefined}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    color="primary"
+                    onClick={() =>
+                      openModal("delete", {
+                        ids: [
+                          category.id
+                        ]
+                      })
+                    }
+                  >
+                    <DeleteIcon />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             );
@@ -204,11 +248,11 @@ const CategoryList: React.FC<CategoryListProps> = props => {
           () => (
             <TableRow>
               <TableCell colSpan={numberOfColumns}>
-                {isRoot ? (
-                  <FormattedMessage defaultMessage="No categories found" />
-                ) : (
-                  <FormattedMessage defaultMessage="No subcategories found" />
-                )}
+                {/* {isRoot ? ( */}
+                <FormattedMessage defaultMessage="No categories found" />
+                {/* ) : (
+                    <FormattedMessage defaultMessage="No subcategories found" />
+                  )} */}
               </TableCell>
             </TableRow>
           )

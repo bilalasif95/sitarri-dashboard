@@ -10,7 +10,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { CategoryFragment } from "@saleor/categories/types/CategoryFragment";
-// import Checkbox from "@saleor/components/Checkbox";
+import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
@@ -68,7 +68,7 @@ interface CategoryListProps
   onAdd?();
 }
 
-const numberOfColumns = 3;
+const numberOfColumns = 5;
 
 const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
   const {
@@ -79,8 +79,8 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
     pageInfo,
     isChecked,
     isRoot,
-    // selected,
-    // toggle,
+    selected,
+    toggle,
     toggleAll,
     toolbar,
     onNextPage,
@@ -101,9 +101,9 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
     <ResponsiveTable>
       <TableHead
         colSpan={numberOfColumns}
-        selected={undefined}
+        selected={selected}
         disabled={disabled}
-        items={[]}
+        items={categories}
         toggleAll={toggleAll}
         toolbar={toolbar}
       >
@@ -134,6 +134,22 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
         >
           <FormattedMessage
             defaultMessage="Address"
+          />
+        </TableCellHeader>
+        <TableCellHeader
+          direction={
+            isRoot && sort.sort === CategoryListUrlSortField.subcategoryCount
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
+          className={classes.colProducts}
+          disableClick={!isRoot}
+          onClick={() =>
+            isRoot && onSort(CategoryListUrlSortField.subcategoryCount)
+          }
+        >
+          <FormattedMessage
+            defaultMessage="Business"
           />
         </TableCellHeader>
         <TableCellHeader
@@ -185,18 +201,27 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
                 data-tc="id"
                 data-tc-id={maybe(() => category.id)}
               >
-                {/* <TableCell padding="checkbox">
+                <TableCell padding="checkbox">
                   <Checkbox
                     checked={isSelected}
                     disabled={disabled}
                     disableClickPropagation
                     onChange={() => toggle(category.id)}
                   />
-                </TableCell> */}
+                </TableCell>
                 <TableCell className={classes.colName} data-tc="name">
                   {category && category.name ? category.name : <Skeleton />}
                 </TableCell>
                 <TableCell className={classes.colSubcategories}>
+                  {category &&
+                    category.children &&
+                    category.children.totalCount !== undefined ? (
+                      category.children.totalCount
+                    ) : (
+                      <Skeleton />
+                    )}
+                </TableCell>
+                <TableCell className={classes.colProducts}>
                   {category &&
                     category.children &&
                     category.children.totalCount !== undefined ? (

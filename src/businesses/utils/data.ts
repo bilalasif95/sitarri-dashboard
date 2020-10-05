@@ -207,7 +207,7 @@ export function getProductUpdatePageFormData(
     instagram: maybe(() => product.instagram, ""),
     isPublished: maybe(() => product.isPublished, false),
     logo: maybe(() => product.logo, ""),
-    name: maybe(() => product.name, ""),
+    name: maybe(() => product.name, product && product.name),
     publicationDate: maybe(() => product.publicationDate, ""),
     seoDescription: maybe(() => product.seoDescription, ""),
     seoTitle: maybe(() => product.seoTitle, ""),
@@ -220,7 +220,8 @@ export function getProductUpdatePageFormData(
           : undefined,
       ""
     ),
-    trackInventory: !!product?.variants[0]?.trackInventory,
+    trackInventory: true,
+                    // !!product?.variants[0]?.trackInventory,
     twitter: maybe(() => product.twitter, ""),
     website: maybe(() => product.website, ""),
   };

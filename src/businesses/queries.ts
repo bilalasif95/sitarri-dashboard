@@ -309,7 +309,7 @@ export const useInitialProductFilterDataQuery = makeQuery<
 
 const productListQuery = gql`
   ${productFragment}
-  query ProductList(
+  query BusinessesList(
     $first: Int
     $after: String
     $last: Int
@@ -317,6 +317,15 @@ const productListQuery = gql`
     $filter: ProductFilterInput
     $sort: ProductOrder
   ) {
+    businesses(first: 100) {
+      edges {
+        node {
+          id
+          name
+          description
+        }
+      }
+    }
     products(
       before: $before
       after: $after
@@ -354,10 +363,20 @@ export const TypedProductListQuery = TypedQuery<
 >(productListQuery);
 
 const productDetailsQuery = gql`
-  ${productFragmentDetails}
-  query ProductDetails($id: ID!) {
-    product(id: $id) {
-      ...Product
+  query BusinessDetails($id: ID!) {
+    business(id: $id) {
+      id
+      name
+      description
+      businessStore(first: 100) {
+        edges {
+          node {
+            id
+            name
+            description
+          }
+        }
+      }
     }
   }
 `;

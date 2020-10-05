@@ -269,16 +269,16 @@ export const ProductList: React.FC<ProductListProps> = (props, { params }) => {
               </TableCellHeader>
             );
           })}
-          <DisplayColumn column="isPublished" displayColumns={settings.columns}>
-            <TableCellHeader
-              className={classes.colPublished}
-            >
-              <FormattedMessage
-                defaultMessage="Actions"
-                description="business actions"
-              />
-            </TableCellHeader>
-          </DisplayColumn>
+          {/* <DisplayColumn column="isPublished" displayColumns={settings.columns}> */}
+          <TableCellHeader
+            className={classes.colPublished}
+          >
+            <FormattedMessage
+              defaultMessage="Actions"
+              description="business actions"
+            />
+          </TableCellHeader>
+          {/* </DisplayColumn> */}
         </TableHead>
         <TableFooter>
           <TableRow>
@@ -365,24 +365,30 @@ export const ProductList: React.FC<ProductListProps> = (props, { params }) => {
                       data-tc-is-published={maybe(() => product.isPublished)}
                     >
                       {product &&
-                        maybe(() => product.isPublished !== undefined) ? (
-                          <StatusLabel
-                            label={
-                              product.isPublished
-                                ? intl.formatMessage({
-                                  defaultMessage: "Verified",
-                                  description: "business status"
-                                })
-                                : intl.formatMessage({
-                                  defaultMessage: "Not Verified",
-                                  description: "business status"
-                                })
-                            }
-                            status={product.isPublished ? "success" : "error"}
-                          />
-                        ) : (
-                          <Skeleton />
-                        )}
+                        // maybe(() => product.isPublished !== undefined) ? (
+                        <StatusLabel
+                          label={
+                            // product.isPublished
+                            //   ? 
+                            intl.formatMessage({
+                              defaultMessage: "Verified",
+                              description: "business status"
+                            })
+                            // : intl.formatMessage({
+                            //   defaultMessage: "Not Verified",
+                            //   description: "business status"
+                            // })
+                          }
+                          status={
+                            // product.isPublished ? 
+                            "success"
+                            // : "error"
+                          }
+                        />
+                        // ) : (
+                        //   <Skeleton />
+                        // )
+                      }
                     </TableCell>
                   </DisplayColumn>
                   {gridAttributesFromSettings.map(gridAttribute => (

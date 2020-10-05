@@ -1,7 +1,7 @@
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { CategoryFragment } from "@saleor/categories/types/CategoryFragment";
 import Container from "@saleor/components/Container";
@@ -20,10 +20,10 @@ import CategoryList from "../CategoryList";
 
 export interface CategoryTableProps
   extends PageListProps,
-    ListActions,
-    SearchPageProps,
-    SortPage<CategoryListUrlSortField>,
-    TabPageProps {
+  ListActions,
+  SearchPageProps,
+  SortPage<CategoryListUrlSortField>,
+  TabPageProps {
   categories: CategoryFragment[];
   paramsProps: any;
 }
@@ -59,12 +59,12 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.stores)}>
-        <Button color="primary" variant="contained" onClick={onAdd}>
+        {/* <Button color="primary" variant="contained" onClick={onAdd}>
           <FormattedMessage
             defaultMessage="Create Store"
             description="button"
           />
-        </Button>
+        </Button> */}
       </PageHeader>
       <Card>
         <SearchBar

@@ -155,6 +155,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         onTabDelete={() => openModal("delete-search")}
         onTabSave={() => openModal("save-search")}
         tabs={tabs.map(tab => tab.name)}
+        params={params}
         settings={settings}
         sort={getSortParams(params)}
         onAdd={() => navigate(categoryAddUrl())}

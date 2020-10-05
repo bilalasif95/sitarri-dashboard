@@ -283,6 +283,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                               ),
                             []
                           )}
+                          businessNames={maybe(() => data.businesses.edges)}
                           currencySymbol={currencySymbol}
                           currentTab={currentTab}
                           defaultSettings={
@@ -310,7 +311,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                           onAdd={() => navigate(productAddUrl)}
                           disabled={loading}
                           products={maybe(() =>
-                            data.products.edges.map(edge => edge.node)
+                            data.businesses.edges.map(edge => edge.node)
                           )}
                           onFetchMore={() =>
                             attributes.loadMore(

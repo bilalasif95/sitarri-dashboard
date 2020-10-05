@@ -232,14 +232,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   />
                 )}
                 <CardSpacer />
-                <ProductPricing
-                  currency={currency}
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
-                <CardSpacer />
                 {!!productType && !productType.hasVariants && (
                   <>
                     <ProductStocks
@@ -332,6 +324,14 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                       date: localizeDate(data.publicationDate)
                     }
                   )}
+                />
+                <CardSpacer />
+                <ProductPricing
+                  currency={currency}
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
                 />
               </div>
             </Grid>

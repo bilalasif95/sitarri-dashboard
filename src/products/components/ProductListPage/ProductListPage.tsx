@@ -1,8 +1,8 @@
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import ColumnPicker, {
   ColumnPickerChoice
@@ -34,10 +34,10 @@ import {
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
-    ListActions,
-    FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
-    FetchMoreProps,
-    SortPage<ProductListUrlSortField> {
+  ListActions,
+  FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
+  FetchMoreProps,
+  SortPage<ProductListUrlSortField> {
   activeAttributeSortId: string;
   availableInGridAttributes: AvailableInGridAttributes_availableInGrid_edges_node[];
   currencySymbol: string;
@@ -134,7 +134,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           onFetchMore={onFetchMore}
           onSave={handleSave}
         />
-        <Button
+        {/* <Button
           onClick={onAdd}
           color="primary"
           variant="contained"
@@ -144,7 +144,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             defaultMessage="Create Product"
             description="button"
           />
-        </Button>
+        </Button> */}
       </PageHeader>
       <Card>
         <FilterBar

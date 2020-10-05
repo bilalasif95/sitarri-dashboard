@@ -1,25 +1,25 @@
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
+// import Button from "@material-ui/core/Button";
+// import Card from "@material-ui/core/Card";
 import { RawDraftContentState } from "draft-js";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
-import CardTitle from "@saleor/components/CardTitle";
+// import CardTitle from "@saleor/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
-import { Tab, TabContainer } from "@saleor/components/Tab";
+// import { Tab, TabContainer } from "@saleor/components/Tab";
 import { sectionNames } from "@saleor/intl";
 import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import { maybe } from "../../../misc";
 import { TabListActions } from "../../../types";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
-import CategoryList from "../../components/CategoryList";
+// import CategoryList from "../../components/CategoryList";
 import {
   CategoryDetails_category,
   CategoryDetails_category_children_edges_node,
@@ -68,23 +68,23 @@ export interface CategoryUpdatePageProps
   onCategoryClick(id: string): () => void;
 }
 
-const CategoriesTab = Tab(CategoryPageTab.categories);
-const ProductsTab = Tab(CategoryPageTab.products);
+// const CategoriesTab = Tab(CategoryPageTab.categories);
+// const ProductsTab = Tab(CategoryPageTab.products);
 
 export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
-  changeTab,
-  currentTab,
+  // changeTab,
+  // currentTab,
   category,
   disabled,
   errors,
   pageInfo,
   products,
   saveButtonBarState,
-  subcategories,
-  onAddCategory,
+  // subcategories,
+  // onAddCategory,
   onAddProduct,
   onBack,
-  onCategoryClick,
+  // onCategoryClick,
   onDelete,
   onNextPage,
   onPreviousPage,
@@ -95,26 +95,26 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   isChecked,
   productListToolbar,
   selected,
-  subcategoryListToolbar,
+  // subcategoryListToolbar,
   toggle,
   toggleAll
 }: CategoryUpdatePageProps) => {
   const intl = useIntl();
   const initialData: FormData = category
     ? {
-        backgroundImageAlt: maybe(() => category.backgroundImage.alt, ""),
-        description: maybe(() => JSON.parse(category.descriptionJson)),
-        name: category.name || "",
-        seoDescription: category.seoDescription || "",
-        seoTitle: category.seoTitle || ""
-      }
+      backgroundImageAlt: maybe(() => category.backgroundImage.alt, ""),
+      description: maybe(() => JSON.parse(category.descriptionJson)),
+      name: category.name || "",
+      seoDescription: category.seoDescription || "",
+      seoTitle: category.seoTitle || ""
+    }
     : {
-        backgroundImageAlt: "",
-        description: "",
-        name: "",
-        seoDescription: "",
-        seoTitle: ""
-      };
+      backgroundImageAlt: "",
+      description: "",
+      name: "",
+      seoDescription: "",
+      seoTitle: ""
+    };
   return (
     <Form onSubmit={onSubmit} initial={initialData} confirmLeave>
       {({ data, change, submit, hasChanged }) => (
@@ -153,7 +153,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             disabled={disabled}
           />
           <CardSpacer />
-          <TabContainer>
+          {/* <TabContainer>
             <CategoriesTab
               isActive={currentTab === CategoryPageTab.categories}
               changeTab={changeTab}
@@ -173,8 +173,8 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               />
             </ProductsTab>
           </TabContainer>
-          <CardSpacer />
-          {currentTab === CategoryPageTab.categories && (
+          <CardSpacer /> */}
+          {/* {currentTab === CategoryPageTab.categories && (
             <Card>
               <CardTitle
                 title={intl.formatMessage({
@@ -212,23 +212,23 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               />
             </Card>
           )}
-          {currentTab === CategoryPageTab.products && (
-            <CategoryProducts
-              categoryName={maybe(() => category.name)}
-              products={products}
-              disabled={disabled}
-              pageInfo={pageInfo}
-              onNextPage={onNextPage}
-              onPreviousPage={onPreviousPage}
-              onRowClick={onProductClick}
-              onAdd={onAddProduct}
-              toggle={toggle}
-              toggleAll={toggleAll}
-              selected={selected}
-              isChecked={isChecked}
-              toolbar={productListToolbar}
-            />
-          )}
+          {currentTab === CategoryPageTab.products && ( */}
+          <CategoryProducts
+            categoryName={maybe(() => category.name)}
+            products={products}
+            disabled={disabled}
+            pageInfo={pageInfo}
+            onNextPage={onNextPage}
+            onPreviousPage={onPreviousPage}
+            onRowClick={onProductClick}
+            onAdd={onAddProduct}
+            toggle={toggle}
+            toggleAll={toggleAll}
+            selected={selected}
+            isChecked={isChecked}
+            toolbar={productListToolbar}
+          />
+          {/* )} */}
           <SaveButtonBar
             onCancel={onBack}
             onDelete={onDelete}

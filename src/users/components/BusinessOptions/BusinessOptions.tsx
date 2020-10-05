@@ -1044,7 +1044,7 @@ const BusinessOptions: React.FC<any> = (props) => {
                 <Dialog
                     maxWidth="sm"
                     fullWidth
-                    // onClose={() => setAddBusinessModal(false)}
+                    onClose={() => setAddBusinessModal(false)}
                     open={openAddBusinessModal}
                 >
                     <CreateBusinessMutation onCompleted={onCreateBusinessCompleted}>
@@ -1067,26 +1067,26 @@ const BusinessOptions: React.FC<any> = (props) => {
                                         <>
                                             <DialogContent className={classes.businessmodalcont}>
                                                 <div className={classes.businessmodal}>
-                                                    {/* <ul className={classes.mylist}>
+                                                    <ul className={classes.mylist}>
                                                         <li className={classes.listitem}>
                                                             <span
-                                                                onClick={() => {
-                                                                    setCreateBusinessNameError([]);
-                                                                    setAddBusinessModal(false);
-                                                                    setOpenAddBusinessModal(false);
-                                                                    setOpen(true);
-                                                                }}
+                                                            // onClick={() => {
+                                                            //     setCreateBusinessNameError([]);
+                                                            //     setAddBusinessModal(false);
+                                                            //     setOpenAddBusinessModal(false);
+                                                            //     setOpen(true);
+                                                            // }}
                                                             >
-                                                                <SVG
+                                                                {/* <SVG
                                                                     classname={classes.arrowlefticon}
                                                                     src={arrowleft}
-                                                                />
+                                                                /> */}
                                                             </span>
                                                             <span className={classes.listtext}>
                                                                 What is the name of the business?
                                                             </span>
                                                         </li>
-                                                    </ul> */}
+                                                    </ul>
                                                     <div className={classes.inputbox}>
                                                         <SVG src={inputicon} />
                                                         <TextField
@@ -1170,15 +1170,15 @@ const BusinessOptions: React.FC<any> = (props) => {
                                             <ul className={classes.mylist}>
                                                 <li className={classes.listitem}>
                                                     <span onClick={() => {
-                                                        if (user.businessUser.edges.length === 0) {
-                                                            setAddBusinessModal(true);
-                                                            setOpenAddBusinessModal(true);
-                                                            setChooseCategoryModal(false);
-                                                            setOpenChooseCategoryModal(false);
-                                                        } else {
-                                                            setChooseCategoryModal(false);
-                                                            setOpenChooseCategoryModal(false);
-                                                        }
+                                                        // if (user.businessUser.edges.length === 0) {
+                                                        setAddBusinessModal(true);
+                                                        setOpenAddBusinessModal(true);
+                                                        setChooseCategoryModal(false);
+                                                        setOpenChooseCategoryModal(false);
+                                                        // } else {
+                                                        //     setChooseCategoryModal(false);
+                                                        //     setOpenChooseCategoryModal(false);
+                                                        // }
                                                     }}>
                                                         <SVG className={classes.arrowlefticon} src={arrowleft} />
                                                     </span>
