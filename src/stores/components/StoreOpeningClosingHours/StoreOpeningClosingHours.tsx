@@ -63,21 +63,66 @@ const useStyles = makeStyles(
   { name: "StoreOpeningClosingHours" }
 );
 
-function valuetext(value) {
-  return `${value}°C`;
+function secondsToHms(d) {
+  d = Number(d);
+  const h = Math.floor(d / 3600);
+  const m = Math.floor(d % 3600 / 60);
+  const s = Math.floor(d % 3600 % 60);
+
+  const hDisplay = h > 0 ? h + (h === 1 ? ":" : ":") : "";
+  const mDisplay = m > 0 ? m < 10 ? "0" + m + ":" : m + ":" : "00:";
+  const sDisplay = s > 0 ? s < 10 ? "0" + s : s : "00";
+  return hDisplay + mDisplay + sDisplay;
 }
 
 export const StoreOpeningClosingHours: React.FC<any> = (
   // { disabled, data, onChange, errors },
-  { disabled, onChange },
+  { disabled, data, onChange },
   props
 ) => {
   const intl = useIntl();
   const classes = useStyles(props);
-  const [value, setValue] = React.useState([20, 37]);
+  const [mondayTime, setMondayTime] = React.useState([0, 1440]);
+  const [tuesdayTime, setTuesdayTime] = React.useState([0, 1440]);
+  const [wednesdayTime, setWednesdayTime] = React.useState([0, 1440]);
+  const [thursdayTime, setThursdayTime] = React.useState([0, 1440]);
+  const [fridayTime, setFridayTime] = React.useState([0, 1440]);
+  const [saturdayTime, setSaturdayTime] = React.useState([0, 1440]);
+  const [sundayTime, setSundayTime] = React.useState([0, 1440]);
 
-  const handleChange = newValue => {
-    setValue(newValue);
+  const mondayHandleChange = (event, newValue) => {
+    event.preventDefault();
+    setMondayTime(newValue);
+  };
+
+  const tuesdayHandleChange = (event, newValue) => {
+    event.preventDefault();
+    setTuesdayTime(newValue);
+  };
+
+  const wednesdayHandleChange = (event, newValue) => {
+    event.preventDefault();
+    setWednesdayTime(newValue);
+  };
+
+  const thursdayHandleChange = (event, newValue) => {
+    event.preventDefault();
+    setThursdayTime(newValue);
+  };
+
+  const fridayHandleChange = (event, newValue) => {
+    event.preventDefault();
+    setFridayTime(newValue);
+  };
+
+  const saturdayHandleChange = (event, newValue) => {
+    event.preventDefault();
+    setSaturdayTime(newValue);
+  };
+
+  const sundayHandleChange = (event, newValue) => {
+    event.preventDefault();
+    setSundayTime(newValue);
   };
 
   return (
@@ -93,29 +138,36 @@ export const StoreOpeningClosingHours: React.FC<any> = (
             <p className={classes.weekDays}>Monday</p>
             <div className={classes.toggleBtn}>
               <ControlledSwitch
-                checked={false}
+                checked={data.mondayOpenClose}
                 disabled={disabled}
                 label=""
-                name="hasVariants"
+                name="mondayOpenClose"
                 onChange={onChange}
               />
             </div>
             <div className={classes.openOrClose}>
-              <p className={classes.openText}>Open</p>
-              <p className={classes.closeText}>Closed</p>
+              {data.mondayOpenClose ? <p className={classes.openText}>Open</p>
+                : <p className={classes.closeText}>Closed</p>}
             </div>
           </div>
 
           <div className={classes.root}>
             <Typography id="range-slider" gutterBottom>
-              Open: 7:00 - 14:00
+              {data.mondayOpenClose ? <>Open:&nbsp;
+                {
+                  mondayTime[0] <= 0 ? <>00:00</> : secondsToHms(mondayTime[0])
+                } - {
+                  mondayTime[1] <= 0 ? <>00:00</> : secondsToHms(mondayTime[1])
+                }</> : <>Closed</>}
             </Typography>
             <Slider
-              value={value}
-              onChange={handleChange}
-              valueLabelDisplay="auto"
+              value={mondayTime}
+              step={30}
+              max={1440}
+              onChange={mondayHandleChange}
+              // valueLabelDisplay="auto"
               aria-labelledby="range-slider"
-              getAriaValueText={valuetext}
+            // getAriaValueText={valuetext}
             />
           </div>
         </div>
@@ -128,30 +180,37 @@ export const StoreOpeningClosingHours: React.FC<any> = (
             <p className={classes.weekDays}>Tuesday</p>
             <div className={classes.toggleBtn}>
               <ControlledSwitch
-                checked={false}
+                checked={data.tuesdayOpenClose}
                 disabled={disabled}
                 label=""
-                name="hasVariants"
+                name="tuesdayOpenClose"
                 onChange={onChange}
               />
             </div>
 
             <div className={classes.openOrClose}>
-              <p className={classes.openText}>Open</p>
-              <p className={classes.closeText}>Closed</p>
+              {data.tuesdayOpenClose ? <p className={classes.openText}>Open</p>
+                : <p className={classes.closeText}>Closed</p>}
             </div>
           </div>
 
           <div className={classes.root}>
             <Typography id="range-slider" gutterBottom>
-              Open: 7:00 - 14:00
+              {data.tuesdayOpenClose ? <>Open:&nbsp;
+                {
+                  tuesdayTime[0] <= 0 ? <>00:00</> : secondsToHms(tuesdayTime[0])
+                } - {
+                  tuesdayTime[1] <= 0 ? <>00:00</> : secondsToHms(tuesdayTime[1])
+                }</> : <>Closed</>}
             </Typography>
             <Slider
-              value={value}
-              onChange={handleChange}
-              valueLabelDisplay="auto"
+              step={30}
+              max={1440}
+              value={tuesdayTime}
+              onChange={tuesdayHandleChange}
+              // valueLabelDisplay="auto"
               aria-labelledby="range-slider"
-              getAriaValueText={valuetext}
+            // getAriaValueText={valuetext}
             />
           </div>
         </div>
@@ -164,30 +223,37 @@ export const StoreOpeningClosingHours: React.FC<any> = (
             <p className={classes.weekDays}>Wednesday</p>
             <div className={classes.toggleBtn}>
               <ControlledSwitch
-                checked={false}
+                checked={data.wednesdayOpenClose}
                 disabled={disabled}
                 label=""
-                name="hasVariants"
+                name="wednesdayOpenClose"
                 onChange={onChange}
               />
             </div>
 
             <div className={classes.openOrClose}>
-              <p className={classes.openText}>Open</p>
-              <p className={classes.closeText}>Closed</p>
+              {data.wednesdayOpenClose ? <p className={classes.openText}>Open</p>
+                : <p className={classes.closeText}>Closed</p>}
             </div>
           </div>
 
           <div className={classes.root}>
             <Typography id="range-slider" gutterBottom>
-              Open: 7:00 - 14:00
+              {data.wednesdayOpenClose ? <>Open:&nbsp;
+                {
+                  wednesdayTime[0] <= 0 ? <>00:00</> : secondsToHms(wednesdayTime[0])
+                } - {
+                  wednesdayTime[1] <= 0 ? <>00:00</> : secondsToHms(wednesdayTime[1])
+                }</> : <>Closed</>}
             </Typography>
             <Slider
-              value={value}
-              onChange={handleChange}
-              valueLabelDisplay="auto"
+              value={wednesdayTime}
+              step={30}
+              max={1440}
+              onChange={wednesdayHandleChange}
+              // valueLabelDisplay="auto"
               aria-labelledby="range-slider"
-              getAriaValueText={valuetext}
+            // getAriaValueText={valuetext}
             />
           </div>
         </div>
@@ -200,30 +266,37 @@ export const StoreOpeningClosingHours: React.FC<any> = (
             <p className={classes.weekDays}>Thursday</p>
             <div className={classes.toggleBtn}>
               <ControlledSwitch
-                checked={false}
+                checked={data.thursdayOpenClose}
                 disabled={disabled}
                 label=""
-                name="hasVariants"
+                name="thursdayOpenClose"
                 onChange={onChange}
               />
             </div>
 
             <div className={classes.openOrClose}>
-              <p className={classes.openText}>Open</p>
-              <p className={classes.closeText}>Closed</p>
+              {data.thursdayOpenClose ? <p className={classes.openText}>Open</p>
+                : <p className={classes.closeText}>Closed</p>}
             </div>
           </div>
 
           <div className={classes.root}>
             <Typography id="range-slider" gutterBottom>
-              Open: 7:00 - 14:00
+              {data.thursdayOpenClose ? <>Open:&nbsp;
+                {
+                  thursdayTime[0] <= 0 ? <>00:00</> : secondsToHms(thursdayTime[0])
+                } - {
+                  thursdayTime[1] <= 0 ? <>00:00</> : secondsToHms(thursdayTime[1])
+                }</> : <>Closed</>}
             </Typography>
             <Slider
-              value={value}
-              onChange={handleChange}
-              valueLabelDisplay="auto"
+              value={thursdayTime}
+              step={30}
+              max={1440}
+              onChange={thursdayHandleChange}
+              // valueLabelDisplay="auto"
               aria-labelledby="range-slider"
-              getAriaValueText={valuetext}
+            // getAriaValueText={valuetext}
             />
           </div>
         </div>
@@ -236,30 +309,37 @@ export const StoreOpeningClosingHours: React.FC<any> = (
             <p className={classes.weekDays}>Friday</p>
             <div className={classes.toggleBtn}>
               <ControlledSwitch
-                checked={false}
+                checked={data.fridayOpenClose}
                 disabled={disabled}
                 label=""
-                name="hasVariants"
+                name="fridayOpenClose"
                 onChange={onChange}
               />
             </div>
 
             <div className={classes.openOrClose}>
-              <p className={classes.openText}>Open</p>
-              <p className={classes.closeText}>Closed</p>
+              {data.fridayOpenClose ? <p className={classes.openText}>Open</p>
+                : <p className={classes.closeText}>Closed</p>}
             </div>
           </div>
 
           <div className={classes.root}>
             <Typography id="range-slider" gutterBottom>
-              Open: 7:00 - 14:00
+              {data.fridayOpenClose ? <>Open:&nbsp;
+                {
+                  fridayTime[0] <= 0 ? <>00:00</> : secondsToHms(fridayTime[0])
+                } - {
+                  fridayTime[1] <= 0 ? <>00:00</> : secondsToHms(fridayTime[1])
+                }</> : <>Closed</>}
             </Typography>
             <Slider
-              value={value}
-              onChange={handleChange}
-              valueLabelDisplay="auto"
+              value={fridayTime}
+              step={30}
+              max={1440}
+              onChange={fridayHandleChange}
+              // valueLabelDisplay="auto"
               aria-labelledby="range-slider"
-              getAriaValueText={valuetext}
+            // getAriaValueText={valuetext}
             />
           </div>
         </div>
@@ -272,30 +352,37 @@ export const StoreOpeningClosingHours: React.FC<any> = (
             <p className={classes.weekDays}>Saturday</p>
             <div className={classes.toggleBtn}>
               <ControlledSwitch
-                checked={false}
+                checked={data.saturdayOpenClose}
                 disabled={disabled}
                 label=""
-                name="hasVariants"
+                name="saturdayOpenClose"
                 onChange={onChange}
               />
             </div>
 
             <div className={classes.openOrClose}>
-              <p className={classes.openText}>Open</p>
-              <p className={classes.closeText}>Closed</p>
+              {data.saturdayOpenClose ? <p className={classes.openText}>Open</p>
+                : <p className={classes.closeText}>Closed</p>}
             </div>
           </div>
 
           <div className={classes.root}>
             <Typography id="range-slider" gutterBottom>
-              Open: 7:00 - 14:00
+              {data.saturdayOpenClose ? <>Open:&nbsp;
+                {
+                  saturdayTime[0] <= 0 ? <>00:00</> : secondsToHms(saturdayTime[0])
+                } - {
+                  saturdayTime[1] <= 0 ? <>00:00</> : secondsToHms(saturdayTime[1])
+                }</> : <>Closed</>}
             </Typography>
             <Slider
-              value={value}
-              onChange={handleChange}
-              valueLabelDisplay="auto"
+              value={saturdayTime}
+              step={30}
+              max={1440}
+              onChange={saturdayHandleChange}
+              // valueLabelDisplay="auto"
               aria-labelledby="range-slider"
-              getAriaValueText={valuetext}
+            // getAriaValueText={valuetext}
             />
           </div>
         </div>
@@ -308,29 +395,36 @@ export const StoreOpeningClosingHours: React.FC<any> = (
             <p className={classes.weekDays}>Sunday</p>
             <div className={classes.toggleBtn}>
               <ControlledSwitch
-                checked={false}
+                checked={data.sundayOpenClose}
                 disabled={disabled}
                 label=""
-                name="hasVariants"
+                name="sundayOpenClose"
                 onChange={onChange}
               />
             </div>
             <div className={classes.openOrClose}>
-              <p className={classes.openText}>Open</p>
-              <p className={classes.closeText}>Closed</p>
+              {data.sundayOpenClose ? <p className={classes.openText}>Open</p>
+                : <p className={classes.closeText}>Closed</p>}
             </div>
           </div>
 
           <div className={classes.root}>
             <Typography id="range-slider" gutterBottom>
-              Closed
+              {data.sundayOpenClose ? <>Open:&nbsp;
+                {
+                  sundayTime[0] <= 0 ? <>00:00</> : secondsToHms(sundayTime[0])
+                } - {
+                  sundayTime[1] <= 0 ? <>00:00</> : secondsToHms(sundayTime[1])
+                }</> : <>Closed</>}
             </Typography>
             <Slider
-              value={value}
-              onChange={handleChange}
-              valueLabelDisplay="auto"
+              value={sundayTime}
+              step={30}
+              max={1440}
+              onChange={sundayHandleChange}
+              // valueLabelDisplay="auto"
               aria-labelledby="range-slider"
-              getAriaValueText={valuetext}
+            // getAriaValueText={valuetext}
             />
           </div>
         </div>

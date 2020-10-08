@@ -9,7 +9,7 @@ import TableRow from "@material-ui/core/TableRow";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { CategoryFragment } from "@saleor/categories/types/CategoryFragment";
+// import { CategoryFragment } from "@saleor/categories/types/CategoryFragment";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -62,7 +62,7 @@ interface CategoryListProps
   extends ListProps,
   ListActions,
   SortPage<CategoryListUrlSortField> {
-  categories?: CategoryFragment[];
+  categories?: any[];
   isRoot: boolean;
   params: CategoryListUrlQueryParams;
   onAdd?();
@@ -214,18 +214,16 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
                 </TableCell>
                 <TableCell className={classes.colSubcategories}>
                   {category &&
-                    category.children &&
-                    category.children.totalCount !== undefined ? (
-                      category.children.totalCount
+                    (category.address !== undefined) || (category.address !== null) ? (
+                      category.address && category.address.streetAddress && <>{category.address.streetAddress + ", " + category.address.city}</>
                     ) : (
                       <Skeleton />
                     )}
                 </TableCell>
                 <TableCell className={classes.colProducts}>
                   {category &&
-                    category.children &&
-                    category.children.totalCount !== undefined ? (
-                      category.children.totalCount
+                    category.business !== undefined ? (
+                      category.business.name
                     ) : (
                       <Skeleton />
                     )}

@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { CategoryInput, ProductErrorCode } from "./../../types/globalTypes";
+import { ProductErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: CategoryUpdate
@@ -38,15 +38,15 @@ export interface CategoryUpdate_categoryUpdate_errors {
 
 export interface CategoryUpdate_categoryUpdate {
   __typename: "CategoryUpdate";
-  category: CategoryUpdate_categoryUpdate_category | null;
+  store: any | null;
   errors: CategoryUpdate_categoryUpdate_errors[];
 }
 
 export interface CategoryUpdate {
-  categoryUpdate: CategoryUpdate_categoryUpdate | null;
+  storeUpdate: CategoryUpdate_categoryUpdate | null;
 }
 
 export interface CategoryUpdateVariables {
   id: string;
-  input: CategoryInput;
+  input: any;
 }

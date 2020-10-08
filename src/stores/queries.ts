@@ -38,28 +38,33 @@ export const categoryDetailsFragment = gql`
 `;
 
 export const rootCategories = gql`
-  ${categoryFragment}
   ${pageInfoFragment}
-  query RootCategories(
+  query Stores(
     $first: Int
     $after: String
     $last: Int
     $before: String
-    $filter: CategoryFilterInput
-    $sort: CategorySortingInput
+    $sort: StoreOrder
   ) {
-    categories(
-      level: 0
+    stores(
       first: $first
       after: $after
       last: $last
       before: $before
-      filter: $filter
       sortBy: $sort
     ) {
       edges {
         node {
-          ...CategoryFragment
+          id
+          name
+          address {
+            streetAddress
+            city
+          }
+          business {
+            id
+            name
+          }
         }
       }
       pageInfo {
@@ -73,29 +78,48 @@ export const useRootCategoriesQuery = makeQuery<RootCategories, {}>(
 );
 
 export const categoryDetails = gql`
-  ${categoryFragment}
-  ${categoryDetailsFragment}
   ${pageInfoFragment}
-  query CategoryDetails(
+  query StoreDetails(
     $id: ID!
     $first: Int
     $after: String
     $last: Int
     $before: String
   ) {
-    category(id: $id) {
-      ...CategoryDetailsFragment
-      children(first: $first, after: $after, last: $last, before: $before) {
-        edges {
-          node {
-            ...CategoryFragment
-          }
-        }
-        pageInfo {
-          ...PageInfoFragment
-        }
+    store(id: $id) {
+      id
+      name
+      description
+      address {
+        streetAddress
+        city
+        postalCode
+        country
       }
-      products(first: $first, after: $after, last: $last, before: $before) {
+      category
+      business {
+        id
+        name
+      }
+      logo
+      websiteUrl
+      facebookUrl
+      twitterUrl
+      instagramUrl
+      deliverooUrl
+      uberEatsUrl
+      phone
+      images {
+        url
+        id
+      }
+      tags {
+        name
+        id
+      }
+      openingHours
+      closingHours
+      storeProduct(first: $first, after: $after, last: $last, before: $before) {
         pageInfo {
           ...PageInfoFragment
         }

@@ -1,4 +1,4 @@
-import { ContentState, convertToRaw, RawDraftContentState } from "draft-js";
+// import { ContentState, convertToRaw, RawDraftContentState } from "draft-js";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -27,14 +27,16 @@ import CategoryDetailsForm from "../../components/CategoryDetailsForm";
 import GoogleMap from "./GoogleMap";
 
 interface FormData {
-  description: RawDraftContentState;
+  // description: RawDraftContentState;
+  description: string;
   name: string;
   seoTitle: string;
   seoDescription: string;
 }
 
 const initialData: FormData = {
-  description: convertToRaw(ContentState.createFromText("")),
+  // description: convertToRaw(ContentState.createFromText("")),
+  description: "",
   name: "",
   seoDescription: "",
   seoTitle: ""
@@ -63,7 +65,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
   // const handleChange = address => {
   //     setGetLocation(address)
   //   };
-  
+
   //   const handleSelect = (address) => {
   //     geocodeByAddress(address)
   //       .then(results => {console.log(results,"=====");getLatLng(results[0])})
@@ -97,6 +99,20 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
                 data={data}
                 onChange={change}
                 errors={errors}
+                statuses={[
+                  {
+                    label: "Online",
+                    value: "online"
+                  },
+                  {
+                    label: "Offline",
+                    value: "offline"
+                  },
+                  {
+                    label: "Both",
+                    value: "both"
+                  },
+                ]}
               />
               <CardSpacer />
               <SeoForm

@@ -3,6 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -12,7 +13,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useUser from "@saleor/hooks/useUser";
+// import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import NotFoundPage from "@saleor/components/NotFoundPage";
@@ -61,18 +62,20 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();
+  const [latlngError, setlatLngError] = React.useState("");
+  const [latLngLoading, setlatLngLoading] = React.useState(false);
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
   const intl = useIntl();
-  const { user } = useUser();
+  // const { user } = useUser();
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const { data, loading, refetch } = useCategoryDetailsQuery({
     displayLoader: true,
     variables: { ...paginationState, id }
   });
 
-  const category = data?.category;
+  const category = data?.store;
 
   if (category === null) {
     return <NotFoundPage onBack={() => navigate(storesListUrl())} />;
@@ -94,8 +97,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   });
 
   const handleCategoryUpdate = (data: CategoryUpdate) => {
-    if (data.categoryUpdate.errors.length > 0) {
-      const backgroundImageError = data.categoryUpdate.errors.find(
+    if (data.storeUpdate.errors.length > 0) {
+      const backgroundImageError = data.storeUpdate.errors.find(
         error => error.field === ("backgroundImage" as keyof CategoryInput)
       );
       if (backgroundImageError) {
@@ -154,43 +157,45 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
     params.activeTab === CategoryPageTab.categories
-      ? maybe(() => data.category.children.pageInfo)
-      : maybe(() => data.category.products.pageInfo),
+      ? maybe(() => data.store.storeProduct.pageInfo)
+      : maybe(() => data.store.storeProduct.pageInfo),
     paginationState,
     params
   );
 
   return (
     <>
-      <WindowTitle title={maybe(() => data.category.name)} />
+      <WindowTitle title={maybe(() => data.store.name)} />
       <TypedProductBulkDeleteMutation onCompleted={handleBulkProductDelete}>
         {(productBulkDelete, productBulkDeleteOpts) => (
           <>
             <CategoryUpdatePage
               changeTab={changeTab}
               currentTab={params.activeTab}
-              category={maybe(() => data.category)}
-              disabled={loading}
-              errors={updateResult.data?.categoryUpdate.errors || []}
+              category={maybe(() => data.store)}
+              disabled={loading || latLngLoading}
+              latlngError={latlngError}
+              errors={updateResult.data?.storeUpdate.errors || []}
               onAddCategory={() => navigate(categoryAddUrl(id))}
               onAddProduct={() => navigate(productAddUrl)}
               onBack={() =>
                 navigate(
                   maybe(
-                    () => categoryUrl(data.category.parent.id),
+                    () => categoryUrl(data.store.parent.id),
                     storesListUrl()
                   )
                 )
               }
+              images={maybe(() => data.store.images)}
               onCategoryClick={id => () => navigate(categoryUrl(id))}
               onDelete={() => openModal("delete")}
-              onImageDelete={() =>
+              onImageDelete={() => () =>
                 updateCategory({
                   variables: {
                     id,
                     input: {
-                      backgroundImage: null,
-                      store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
+                      business: category.business.id,
+                      images: null,
                     }
                   }
                 })
@@ -201,8 +206,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                   variables: {
                     id,
                     input: {
-                      backgroundImage: file,
-                      store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
+                      business: category.business.id,
+                      images: file,
                     }
                   }
                 })
@@ -211,29 +216,63 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
               onPreviousPage={loadPreviousPage}
               pageInfo={pageInfo}
               onProductClick={id => () => navigate(productUrl(id))}
-              onSubmit={formData =>
-                updateCategory({
-                  variables: {
-                    id,
-                    input: {
-                      backgroundImageAlt: formData.backgroundImageAlt,
-                      descriptionJson: JSON.stringify(formData.description),
-                      name: formData.name,
-                      seo: {
-                        description: formData.seoDescription,
-                        title: formData.seoTitle
-                      },
-                      store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
-                    }
-                  }
-                })
-              }
+              onSubmit={formData => {
+                setlatLngError("");
+                setlatLngLoading(true);
+                geocodeByAddress(
+                  formData.streetAddress +
+                  "," +
+                  formData.city +
+                  "," +
+                  formData.country
+                )
+                  .then(results => getLatLng(results[0]))
+                  .then(latLng => {
+                    setlatLngLoading(false);
+                    updateCategory({
+                      variables: {
+                        id,
+                        input: {
+                          address: {
+                            city: formData.city,
+                            country: formData.country,
+                            latitude: latLng.lat,
+                            longitude: latLng.lng,
+                            postalCode: formData.postalCode,
+                            streetAddress: formData.streetAddress,
+                          },
+                          // backgroundImageAlt: formData.backgroundImageAlt,
+                          business: data.store.business.id,
+                          category: formData.businessCategory,
+                          deliverooUrl: formData.delivery,
+                          description: formData.description,
+                          facebookUrl: formData.facebook,
+                          instagramUrl: formData.instagram,
+                          logo: formData.logo,
+                          name: formData.name,
+                          phone: formData.phone,
+                          twitterUrl: formData.twitter,
+                          uberEatsUrl: formData.reservationSystem,
+                          websiteUrl: formData.website,
+                          // seo: {
+                          //   description: formData.seoDescription,
+                          //   title: formData.seoTitle
+                          // },
+                        }
+                      }
+                    })
+                  })
+                  .catch(error => {
+                    setlatLngLoading(false);
+                    setlatLngError(error);
+                  });
+              }}
               products={maybe(() =>
-                data.category.products.edges.map(edge => edge.node)
+                data.store.storeProduct.edges.map(edge => edge.node)
               )}
               saveButtonBarState={updateResult.status}
               subcategories={maybe(() =>
-                data.category.children.edges.map(edge => edge.node)
+                data.store.storeProduct.edges.map(edge => edge.node)
               )}
               subcategoryListToolbar={
                 <IconButton
@@ -280,7 +319,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                   defaultMessage="Are you sure you want to delete {categoryName}?"
                   values={{
                     categoryName: (
-                      <strong>{maybe(() => data.category.name, "...")}</strong>
+                      <strong>{maybe(() => data.store.name, "...")}</strong>
                     )
                   }}
                 />

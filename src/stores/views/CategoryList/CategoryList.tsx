@@ -40,7 +40,7 @@ import {
   getFilterVariables,
   saveFilterTab
 } from "./filter";
-import { getSortQueryVariables } from "./sort";
+// import { getSortQueryVariables } from "./sort";
 
 interface CategoryListProps {
   params: CategoryListUrlQueryParams;
@@ -62,7 +62,8 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params)
+      // sort: getSortQueryVariables(params)
+      sort: null
     }),
     [params]
   );
@@ -118,7 +119,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   };
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    maybe(() => data.categories.pageInfo),
+    maybe(() => data.stores.pageInfo),
     paginationState,
     params
   );
@@ -144,7 +145,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     <>
       <CategoryListPage
         categories={maybe(
-          () => data.categories.edges.map(edge => edge.node),
+          () => data.stores.edges.map(edge => edge.node),
           []
         )}
         currentTab={currentTab}

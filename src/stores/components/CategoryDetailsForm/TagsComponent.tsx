@@ -106,24 +106,37 @@ const TagsComponent = withStyles(styles, { name: "TagsComponent" })(
         tiles: {},
       }
     }
+
+    // static getDerivedStateFromProps(props,state): any {
+    //   console.log(props,"=======")
+    //   const newTileId = props.tags && props.tags.length;
+    //   state.tileIds.push(newTileId);
+    //   props.tags && props.tags.map(tag => {
+    //     return state.tiles[newTileId] = { text: tag.name };
+    //   })
+    //   console.log(state,"=======")
+    // }
+
     addTile(tile) {
       // pull tiles array out of the state
       // see destructoring
-      const { tiles, tileIds } = this.state;
+      if (tile.length && Object.keys(this.state.tiles).length <= 3) {
+        const { tiles, tileIds } = this.state;
 
-      const newTileId = (tileIds.length - 1) + 1;
-      tileIds.push(newTileId);
-      tiles[newTileId] = { text: tile };
+        const newTileId = (tileIds.length - 1) + 1;
+        tileIds.push(newTileId);
+        tiles[newTileId] = { text: tile };
 
-      // reset the input value
-      const currentValue = "";
+        // reset the input value
+        const currentValue = "";
 
-      // this is the same as saying tiles : tiles
-      this.setState({
-        currentValue,
-        tileIds,
-        tiles,
-      })
+        // this is the same as saying tiles : tiles
+        this.setState({
+          currentValue,
+          tileIds,
+          tiles,
+        })
+      }
     }
 
     removeTile(id) {
@@ -221,6 +234,7 @@ class Input extends React.Component<any> {
               name="new-item"
               placeholder="Enter Tag"
               autoComplete="off"
+              // value={data.tags}
               defaultValue={this.props.value}
               onKeyDown={e => this.tagEvent(e)}
             />

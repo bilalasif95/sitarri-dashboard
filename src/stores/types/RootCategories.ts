@@ -46,7 +46,7 @@ export interface RootCategories_categories {
 }
 
 export interface RootCategories {
-  categories: RootCategories_categories | null;
+  stores: any | null;
 }
 
 export interface RootCategoriesVariables {

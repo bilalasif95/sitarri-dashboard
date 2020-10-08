@@ -7,7 +7,7 @@ import Earth from "@assets/images/earth.svg";
 import Instagram from "@assets/images/instagram.svg";
 import Tag from "@assets/images/tag.svg";
 import TextField from "@material-ui/core/TextField";
-import { RawDraftContentState } from "draft-js";
+// import { RawDraftContentState } from "draft-js";
 import Facebook from "@assets/images/facebook1.svg";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -233,31 +233,34 @@ interface CategoryDetailsFormProps {
   data: {
     name: string;
     facebook?: string;
-    description: RawDraftContentState;
+    // description: RawDraftContentState;
     website?: string;
     instagram?: string;
     twitter?: string;
     logo?: any;
+    reservationSystem?: string;
+    delivery?: string;
     businessCategory?: string;
   };
   disabled: boolean;
+  businessNames: any;
   errors: ProductErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
 export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormProps> = (
-  { disabled, data, onChange, errors },
+  { disabled, data, onChange, errors, businessNames },
   props
 ) => {
   const intl = useIntl();
   const classes = useStyles(props);
   const [businessNamesArray, setBusinessNamesArray] = React.useState([]);
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
-    maybe(() => "", "")
+    maybe(() => data && data.businessCategory, "")
   );
   const [logo, setLogo] = React.useState<any>();
   const formErrors = getFormErrors(
-    ["name", "descriptionJson", "website", "facebook", "instagram", "twitter"],
+    ["name", "website", "facebook", "reservationSystem", "delivery", "instagram", "twitter"],
     errors
   );
   const handleCountrySelect = createSingleAutocompleteSelectHandler(
@@ -266,21 +269,14 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
     businessNamesArray
   );
   React.useEffect(() => {
-    setBusinessNamesArray([
-      {
-        label: "Online",
-        value: "online"
-      },
-      {
-        label: "Offline",
-        value: "offline"
-      },
-      {
-        label: "Both",
-        value: "both"
-      }
-    ]);
-  }, []);
+    const businessNameArray = [];
+    maybe(() =>
+      businessNames.map(name => {
+        businessNameArray.push({ label: name.node.name, value: name.node.id });
+      })
+    );
+    setBusinessNamesArray(businessNameArray);
+  }, [businessNames]);
 
   return (
     <Card>
@@ -296,8 +292,8 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
               {logo === "" || logo === undefined ? (
                 <SVG src={NoImg} />
               ) : (
-                <img src={logo} />
-              )}
+                  <img src={logo} />
+                )}
             </div>
           </div>
 
@@ -435,12 +431,12 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
                   className={classes.Website}
                   disabled={disabled}
                   label="Delivery Partner Url"
-                  name="website"
-                  error={!!formErrors.website}
-                  helperText={!!formErrors.website}
+                  name="delivery"
+                  error={!!formErrors.delivery}
+                  helperText={!!formErrors.delivery}
                   type="url"
                   onChange={onChange}
-                  value={data.website}
+                  value={data.delivery}
                 />
                 <p className={classes.inputText}>
                   Your Store page on Deliveroo, UberEats, Just Eat for others
@@ -460,12 +456,12 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
                   className={classes.Website}
                   disabled={disabled}
                   label="Reservation system Url"
-                  name="website"
-                  error={!!formErrors.website}
-                  helperText={!!formErrors.website}
+                  name="reservationSystem"
+                  error={!!formErrors.reservationSystem}
+                  helperText={!!formErrors.reservationSystem}
                   type="url"
                   onChange={onChange}
-                  value={data.website}
+                  value={data.reservationSystem}
                 />
                 <p className={classes.inputText}>
                   Your booking page on resy, OpenTable, SevenRooms or others

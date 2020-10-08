@@ -109,16 +109,17 @@ export interface CategoryDetails_category {
   id: string;
   backgroundImage: CategoryDetails_category_backgroundImage | null;
   name: string;
-  descriptionJson: any;
+  description?: any;
   seoDescription: string | null;
   seoTitle: string | null;
   parent: CategoryDetails_category_parent | null;
   children: CategoryDetails_category_children | null;
   products: CategoryDetails_category_products | null;
+  tags?: any;
 }
 
 export interface CategoryDetails {
-  category: CategoryDetails_category | null;
+  store: any | null;
 }
 
 export interface CategoryDetailsVariables {

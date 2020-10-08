@@ -3,7 +3,7 @@ import CardContent from "@material-ui/core/CardContent";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
-import { RawDraftContentState } from "draft-js";
+// import { RawDraftContentState } from "draft-js";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -21,6 +21,14 @@ import SingleAutocompleteSelectField from "../../../components/SingleAutocomplet
 
 const useStyles = makeStyles(
   theme => ({
+    businessmodaltextarea: {
+      "& label": {
+        overflowX: "visible"
+      },
+      marginLeft: "47px",
+      marginTop: "30px",
+      width: "89%"
+    },
     cityInput: {
       width: "60%"
     },
@@ -31,7 +39,10 @@ const useStyles = makeStyles(
       display: "flex",
       justifyContent: "space-between"
     },
-
+    latlngError: {
+      color: "red",
+      textAlign: "center"
+    },
     phoneInput: {
       "& .MuiFormControl-root": {
         width: "100%"
@@ -73,16 +84,24 @@ interface CategoryDetailsFormProps {
   category?: CategoryDetails_category;
   data: {
     name: string;
-    description: RawDraftContentState;
+    // description: RawDraftContentState;
     businessCategory?: string;
+    phone?: string;
+    country?: any;
+    streetAddress?: string;
+    streetAddress2?: string;
+    city?: string;
+    postalCode?: number;
   };
+  countries: any;
+  latlngError: string;
   disabled: boolean;
   errors: ProductErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
 export const ContactInformationForm: React.FC<CategoryDetailsFormProps> = (
-  { disabled, data, onChange, errors },
+  { disabled, data, onChange, errors, countries, latlngError },
   // { category, disabled, data, onChange, errors },
   props
 ) => {
@@ -90,37 +109,34 @@ export const ContactInformationForm: React.FC<CategoryDetailsFormProps> = (
   const classes = useStyles(props);
 
   const [businessNamesArray, setBusinessNamesArray] = React.useState([]);
-  const [phone, setPhone] = React.useState([]);
+  const [phone, setPhone] = useStateFromProps(maybe(() => data && data.phone, ""));
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
-    maybe(() => "", "")
+    maybe(() => data && data.country, "")
   );
-  const formErrors = getFormErrors(["name", "descriptionJson"], errors);
-  const handleCountrySelect = createSingleAutocompleteSelectHandler(
-    onChange,
-    setCountryDisplayName,
-    businessNamesArray
-  );
+  const formErrors = getFormErrors(["streetAddress", "streetAddress2", "city", "postalCode"], errors);
 
   const handleOnChange = value => {
     setPhone(value);
   };
 
   React.useEffect(() => {
-    setBusinessNamesArray([
-      {
-        label: "Online",
-        value: "online"
-      },
-      {
-        label: "Offline",
-        value: "offline"
-      },
-      {
-        label: "Both",
-        value: "both"
-      }
-    ]);
-  }, []);
+    const setCountries = maybe(
+      () =>
+        countries.map(country => ({
+          label: country.label,
+          value: country.code
+        })),
+      []
+    )
+    setBusinessNamesArray(setCountries);
+  }, [countries]);
+
+  const handleCountrySelect = createSingleAutocompleteSelectHandler(
+    onChange,
+    setCountryDisplayName,
+    businessNamesArray
+  );
+
   return (
     <>
       <Card>
@@ -134,12 +150,12 @@ export const ContactInformationForm: React.FC<CategoryDetailsFormProps> = (
               label={intl.formatMessage({
                 defaultMessage: "Address line 1"
               })}
-              name="name"
+              name="streetAddress"
               disabled={disabled}
-              value={data && data.name}
+              value={data.streetAddress}
               onChange={onChange}
-              error={!!formErrors.name}
-              helperText={getProductErrorMessage(formErrors.name, intl)}
+              error={!!formErrors.streetAddress}
+              helperText={getProductErrorMessage(formErrors.streetAddress, intl)}
               fullWidth
             />
 
@@ -149,12 +165,12 @@ export const ContactInformationForm: React.FC<CategoryDetailsFormProps> = (
               label={intl.formatMessage({
                 defaultMessage: "Address line 2"
               })}
-              name="name"
+              name="streetAddress2"
               disabled={disabled}
-              value={data && data.name}
+              value={data.streetAddress2}
               onChange={onChange}
-              error={!!formErrors.name}
-              helperText={getProductErrorMessage(formErrors.name, intl)}
+              error={!!formErrors.streetAddress2}
+              helperText={getProductErrorMessage(formErrors.streetAddress2, intl)}
               fullWidth
             />
 
@@ -166,12 +182,12 @@ export const ContactInformationForm: React.FC<CategoryDetailsFormProps> = (
                   label={intl.formatMessage({
                     defaultMessage: "City"
                   })}
-                  name="name"
+                  name="city"
                   disabled={disabled}
-                  value={data && data.name}
+                  value={data.city}
                   onChange={onChange}
-                  error={!!formErrors.name}
-                  helperText={getProductErrorMessage(formErrors.name, intl)}
+                  error={!!formErrors.city}
+                  helperText={getProductErrorMessage(formErrors.city, intl)}
                   fullWidth
                 />
               </div>
@@ -181,19 +197,18 @@ export const ContactInformationForm: React.FC<CategoryDetailsFormProps> = (
                   label={intl.formatMessage({
                     defaultMessage: "Post Code"
                   })}
-                  name="name"
+                  name="postalCode"
                   disabled={disabled}
-                  value={data && data.name}
+                  value={data.postalCode}
                   onChange={onChange}
-                  error={!!formErrors.name}
-                  helperText={getProductErrorMessage(formErrors.name, intl)}
+                  error={!!formErrors.postalCode}
+                  helperText={getProductErrorMessage(formErrors.postalCode, intl)}
                   fullWidth
                 />
               </div>
             </div>
           </div>
           <FormSpacer />
-
           <div className={classes.selectCategory}>
             <SingleAutocompleteSelectField
               disabled={disabled}
@@ -201,21 +216,28 @@ export const ContactInformationForm: React.FC<CategoryDetailsFormProps> = (
               label={intl.formatMessage({
                 defaultMessage: "Country"
               })}
-              name="businessCategory"
+              name="country"
               onChange={handleCountrySelect}
-              value={data.businessCategory}
+              value={data.country}
               choices={businessNamesArray}
               InputProps={{
                 autoComplete: "off"
               }}
             />
           </div>
-
           <FormSpacer />
-
+          {latlngError && (
+            <div
+              className={classes.businessmodaltextarea}
+            >
+              <p className={classes.latlngError}>
+                Invalid Address.
+              </p>
+            </div>
+          )}
           <div className={classes.phoneInput}>
             <p>Phone</p>
-            <MuiPhoneNumber defaultCountry={"gb"} onChange={handleOnChange} />
+            <MuiPhoneNumber value={phone} defaultCountry={"gb"} onChange={handleOnChange} />
           </div>
         </CardContent>
       </Card>

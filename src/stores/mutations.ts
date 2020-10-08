@@ -55,15 +55,41 @@ export const useCategoryCreateMutation = makeMutation<
 >(categoryCreateMutation);
 
 export const categoryUpdateMutation = gql`
-  ${categoryDetailsFragment}
-  ${productErrorFragment}
-  mutation CategoryUpdate($id: ID!, $input: CategoryInput!) {
-    categoryUpdate(id: $id, input: $input) {
-      category {
-        ...CategoryDetailsFragment
+  mutation StoreUpdate($id: ID!, $input: StoreCreateInput!) {
+    storeUpdate(id: $id, input: $input) {
+      store {
+        id
+        name
+        description
+        category
+        address {
+          streetAddress
+          postalCode
+          city
+          country
+        }
+        logo
+        websiteUrl
+        facebookUrl
+        twitterUrl
+        instagramUrl
+        deliverooUrl
+        uberEatsUrl
+        phone
+        images {
+          url
+          id
+        }
+        tags {
+          id
+          name
+        }
+        openingHours
+        closingHours
       }
-      errors: productErrors {
-        ...ProductErrorFragment
+      errors {
+        field
+        message
       }
     }
   }
