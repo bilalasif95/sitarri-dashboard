@@ -1,4 +1,4 @@
-import { ContentState, convertToRaw, RawDraftContentState } from "draft-js";
+// import { ContentState, convertToRaw, RawDraftContentState } from "draft-js";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -50,7 +50,7 @@ interface FormData {
   category: string;
   collections: string[];
   chargeTaxes: boolean;
-  description: RawDraftContentState;
+  description: string;
   isPublished: boolean;
   name: string;
   productType: string;
@@ -126,15 +126,15 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
 
   // Ensures that it will not change after component rerenders, because it
   // generates different block keys and it causes editor to lose its content.
-  const initialDescription = React.useRef(
-    convertToRaw(ContentState.createFromText(""))
-  );
+  // const initialDescription = React.useRef(
+  //   convertToRaw(ContentState.createFromText(""))
+  // );
   const initialData: FormData = {
     basePrice: 0,
     category: "",
     chargeTaxes: false,
     collections: [],
-    description: {} as any,
+    description: "",
     isPublished: false,
     name: "",
     productType: "",
@@ -219,7 +219,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   data={data}
                   disabled={disabled}
                   errors={errors}
-                  initialDescription={initialDescription.current}
+                  // initialDescription={initialDescription.current}
                   onChange={change}
                 />
                 <CardSpacer />

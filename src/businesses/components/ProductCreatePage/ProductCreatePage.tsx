@@ -1,5 +1,4 @@
 // import { ContentState, convertToRaw, RawDraftContentState } from "draft-js";
-import { RawDraftContentState } from "draft-js";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -51,7 +50,7 @@ interface FormData {
   category: string;
   collections: string[];
   chargeTaxes: boolean;
-  description: RawDraftContentState;
+  description: string;
   isPublished: boolean;
   name: string;
   productType: string;
@@ -135,7 +134,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     category: "",
     chargeTaxes: false,
     collections: [],
-    description: {} as any,
+    description: "",
     isPublished: false,
     name: "",
     productType: "",

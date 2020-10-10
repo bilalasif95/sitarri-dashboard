@@ -106,7 +106,7 @@ export const product: (
       name: "Winter sale"
     }
   ],
-  descriptionJson: JSON.stringify(content),
+  description: content,
   id: "p10171",
   images: [
     {

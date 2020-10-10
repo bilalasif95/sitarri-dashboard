@@ -126,7 +126,7 @@ export const productFragmentDetails = gql`
   fragment Product on Product {
     ...ProductVariantAttributesFragment
     name
-    descriptionJson
+    description
     seoTitle
     seoDescription
     category {

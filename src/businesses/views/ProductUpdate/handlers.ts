@@ -26,7 +26,7 @@ export function createUpdateHandler(
       category: data.category,
       chargeTaxes: data.chargeTaxes,
       collections: data.collections,
-      descriptionJson: JSON.stringify(data.description),
+      description: data.description,
       id: product.id,
       isPublished: data.isPublished,
       name: data.name,

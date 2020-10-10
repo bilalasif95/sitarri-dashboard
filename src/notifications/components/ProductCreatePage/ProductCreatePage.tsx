@@ -1,4 +1,4 @@
-import { ContentState, convertToRaw, RawDraftContentState } from "draft-js";
+import { ContentState, convertToRaw } from "draft-js";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -50,7 +50,7 @@ interface FormData {
   category: string;
   collections: string[];
   chargeTaxes: boolean;
-  description: RawDraftContentState;
+  description: string;
   isPublished: boolean;
   name: string;
   productType: string;

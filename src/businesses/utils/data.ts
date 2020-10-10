@@ -1,4 +1,4 @@
-import { RawDraftContentState } from "draft-js";
+// import { RawDraftContentState } from "draft-js";
 
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
@@ -173,7 +173,7 @@ export interface ProductUpdatePageFormData {
   category: string | null;
   collections: string[];
   chargeTaxes: boolean;
-  description: RawDraftContentState;
+  description: string;
   isPublished: boolean;
   name: string;
   publicationDate: string;
@@ -202,7 +202,7 @@ export function getProductUpdatePageFormData(
       () => product.collections.map(collection => collection.id),
       []
     ),
-    description: maybe(() => JSON.parse(product.descriptionJson)),
+    description: maybe(() => product.description,""),
     facebook: maybe(() => product.facebook, ""),
     instagram: maybe(() => product.instagram, ""),
     isPublished: maybe(() => product.isPublished, false),

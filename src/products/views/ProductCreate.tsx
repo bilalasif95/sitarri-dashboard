@@ -81,7 +81,7 @@ export const ProductCreateView: React.FC = () => {
               category: formData.category,
               chargeTaxes: formData.chargeTaxes,
               collections: formData.collections,
-              descriptionJson: JSON.stringify(formData.description),
+              description: formData.description,
               isPublished: formData.isPublished,
               name: formData.name,
               productType: formData.productType,

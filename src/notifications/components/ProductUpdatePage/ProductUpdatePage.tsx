@@ -1,4 +1,4 @@
-import { convertFromRaw, RawDraftContentState } from "draft-js";
+import { RawDraftContentState } from "draft-js";
 import { diff } from "fast-array-diff";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -269,42 +269,43 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       toggleAll={toggleAll}
                     />
                   ) : (
-                    <ProductStocks
-                      data={data}
-                      disabled={disabled}
-                      errors={errors}
-                      stocks={stocks}
-                      warehouses={warehouses}
-                      onChange={(id, value) => {
-                        triggerChange();
-                        changeStockData(id, value);
-                      }}
-                      onFormDataChange={change}
-                      onWarehouseStockAdd={id => {
-                        triggerChange();
-                        addStock({
-                          data: null,
-                          id,
-                          label: warehouses.find(
-                            warehouse => warehouse.id === id
-                          ).name,
-                          value: "0"
-                        });
-                      }}
-                      onWarehouseStockDelete={id => {
-                        triggerChange();
-                        removeStock(id);
-                      }}
-                    />
-                  )}
+                      <ProductStocks
+                        data={data}
+                        disabled={disabled}
+                        errors={errors}
+                        stocks={stocks}
+                        warehouses={warehouses}
+                        onChange={(id, value) => {
+                          triggerChange();
+                          changeStockData(id, value);
+                        }}
+                        onFormDataChange={change}
+                        onWarehouseStockAdd={id => {
+                          triggerChange();
+                          addStock({
+                            data: null,
+                            id,
+                            label: warehouses.find(
+                              warehouse => warehouse.id === id
+                            ).name,
+                            value: "0"
+                          });
+                        }}
+                        onWarehouseStockDelete={id => {
+                          triggerChange();
+                          removeStock(id);
+                        }}
+                      />
+                    )}
                   <CardSpacer />
                   <SeoForm
                     title={data.seoTitle}
                     titlePlaceholder={data.name}
                     description={data.seoDescription}
                     descriptionPlaceholder={maybe(() =>
-                      convertFromRaw(data.description)
-                        .getPlainText()
+                      data.description
+                        // convertFromRaw(data.description)
+                        //   .getPlainText()
                         .slice(0, 300)
                     )}
                     loading={disabled}

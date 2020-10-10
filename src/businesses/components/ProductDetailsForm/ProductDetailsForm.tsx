@@ -2,7 +2,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { RawDraftContentState } from "draft-js";
+// import { RawDraftContentState } from "draft-js";
 import Facebook from "@assets/images/facebook1.svg";
 import React from "react";
 import Dropzone from "react-dropzone";
@@ -219,7 +219,7 @@ const useStyles = makeStyles(
 
 interface ProductDetailsFormProps {
   data: {
-    description: RawDraftContentState;
+    description: string;
     name: string;
     website?: string;
     facebook?: string;

@@ -1,4 +1,4 @@
-import { convertFromRaw, RawDraftContentState } from "draft-js";
+// import { convertFromRaw, RawDraftContentState } from "draft-js";
 import { diff } from "fast-array-diff";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -158,9 +158,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   );
 
   const initialData = getProductUpdatePageFormData(product, variants);
-  const initialDescription = maybe<RawDraftContentState>(() =>
-    JSON.parse(product.descriptionJson)
-  );
+  // const initialDescription = maybe<any>(() =>
+  //   product.description
+  // );
 
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
@@ -230,7 +230,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     data={data}
                     disabled={disabled}
                     errors={errors}
-                    initialDescription={initialDescription}
+                    // initialDescription={initialDescription}
                     onChange={change}
                   />
                   <CardSpacer />
@@ -301,8 +301,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     titlePlaceholder={data.name}
                     description={data.seoDescription}
                     descriptionPlaceholder={maybe(() =>
-                      convertFromRaw(data.description)
-                        .getPlainText()
+                      // convertFromRaw(data.description)
+                      //   .getPlainText()
+                      data.description
                         .slice(0, 300)
                     )}
                     loading={disabled}

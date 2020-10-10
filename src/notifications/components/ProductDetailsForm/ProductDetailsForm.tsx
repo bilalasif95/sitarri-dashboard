@@ -14,7 +14,7 @@ import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragm
 
 interface ProductDetailsFormProps {
   data: {
-    description: RawDraftContentState;
+    description: string;
     name: string;
   };
   disabled?: boolean;

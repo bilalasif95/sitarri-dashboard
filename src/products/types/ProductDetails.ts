@@ -186,7 +186,7 @@ export interface ProductDetails_product {
   twitter?: string;
   logo?: any;
   businessCategory?: string;
-  descriptionJson: any;
+  description?: any;
   seoTitle: string | null;
   seoDescription: string | null;
   category: ProductDetails_product_category | null;

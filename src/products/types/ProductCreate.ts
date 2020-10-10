@@ -186,7 +186,7 @@ export interface ProductCreate_productCreate_product {
   attributes: ProductCreate_productCreate_product_attributes[];
   productType: ProductCreate_productCreate_product_productType;
   name: string;
-  descriptionJson: any;
+  description: any;
   seoTitle: string | null;
   seoDescription: string | null;
   category: ProductCreate_productCreate_product_category | null;
@@ -219,7 +219,7 @@ export interface ProductCreateVariables {
   category: string;
   chargeTaxes: boolean;
   collections?: (string | null)[] | null;
-  descriptionJson?: any | null;
+  description?: any | null;
   isPublished: boolean;
   name: string;
   basePrice?: any | null;
