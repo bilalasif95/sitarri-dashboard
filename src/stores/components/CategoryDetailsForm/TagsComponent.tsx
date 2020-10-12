@@ -5,6 +5,9 @@ import { createStyles, withStyles } from "@material-ui/core/styles";
 const styles = () =>
   createStyles({
     fieldContainer: {
+      "& span": {
+        lineHeight: "30px"
+      },
       // "&-moz-box-shadow": "0px 3px 14px 1px rgba(74,74,74,0.2)",
       // "&-webkit-box-shadow": "0px 3px 14px 1px rgba(74,74,74,0.2)",
       background: "white",
@@ -103,8 +106,8 @@ const TagsComponent = withStyles(styles, { name: "TagsComponent" })(
       this.state = {
         currentValue: "",
         tileIds: [],
-        tiles: {},
-      }
+        tiles: {}
+      };
     }
 
     // static getDerivedStateFromProps(props,state): any {
@@ -123,7 +126,7 @@ const TagsComponent = withStyles(styles, { name: "TagsComponent" })(
       if (tile.length && Object.keys(this.state.tiles).length <= 3) {
         const { tiles, tileIds } = this.state;
 
-        const newTileId = (tileIds.length - 1) + 1;
+        const newTileId = tileIds.length - 1 + 1;
         tileIds.push(newTileId);
         tiles[newTileId] = { text: tile };
 
@@ -134,8 +137,8 @@ const TagsComponent = withStyles(styles, { name: "TagsComponent" })(
         this.setState({
           currentValue,
           tileIds,
-          tiles,
-        })
+          tiles
+        });
       }
     }
 
@@ -148,14 +151,16 @@ const TagsComponent = withStyles(styles, { name: "TagsComponent" })(
 
     editLastTile() {
       const { tiles } = this.state;
-      const lastTileValue = Object.keys(tiles).slice(-1).pop();
+      const lastTileValue = Object.keys(tiles)
+        .slice(-1)
+        .pop();
       // console.log('the last tile object is:', tiles[lastTileValue].text);
       // store last tile text value before deleting it
       const currentValue = tiles[lastTileValue].text;
       delete tiles[lastTileValue];
       this.setState({
         currentValue,
-        tiles,
+        tiles
       });
     }
     render() {

@@ -51,7 +51,7 @@ const useStyles = makeStyles(
         width: "initial"
       },
       "& input": {
-        marginLeft: "4px !important"
+        marginLeft: "0px !important"
       },
       "& label": {
         marginLeft: "0px !important"
@@ -81,10 +81,10 @@ const useStyles = makeStyles(
       },
 
       "& .MuiInputLabel-animated": {
-        marginLeft: "95px"
+        marginLeft: "91px"
       },
       "& input": {
-        marginLeft: "98px"
+        marginLeft: "90px"
       }
     },
     ImgDropzone: {
@@ -184,10 +184,20 @@ const useStyles = makeStyles(
 
     Website: {
       "& input": {
-        marginLeft: "40px !important"
+        marginLeft: "35px !important"
       },
       "& label": {
         marginLeft: "35px !important"
+      }
+    },
+
+    twitter: {
+      "& input": {
+        marginLeft: "80px !important"
+      },
+
+      "& label": {
+        marginLeft: "79px !important"
       }
     },
 
@@ -260,7 +270,15 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
   );
   const [logo, setLogo] = React.useState<any>();
   const formErrors = getFormErrors(
-    ["name", "website", "facebook", "reservationSystem", "delivery", "instagram", "twitter"],
+    [
+      "name",
+      "website",
+      "facebook",
+      "reservationSystem",
+      "delivery",
+      "instagram",
+      "twitter"
+    ],
     errors
   );
   const handleCountrySelect = createSingleAutocompleteSelectHandler(
@@ -292,8 +310,8 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
               {logo === "" || logo === undefined ? (
                 <SVG src={NoImg} />
               ) : (
-                  <img src={logo} />
-                )}
+                <img src={logo} />
+              )}
             </div>
           </div>
 
@@ -373,6 +391,7 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
             <div className={classes.SocialIcons}>
               <SVG className={classes.InputIcons} src={Twitter} />
               <TextField
+                className={classes.twitter}
                 disabled={disabled}
                 label="Twitter"
                 name="twitter"
