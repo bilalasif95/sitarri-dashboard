@@ -33,23 +33,23 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colName: {
-        width: 840
+        // width: 200
       },
       colProducts: {
-        width: 160
+        // width: 530
       },
       colSubcategories: {
-        width: 160
+        width: 530
       }
     },
     colName: {
       paddingLeft: 0
     },
     colProducts: {
-      textAlign: "center"
+      // textAlign: "center"
     },
     colSubcategories: {
-      textAlign: "center"
+      // textAlign: "center"
     },
     tableRow: {
       cursor: "pointer"
@@ -60,8 +60,8 @@ const useStyles = makeStyles(
 
 interface CategoryListProps
   extends ListProps,
-  ListActions,
-  SortPage<CategoryListUrlSortField> {
+    ListActions,
+    SortPage<CategoryListUrlSortField> {
   categories?: any[];
   isRoot: boolean;
   params: CategoryListUrlQueryParams;
@@ -132,9 +132,7 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
             isRoot && onSort(CategoryListUrlSortField.subcategoryCount)
           }
         >
-          <FormattedMessage
-            defaultMessage="Address"
-          />
+          <FormattedMessage defaultMessage="Address" />
         </TableCellHeader>
         <TableCellHeader
           direction={
@@ -148,9 +146,7 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
             isRoot && onSort(CategoryListUrlSortField.subcategoryCount)
           }
         >
-          <FormattedMessage
-            defaultMessage="Business"
-          />
+          <FormattedMessage defaultMessage="Business" />
         </TableCellHeader>
         <TableCellHeader
           direction={
@@ -213,20 +209,26 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
                   {category && category.name ? category.name : <Skeleton />}
                 </TableCell>
                 <TableCell className={classes.colSubcategories}>
-                  {category &&
-                    (category.address !== undefined) || (category.address !== null) ? (
-                      category.address && category.address.streetAddress && <>{category.address.streetAddress + ", " + category.address.city}</>
-                    ) : (
-                      <Skeleton />
-                    )}
+                  {(category && category.address !== undefined) ||
+                  category.address !== null ? (
+                    category.address &&
+                    category.address.streetAddress && (
+                      <>
+                        {category.address.streetAddress +
+                          ", " +
+                          category.address.city}
+                      </>
+                    )
+                  ) : (
+                    <Skeleton />
+                  )}
                 </TableCell>
                 <TableCell className={classes.colProducts}>
-                  {category &&
-                    category.business !== undefined ? (
-                      category.business.name
-                    ) : (
-                      <Skeleton />
-                    )}
+                  {category && category.business !== undefined ? (
+                    category.business.name
+                  ) : (
+                    <Skeleton />
+                  )}
                 </TableCell>
                 <TableCell className={classes.colProducts}>
                   <IconButton
@@ -239,9 +241,7 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
                     color="primary"
                     onClick={() =>
                       openModal("delete", {
-                        ids: [
-                          category.id
-                        ]
+                        ids: [category.id]
                       })
                     }
                   >
