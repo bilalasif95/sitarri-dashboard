@@ -65,7 +65,6 @@ const useStyles = makeStyles(
         outline: "none"
       }
     },
-
     Form: {
       display: "flex",
       justifyContent: "space-between"
@@ -79,7 +78,6 @@ const useStyles = makeStyles(
       "& .MuiInputBase-fullWidth": {
         width: "100%"
       },
-
       "& .MuiInputLabel-animated": {
         marginLeft: "91px"
       },
@@ -113,7 +111,6 @@ const useStyles = makeStyles(
     InputPrepend: {
       position: "relative"
     },
-
     PrependText: {
       background: "#efefef",
       borderBottomLeftRadius: "5px",
@@ -181,7 +178,6 @@ const useStyles = makeStyles(
       paddingLeft: " 25px",
       position: "relative"
     },
-
     Website: {
       "& input": {
         marginLeft: "35px !important"
@@ -190,17 +186,6 @@ const useStyles = makeStyles(
         marginLeft: "35px !important"
       }
     },
-
-    twitter: {
-      "& input": {
-        marginLeft: "80px !important"
-      },
-
-      "& label": {
-        marginLeft: "79px !important"
-      }
-    },
-
     card: {
       marginBottom: theme.spacing(2)
     },
@@ -226,14 +211,21 @@ const useStyles = makeStyles(
     inputText: {
       fontSize: "8px"
     },
-
     root: {
       display: "grid",
       gridColumnGap: theme.spacing(2),
       gridRowGap: theme.spacing(1),
       gridTemplateColumns: "repeat(4, 1fr)"
     },
-    toolbar: { marginTop: -theme.spacing(0.5) }
+    toolbar: { marginTop: -theme.spacing(0.5) },
+    twitter: {
+      "& input": {
+        marginLeft: "80px !important"
+      },
+      "& label": {
+        marginLeft: "79px !important"
+      }
+    }
   }),
   { name: "BusinessInformationOfSpecificStore" }
 );

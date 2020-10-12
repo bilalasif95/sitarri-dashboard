@@ -8,7 +8,7 @@ import Store from "@assets/images/store.svg";
 import Shapes from "@assets/images/shapes.svg";
 import configureIcon from "@assets/images/menu-configure-icon.svg";
 import Home from "@assets/images/home.svg";
-import Setting from "@assets/images/setting.svg";
+// import Setting from "@assets/images/setting.svg";
 // import customerIcon from "@assets/images/menu-customers-icon.svg";
 import discountsIcon from "@assets/images/menu-discounts-icon.svg";
 // import homeIcon from "@assets/images/menu-home-icon.svg";
