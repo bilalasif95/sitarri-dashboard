@@ -251,6 +251,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                           logo: formData.logo,
                           name: formData.name,
                           phone: formData.phone,
+                          tags: formData.tags,
                           twitterUrl: formData.twitter,
                           uberEatsUrl: formData.reservationSystem,
                           websiteUrl: formData.website,

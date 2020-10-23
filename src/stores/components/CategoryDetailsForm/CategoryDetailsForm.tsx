@@ -139,7 +139,7 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = (
             />
           </div>
           <FormSpacer />
-          <TagsComponent tags={maybe(() => category.tags)} />
+          <TagsComponent data={data} tags={maybe(() => category.tags)} />
         </CardContent>
       </Card>
     </>
