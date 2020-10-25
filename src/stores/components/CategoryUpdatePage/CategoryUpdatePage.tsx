@@ -18,7 +18,7 @@ import SeoForm from "@saleor/components/SeoForm";
 // import { Tab, TabContainer } from "@saleor/components/Tab";
 import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+// import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import { maybe } from "../../../misc";
 import { TabListActions } from "../../../types";
 import BusinessInformationOfSpecificStore from "../../components/BusinessInformationOfSpecificStore";
@@ -79,7 +79,7 @@ export interface CategoryUpdatePageProps
   extends TabListActions<"productListToolbar" | "subcategoryListToolbar"> {
   changeTab: (index: CategoryPageTab) => void;
   currentTab: CategoryPageTab;
-  errors: ProductErrorFragment[];
+  errors: any;
   disabled: boolean;
   paramsProps: any;
   // placeholderImage: string;
@@ -154,17 +154,17 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
       businessCategory: maybe(() => category.category, ""),
       city: maybe(() => category.address.city, ""),
       country: maybe(() => category.address.country, ""),
-      delivery: maybe(() => category.deliverooUrl, ""),
+      delivery: maybe(() => category.deliverooUrl.slice(12), ""),
       description: maybe(() => category.description, ""),
-      facebook: maybe(() => category.facebookUrl, ""),
+      facebook: maybe(() => category.facebookUrl.slice(25), ""),
       fridayOpenClose: maybe(() => true, false),
-      instagram: maybe(() => category.instagramUrl, ""),
+      instagram: maybe(() => category.instagramUrl.slice(26), ""),
       logo: maybe(() => category.logo, ""),
       mondayOpenClose: maybe(() => true, false),
       name: maybe(() => category.name, ""),
       phone: maybe(() => category.phone, ""),
       postalCode: maybe(() => category.address.postalCode, ""),
-      reservationSystem: maybe(() => category.uberEatsUrl, ""),
+      reservationSystem: maybe(() => category.uberEatsUrl.slice(12), ""),
       saturdayOpenClose: maybe(() => true, false),
       seoDescription: maybe(() => category.seoDescription, ""),
       seoTitle: maybe(() => category.seoTitle, ""),
@@ -175,8 +175,8 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
       tags: maybe(() => category.tags, ""),
       thursdayOpenClose: maybe(() => true, false),
       tuesdayOpenClose: maybe(() => true, false),
-      twitter: maybe(() => category.twitterUrl, ""),
-      website: maybe(() => category.websiteUrl, ""),
+      twitter: maybe(() => category.twitterUrl.slice(24), ""),
+      website: maybe(() => category.websiteUrl.slice(12), ""),
       wednesdayOpenClose: maybe(() => true, false),
     }
     : {
@@ -209,6 +209,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
       website: "",
       wednesdayOpenClose: false,
     };
+
   return (
     <HomePageQuery>
       {({ data }) => {

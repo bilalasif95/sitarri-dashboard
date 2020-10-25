@@ -17,7 +17,7 @@ import CardTitle from "@saleor/components/CardTitle";
 // import RichTextEditor from "@saleor/components/RichTextEditor";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+// import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import Twitter from "@assets/images/twitter1.svg";
 import uploadicon from "@assets/images/uploadicon1.svg";
 
@@ -244,7 +244,7 @@ interface CategoryDetailsFormProps {
   };
   disabled: boolean;
   businessNames: any;
-  errors: ProductErrorFragment[];
+  errors: any;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -260,7 +260,7 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
   );
   const [logo, setLogo] = React.useState<any>();
   const formErrors = getFormErrors(
-    ["name", "website", "facebook", "reservationSystem", "delivery", "instagram", "twitter"],
+    ["name", "websiteUrl", "facebookUrl", "uberEatsUrl", "deliverooUrl", "instagramUrl", "twitterUrl"],
     errors
   );
   const handleCountrySelect = createSingleAutocompleteSelectHandler(
@@ -289,10 +289,10 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
         <div className={classes.BusinessDropbox}>
           <div className={classes.ImgPreviewBox}>
             <div className={classes.PreviewBox}>
-              {logo === "" || logo === undefined ? (
+              {(logo === "" || logo === undefined) && maybe(() => data.logo) === null ? (
                 <SVG src={NoImg} />
               ) : (
-                  <img src={logo} />
+                  <img src={maybe(() => data.logo) ? typeof (maybe(() => data.logo)) === "string" ? maybe(() => data.logo) : logo : maybe(() => data.logo)} />
                 )}
             </div>
           </div>
@@ -326,7 +326,7 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
             </Dropzone>
           </div>
         </div>
-        <button className={classes.RemoveBtn} onClick={() => setLogo("")}>
+        <button className={classes.RemoveBtn} onClick={() => { setLogo(""); data.logo = null }}>
           Remove
         </button>
 
@@ -359,8 +359,8 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
                 disabled={disabled}
                 label="Facebook"
                 name="facebook"
-                error={!!formErrors.facebook}
-                helperText={!!formErrors.facebook}
+                error={!!formErrors.facebookUrl}
+                helperText={!!formErrors.facebookUrl}
                 type="url"
                 onChange={onChange}
                 value={data.facebook}
@@ -376,8 +376,8 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
                 disabled={disabled}
                 label="Twitter"
                 name="twitter"
-                error={!!formErrors.twitter}
-                helperText={!!formErrors.twitter}
+                error={!!formErrors.twitterUrl}
+                helperText={!!formErrors.twitterUrl}
                 type="url"
                 onChange={onChange}
                 value={data.twitter}
@@ -394,8 +394,8 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
                 disabled={disabled}
                 label="Website"
                 name="website"
-                error={!!formErrors.website}
-                helperText={!!formErrors.website}
+                error={!!formErrors.websiteUrl}
+                helperText={!!formErrors.websiteUrl}
                 type="url"
                 onChange={onChange}
                 value={data.website}
@@ -411,8 +411,8 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
                 disabled={disabled}
                 label="Instagram"
                 name="instagram"
-                error={!!formErrors.instagram}
-                helperText={!!formErrors.instagram}
+                error={!!formErrors.instagramUrl}
+                helperText={!!formErrors.instagramUrl}
                 type="url"
                 onChange={onChange}
                 value={data.instagram}
@@ -432,8 +432,8 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
                   disabled={disabled}
                   label="Delivery Partner Url"
                   name="delivery"
-                  error={!!formErrors.delivery}
-                  helperText={!!formErrors.delivery}
+                  error={!!formErrors.deliverooUrl}
+                  helperText={!!formErrors.deliverooUrl}
                   type="url"
                   onChange={onChange}
                   value={data.delivery}
@@ -457,8 +457,8 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
                   disabled={disabled}
                   label="Reservation system Url"
                   name="reservationSystem"
-                  error={!!formErrors.reservationSystem}
-                  helperText={!!formErrors.reservationSystem}
+                  error={!!formErrors.uberEatsUrl}
+                  helperText={!!formErrors.uberEatsUrl}
                   type="url"
                   onChange={onChange}
                   value={data.reservationSystem}
