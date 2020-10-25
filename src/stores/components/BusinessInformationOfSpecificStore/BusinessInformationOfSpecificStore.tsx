@@ -51,7 +51,7 @@ const useStyles = makeStyles(
         width: "initial"
       },
       "& input": {
-        marginLeft: "4px !important"
+        marginLeft: "0px !important"
       },
       "& label": {
         marginLeft: "0px !important"
@@ -65,7 +65,6 @@ const useStyles = makeStyles(
         outline: "none"
       }
     },
-
     Form: {
       display: "flex",
       justifyContent: "space-between"
@@ -79,12 +78,11 @@ const useStyles = makeStyles(
       "& .MuiInputBase-fullWidth": {
         width: "100%"
       },
-
       "& .MuiInputLabel-animated": {
-        marginLeft: "95px"
+        marginLeft: "91px"
       },
       "& input": {
-        marginLeft: "98px"
+        marginLeft: "90px"
       }
     },
     ImgDropzone: {
@@ -113,7 +111,6 @@ const useStyles = makeStyles(
     InputPrepend: {
       position: "relative"
     },
-
     PrependText: {
       background: "#efefef",
       borderBottomLeftRadius: "5px",
@@ -181,16 +178,14 @@ const useStyles = makeStyles(
       paddingLeft: " 25px",
       position: "relative"
     },
-
     Website: {
       "& input": {
-        marginLeft: "40px !important"
+        marginLeft: "35px !important"
       },
       "& label": {
         marginLeft: "35px !important"
       }
     },
-
     card: {
       marginBottom: theme.spacing(2)
     },
@@ -216,14 +211,21 @@ const useStyles = makeStyles(
     inputText: {
       fontSize: "8px"
     },
-
     root: {
       display: "grid",
       gridColumnGap: theme.spacing(2),
       gridRowGap: theme.spacing(1),
       gridTemplateColumns: "repeat(4, 1fr)"
     },
-    toolbar: { marginTop: -theme.spacing(0.5) }
+    toolbar: { marginTop: -theme.spacing(0.5) },
+    twitter: {
+      "& input": {
+        marginLeft: "80px !important"
+      },
+      "& label": {
+        marginLeft: "79px !important"
+      }
+    }
   }),
   { name: "BusinessInformationOfSpecificStore" }
 );
@@ -373,6 +375,7 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
             <div className={classes.SocialIcons}>
               <SVG className={classes.InputIcons} src={Twitter} />
               <TextField
+                className={classes.twitter}
                 disabled={disabled}
                 label="Twitter"
                 name="twitter"

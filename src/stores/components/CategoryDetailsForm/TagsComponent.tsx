@@ -5,6 +5,9 @@ import { createStyles, withStyles } from "@material-ui/core/styles";
 const styles = () =>
   createStyles({
     fieldContainer: {
+      "& span": {
+        lineHeight: "30px"
+      },
       // "&-moz-box-shadow": "0px 3px 14px 1px rgba(74,74,74,0.2)",
       // "&-webkit-box-shadow": "0px 3px 14px 1px rgba(74,74,74,0.2)",
       background: "white",
@@ -75,7 +78,7 @@ class Tile extends React.Component<any> {
     const classes = this.props.classes;
     return (
       <span className={classes.tile}>
-        <span>{tile.text}</span>
+        <span>{tile.name}</span>
         <div className={classes.icon}>
           <CloseIcon
             onClick={() => this.props.removeTile(id)}
@@ -95,6 +98,7 @@ interface TagsState {
 
 const TagsComponent = withStyles(styles, { name: "TagsComponent" })(
   class TagsComponent extends React.Component<any, TagsState> {
+
     constructor(props) {
       super(props);
       this.addTile = this.addTile.bind(this);
@@ -103,19 +107,37 @@ const TagsComponent = withStyles(styles, { name: "TagsComponent" })(
       this.state = {
         currentValue: "",
         tileIds: [],
-        tiles: {},
-      }
+        tiles: {}
+      };
     }
 
-    // static getDerivedStateFromProps(props,state): any {
-    //   console.log(props,"=======")
-    //   const newTileId = props.tags && props.tags.length;
-    //   state.tileIds.push(newTileId);
-    //   props.tags && props.tags.map(tag => {
-    //     return state.tiles[newTileId] = { text: tag.name };
-    //   })
-    //   console.log(state,"=======")
-    // }
+
+    componentDidUpdate(prevProps) {
+
+      if (prevProps.tags !== this.props.tags) {
+      
+        this.props.tags && this.props.tags.map(tag => {
+
+          const { tiles, tileIds } = this.state;
+
+          const newTileId = tileIds.length - 1 + 1;
+          tileIds.push(newTileId);
+          tiles[newTileId] = { name: tag.name };
+
+          // reset the input value
+          const currentValue = "";
+          this.setState({
+            currentValue,
+            tileIds,
+            tiles
+          });
+
+
+          this.props.data.tags = Object.values(this.state.tiles);
+
+        })
+      }
+    }
 
     addTile(tile) {
       // pull tiles array out of the state
@@ -123,9 +145,9 @@ const TagsComponent = withStyles(styles, { name: "TagsComponent" })(
       if (tile.length && Object.keys(this.state.tiles).length <= 3) {
         const { tiles, tileIds } = this.state;
 
-        const newTileId = (tileIds.length - 1) + 1;
+        const newTileId = tileIds.length - 1 + 1;
         tileIds.push(newTileId);
-        tiles[newTileId] = { text: tile };
+        tiles[newTileId] = { name: tile };
 
         // reset the input value
         const currentValue = "";
@@ -134,8 +156,8 @@ const TagsComponent = withStyles(styles, { name: "TagsComponent" })(
         this.setState({
           currentValue,
           tileIds,
-          tiles,
-        })
+          tiles
+        });
       }
     }
 
@@ -148,18 +170,21 @@ const TagsComponent = withStyles(styles, { name: "TagsComponent" })(
 
     editLastTile() {
       const { tiles } = this.state;
-      const lastTileValue = Object.keys(tiles).slice(-1).pop();
+      const lastTileValue = Object.keys(tiles)
+        .slice(-1)
+        .pop();
       // console.log('the last tile object is:', tiles[lastTileValue].text);
       // store last tile text value before deleting it
-      const currentValue = tiles[lastTileValue].text;
+      const currentValue = tiles[lastTileValue].name;
       delete tiles[lastTileValue];
       this.setState({
         currentValue,
-        tiles,
+        tiles
       });
     }
     render() {
       const classes = this.props.classes;
+
       return (
         <>
           <p>
@@ -191,10 +216,10 @@ const TagsComponent = withStyles(styles, { name: "TagsComponent" })(
 );
 
 class Input extends React.Component<any> {
-  text: any;
+  name: any;
   tagForm: any;
   tagEvent(e) {
-    const tag = this.text.value;
+    const tag = this.name.value;
     const tagGroup = tag.split(" ");
     const tiles = this.props.tiles;
     const hasTiles = Object.keys(tiles).length > 0;
@@ -215,8 +240,8 @@ class Input extends React.Component<any> {
 
   componentDidUpdate(prevProps) {
     if (prevProps.value !== this.props.value) {
-      this.text.selectionStart = this.text.value.length;
-      this.text.selectionEnd = this.text.value.length;
+      this.name.selectionStart = this.name.value.length;
+      this.name.selectionEnd = this.name.value.length;
     }
   }
 
@@ -229,7 +254,7 @@ class Input extends React.Component<any> {
         <div className={classes.inputWrapper}>
           <form ref={input => (this.tagForm = input)}>
             <input
-              ref={input => (this.text = input)}
+              ref={input => (this.name = input)}
               type="text"
               name="new-item"
               placeholder="Enter Tag"

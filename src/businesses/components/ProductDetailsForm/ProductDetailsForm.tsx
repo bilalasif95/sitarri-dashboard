@@ -80,7 +80,7 @@ const useStyles = makeStyles(
       },
 
       "& .MuiInputLabel-animated": {
-        marginLeft: "95px"
+        marginLeft: "91px"
       },
       "& input": {
         paddingLeft: "108px"

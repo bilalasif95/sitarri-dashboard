@@ -1,11 +1,17 @@
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { IntlShape } from "react-intl";
 
+import Building from "@assets/images/building.svg";
 import catalogIcon from "@assets/images/menu-catalog-icon.svg";
+import Cart from "@assets/images/cart.svg";
+import Store from "@assets/images/store.svg";
+import Shapes from "@assets/images/shapes.svg";
 import configureIcon from "@assets/images/menu-configure-icon.svg";
+import Home from "@assets/images/home.svg";
+// import Setting from "@assets/images/setting.svg";
 // import customerIcon from "@assets/images/menu-customers-icon.svg";
 import discountsIcon from "@assets/images/menu-discounts-icon.svg";
-import homeIcon from "@assets/images/menu-home-icon.svg";
+// import homeIcon from "@assets/images/menu-home-icon.svg";
 // import ordersIcon from "@assets/images/menu-orders-icon.svg";
 // import translationIcon from "@assets/images/menu-translation-icon.svg";
 import useUser from "@saleor/hooks/useUser";
@@ -34,44 +40,43 @@ export interface IMenuItem {
   url?: string;
 }
 
-
 function createMenuStructure(intl: IntlShape): IMenuItem[] {
   const { user } = useUser();
   const menuItemsWithCollections = [
     {
       ariaLabel: "home",
-      icon: homeIcon,
+      icon: Home,
       label: intl.formatMessage(sectionNames.home),
       url: "/"
     },
     {
       ariaLabel: "businesses",
-      icon: catalogIcon,
+      icon: Building,
       label: intl.formatMessage(sectionNames.businesses),
       permission: PermissionEnum.MANAGE_MENUS,
       url: businessesListUrl()
     },
     {
       ariaLabel: "stores",
-      icon: catalogIcon,
+      icon: Store,
       label: intl.formatMessage(sectionNames.stores),
       permission: PermissionEnum.MANAGE_PRODUCTS,
       url: storesListUrl()
     },
     {
       ariaLabel: "products",
-      icon: catalogIcon,
+      icon: Cart,
       label: intl.formatMessage(sectionNames.products),
       permission: PermissionEnum.MANAGE_PRODUCTS,
       url: productListUrl()
     },
     {
       ariaLabel: "categories",
-      icon: catalogIcon,
+      icon: Shapes,
       label: intl.formatMessage(sectionNames.categories),
       permission: PermissionEnum.MANAGE_PRODUCTS,
       url: categoryListUrl()
-    },
+    }
     // {
     //   ariaLabel: "users",
     //   icon: configureIcon,
@@ -193,27 +198,27 @@ function createMenuStructure(intl: IntlShape): IMenuItem[] {
   const menuItemsWithoutCollections = [
     {
       ariaLabel: "home",
-      icon: homeIcon,
+      icon: Home,
       label: intl.formatMessage(sectionNames.home),
       url: "/"
     },
     {
       ariaLabel: "products",
-      icon: catalogIcon,
+      icon: Cart,
       label: intl.formatMessage(sectionNames.products),
       permission: PermissionEnum.MANAGE_PRODUCTS,
       url: productListUrl()
     },
     {
       ariaLabel: "categories",
-      icon: catalogIcon,
+      icon: Shapes,
       label: intl.formatMessage(sectionNames.categories),
       permission: PermissionEnum.MANAGE_PRODUCTS,
       url: categoryListUrl()
     },
     {
       ariaLabel: "stores",
-      icon: catalogIcon,
+      icon: Store,
       label: intl.formatMessage(sectionNames.stores),
       permission: PermissionEnum.MANAGE_PRODUCTS,
       url: storesListUrl()
@@ -276,19 +281,19 @@ function createMenuStructure(intl: IntlShape): IMenuItem[] {
       ],
       icon: configureIcon,
       label: intl.formatMessage(sectionNames.staffSettings),
-      permission: PermissionEnum.MANAGE_STAFF,
+      permission: PermissionEnum.MANAGE_STAFF
     },
     {
       ariaLabel: "accountSettings",
       icon: configureIcon,
       label: intl.formatMessage(sectionNames.accountSettings),
       url: staffMemberDetailsUrl(user.id)
-    },
+    }
   ];
   if (user.isSuperuser) {
-    return menuItemsWithCollections
+    return menuItemsWithCollections;
   }
-  return menuItemsWithoutCollections
+  return menuItemsWithoutCollections;
 }
 
 export default createMenuStructure;

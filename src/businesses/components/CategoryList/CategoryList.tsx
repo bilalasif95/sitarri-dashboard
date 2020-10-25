@@ -22,13 +22,13 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colName: {
-        width: 840
+        // width: 200
       },
       colProducts: {
-        width: 160
+        // width: 530
       },
       colSubcategories: {
-        width: 160
+        width: 530
       }
     },
     colName: {
