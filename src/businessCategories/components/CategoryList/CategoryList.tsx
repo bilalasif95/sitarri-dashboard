@@ -6,7 +6,7 @@ import TableRow from "@material-ui/core/TableRow";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { CategoryFragment } from "@saleor/categories/types/CategoryFragment";
+// import { CategoryFragment } from "@saleor/categories/types/CategoryFragment";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -17,6 +17,8 @@ import { ListActions, ListProps, SortPage } from "@saleor/types";
 import { CategoryListUrlSortField } from "@saleor/categories/urls";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import { getArrowDirection } from "@saleor/utils/sort";
+
+import { RootCategories_categories_edges_node } from "../../types/RootCategories";
 
 const useStyles = makeStyles(
   theme => ({
@@ -51,7 +53,7 @@ interface CategoryListProps
   extends ListProps,
     ListActions,
     SortPage<CategoryListUrlSortField> {
-  categories?: CategoryFragment[];
+  categories?: RootCategories_categories_edges_node[];
   isRoot: boolean;
   onAdd?();
 }

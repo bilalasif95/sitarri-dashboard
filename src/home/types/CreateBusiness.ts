@@ -38,6 +38,12 @@ export interface CreateBusiness {
 export interface CreateBusinessVariables {
   input: {
     name: string;
+    businesscategory?: any;
+    facebookUrl?: string;
+    instagramUrl?: string;
+    logo?: any;
+    twitterUrl?: any;
+    websiteUrl?: any;
     // description: string;
   };
 }

@@ -74,6 +74,7 @@ export interface ProductList_products {
 }
 
 export interface ProductList {
+  businessCategories: any;
   businesses: any;
   products: ProductList_products | null;
 }

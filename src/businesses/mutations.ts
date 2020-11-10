@@ -139,43 +139,34 @@ export const TypedProductImagesReorder = TypedMutation<
 >(productImagesReorder);
 
 export const productUpdateMutation = gql`
-  ${productErrorFragment}
   ${productFragmentDetails}
-  mutation ProductUpdate(
+  mutation BusinessUpdate(
     $id: ID!
-    $attributes: [AttributeValueInput]
-    $publicationDate: Date
-    $category: ID
-    $chargeTaxes: Boolean!
-    $collections: [ID]
-    $descriptionJson: JSONString
-    $store: ID
-    $isPublished: Boolean!
-    $name: String
-    $basePrice: Decimal
-    $seo: SeoInput
+    $businesscategory: ID!
+    $websiteUrl: String
+    $facebookUrl: String
+    $instagramUrl: String
+    $twitterUrl: String
+    $logo: Upload
   ) {
-    productUpdate(
+    businessUpdate(
       id: $id
       input: {
-        attributes: $attributes
-        publicationDate: $publicationDate
-        category: $category
-        chargeTaxes: $chargeTaxes
-        collections: $collections
-        descriptionJson: $descriptionJson
-        isPublished: $isPublished
-        name: $name
-        store: $store
-        basePrice: $basePrice
-        seo: $seo
+        businesscategory: $businesscategory
+        websiteUrl: $websiteUrl
+        facebookUrl: $facebookUrl
+        instagramUrl: $instagramUrl
+        twitterUrl: $twitterUrl
+        logo: $logo
       }
     ) {
-      errors: productErrors {
-        ...ProductErrorFragment
+      businessErrors {
+        code
+        field
+        message
       }
-      product {
-        ...Product
+      business {
+        ...Business
       }
     }
   }

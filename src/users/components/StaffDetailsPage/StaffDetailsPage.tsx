@@ -138,7 +138,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                 <CardSpacer />
                 <HomePageQuery>
                   {({ data }) => (
-                    <BusinessOptions businessNames={maybe(() => data.businesses.edges)} />
+                    <BusinessOptions businessNames={maybe(() => data.businessCategories.edges)} />
                   )}
                 </HomePageQuery>
               </div>

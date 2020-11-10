@@ -25,12 +25,11 @@ import {
 
 const home = gql`
   query Home {
-    businesses(first: 100) {
+    businessCategories(first: 100) {
       edges {
         node {
           id
           name
-          description
         }
       }
     }

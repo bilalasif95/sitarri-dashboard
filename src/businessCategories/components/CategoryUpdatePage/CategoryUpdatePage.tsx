@@ -16,7 +16,7 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 // import { Tab, TabContainer } from "@saleor/components/Tab";
 import { sectionNames } from "@saleor/intl";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+// import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import { maybe } from "../../../misc";
 import { TabListActions } from "../../../types";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
@@ -24,10 +24,11 @@ import CategoryDetailsForm from "../../components/CategoryDetailsForm";
 import {
   CategoryDetails_category,
   CategoryDetails_category_children_edges_node,
-  CategoryDetails_category_products_edges_node
+  CategoryDetails_category_products_edges_node,
 } from "../../types/CategoryDetails";
 import CategoryBackground from "../CategoryBackground";
 // import CategoryProducts from "../CategoryProducts";
+import { CategoryUpdate_categoryUpdate_errors } from "../../types/CategoryUpdate";
 
 export interface FormData {
   backgroundImageAlt: string;
@@ -46,7 +47,7 @@ export interface CategoryUpdatePageProps
   extends TabListActions<"productListToolbar" | "subcategoryListToolbar"> {
   changeTab: (index: CategoryPageTab) => void;
   currentTab: CategoryPageTab;
-  errors: ProductErrorFragment[];
+  errors: CategoryUpdate_categoryUpdate_errors[];
   disabled: boolean;
   category: CategoryDetails_category;
   products: CategoryDetails_category_products_edges_node[];
@@ -103,19 +104,19 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   const intl = useIntl();
   const initialData: FormData = category
     ? {
-        backgroundImageAlt: maybe(() => category.backgroundImage.alt, ""),
-        description: maybe(() => JSON.parse(category.descriptionJson)),
-        name: category.name || "",
-        seoDescription: category.seoDescription || "",
-        seoTitle: category.seoTitle || ""
-      }
+      backgroundImageAlt: maybe(() => category.backgroundImage.alt, ""),
+      description: maybe(() => JSON.parse(category.description)),
+      name: category.name || "",
+      seoDescription: category.seoDescription || "",
+      seoTitle: category.seoTitle || ""
+    }
     : {
-        backgroundImageAlt: "",
-        description: "",
-        name: "",
-        seoDescription: "",
-        seoTitle: ""
-      };
+      backgroundImageAlt: "",
+      description: "",
+      name: "",
+      seoDescription: "",
+      seoTitle: ""
+    };
   return (
     <Form onSubmit={onSubmit} initial={initialData} confirmLeave>
       {({ data, change, submit, hasChanged }) => (

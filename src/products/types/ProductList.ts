@@ -46,6 +46,9 @@ export interface ProductList_products_edges_node {
   __typename: "Product";
   id: string;
   name: string;
+  logo?: string;
+  websiteUrl?: string;
+  user?: any;
   thumbnail: ProductList_products_edges_node_thumbnail | null;
   isAvailable: boolean | null;
   isPublished: boolean;

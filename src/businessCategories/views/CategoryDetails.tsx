@@ -12,7 +12,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import NotFoundPage from "@saleor/components/NotFoundPage";
@@ -65,21 +64,20 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     params.ids
   );
   const intl = useIntl();
-  const { user } = useUser();
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const { data, loading, refetch } = useCategoryDetailsQuery({
     displayLoader: true,
     variables: { ...paginationState, id }
   });
 
-  const category = data?.category;
+  const category = data?.businessCategoriesDetails;
 
   if (category === null) {
     return <NotFoundPage onBack={() => navigate(categoryListUrl())} />;
   }
 
   const handleCategoryDelete = (data: CategoryDelete) => {
-    if (data.categoryDelete.errors.length === 0) {
+    if (data.businesscategoryDelete.businessCategoryErrors.length === 0) {
       notify({
         text: intl.formatMessage({
           defaultMessage: "Business Category deleted"
@@ -94,8 +92,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   });
 
   const handleCategoryUpdate = (data: CategoryUpdate) => {
-    if (data.categoryUpdate.errors.length > 0) {
-      const backgroundImageError = data.categoryUpdate.errors.find(
+    if (data.businesscategoryUpdate.businesscategoryErrors.length > 0) {
+      const backgroundImageError = data.businesscategoryUpdate.businesscategoryErrors.find(
         error => error.field === ("backgroundImage" as keyof CategoryInput)
       );
       if (backgroundImageError) {
@@ -106,12 +104,12 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     }
   };
 
-  const [updateCategory, updateResult] = useCategoryUpdateMutation({
+  const [businesscategoryUpdate, updateResult] = useCategoryUpdateMutation({
     onCompleted: handleCategoryUpdate
   });
 
   const handleBulkCategoryDelete = (data: CategoryBulkDelete) => {
-    if (data.categoryBulkDelete.errors.length === 0) {
+    if (data.businesscategoryBulkdelete.businessCategoryErrors.length === 0) {
       closeModal();
       notify({
         text: intl.formatMessage(commonMessages.savedChanges)
@@ -121,8 +119,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   };
 
   const [
-    categoryBulkDelete,
-    categoryBulkDeleteOpts
+    businesscategoryBulkdelete,
+    businesscategoryBulkdeleteOpts
   ] = useCategoryBulkDeleteMutation({
     onCompleted: handleBulkCategoryDelete
   });
@@ -154,54 +152,51 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
     params.activeTab === CategoryPageTab.categories
-      ? maybe(() => data.category.children.pageInfo)
-      : maybe(() => data.category.products.pageInfo),
+      ? maybe(() => data.businessCategoriesDetails.children.pageInfo)
+      : maybe(() => data.businessCategoriesDetails.products.pageInfo),
     paginationState,
     params
   );
 
   return (
     <>
-      <WindowTitle title={maybe(() => data.category.name)} />
+      <WindowTitle title={maybe(() => data.businessCategoriesDetails.name)} />
       <TypedProductBulkDeleteMutation onCompleted={handleBulkProductDelete}>
         {(productBulkDelete, productBulkDeleteOpts) => (
           <>
             <CategoryUpdatePage
               changeTab={changeTab}
               currentTab={params.activeTab}
-              category={maybe(() => data.category)}
+              category={maybe(() => data.businessCategoriesDetails)}
               disabled={loading}
-              errors={updateResult.data?.categoryUpdate.errors || []}
+              errors={updateResult.data?.businesscategoryUpdate.businesscategoryErrors || []}
               onAddCategory={() => navigate(categoryAddUrl(id))}
               onAddProduct={() => navigate(productAddUrl)}
               onBack={() =>
                 navigate(
                   maybe(
-                    () => categoryUrl(data.category.parent.id),
-                    categoryListUrl()
+                    () => categoryListUrl()
                   )
                 )
               }
               onCategoryClick={id => () => navigate(categoryUrl(id))}
               onDelete={() => openModal("delete")}
               onImageDelete={() =>
-                updateCategory({
+                businesscategoryUpdate({
                   variables: {
                     id,
                     input: {
                       backgroundImage: null,
-                      store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
                     }
                   }
                 })
               }
               onImageUpload={file =>
-                updateCategory({
+                businesscategoryUpdate({
                   variables: {
                     id,
                     input: {
                       backgroundImage: file,
-                      store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
                     }
                   }
                 })
@@ -211,28 +206,25 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
               pageInfo={pageInfo}
               onProductClick={id => () => navigate(productUrl(id))}
               onSubmit={formData =>
-                updateCategory({
+                businesscategoryUpdate({
                   variables: {
                     id,
                     input: {
                       backgroundImageAlt: formData.backgroundImageAlt,
-                      descriptionJson: JSON.stringify(formData.description),
+                      description: JSON.stringify(formData.description),
                       name: formData.name,
-                      seo: {
-                        description: formData.seoDescription,
-                        title: formData.seoTitle
-                      },
-                      store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
+                      seoDescription: formData.seoDescription,
+                      seoTitle: formData.seoTitle
                     }
                   }
                 })
               }
               products={maybe(() =>
-                data.category.products.edges.map(edge => edge.node)
+                data.businessCategoriesDetails.products.edges.map(edge => edge.node)
               )}
               saveButtonBarState={updateResult.status}
               subcategories={maybe(() =>
-                data.category.children.edges.map(edge => edge.node)
+                data.businessCategoriesDetails.children.edges.map(edge => edge.node)
               )}
               subcategoryListToolbar={
                 <IconButton
@@ -279,7 +271,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                   defaultMessage="Are you sure you want to delete {categoryName}?"
                   values={{
                     categoryName: (
-                      <strong>{maybe(() => data.category.name, "...")}</strong>
+                      <strong>{maybe(() => data.businessCategoriesDetails.name, "...")}</strong>
                     )
                   }}
                 />
@@ -293,10 +285,10 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                 params.action === "delete-categories" &&
                 maybe(() => params.ids.length > 0)
               }
-              confirmButtonState={categoryBulkDeleteOpts.status}
+              confirmButtonState={businesscategoryBulkdeleteOpts.status}
               onClose={closeModal}
               onConfirm={() =>
-                categoryBulkDelete({
+                businesscategoryBulkdelete({
                   variables: { ids: params.ids }
                 }).then(() => refetch())
               }

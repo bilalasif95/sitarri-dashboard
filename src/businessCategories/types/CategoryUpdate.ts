@@ -24,26 +24,26 @@ export interface CategoryUpdate_categoryUpdate_category {
   id: string;
   backgroundImage: CategoryUpdate_categoryUpdate_category_backgroundImage | null;
   name: string;
-  descriptionJson: any;
+  description: any;
   seoDescription: string | null;
   seoTitle: string | null;
   parent: CategoryUpdate_categoryUpdate_category_parent | null;
 }
 
 export interface CategoryUpdate_categoryUpdate_errors {
-  __typename: "ProductError";
+  __typename: "BusinessCategoryError";
   code: ProductErrorCode;
   field: string | null;
 }
 
 export interface CategoryUpdate_categoryUpdate {
-  __typename: "CategoryUpdate";
-  category: CategoryUpdate_categoryUpdate_category | null;
-  errors: CategoryUpdate_categoryUpdate_errors[];
+  __typename: "BusinessCategoryUpdate";
+  businessCategory: CategoryUpdate_categoryUpdate_category | null;
+  businesscategoryErrors: CategoryUpdate_categoryUpdate_errors[];
 }
 
 export interface CategoryUpdate {
-  categoryUpdate: CategoryUpdate_categoryUpdate | null;
+  businesscategoryUpdate: CategoryUpdate_categoryUpdate | null;
 }
 
 export interface CategoryUpdateVariables {

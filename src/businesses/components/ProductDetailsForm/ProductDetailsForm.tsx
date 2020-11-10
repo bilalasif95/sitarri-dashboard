@@ -221,10 +221,10 @@ interface ProductDetailsFormProps {
   data: {
     description: string;
     name: string;
-    website?: string;
-    facebook?: string;
-    instagram?: string;
-    twitter?: string;
+    websiteUrl?: string;
+    facebookUrl?: string;
+    instagramUrl?: string;
+    twitterUrl?: string;
     logo?: any;
     businessCategory?: string;
   };
@@ -252,13 +252,13 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
   const intl = useIntl();
   const [businessNamesArray, setBusinessNamesArray] = React.useState([]);
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
-    maybe(() => "", "")
+    maybe(() => data.businessCategory, "")
   );
   const classes = useStyles(props);
   const [logo, setLogo] = React.useState<any>();
   // const [logoFile, setLogoFile] = React.useState<any>();
   const formErrors = getFormErrors(
-    ["website", "facebook", "instagram", "twitter"],
+    ["websiteUrl", "facebookUrl", "instagramUrl", "twitterUrl"],
     errors
   );
   const handleCountrySelect = createSingleAutocompleteSelectHandler(
@@ -285,7 +285,11 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
       <CardContent>
         <div className={classes.BusinessTitle}>
           <div className={classes.TitleImg}>
-            <SVG src={NoImg} />
+            {data.logo ?
+              <img src={data.logo} />
+              :
+              <SVG src={NoImg} />
+            }
           </div>
           <div className={classes.BusinessTypography}>
             <h3>{data.name}</h3>
@@ -325,12 +329,12 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
                 <TextField
                   disabled={disabled}
                   label="Facebook"
-                  name="facebook"
-                  error={!!formErrors.facebook}
-                  helperText={!!formErrors.facebook}
+                  name="facebookUrl"
+                  error={!!formErrors.facebookUrl}
+                  helperText={!!formErrors.facebookUrl}
                   type="url"
                   onChange={onChange}
-                  value={data.facebook}
+                  value={data && data.facebookUrl}
                 />
               </div>
             </div>
@@ -342,12 +346,12 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
                 <TextField
                   disabled={disabled}
                   label="Twitter"
-                  name="twitter"
-                  error={!!formErrors.twitter}
-                  helperText={!!formErrors.twitter}
+                  name="twitterUrl"
+                  error={!!formErrors.twitterUrl}
+                  helperText={!!formErrors.twitterUrl}
                   type="url"
                   onChange={onChange}
-                  value={data.twitter}
+                  value={data && data.twitterUrl}
                 />
               </div>
             </div>
@@ -362,12 +366,12 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
                   className={classes.Website}
                   disabled={disabled}
                   label="Website"
-                  name="website"
-                  error={!!formErrors.website}
-                  helperText={!!formErrors.website}
+                  name="websiteUrl"
+                  error={!!formErrors.websiteUrl}
+                  helperText={!!formErrors.websiteUrl}
                   type="url"
                   onChange={onChange}
-                  value={data.website}
+                  value={data && data.websiteUrl}
                 />
               </div>
             </div>
@@ -379,12 +383,12 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
                 <TextField
                   disabled={disabled}
                   label="Instagram"
-                  name="instagram"
-                  error={!!formErrors.instagram}
-                  helperText={!!formErrors.instagram}
+                  name="instagramUrl"
+                  error={!!formErrors.instagramUrl}
+                  helperText={!!formErrors.instagramUrl}
                   type="url"
                   onChange={onChange}
-                  value={data.instagram}
+                  value={data && data.instagramUrl}
                 />
               </div>
             </div>
@@ -432,8 +436,8 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
                 {logo === "" || logo === undefined ? (
                   <SVG src={NoImg} />
                 ) : (
-                  <img src={logo} />
-                )}
+                    <img src={logo} />
+                  )}
               </div>
             </div>
             <button className={classes.RemoveBtn} onClick={() => setLogo("")}>

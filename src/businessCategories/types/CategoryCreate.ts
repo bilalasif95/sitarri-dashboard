@@ -20,30 +20,30 @@ export interface CategoryCreate_categoryCreate_category_parent {
 }
 
 export interface CategoryCreate_categoryCreate_category {
-  __typename: "Category";
+  __typename: "BusinessCategory";
   id: string;
   backgroundImage: CategoryCreate_categoryCreate_category_backgroundImage | null;
   name: string;
-  descriptionJson: any;
+  description: any;
   seoDescription: string | null;
   seoTitle: string | null;
   parent: CategoryCreate_categoryCreate_category_parent | null;
 }
 
 export interface CategoryCreate_categoryCreate_errors {
-  __typename: "ProductError";
+  __typename: "BusinessCategoryError";
   code: ProductErrorCode;
   field: string | null;
 }
 
 export interface CategoryCreate_categoryCreate {
-  __typename: "CategoryCreate";
-  category: CategoryCreate_categoryCreate_category | null;
-  errors: CategoryCreate_categoryCreate_errors[];
+  __typename: "BusinessCategoryCreate";
+  businessCategory: CategoryCreate_categoryCreate_category | null;
+  businesscategoryErrors: CategoryCreate_categoryCreate_errors[];
 }
 
 export interface CategoryCreate {
-  categoryCreate: CategoryCreate_categoryCreate | null;
+  businesscategoryCreate: CategoryCreate_categoryCreate | null;
 }
 
 export interface CategoryCreateVariables {

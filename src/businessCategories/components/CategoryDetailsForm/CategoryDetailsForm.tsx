@@ -10,9 +10,10 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import RichTextEditor from "@saleor/components/RichTextEditor";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
-import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
+// import { ProductErrorFragment } from "@saleor/attributes/types/ProductErrorFragment";
 import { maybe } from "../../../misc";
 import { CategoryDetails_category } from "../../types/CategoryDetails";
+import { CategoryUpdate_categoryUpdate_errors } from "../../types/CategoryUpdate";
 
 interface CategoryDetailsFormProps {
   category?: CategoryDetails_category;
@@ -21,7 +22,7 @@ interface CategoryDetailsFormProps {
     description: RawDraftContentState;
   };
   disabled: boolean;
-  errors: ProductErrorFragment[];
+  errors: CategoryUpdate_categoryUpdate_errors[];
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -34,8 +35,7 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
 }) => {
   const intl = useIntl();
 
-  const formErrors = getFormErrors(["name", "descriptionJson"], errors);
-
+  const formErrors = getFormErrors(["name", "description"], errors);
   return (
     <Card>
       <CardTitle
@@ -59,12 +59,12 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
         <FormSpacer />
         <RichTextEditor
           disabled={disabled}
-          error={!!formErrors.descriptionJson}
-          helperText={getProductErrorMessage(formErrors.descriptionJson, intl)}
+          error={!!formErrors.description}
+          helperText={getProductErrorMessage(formErrors.description, intl)}
           label={intl.formatMessage({
             defaultMessage: "Business Category Description"
           })}
-          initial={maybe(() => JSON.parse(category.descriptionJson))}
+          initial={maybe(() => JSON.parse(category.description))}
           name="description"
           onChange={onChange}
         />

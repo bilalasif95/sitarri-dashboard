@@ -234,7 +234,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         <TypedProductListQuery displayLoader variables={queryVariables}>
           {({ data, loading, refetch }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-              maybe(() => data.products.pageInfo),
+              maybe(() => data.businesses.pageInfo),
               paginationState,
               params
             );
@@ -283,7 +283,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                               ),
                             []
                           )}
-                          businessNames={maybe(() => data.businesses.edges)}
+                          businessNames={maybe(() => data.businessCategories.edges)}
                           currencySymbol={currencySymbol}
                           currentTab={currentTab}
                           defaultSettings={

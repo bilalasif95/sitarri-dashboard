@@ -213,7 +213,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   return (
     <HomePageQuery>
       {({ data }) => {
-        maybe(() => setBusinesses(data.businesses.edges))
+        maybe(() => setBusinesses(data.businessCategories.edges))
         return (
           <Form onSubmit={onSubmit} initial={initialData} confirmLeave>
             {({ data, change, submit, hasChanged }) => (

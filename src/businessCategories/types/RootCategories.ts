@@ -19,15 +19,19 @@ export interface RootCategories_categories_edges_node_products {
 }
 
 export interface RootCategories_categories_edges_node {
-  __typename: "Category";
+  __typename: "BusinessCategory";
   id: string;
   name: string;
-  children: RootCategories_categories_edges_node_children | null;
-  products: RootCategories_categories_edges_node_products | null;
+  backgroundImage: string;
+  description: string;
+  seoDescription: string;
+  seoTitle: string;
+  // children: RootCategories_categories_edges_node_children | null;
+  // products: RootCategories_categories_edges_node_products | null;
 }
 
 export interface RootCategories_categories_edges {
-  __typename: "CategoryCountableEdge";
+  __typename: "BusinessCategoryCountableEdge";
   node: RootCategories_categories_edges_node;
 }
 
@@ -40,13 +44,13 @@ export interface RootCategories_categories_pageInfo {
 }
 
 export interface RootCategories_categories {
-  __typename: "CategoryCountableConnection";
+  __typename: "BusinessCategoryCountableConnection";
   edges: RootCategories_categories_edges[];
   pageInfo: RootCategories_categories_pageInfo;
 }
 
 export interface RootCategories {
-  categories: RootCategories_categories | null;
+  businessCategories: RootCategories_categories | null;
 }
 
 export interface RootCategoriesVariables {

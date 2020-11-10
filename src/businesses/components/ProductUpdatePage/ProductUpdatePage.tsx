@@ -327,7 +327,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     }))
   ];
 
-  const handleSubmit = (data: ProductUpdatePageFormData) => {
+  const handleSubmit = (data: any) => {
     // const dataStocks = stocks.map(stock => stock.id);
     // const variantStocks = product.variants[0].stocks.map(
     //   stock => stock.warehouse.id
@@ -450,7 +450,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   return (
     <HomePageQuery>
       {({ data }) => {
-        maybe(() => setBusinesses(data.businesses.edges))
+        maybe(() => setBusinesses(data.businessCategories.edges))
         return (
           <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>
             {({ change, data, hasChanged, submit }) => (

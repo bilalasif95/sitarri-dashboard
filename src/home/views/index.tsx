@@ -55,7 +55,7 @@ const HomeSection = () => {
           userName={getUserName(user, true)}
           userPermissions={user?.userPermissions || []}
           confirmButtonState={maybe(()=>null)}
-          businessNames={maybe(()=>data.businesses.edges)}
+          businessNames={maybe(()=>data.businessCategories.edges)}
           disabled={false}
         />
       )}

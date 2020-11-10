@@ -3,7 +3,7 @@ import Card from "@material-ui/core/Card";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { CategoryFragment } from "@saleor/categories/types/CategoryFragment";
+// import { CategoryFragment } from "@saleor/categories/types/CategoryFragment";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
@@ -18,13 +18,15 @@ import {
 import { CategoryListUrlSortField } from "@saleor/categories/urls";
 import CategoryList from "../CategoryList";
 
+import { RootCategories_categories_edges_node } from "../../types/RootCategories";
+
 export interface CategoryTableProps
   extends PageListProps,
     ListActions,
     SearchPageProps,
     SortPage<CategoryListUrlSortField>,
     TabPageProps {
-  categories: CategoryFragment[];
+  categories: RootCategories_categories_edges_node[];
 }
 
 export const CategoryListPage: React.FC<CategoryTableProps> = ({

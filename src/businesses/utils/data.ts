@@ -181,10 +181,10 @@ export interface ProductUpdatePageFormData {
   seoTitle: string;
   sku: string;
   trackInventory: boolean;
-  website?: string;
-  facebook?: string;
-  instagram?: string;
-  twitter?: string;
+  websiteUrl?: string;
+  facebookUrl?: string;
+  instagramUrl?: string;
+  twitterUrl?: string;
   logo?: any;
   businessCategory?: string;
 }
@@ -195,19 +195,19 @@ export function getProductUpdatePageFormData(
 ): ProductUpdatePageFormData {
   return {
     basePrice: maybe(() => product.basePrice.amount, 0),
-    businessCategory: maybe(() => product.businessCategory, ""),
+    businessCategory: maybe(() => product.businesscategory.name, ""),
     category: maybe(() => product.category.id, ""),
     chargeTaxes: maybe(() => product.chargeTaxes, false),
     collections: maybe(
       () => product.collections.map(collection => collection.id),
       []
     ),
-    description: maybe(() => product.description,""),
-    facebook: maybe(() => product.facebook, ""),
-    instagram: maybe(() => product.instagram, ""),
+    description: maybe(() => product.description, ""),
+    facebookUrl: maybe(() => product.facebookUrl.slice(25), ""), 
+    instagramUrl: maybe(() => product.instagramUrl.slice(26), ""),
     isPublished: maybe(() => product.isPublished, false),
     logo: maybe(() => product.logo, ""),
-    name: maybe(() => product.name, product && product.name),
+    name: maybe(() => product.name, ""),
     publicationDate: maybe(() => product.publicationDate, ""),
     seoDescription: maybe(() => product.seoDescription, ""),
     seoTitle: maybe(() => product.seoTitle, ""),
@@ -216,14 +216,14 @@ export function getProductUpdatePageFormData(
         product.productType.hasVariants
           ? undefined
           : variants && variants[0]
-          ? variants[0].sku
-          : undefined,
+            ? variants[0].sku
+            : undefined,
       ""
     ),
     trackInventory: true,
-                    // !!product?.variants[0]?.trackInventory,
-    twitter: maybe(() => product.twitter, ""),
-    website: maybe(() => product.website, ""),
+    // !!product?.variants[0]?.trackInventory,
+    twitterUrl: maybe(() => product.twitterUrl.slice(24), ""),
+    websiteUrl: maybe(() => product.websiteUrl.slice(12), ""),
   };
 }
 

@@ -85,7 +85,7 @@ export const categories: CategoryFragment[] = [
 export const category: (
   placeholderImage: string
 ) => CategoryDetails_category = (placeholderImage: string) => ({
-  __typename: "Category",
+  __typename: "BusinessCategory",
   backgroundImage: {
     __typename: "Image",
     alt: "Alt text",
@@ -102,7 +102,7 @@ export const category: (
       startCursor: "YXJyYXljb25uZWN0aW9uOjA="
     }
   },
-  descriptionJson: JSON.stringify(content),
+  description: JSON.stringify(content),
   id: "Q2F0ZWdvcnk6NA==",
   name: "Coffees",
   parent: {

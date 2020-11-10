@@ -180,12 +180,15 @@ export interface ProductDetails_product {
   attributes: ProductDetails_product_attributes[];
   productType: ProductDetails_product_productType;
   name: string;
-  website?: string;
-  facebook?: string;
-  instagram?: string;
-  twitter?: string;
+  websiteUrl?: string;
+  facebookUrl?: string;
+  instagramUrl?: string;
+  twitterUrl?: string;
   logo?: any;
-  businessCategory?: string;
+  businesscategory?: {
+    name?: string;
+    id?: string;
+  };
   description?: any;
   seoTitle: string | null;
   seoDescription: string | null;

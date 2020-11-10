@@ -23,22 +23,22 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
   const intl = useIntl();
   // const { user } = useUser();
   const handleSuccess = (data: CategoryCreate) => {
-    if (data.categoryCreate.errors.length === 0) {
+    if (data.businesscategoryCreate.businesscategoryErrors.length === 0) {
       notify({
         text: intl.formatMessage({
           defaultMessage: "Business Category Created"
         })
       });
-      navigate(categoryUrl(data.categoryCreate.category.id));
+      navigate(categoryUrl(data.businesscategoryCreate.businessCategory.id));
     }
   };
 
-  const [businessCategoryCreate, createCategoryResult] = useCategoryCreateMutation({
+  const [businesscategoryCreate, createCategoryResult] = useCategoryCreateMutation({
     onCompleted: handleSuccess
   });
 
   const errors = maybe(
-    () => createCategoryResult.data.categoryCreate.errors,
+    () => createCategoryResult.data.businesscategoryCreate.businesscategoryErrors,
     []
   );
 
@@ -58,18 +58,14 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
           navigate(parentId ? categoryUrl(parentId) : categoryListUrl())
         }
         onSubmit={formData =>
-          businessCategoryCreate({
+          businesscategoryCreate({
             variables: {
               input: {
-                descriptionJson: JSON.stringify(formData.description),
+                description: JSON.stringify(formData.description),
                 name: formData.name,
-                seo: {
-                  description: formData.seoDescription,
-                  title: formData.seoTitle
-                },
-                // store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
+                seoDescription: formData.seoDescription,
+                seoTitle: formData.seoTitle
               },
-              parent: parentId || null
             }
           })
         }

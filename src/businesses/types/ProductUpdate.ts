@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeValueInput, SeoInput, ProductErrorCode, AttributeInputTypeEnum } from "./../../types/globalTypes";
+import { ProductErrorCode, AttributeInputTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductUpdate
@@ -215,15 +215,21 @@ export interface ProductUpdate {
 
 export interface ProductUpdateVariables {
   id: string;
-  attributes?: (AttributeValueInput | null)[] | null;
-  publicationDate?: any | null;
-  category?: string | null;
-  chargeTaxes: boolean;
-  collections?: (string | null)[] | null;
-  descriptionJson?: any | null;
-  isPublished: boolean;
-  name?: string | null;
-  basePrice?: any | null;
-  seo?: SeoInput | null;
-  store: string;
+  businesscategory: string;
+  websiteUrl: string;
+  facebookUrl: string;
+  logo: any;
+  twitterUrl: string;
+  instagramUrl: string;
+  // attributes?: (AttributeValueInput | null)[] | null;
+  // publicationDate?: any | null;
+  // category?: string | null;
+  // chargeTaxes: boolean;
+  // collections?: (string | null)[] | null;
+  // descriptionJson?: any | null;
+  // isPublished: boolean;
+  // name?: string | null;
+  // basePrice?: any | null;
+  // seo?: SeoInput | null;
+  // store: string;
 }

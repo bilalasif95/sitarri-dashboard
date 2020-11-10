@@ -37,7 +37,7 @@ import {
   deleteFilterTab,
   getActiveFilters,
   getFilterTabs,
-  getFilterVariables,
+  // getFilterVariables,
   saveFilterTab
 } from "./filter";
 import { getSortQueryVariables } from "./sort";
@@ -61,7 +61,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
-      filter: getFilterVariables(params),
+      search: params.query,
       sort: getSortQueryVariables(params)
     }),
     [params]
@@ -118,13 +118,13 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   };
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    maybe(() => data.categories.pageInfo),
+    maybe(() => data.businessCategories.pageInfo),
     paginationState,
     params
   );
 
   const handleCategoryBulkDelete = (data: CategoryBulkDelete) => {
-    if (data.categoryBulkDelete.errors.length === 0) {
+    if (data.businesscategoryBulkdelete.businessCategoryErrors.length === 0) {
       navigate(categoryListUrl(), true);
       refetch();
       reset();
@@ -132,8 +132,8 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   };
 
   const [
-    categoryBulkDelete,
-    categoryBulkDeleteOpts
+    businesscategoryBulkdelete,
+    businesscategoryBulkdeleteOpts
   ] = useCategoryBulkDeleteMutation({
     onCompleted: handleCategoryBulkDelete
   });
@@ -144,7 +144,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     <>
       <CategoryListPage
         categories={maybe(
-          () => data.categories.edges.map(edge => edge.node),
+          () => data.businessCategories.edges.map(edge => edge.node),
           []
         )}
         currentTab={currentTab}
@@ -183,7 +183,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         }
       />
       <ActionDialog
-        confirmButtonState={categoryBulkDeleteOpts.status}
+        confirmButtonState={businesscategoryBulkdeleteOpts.status}
         onClose={() =>
           navigate(
             categoryListUrl({
@@ -194,7 +194,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
           )
         }
         onConfirm={() =>
-          categoryBulkDelete({
+          businesscategoryBulkdelete({
             variables: {
               ids: params.ids
             }

@@ -15,12 +15,12 @@ export interface CategoryBulkDelete_categoryBulkDelete_errors {
 }
 
 export interface CategoryBulkDelete_categoryBulkDelete {
-  __typename: "CategoryBulkDelete";
-  errors: CategoryBulkDelete_categoryBulkDelete_errors[];
+  __typename: "BusinessCategoryBulkDelete";
+  businessCategoryErrors: CategoryBulkDelete_categoryBulkDelete_errors[];
 }
 
 export interface CategoryBulkDelete {
-  categoryBulkDelete: CategoryBulkDelete_categoryBulkDelete | null;
+  businesscategoryBulkdelete: CategoryBulkDelete_categoryBulkDelete | null;
 }
 
 export interface CategoryBulkDeleteVariables {

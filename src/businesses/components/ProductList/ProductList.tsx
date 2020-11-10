@@ -11,7 +11,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
-import Money from "@saleor/components/Money";
+// import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
@@ -215,7 +215,7 @@ export const ProductList: React.FC<ProductListProps> = (props, { params }) => {
                   ? getArrowDirection(sort.asc)
                   : undefined
               }
-              textAlign="right"
+              // textAlign="right"
               onClick={() => onSort(ProductListUrlSortField.price)}
             >
               <FormattedMessage
@@ -300,7 +300,6 @@ export const ProductList: React.FC<ProductListProps> = (props, { params }) => {
             products,
             product => {
               const isSelected = product ? isChecked(product.id) : false;
-
               return (
                 <TableRow
                   selected={isSelected}
@@ -321,7 +320,7 @@ export const ProductList: React.FC<ProductListProps> = (props, { params }) => {
                   </TableCell>
                   <TableCellAvatar
                     className={classes.colName}
-                    thumbnail={maybe(() => product.thumbnail.url)}
+                    thumbnail={maybe(() => product.logo)}
                     data-tc="name"
                   >
                     {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
@@ -334,8 +333,8 @@ export const ProductList: React.FC<ProductListProps> = (props, { params }) => {
                       className={classes.colType}
                       data-tc="product-type"
                     >
-                      {product && product.productType ? (
-                        product.productType.name
+                      {product && product.websiteUrl ? (
+                        product.websiteUrl
                       ) : (
                           <Skeleton />
                         )}
@@ -345,12 +344,13 @@ export const ProductList: React.FC<ProductListProps> = (props, { params }) => {
                     column="price"
                     displayColumns={settings.columns}
                   >
-                    <TableCell className={classes.colPrice}>
-                      {maybe(() => product.basePrice) &&
-                        maybe(() => product.basePrice.amount) !== undefined &&
-                        maybe(() => product.basePrice.currency) !== undefined ? (
-                          <Money money={product.basePrice} />
-                        ) : (
+                    <TableCell className={classes.colType}>
+                      {maybe(() => product.user.edges.length > 0) ? (
+                        maybe(() => product.user.edges[0].node.isSuperuser) ? (
+                          <span>Super Admin</span>
+                          // <Money money={product.basePrice} />
+                        ) : <span>{maybe(() => product.user.edges[0].node.email)}</span>
+                      ) : (
                           <Skeleton />
                         )}
                     </TableCell>

@@ -102,11 +102,11 @@ export interface CategoryDetails_category_products {
 }
 
 export interface CategoryDetails_category {
-  __typename: "Category";
+  __typename: "BusinessCategory";
   id: string;
   backgroundImage: CategoryDetails_category_backgroundImage | null;
   name: string;
-  descriptionJson: any;
+  description: any;
   seoDescription: string | null;
   seoTitle: string | null;
   parent: CategoryDetails_category_parent | null;
@@ -115,7 +115,7 @@ export interface CategoryDetails_category {
 }
 
 export interface CategoryDetails {
-  category: CategoryDetails_category | null;
+  businessCategoriesDetails: CategoryDetails_category | null;
 }
 
 export interface CategoryDetailsVariables {

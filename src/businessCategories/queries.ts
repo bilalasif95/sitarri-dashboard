@@ -8,58 +8,58 @@ import {
 } from "./types/CategoryDetails";
 import { RootCategories } from "./types/RootCategories";
 
-export const categoryFragment = gql`
-  fragment CategoryFragment on Category {
-    id
-    name
-    children {
-      totalCount
-    }
-    products {
-      totalCount
-    }
-  }
-`;
+// export const categoryFragment = gql`
+//   fragment BusinessCategoryFragment on BusinessCategory {
+//     id
+//     name
+//     children {
+//       totalCount
+//     }
+//     products {
+//       totalCount
+//     }
+//   }
+// `;
 export const categoryDetailsFragment = gql`
-  fragment BusinessCategoryDetailsFragment on BusinessCategory {
+  fragment BusinessCategoryFragment on BusinessCategory {
     id
     backgroundImage {
       alt
       url
     }
     name
-    descriptionJson
+    description
     seoDescription
     seoTitle
-    parent {
-      id
-    }
   }
 `;
 
+// $filter: CategoryFilterInput
+// $sort: CategorySortingInput
+
+// filter: $filter
+// sortBy: $sort
+
 export const rootCategories = gql`
-  ${categoryFragment}
+  ${categoryDetailsFragment}
   ${pageInfoFragment}
-  query RootCategories(
+  query BusinessCategories(
     $first: Int
     $after: String
     $last: Int
     $before: String
-    $filter: CategoryFilterInput
-    $sort: CategorySortingInput
+    $search: String
   ) {
-    categories(
-      level: 0
+    businessCategories(
       first: $first
       after: $after
       last: $last
       before: $before
-      filter: $filter
-      sortBy: $sort
+      search: $search
     ) {
       edges {
         node {
-          ...CategoryFragment
+          ...BusinessCategoryFragment
         }
       }
       pageInfo {
@@ -73,52 +73,12 @@ export const useRootCategoriesQuery = makeQuery<RootCategories, {}>(
 );
 
 export const categoryDetails = gql`
-  ${categoryFragment}
   ${categoryDetailsFragment}
-  ${pageInfoFragment}
-  query CategoryDetails(
+  query BusinessCategoryDetails(
     $id: ID!
-    $first: Int
-    $after: String
-    $last: Int
-    $before: String
   ) {
-    category(id: $id) {
-      ...CategoryDetailsFragment
-      children(first: $first, after: $after, last: $last, before: $before) {
-        edges {
-          node {
-            ...CategoryFragment
-          }
-        }
-        pageInfo {
-          ...PageInfoFragment
-        }
-      }
-      products(first: $first, after: $after, last: $last, before: $before) {
-        pageInfo {
-          ...PageInfoFragment
-        }
-        edges {
-          cursor
-          node {
-            id
-            name
-            basePrice {
-              amount
-              currency
-            }
-            isAvailable
-            thumbnail {
-              url
-            }
-            productType {
-              id
-              name
-            }
-          }
-        }
-      }
+    businessCategoriesDetails(id: $id) {
+      ...BusinessCategoryFragment
     }
   }
 `;

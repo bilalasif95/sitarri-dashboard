@@ -56,12 +56,12 @@ import ProductList from "../ProductList";
 import {
   CreateBusinessMutation,
   ProductBulkCreateMutation,
-  UpdateBusinessMutation
+  // UpdateBusinessMutation
 } from "../../../home/queries";
 
 import { CreateBusiness } from "../../../home/types/CreateBusiness";
 import { ProductBulkCreate } from "../../../home/types/ProductBulkCreate";
-import { UpdateBusiness } from "../../../home/types/UpdateBusiness";
+// import { UpdateBusiness } from "../../../home/types/UpdateBusiness";
 
 import SingleAutocompleteSelectField from "../../../components/SingleAutocompleteSelectField";
 
@@ -543,26 +543,34 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const onCreateBusinessCompleted = (data: CreateBusiness) => {
     setCreateBusinessNameError([]);
     if (data.businessCreate.businessErrors.length === 0) {
-      setAddBusinessModal(false);
-      setChooseCategoryModal(true);
-      setOpenChooseCategoryModal(true);
+      setAddInformationModal(false);
+      setOpenAddInformationModal(false);
+      setOpenImportInformationModal(true);
+      setImportInformationModal(true);
+      // setAddBusinessModal(false);
+      // setChooseCategoryModal(true);
+      // setOpenChooseCategoryModal(true);
       setBusinessID(data.businessCreate.business.id);
-      setBusinessName(data.businessCreate.business.name);
+      // setBusinessName(data.businessCreate.business.name);
       // setBusinessDescription(data.businessCreate.business.description);
     } else {
       setCreateBusinessNameError(
         data.businessCreate.businessErrors.filter(item => item.field === "name")
       );
-    }
-  };
-  const onUpdateBusinessCompleted = (data: UpdateBusiness) => {
-    if (data.businessUpdate.businessErrors.length === 0) {
       setAddInformationModal(false);
       setOpenAddInformationModal(false);
-      setOpenImportInformationModal(true);
-      setImportInformationModal(true);
+      setAddBusinessModal(true);
+      setOpenAddBusinessModal(true);
     }
   };
+  // const onUpdateBusinessCompleted = (data: UpdateBusiness) => {
+  //   if (data.businessUpdate.businessErrors.length === 0) {
+  //     setAddInformationModal(false);
+  //     setOpenAddInformationModal(false);
+  //     setOpenImportInformationModal(true);
+  //     setImportInformationModal(true);
+  //   }
+  // };
   const onProductBulkCreateCompleted = (data: ProductBulkCreate) => {
     setIzettleAccessTokenError([]);
     setSquareAccessTokenError([]);
@@ -782,69 +790,69 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           onClose={() => setAddBusinessModal(false)}
           open={openAddBusinessModal}
         >
-          <CreateBusinessMutation onCompleted={onCreateBusinessCompleted}>
+          {/* <CreateBusinessMutation onCompleted={onCreateBusinessCompleted}>
             {(businessCreate, businessCreateOpts) => (
+              <> */}
+          <Form
+            initial={initialForm}
+          // onSubmit={input =>
+          //   businessCreate({
+          //     variables: {
+          //       input: {
+          //         // description: input.description,
+          //         name: input.businessName
+          //       }
+          //     }
+          //   })
+          // }
+          >
+            {({ change, data }) => (
               <>
-                <Form
-                  initial={initialForm}
-                  onSubmit={input =>
-                    businessCreate({
-                      variables: {
-                        input: {
-                          // description: input.description,
-                          name: input.businessName
-                        }
-                      }
-                    })
-                  }
-                >
-                  {({ change, data, submit }) => (
-                    <>
-                      <DialogContent className={classes.businessmodalcont}>
-                        <div className={classes.businessmodal}>
-                          <ul className={classes.mylist}>
-                            <li className={classes.listitem}>
-                              <span
-                              // onClick={() => {
-                              //     setCreateBusinessNameError([]);
-                              //     setAddBusinessModal(false);
-                              //     setOpenAddBusinessModal(false);
-                              //     setOpen(true);
-                              // }}
-                              >
-                                {/* <SVG
+                <DialogContent className={classes.businessmodalcont}>
+                  <div className={classes.businessmodal}>
+                    <ul className={classes.mylist}>
+                      <li className={classes.listitem}>
+                        <span
+                        // onClick={() => {
+                        //     setCreateBusinessNameError([]);
+                        //     setAddBusinessModal(false);
+                        //     setOpenAddBusinessModal(false);
+                        //     setOpen(true);
+                        // }}
+                        >
+                          {/* <SVG
                                                                     classname={classes.arrowlefticon}
                                                                     src={arrowleft}
                                                                 /> */}
-                              </span>
-                              <span className={classes.listtext}>
-                                What is the name of the business?
+                        </span>
+                        <span className={classes.listtext}>
+                          What is the name of the business?
                                                             </span>
-                            </li>
-                          </ul>
-                          <div className={classes.inputbox}>
-                            <SVG src={inputicon} />
-                            <TextField
-                              autoFocus
-                              required
-                              fullWidth
-                              error={maybe(
-                                () => createBusinessNameError[0].message
-                              )}
-                              helperText={maybe(
-                                () => createBusinessNameError[0].message
-                              )}
-                              autoComplete="businessName"
-                              label="Business Name"
-                              name="businessName"
-                              onChange={change}
-                              value={data.businessName}
-                              inputProps={{
-                                "data-tc": "businessName"
-                              }}
-                            />
-                          </div>
-                          {/* <div className={classes.businessmodaltextarea}>
+                      </li>
+                    </ul>
+                    <div className={classes.inputbox}>
+                      <SVG src={inputicon} />
+                      <TextField
+                        autoFocus
+                        required
+                        fullWidth
+                        error={maybe(
+                          () => createBusinessNameError[0].message
+                        )}
+                        helperText={maybe(
+                          () => createBusinessNameError[0].message
+                        )}
+                        autoComplete="businessName"
+                        label="Business Name"
+                        name="businessName"
+                        onChange={change}
+                        value={data.businessName}
+                        inputProps={{
+                          "data-tc": "businessName"
+                        }}
+                      />
+                    </div>
+                    {/* <div className={classes.businessmodaltextarea}>
                             <TextField
                               fullWidth
                               multiline
@@ -858,29 +866,35 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                               }}
                             />
                           </div> */}
-                        </div>
-                      </DialogContent>
-                      <DialogActions className={classes.modalfooter}>
-                        <ConfirmButton
-                          transitionState={maybe(() => null)}
-                          color="primary"
-                          disabled={
-                            businessCreateOpts.loading ||
-                            data.businessName === ""
-                          }
-                          variant="contained"
-                          onClick={() => submit()}
-                          className={classes.sendbtn}
-                        >
-                          <span>Next</span>
-                        </ConfirmButton>
-                      </DialogActions>
-                    </>
-                  )}
-                </Form>
+                  </div>
+                </DialogContent>
+                <DialogActions className={classes.modalfooter}>
+                  <ConfirmButton
+                    transitionState={maybe(() => null)}
+                    color="primary"
+                    disabled={
+                      // businessCreateOpts.loading ||
+                      data.businessName === ""
+                    }
+                    variant="contained"
+                    onClick={() => {
+                      setBusinessName(data.businessName);
+                      setAddBusinessModal(false);
+                      setChooseCategoryModal(true);
+                      setOpenChooseCategoryModal(true);
+                      // submit()
+                    }}
+                    className={classes.sendbtn}
+                  >
+                    <span>Next</span>
+                  </ConfirmButton>
+                </DialogActions>
               </>
             )}
-          </CreateBusinessMutation>
+          </Form>
+          {/* </>
+            )}
+          </CreateBusinessMutation> */}
         </Dialog>
       )}
 
@@ -995,15 +1009,15 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           // onClose={() => setAddInformationModal(false)}
           open={openAddInformationModal}
         >
-          <UpdateBusinessMutation onCompleted={onUpdateBusinessCompleted}>
-            {(businessUpdate, businessUpdateOpts) => (
+          <CreateBusinessMutation onCompleted={onCreateBusinessCompleted}>
+            {(businessCreate, businessCreateOpts) => (
               <>
                 <Form initial={initialForm} onSubmit={input =>
-                  businessUpdate({
+                  businessCreate({
                     variables: {
                       input: {
                         // business: businessID,
-                        category: businesscategory,
+                        businesscategory,
                         // description: businessDescription,
                         facebookUrl: input.facebook,
                         instagramUrl: input.instagram,
@@ -1200,7 +1214,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                           transitionState={maybe(() => null)}
                           color="primary"
                           // disabled={data.phone === ""}
-                          disabled={businessUpdateOpts.loading}
+                          disabled={businessCreateOpts.loading}
                           variant="contained"
                           onClick={() => {
                             // if (data.phone !== "" && !/\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\d{1,14}$/.test(data.phone)) {
@@ -1271,7 +1285,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                 </Form>
               </>
             )}
-          </UpdateBusinessMutation>
+          </CreateBusinessMutation>
         </Dialog>
       )}
       {allDoneModal && (

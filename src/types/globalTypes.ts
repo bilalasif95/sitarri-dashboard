@@ -908,6 +908,8 @@ export interface CategoryInput {
   name?: string | null;
   slug?: string | null;
   seo?: SeoInput | null;
+  seoDescription?: string | null;
+  seoTitle?: string | null;
   backgroundImage?: any | null;
   backgroundImageAlt?: string | null;
   store?: string;

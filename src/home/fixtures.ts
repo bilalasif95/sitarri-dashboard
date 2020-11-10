@@ -267,7 +267,7 @@ export const shop: (placeholderImage: string) => Home = (
       }
     ]
   },
-  businesses: [],
+  businessCategories: [],
   ordersToCapture: {
     __typename: "OrderCountableConnection",
     totalCount: 0

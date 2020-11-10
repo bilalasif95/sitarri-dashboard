@@ -119,78 +119,13 @@ const productVariantAttributesFragment = gql`
 `;
 
 export const productFragmentDetails = gql`
-  ${fragmentProductImage}
-  ${fragmentMoney}
-  ${productVariantAttributesFragment}
-  ${stockFragment}
-  fragment Product on Product {
-    ...ProductVariantAttributesFragment
+  fragment Business on Business {
     name
-    descriptionJson
-    seoTitle
-    seoDescription
-    category {
-      id
-      name
-    }
-    collections {
-      id
-      name
-    }
-    basePrice {
-      ...Money
-    }
-    margin {
-      start
-      stop
-    }
-    purchaseCost {
-      start {
-        ...Money
-      }
-      stop {
-        ...Money
-      }
-    }
-    isAvailable
-    isPublished
-    chargeTaxes
-    publicationDate
-    pricing {
-      priceRange {
-        start {
-          net {
-            ...Money
-          }
-        }
-        stop {
-          net {
-            ...Money
-          }
-        }
-      }
-    }
-    images {
-      ...ProductImageFragment
-    }
-    variants {
-      id
-      sku
-      name
-      priceOverride {
-        ...Money
-      }
-      margin
-      stocks {
-        ...StockFragment
-      }
-      trackInventory
-    }
-    productType {
-      id
-      name
-      hasVariants
-    }
+    logo
+    websiteUrl
+    facebookUrl
+    twitterUrl
+    instagramUrl
   }
 `;
 
@@ -322,7 +257,30 @@ const productListQuery = gql`
         node {
           id
           name
-          description
+          logo
+          websiteUrl
+          user(first:100) {
+            edges {
+              node {
+                isSuperuser
+                email
+              }
+            }
+          }
+        }
+      }
+      pageInfo {
+        hasPreviousPage
+        hasNextPage
+        startCursor
+        endCursor
+      }
+    }
+    businessCategories(first: 100) {
+      edges {
+        node {
+          id
+          name
         }
       }
     }
@@ -368,6 +326,17 @@ const productDetailsQuery = gql`
       id
       name
       description
+      logo
+      websiteUrl
+      facebookUrl
+      twitterUrl
+      deliverooUrl
+      uberEatsUrl
+      instagramUrl
+      businesscategory{
+        id
+        name
+      }
       businessStore(first: 100) {
         edges {
           node {

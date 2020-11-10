@@ -284,7 +284,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params, listPa
                   const handleSubmit = createUpdateHandler(
                     product,
                     updateProduct.mutate,
-                    updateSimpleProduct.mutate
+                    // updateSimpleProduct.mutate
                   );
                   const handleImageUpload = createImageUploadHandler(
                     id,
