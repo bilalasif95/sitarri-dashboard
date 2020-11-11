@@ -49,6 +49,7 @@ export const rootCategories = gql`
     $last: Int
     $before: String
     $search: String
+    $sort: BusinessCategorySortingInput
   ) {
     businessCategories(
       first: $first
@@ -56,6 +57,7 @@ export const rootCategories = gql`
       last: $last
       before: $before
       search: $search
+      sortBy: $sort
     ) {
       edges {
         node {

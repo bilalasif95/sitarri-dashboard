@@ -511,11 +511,12 @@ export const TypedVariantImageUnassignMutation = TypedMutation<
 >(variantImageUnassignMutation);
 
 export const productBulkDeleteMutation = gql`
-  ${productErrorFragment}
-  mutation productBulkDelete($ids: [ID!]!) {
-    productBulkDelete(ids: $ids) {
-      errors: productErrors {
-        ...ProductErrorFragment
+  mutation BusinessBulkDelete($ids: [ID!]!) {
+    businessBuldelete(ids: $ids) {
+      businessErrors {
+        code
+        field
+        message
       }
     }
   }
