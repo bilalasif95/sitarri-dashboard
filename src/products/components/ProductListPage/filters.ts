@@ -14,6 +14,7 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 export enum ProductFilterKeys {
   attributes = "attributes",
   categories = "categories",
+  businessCategories = "businessCategories",
   collections = "collections",
   status = "status",
   price = "price",
@@ -31,6 +32,7 @@ export interface ProductListFilterOpts {
   >;
   categories: FilterOpts<string[]> & AutocompleteFilterOpts;
   collections: FilterOpts<string[]> & AutocompleteFilterOpts;
+  businessCategories: any;
   price: FilterOpts<MinMax>;
   productType: FilterOpts<string[]> & AutocompleteFilterOpts;
   status: FilterOpts<ProductStatus>;

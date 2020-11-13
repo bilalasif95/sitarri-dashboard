@@ -29,13 +29,15 @@ export enum ProductListUrlFiltersEnum {
   priceFrom = "priceFrom",
   priceTo = "priceTo",
   status = "status",
+  user = "user",
   stockStatus = "stockStatus",
   query = "query"
 }
 export enum ProductListUrlFiltersWithMultipleValues {
   categories = "categories",
   collections = "collections",
-  productTypes = "productTypes"
+  productTypes = "productTypes",
+  businessCategories = "businessCategories"
 }
 export enum ProductListUrlFiltersAsDictWithMultipleValues {
   attributes = "attributes"
@@ -65,7 +67,7 @@ export interface ProductListUrlQueryParams
 export const businessesListUrl = (params?: ProductListUrlQueryParams): string =>
   productListPath + "?" + stringifyQs(params);
 
-export const productPath = (id: string) => urlJoin(productSection + id);
+export const productPath = (id: string) => urlJoin(productSection, id);
 export type ProductUrlDialog = "remove" | "remove-variants";
 export type ProductUrlQueryParams = BulkAction & Dialog<ProductUrlDialog>;
 export const productUrl = (id: string, params?: ProductUrlQueryParams) =>

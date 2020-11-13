@@ -4,7 +4,7 @@ import { FilterOpts, MinMax, AutocompleteFilterOpts } from "@saleor/types";
 import { StockAvailability } from "@saleor/types/globalTypes";
 import {
   createOptionsField,
-  createPriceField,
+  // createPriceField,
   createAutocompleteField
 } from "@saleor/utils/filters/fields";
 import { IFilter } from "@saleor/components/Filter";
@@ -14,6 +14,8 @@ import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocomplet
 export enum ProductFilterKeys {
   attributes = "attributes",
   categories = "categories",
+  user = "user",
+  businessCategories = "businessCategories",
   collections = "collections",
   status = "status",
   price = "price",
@@ -29,12 +31,14 @@ export interface ProductListFilterOpts {
       slug: string;
     }
   >;
+  businessCategories: any;
   categories: FilterOpts<string[]> & AutocompleteFilterOpts;
   collections: FilterOpts<string[]> & AutocompleteFilterOpts;
   price: FilterOpts<MinMax>;
   productType: FilterOpts<string[]> & AutocompleteFilterOpts;
   status: FilterOpts<ProductStatus>;
   stockStatus: FilterOpts<StockAvailability>;
+  user: any;
 }
 
 export enum ProductStatus {
@@ -42,14 +46,27 @@ export enum ProductStatus {
   HIDDEN = "hidden"
 }
 
+export enum User {
+  SUPERUSER = "superuser",
+  OTHER = "other"
+}
+
 const messages = defineMessages({
   available: {
     defaultMessage: "Available",
     description: "product status"
   },
+  businessOwner: {
+    defaultMessage: "Business Owner",
+    description: "business onwer name"
+  },
   hidden: {
-    defaultMessage: "Hidden",
-    description: "product is hidden"
+    defaultMessage: "Not Verified",
+    description: "business is not verified"
+  },
+  other: {
+    defaultMessage: "Others",
+    description: "other users"
   },
   outOfStock: {
     defaultMessage: "Out Of Stock",
@@ -62,13 +79,17 @@ const messages = defineMessages({
     defaultMessage: "Stock quantity",
     description: "product"
   },
+  superAdmin: {
+    defaultMessage: "Super Admin",
+    description: "user"
+  },
   visibility: {
-    defaultMessage: "Visibility",
-    description: "product visibility"
+    defaultMessage: "Status",
+    description: "business status"
   },
   visible: {
-    defaultMessage: "Visible",
-    description: "product is visible"
+    defaultMessage: "Verified",
+    description: "business is verified"
   }
 });
 
@@ -98,85 +119,104 @@ export function createFilterStructure(
     },
     {
       ...createOptionsField(
-        ProductFilterKeys.stock,
-        intl.formatMessage(messages.quantity),
-        [opts.stockStatus.value],
+        ProductFilterKeys.user,
+        intl.formatMessage(messages.businessOwner),
+        [opts.user.value],
         false,
         [
           {
-            label: intl.formatMessage(messages.available),
-            value: StockAvailability.IN_STOCK
+            label: intl.formatMessage(messages.superAdmin),
+            value: User.SUPERUSER
           },
           {
-            label: intl.formatMessage(messages.outOfStock),
-            value: StockAvailability.OUT_OF_STOCK
+            label: intl.formatMessage(messages.other),
+            value: User.OTHER
           }
         ]
       ),
-      active: opts.stockStatus.active
+      active: opts.user.active
     },
-    {
-      ...createPriceField(
-        ProductFilterKeys.price,
-        intl.formatMessage(messages.price),
-        opts.price.value
-      ),
-      active: opts.price.active
-    },
-    {
-      ...createAutocompleteField(
-        ProductFilterKeys.categories,
-        intl.formatMessage(sectionNames.categories),
-        opts.categories.value,
-        opts.categories.displayValues,
-        true,
-        opts.categories.choices,
-        {
-          hasMore: opts.categories.hasMore,
-          initialSearch: "",
-          loading: opts.categories.loading,
-          onFetchMore: opts.categories.onFetchMore,
-          onSearchChange: opts.categories.onSearchChange
-        }
-      ),
-      active: opts.categories.active
-    },
-    {
-      ...createAutocompleteField(
-        ProductFilterKeys.collections,
-        intl.formatMessage(sectionNames.collections),
-        opts.collections.value,
-        opts.collections.displayValues,
-        true,
-        opts.collections.choices,
-        {
-          hasMore: opts.collections.hasMore,
-          initialSearch: "",
-          loading: opts.collections.loading,
-          onFetchMore: opts.collections.onFetchMore,
-          onSearchChange: opts.collections.onSearchChange
-        }
-      ),
-      active: opts.collections.active
-    },
+    // {
+    //   ...createOptionsField(
+    //     ProductFilterKeys.stock,
+    //     intl.formatMessage(messages.quantity),
+    //     [opts.stockStatus.value],
+    //     false,
+    //     [
+    //       {
+    //         label: intl.formatMessage(messages.available),
+    //         value: StockAvailability.IN_STOCK
+    //       },
+    //       {
+    //         label: intl.formatMessage(messages.outOfStock),
+    //         value: StockAvailability.OUT_OF_STOCK
+    //       }
+    //     ]
+    //   ),
+    //   active: opts.stockStatus.active
+    // },
+    // {
+    //   ...createPriceField(
+    //     ProductFilterKeys.price,
+    //     intl.formatMessage(messages.price),
+    //     opts.price.value
+    //   ),
+    //   active: opts.price.active
+    // },
     {
       ...createAutocompleteField(
-        ProductFilterKeys.productType,
-        intl.formatMessage(sectionNames.productTypes),
-        opts.productType.value,
-        opts.productType.displayValues,
+        ProductFilterKeys.businessCategories,
+        intl.formatMessage(sectionNames.businessCategories),
+        opts.businessCategories.value,
+        opts.businessCategories.displayValues,
         true,
-        opts.productType.choices,
+        opts.businessCategories.choices,
         {
-          hasMore: opts.productType.hasMore,
+          hasMore: opts.businessCategories.hasMore,
           initialSearch: "",
-          loading: opts.productType.loading,
-          onFetchMore: opts.productType.onFetchMore,
-          onSearchChange: opts.productType.onSearchChange
+          loading: opts.businessCategories.loading,
+          onFetchMore: opts.businessCategories.onFetchMore,
+          onSearchChange: opts.businessCategories.onSearchChange
         }
       ),
-      active: opts.productType.active
+      active: opts.businessCategories.active
     },
+    // {
+    //   ...createAutocompleteField(
+    //     ProductFilterKeys.collections,
+    //     intl.formatMessage(sectionNames.collections),
+    //     opts.collections.value,
+    //     opts.collections.displayValues,
+    //     true,
+    //     opts.collections.choices,
+    //     {
+    //       hasMore: opts.collections.hasMore,
+    //       initialSearch: "",
+    //       loading: opts.collections.loading,
+    //       onFetchMore: opts.collections.onFetchMore,
+    //       onSearchChange: opts.collections.onSearchChange
+    //     }
+    //   ),
+    //   active: opts.collections.active
+    // },
+    // {
+    //   ...createAutocompleteField(
+    //     ProductFilterKeys.productType,
+    //     intl.formatMessage(sectionNames.productTypes),
+    //     opts.productType.value,
+    //     opts.productType.displayValues,
+    //     true,
+    //     opts.productType.choices,
+    //     {
+    //       hasMore: opts.productType.hasMore,
+    //       initialSearch: "",
+    //       loading: opts.productType.loading,
+    //       onFetchMore: opts.productType.onFetchMore,
+    //       onSearchChange: opts.productType.onSearchChange
+    //     }
+    //   ),
+    //   active: opts.productType.active
+    // },
     ...opts.attributes.map(attr => ({
       ...createOptionsField(
         attr.slug as any,

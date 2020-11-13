@@ -31,6 +31,7 @@ import { ListViews } from "@saleor/types";
 import { getSortUrlVariables } from "@saleor/utils/sort";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
+import useBusinessCategorySearch from "@saleor/searches/useBusinessCategorySearch";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
@@ -94,6 +95,12 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     }
   });
   const searchCategories = useCategorySearch({
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      first: 5
+    }
+  });
+  const searchBusinessCategories = useBusinessCategorySearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 5
@@ -189,7 +196,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     () => ({
       ...paginationState,
       filter,
-      sort
+      search: params.query,
+      sort,
     }),
     [params, settings.rowNumber]
   );
@@ -197,6 +205,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const filterOpts = getFilterOpts(
     params,
     maybe(() => initialFilterData.attributes.edges.map(edge => edge.node), []),
+    {
+      initial: maybe(
+        () => initialFilterData.businessCategories.edges.map(edge => edge.node),
+        []
+      ),
+      search: searchBusinessCategories
+    },
     {
       initial: maybe(
         () => initialFilterData.categories.edges.map(edge => edge.node),
@@ -240,7 +255,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
             );
 
             const handleBulkDelete = (data: productBulkDelete) => {
-              if (data.productBulkDelete.errors.length === 0) {
+              if (data.businessBulkdelete.businessErrors.length === 0) {
                 closeModal();
                 notify({
                   text: intl.formatMessage(commonMessages.savedChanges)
@@ -263,7 +278,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
             return (
               <TypedProductBulkDeleteMutation onCompleted={handleBulkDelete}>
-                {(productBulkDelete, productBulkDeleteOpts) => (
+                {(businessBulkdelete, businessBulkdeleteOpts) => (
                   <TypedProductBulkPublishMutation
                     onCompleted={handleBulkPublish}
                   >
@@ -401,10 +416,10 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                         />
                         <ActionDialog
                           open={params.action === "delete"}
-                          confirmButtonState={productBulkDeleteOpts.status}
+                          confirmButtonState={businessBulkdeleteOpts.status}
                           onClose={closeModal}
                           onConfirm={() =>
-                            productBulkDelete({
+                            businessBulkdelete({
                               variables: { ids: params.ids }
                             })
                           }

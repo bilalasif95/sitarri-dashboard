@@ -1,9 +1,7 @@
-import isArray from "lodash-es/isArray";
+// import isArray from "lodash-es/isArray";
 
 import { maybe, findValueInEnum } from "@saleor/misc";
 import {
-  ProductFilterKeys,
-  ProductListFilterOpts,
   ProductStatus
 } from "@saleor/products/components/ProductListPage";
 import { UseSearchResult } from "@saleor/hooks/makeSearch";
@@ -35,7 +33,7 @@ import {
 import {
   createFilterTabUtils,
   createFilterUtils,
-  getGteLteVariables,
+  // getGteLteVariables,
   getMinMaxQueryParam,
   getSingleEnumValueQueryParam,
   dedupeFilter,
@@ -52,11 +50,18 @@ import {
   CategoryListUrlFilters
 } from "../../../categories/urls";
 
+import {
+  ProductFilterKeys,
+  ProductListFilterOpts,
+  User
+} from "../../components/ProductListPage/filters";
+
 export const PRODUCT_FILTERS_KEY = "productFilters";
 
 export function getFilterOpts(
   params: ProductListUrlFilters,
   attributes: InitialProductFilterData_attributes_edges_node[],
+  businessCategories: any,
   categories: {
     initial: InitialProductFilterData_categories_edges_node[];
     search: UseSearchResult<SearchCategories, SearchCategoriesVariables>;
@@ -86,6 +91,36 @@ export function getFilterOpts(
             ? params.attributes[attr.slug]
             : []
       })),
+    businessCategories: {
+      active: !!params.businessCategories,
+      choices: maybe(
+        () =>
+          businessCategories.search.result.data.businessCategories.edges.map(edge => ({
+            label: edge.node.name,
+            value: edge.node.id
+          })),
+        []
+      ),
+      displayValues: !!params.businessCategories
+        ? maybe(
+          () =>
+            businessCategories.initial.map(category => ({
+              label: category.name,
+              value: category.id
+            })),
+          []
+        )
+        : [],
+      hasMore: maybe(
+        () => businessCategories.search.result.data.businessCategories.pageInfo.hasNextPage,
+        false
+      ),
+      initialSearch: "",
+      loading: businessCategories.search.result.loading,
+      onFetchMore: businessCategories.search.loadMore,
+      onSearchChange: businessCategories.search.search,
+      value: maybe(() => dedupeFilter(params.businessCategories), [])
+    },
     categories: {
       active: !!params.categories,
       choices: maybe(
@@ -98,13 +133,13 @@ export function getFilterOpts(
       ),
       displayValues: !!params.categories
         ? maybe(
-            () =>
-              categories.initial.map(category => ({
-                label: category.name,
-                value: category.id
-              })),
-            []
-          )
+          () =>
+            categories.initial.map(category => ({
+              label: category.name,
+              value: category.id
+            })),
+          []
+        )
         : [],
       hasMore: maybe(
         () => categories.search.result.data.search.pageInfo.hasNextPage,
@@ -128,13 +163,13 @@ export function getFilterOpts(
       ),
       displayValues: !!params.collections
         ? maybe(
-            () =>
-              collections.initial.map(category => ({
-                label: category.name,
-                value: category.id
-              })),
-            []
-          )
+          () =>
+            collections.initial.map(category => ({
+              label: category.name,
+              value: category.id
+            })),
+          []
+        )
         : [],
       hasMore: maybe(
         () => collections.search.result.data.search.pageInfo.hasNextPage,
@@ -169,13 +204,13 @@ export function getFilterOpts(
       ),
       displayValues: !!params.productTypes
         ? maybe(
-            () =>
-              productTypes.initial.map(productType => ({
-                label: productType.name,
-                value: productType.id
-              })),
-            []
-          )
+          () =>
+            productTypes.initial.map(productType => ({
+              label: productType.name,
+              value: productType.id
+            })),
+          []
+        )
         : [],
       hasMore: maybe(
         () => productTypes.search.result.data.search.pageInfo.hasNextPage,
@@ -194,7 +229,11 @@ export function getFilterOpts(
     stockStatus: {
       active: maybe(() => params.stockStatus !== undefined, false),
       value: maybe(() => findValueInEnum(params.stockStatus, StockAvailability))
-    }
+    },
+    user: {
+      active: maybe(() => params.user !== undefined, false),
+      value: maybe(() => findValueInEnum(params.user, User))
+    },
   };
 }
 
@@ -211,35 +250,40 @@ export function getCategoryFilterVariables(
 export function getFilterVariables(
   params: ProductListUrlFilters
 ): ProductFilterInput {
-  const { user } = useUser();
+  // const { user } = useUser();
   return {
-    attributes: !!params.attributes
-      ? Object.keys(params.attributes).map(key => ({
-          slug: key,
-          // It is possible for qs to parse values not as string[] but string
-          values: isArray(params.attributes[key])
-            ? params.attributes[key]
-            : (([params.attributes[key]] as unknown) as string[])
-        }))
-      : null,
-    categories: params.categories !== undefined ? params.categories : null,
-    collections: params.collections !== undefined ? params.collections : null,
-    isPublished:
+    // attributes: !!params.attributes
+    //   ? Object.keys(params.attributes).map(key => ({
+    //     slug: key,
+    //     // It is possible for qs to parse values not as string[] but string
+    //     values: isArray(params.attributes[key])
+    //       ? params.attributes[key]
+    //       : (([params.attributes[key]] as unknown) as string[])
+    //   }))
+    //   : null,
+    businesscategory: params.businessCategories !== undefined ? params.businessCategories : null,
+    // categories: params.categories !== undefined ? params.categories : null,
+    // collections: params.collections !== undefined ? params.collections : null,
+    isSuperuser:
+      params.user !== undefined
+        ? params.user === User.SUPERUSER
+        : null,
+    isVerified:
       params.status !== undefined
         ? params.status === ProductStatus.PUBLISHED
         : null,
-    price: getGteLteVariables({
-      gte: parseFloat(params.priceFrom),
-      lte: parseFloat(params.priceTo)
-    }),
-    productTypes:
-      params.productTypes !== undefined ? params.productTypes : null,
-    search: params.query,
-    stockAvailability:
-      params.stockStatus !== undefined
-        ? findValueInEnum(params.stockStatus, StockAvailability)
-        : null,
-    store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
+    // price: getGteLteVariables({
+    //   gte: parseFloat(params.priceFrom),
+    //   lte: parseFloat(params.priceTo)
+    // }),
+    // productTypes:
+    //   params.productTypes !== undefined ? params.productTypes : null,
+    // search: params.query,
+    // stockAvailability:
+    //   params.stockStatus !== undefined
+    //     ? findValueInEnum(params.stockStatus, StockAvailability)
+    //     : null,
+    // store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
   };
 }
 
@@ -255,14 +299,20 @@ export function getFilterQueryParam(
     return {
       [group]: active
         ? {
-            ...(rest === undefined ? {} : rest),
-            [name]: value
-          }
+          ...(rest === undefined ? {} : rest),
+          [name]: value
+        }
         : rest
     };
   }
 
   switch (name) {
+    case ProductFilterKeys.businessCategories:
+      return getMultipleValueQueryParam(
+        filter,
+        ProductListUrlFiltersWithMultipleValues.businessCategories
+      );
+
     case ProductFilterKeys.categories:
       return getMultipleValueQueryParam(
         filter,
@@ -293,6 +343,13 @@ export function getFilterQueryParam(
         filter,
         ProductListUrlFiltersEnum.status,
         ProductStatus
+      );
+
+    case ProductFilterKeys.user:
+      return getSingleEnumValueQueryParam(
+        filter,
+        ProductListUrlFiltersEnum.user,
+        User
       );
 
     case ProductFilterKeys.stock:

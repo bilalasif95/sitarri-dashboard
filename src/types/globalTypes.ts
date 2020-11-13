@@ -1181,9 +1181,12 @@ export interface PriceRangeInput {
 
 export interface ProductFilterInput {
   isPublished?: boolean | null;
+  isVerified?: boolean | null;
+  isSuperuser?: boolean | null;
   collections?: (string | null)[] | null;
   categories?: (string | null)[] | null;
   hasCategory?: boolean | null;
+  businesscategory?: (string | null)[] | null;
   price?: PriceRangeInput | null;
   attributes?: (AttributeInput | null)[] | null;
   stockAvailability?: StockAvailability | null;
@@ -1192,7 +1195,7 @@ export interface ProductFilterInput {
   search?: string | null;
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
-  store: string;
+  store?: string;
 }
 
 export interface ProductOrder {

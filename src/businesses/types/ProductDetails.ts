@@ -199,6 +199,7 @@ export interface ProductDetails_product {
 
 export interface ProductDetails {
   business: any;
+  businessCategories: any;
 }
 
 export interface ProductDetailsVariables {

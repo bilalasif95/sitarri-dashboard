@@ -13,19 +13,21 @@ import { ProductUpdateVariables } from "../../types/ProductUpdate";
 export function createUpdateHandler(
   product: ProductDetails_product,
   updateProduct: (variables: ProductUpdateVariables) => void,
+  businessCategories: any
   // updateSimpleProduct: (variables: SimpleProductUpdateVariables) => void
 ) {
   // const { user } = useUser();
 
   return (data: any) => {
+    const category = businessCategories.filter(val => val.node.name === data.businessCategory)
     const productVariables: ProductUpdateVariables = {
-      businesscategory: product.businesscategory.id,
-      facebookUrl: "https://www.facebook.com/" + data.facebookUrl,
+      businesscategory: category.length ? category[0].node.id : product.businesscategory.id,
+      facebookUrl: data.facebookUrl ? "https://www.facebook.com/" + data.facebookUrl : "",
       id: product.id,
-      instagramUrl: "https://www.instagram.com/" + data.instagramUrl,
+      instagramUrl: data.instagramUrl ? "https://www.instagram.com/" + data.instagramUrl : "",
       logo: data.logo,
-      twitterUrl: "https://www.twitter.com/" + data.twitterUrl,
-      websiteUrl: "https://www." + data.websiteUrl,
+      twitterUrl: data.twitterUrl ? "https://www.twitter.com/" + data.twitterUrl : "",
+      websiteUrl: data.websiteUrl ? "https://www." + data.websiteUrl : "",
       // attributes: data.attributes.map(attribute => ({
       //   id: attribute.id,
       //   values: attribute.value[0] === "" ? [] : attribute.value

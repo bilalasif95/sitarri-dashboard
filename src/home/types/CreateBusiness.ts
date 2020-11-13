@@ -42,6 +42,7 @@ export interface CreateBusinessVariables {
     facebookUrl?: string;
     instagramUrl?: string;
     logo?: any;
+    isVerified?: boolean;
     twitterUrl?: any;
     websiteUrl?: any;
     // description: string;

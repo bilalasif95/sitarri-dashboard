@@ -84,6 +84,7 @@ export interface InitialProductFilterData {
   categories: InitialProductFilterData_categories | null;
   collections: InitialProductFilterData_collections | null;
   productTypes: InitialProductFilterData_productTypes | null;
+  businessCategories: any | null;
 }
 
 export interface InitialProductFilterDataVariables {

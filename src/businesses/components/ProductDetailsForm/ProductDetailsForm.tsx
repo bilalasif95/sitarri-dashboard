@@ -64,6 +64,15 @@ const useStyles = makeStyles(
         outline: "none"
       }
     },
+    Facebook: {
+      "& input": {
+        paddingLeft: "103px !important"
+      },
+      "& label": {
+        marginLeft: "91px !important",
+        width: "initial",
+      }
+    },
     Form: {
       display: "flex",
       justifyContent: "space-between"
@@ -119,6 +128,15 @@ const useStyles = makeStyles(
       position: "relative"
     },
 
+    Instagram: {
+      "& input": {
+        paddingLeft: "108px !important"
+      },
+      "& label": {
+        marginLeft: "95px !important",
+        width: "initial",
+      }
+    },
     PrependText: {
       background: "#efefef",
       borderBottomLeftRadius: "5px",
@@ -174,11 +192,25 @@ const useStyles = makeStyles(
       display: "flex"
     },
     TitleImg: {
+      "& img": {
+        borderRadius: "5px",
+        height: "60px",
+        width: "60px"
+      },
       background: "#e8ebeb",
       borderRadius: "5px",
       height: "60px",
       marginRight: "25px",
       width: "60px"
+    },
+    Twitter: {
+      "& input": {
+        paddingLeft: "93px !important"
+      },
+      "& label": {
+        marginLeft: "80px !important",
+        width: "initial",
+      }
     },
     VerifiedImg: {
       left: "0",
@@ -199,7 +231,7 @@ const useStyles = makeStyles(
         paddingLeft: "50px !important"
       },
       "& label": {
-        marginLeft: "35px !important"
+        marginLeft: "37px !important"
       }
     },
     card: {
@@ -228,6 +260,7 @@ interface ProductDetailsFormProps {
     logo?: any;
     businessCategory?: string;
   };
+  product?: any;
   businessNames: any;
   disabled?: boolean;
   errors: ProductErrorFragment[];
@@ -243,6 +276,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
     data,
     disabled,
     errors,
+    product,
     businessNames,
     // initialDescription,
     onChange
@@ -252,7 +286,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
   const intl = useIntl();
   const [businessNamesArray, setBusinessNamesArray] = React.useState([]);
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
-    maybe(() => data.businessCategory, "")
+    maybe(() => product.businesscategory.name, "")
   );
   const classes = useStyles(props);
   const [logo, setLogo] = React.useState<any>();
@@ -285,8 +319,8 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
       <CardContent>
         <div className={classes.BusinessTitle}>
           <div className={classes.TitleImg}>
-            {data.logo ?
-              <img src={data.logo} />
+            {product && product.logo ?
+              <img src={product && product.logo} />
               :
               <SVG src={NoImg} />
             }
@@ -317,7 +351,9 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
                 value={data.businessCategory}
                 choices={businessNamesArray}
                 InputProps={{
-                  autoComplete: "off"
+                  inputProps: {
+                    autocomplete: "plsdontautocomplete" // Somehow it shuts it down
+                  }
                 }}
               />
             </div>
@@ -327,6 +363,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
               <div className={classes.SocialIcons}>
                 <SVG className={classes.InputIcons} src={Facebook} />
                 <TextField
+                  className={classes.Facebook}
                   disabled={disabled}
                   label="Facebook"
                   name="facebookUrl"
@@ -344,6 +381,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
               <div className={classes.SocialIcons}>
                 <SVG className={classes.InputIcons} src={Twitter} />
                 <TextField
+                  className={classes.Twitter}
                   disabled={disabled}
                   label="Twitter"
                   name="twitterUrl"
@@ -381,6 +419,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
               <div className={classes.SocialIcons}>
                 <SVG className={classes.InputIcons} src={Instagram} />
                 <TextField
+                  className={classes.Instagram}
                   disabled={disabled}
                   label="Instagram"
                   name="instagramUrl"

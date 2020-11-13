@@ -21,19 +21,32 @@ export const categoryFragment = gql`
   }
 `;
 export const categoryDetailsFragment = gql`
-  fragment CategoryDetailsFragment on Category {
-    id
-    backgroundImage {
-      alt
-      url
-    }
-    name
-    descriptionJson
-    seoDescription
-    seoTitle
-    parent {
+  fragment StoreDetailsFragment on Store {
       id
-    }
+      name
+      description
+      address {
+        streetAddress
+        city
+        postalCode
+        country
+      }
+      category
+      business {
+        id
+        name
+      }
+      logo
+      phone
+      images {
+        url
+        id
+        alt
+      }
+      tags {
+        name
+        id
+      }
   }
 `;
 

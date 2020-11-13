@@ -48,7 +48,7 @@ import {
   ProductUrlDialog,
   productVariantCreatorUrl
 } from "../../urls";
-import {productAddUrl} from "../../../products/urls";
+import { productAddUrl } from "../../../products/urls";
 import {
   areFiltersApplied,
   getFilterTabs,
@@ -162,6 +162,13 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params, listPa
   const filterOpts = getFilterOpts(
     listParams,
     maybe(() => initialFilterData.attributes.edges.map(edge => edge.node), []),
+    {
+      initial: maybe(
+        () => initialFilterData.businessCategories.edges.map(edge => edge.node),
+        []
+      ),
+      search: searchCategories
+    },
     {
       initial: maybe(
         () => initialFilterData.categories.edges.map(edge => edge.node),
@@ -284,6 +291,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params, listPa
                   const handleSubmit = createUpdateHandler(
                     product,
                     updateProduct.mutate,
+                    data && data.businessCategories && data.businessCategories.edges
                     // updateSimpleProduct.mutate
                   );
                   const handleImageUpload = createImageUploadHandler(

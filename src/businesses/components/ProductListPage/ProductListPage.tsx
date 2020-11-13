@@ -16,6 +16,7 @@ import search from "@assets/images/search.svg";
 import globe from "@assets/images/globe.svg";
 import facebook from "@assets/images/facebook.svg";
 import instagram from "@assets/images/instagram.svg";
+import NoImg from "@assets/images/noimg.svg";
 import saleimg1 from "@assets/images/saleimg1.svg";
 import saleimg2 from "@assets/images/saleimg2.svg";
 import saleimg3 from "@assets/images/saleimg3.svg";
@@ -90,6 +91,56 @@ export interface ProductListPageProps
 
 const useStyles = makeStyles(
   theme => ({
+    Facebook: {
+      "& input": {
+        paddingLeft: "103px !important"
+      },
+      "& label": {
+        marginLeft: "91px !important",
+        width: "initial",
+      }
+    },
+    InputPrepend: {
+      position: "relative"
+    },
+    Instagram: {
+      "& input": {
+        paddingLeft: "108px !important"
+      },
+      "& label": {
+        marginLeft: "95px !important",
+        width: "initial",
+      }
+    },
+    PrependText: {
+      background: "#efefef",
+      borderBottomLeftRadius: "5px",
+      borderRight: "1px solid #9d9d9d",
+      borderTopLeftRadius: "5px",
+      fontSize: "8px",
+      left: "46px",
+      padding: "20px 8px",
+      position: "absolute",
+      top: "31px",
+      zIndex: 1
+    },
+    Twitter: {
+      "& input": {
+        paddingLeft: "93px !important"
+      },
+      "& label": {
+        marginLeft: "80px !important",
+        width: "initial",
+      }
+    },
+    Website: {
+      "& input": {
+        paddingLeft: "50px !important"
+      },
+      "& label": {
+        marginLeft: "37px !important"
+      }
+    },
     arrowlefticon: {
       left: "0",
       position: "absolute"
@@ -272,7 +323,7 @@ const useStyles = makeStyles(
         height: "100px",
         width: "100px"
       },
-      backgroundColor: "#695ccd",
+      // backgroundColor: "#695ccd",
       borderRadius: "5px",
       height: "100px",
       width: "100px"
@@ -500,11 +551,12 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const [vend, setVend] = React.useState(false);
   const [platform, setPlatform] = React.useState("");
   const [businessID, setBusinessID] = React.useState("");
+
   const initialForm: any = {
     address: maybe(() => "", ""),
     business: maybe(() => "", ""),
-    businessCategory: maybe(() => "", ""),
-    businessName: maybe(() => "", ""),
+    businessCategory: maybe(() => businesscategory, ""),
+    businessName: maybe(() => businessName, ""),
     city: maybe(() => "", ""),
     country: maybe(() => "", ""),
     description: maybe(() => "", ""),
@@ -534,7 +586,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     setBusinessNamesArray(businessNameArray);
   }, [businessNames]);
 
-  const { verifyTokenAndSetData } = useUser();
+  const { user, verifyTokenAndSetData } = useUser();
   const token = getAuthToken();
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
     maybe(() => "", "")
@@ -1019,8 +1071,9 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                         // business: businessID,
                         businesscategory,
                         // description: businessDescription,
-                        facebookUrl: input.facebook,
-                        instagramUrl: input.instagram,
+                        facebookUrl: input.facebook ? "https://www.facebook.com/" + input.facebook : "",
+                        instagramUrl: input.instagram ? "https://www.instagram.com/" + input.instagram : "",
+                        isVerified: user.isSuperuser ? true : false,
                         logo: logoFile,
                         // maxPrice: 0,
                         // minPrice: 0,
@@ -1028,8 +1081,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                         // rating: 4,
                         // totalReviews: 10,
                         // phone: phoneNumber,
-                        twitterUrl: input.twitter,
-                        websiteUrl: input.website
+                        twitterUrl: input.twitter ? "https://www.twitter.com/" + input.twitter : "",
+                        websiteUrl: input.website ? "https://www." + input.website : "",
                       }
                     }
                   })
@@ -1090,81 +1143,97 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                         }}
                       />
                     </div> */}
-                          <div
-                            className={`${classes.inputbox} ${classes.employeaccessinput}`}
-                          >
-                            <SVG src={globe} />
-                            <TextField
-                              fullWidth
-                              autoComplete="website"
-                              label="Website"
-                              name="website"
-                              error={websiteURLError}
-                              helperText={websiteURLError}
-                              type="url"
-                              onChange={change}
-                              value={data.website}
-                              inputProps={{
-                                "data-tc": "website"
-                              }}
-                            />
+                          <div className={classes.InputPrepend}>
+                            <div className={classes.PrependText}>www.</div>
+                            <div
+                              className={`${classes.inputbox} ${classes.employeaccessinput}`}
+                            >
+                              <SVG src={globe} />
+                              <TextField
+                                className={classes.Website}
+                                fullWidth
+                                autoComplete="website"
+                                label="Website"
+                                name="website"
+                                error={websiteURLError}
+                                helperText={websiteURLError}
+                                type="url"
+                                onChange={change}
+                                value={data.website}
+                                inputProps={{
+                                  "data-tc": "website"
+                                }}
+                              />
+                            </div>
                           </div>
-                          <div
-                            className={`${classes.inputbox} ${classes.employeaccessinput}`}
-                          >
-                            <SVG src={facebook} />
-                            <TextField
-                              fullWidth
-                              autoComplete="facebook"
-                              label="Facebook"
-                              name="facebook"
-                              error={facebookURLError}
-                              helperText={facebookURLError}
-                              type="url"
-                              onChange={change}
-                              value={data.facebook}
-                              inputProps={{
-                                "data-tc": "facebook"
-                              }}
-                            />
+                          <div className={classes.InputPrepend}>
+                            <div className={classes.PrependText}>www.facebook.com/</div>
+                            <div
+                              className={`${classes.inputbox} ${classes.employeaccessinput}`}
+                            >
+                              <SVG src={facebook} />
+                              <TextField
+                                className={classes.Facebook}
+                                fullWidth
+                                autoComplete="facebook"
+                                label="Facebook"
+                                name="facebook"
+                                error={facebookURLError}
+                                helperText={facebookURLError}
+                                type="url"
+                                onChange={change}
+                                value={data.facebook}
+                                inputProps={{
+                                  "data-tc": "facebook"
+                                }}
+                              />
+                            </div>
                           </div>
-                          <div
-                            className={`${classes.inputbox} ${classes.employeaccessinput}`}
-                          >
-                            <SVG src={instagram} />
-                            <TextField
-                              fullWidth
-                              autoComplete="instagram"
-                              label="Instagram"
-                              name="instagram"
-                              error={instagramURLError}
-                              helperText={instagramURLError}
-                              type="url"
-                              onChange={change}
-                              value={data.instagram}
-                              inputProps={{
-                                "data-tc": "instagram"
-                              }}
-                            />
+                          <div className={classes.InputPrepend}>
+                            <div className={classes.PrependText}>www.instagram.com/</div>
+                            <div
+                              className={`${classes.inputbox} ${classes.employeaccessinput}`}
+                            >
+                              <SVG src={instagram} />
+                              <TextField
+                                className={classes.Instagram}
+                                fullWidth
+                                autoComplete="instagram"
+                                label="Instagram"
+                                name="instagram"
+                                error={instagramURLError}
+                                helperText={instagramURLError}
+                                type="url"
+                                onChange={change}
+                                value={data.instagram}
+                                inputProps={{
+                                  "data-tc": "instagram"
+                                }}
+                              />
+                            </div>
                           </div>
-                          <div
-                            className={`${classes.inputbox} ${classes.employeaccessinput}`}
-                          >
-                            <SVG src={twitter} />
-                            <TextField
-                              fullWidth
-                              autoComplete="twitter"
-                              label="Twitter"
-                              error={twitterURLError}
-                              helperText={twitterURLError}
-                              name="twitter"
-                              type="url"
-                              onChange={change}
-                              value={data.twitter}
-                              inputProps={{
-                                "data-tc": "twitter"
-                              }}
-                            />
+                          <div className={classes.InputPrepend}>
+                            <div className={classes.PrependText}>www.twitter.com/</div>
+                            <div
+                              className={`${classes.inputbox} ${classes.employeaccessinput}`}
+                            >
+                              <SVG src={twitter} />
+                              <TextField
+                                className={classes.Twitter}
+                                fullWidth
+                                autoComplete="twitter"
+                                label="Twitter"
+                                error={twitterURLError}
+                                helperText={twitterURLError}
+                                name="twitter"
+                                type="url"
+                                onChange={change}
+                                value={data.twitter}
+                                inputProps={{
+                                  "data-tc": "twitter"
+                                }}
+                              />
+                            </div>
                           </div>
                           <div className={classes.fileupload}>
                             <p>Business Logo</p>
@@ -1204,7 +1273,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                           <div>
                             <p>Preview:</p>
                             <div className={classes.filepreview}>
-                              {logo === "" ? "" : <img src={logo} />}
+                              {logo === "" || logo === undefined ? <img src={NoImg} /> : <img src={logo} />}
                             </div>
                           </div>
                         </div>

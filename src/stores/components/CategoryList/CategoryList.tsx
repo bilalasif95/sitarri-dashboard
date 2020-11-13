@@ -224,8 +224,8 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
                   )}
                 </TableCell>
                 <TableCell className={classes.colProducts}>
-                  {category && category.business !== undefined ? (
-                    category.business.name
+                  {(category && category.business !== undefined) ||  (category && category.business !== null) ? (
+                    category && category.business && category.business.name
                   ) : (
                     <Skeleton />
                   )}

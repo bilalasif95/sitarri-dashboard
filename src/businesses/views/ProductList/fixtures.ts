@@ -20,6 +20,7 @@ export const productListFilterOpts: ProductListFilterOpts = {
     slug: attr.slug,
     value: [attr.values[0].slug, attr.values.length > 2 && attr.values[2].slug]
   })),
+  businessCategories: [],
   categories: {
     ...fetchMoreProps,
     ...searchPageProps,

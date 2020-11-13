@@ -81,6 +81,36 @@ export function getFilterOpts(
             ? params.attributes[attr.slug]
             : []
       })),
+    businessCategories: {
+      active: !!params.categories,
+      choices: maybe(
+        () =>
+          categories.search.result.data.search.edges.map(edge => ({
+            label: edge.node.name,
+            value: edge.node.id
+          })),
+        []
+      ),
+      displayValues: !!params.categories
+        ? maybe(
+          () =>
+            categories.initial.map(category => ({
+              label: category.name,
+              value: category.id
+            })),
+          []
+        )
+        : [],
+      hasMore: maybe(
+        () => categories.search.result.data.search.pageInfo.hasNextPage,
+        false
+      ),
+      initialSearch: "",
+      loading: categories.search.result.loading,
+      onFetchMore: categories.search.loadMore,
+      onSearchChange: categories.search.search,
+      value: maybe(() => dedupeFilter(params.categories), [])
+    },
     categories: {
       active: !!params.categories,
       choices: maybe(
@@ -93,13 +123,13 @@ export function getFilterOpts(
       ),
       displayValues: !!params.categories
         ? maybe(
-            () =>
-              categories.initial.map(category => ({
-                label: category.name,
-                value: category.id
-              })),
-            []
-          )
+          () =>
+            categories.initial.map(category => ({
+              label: category.name,
+              value: category.id
+            })),
+          []
+        )
         : [],
       hasMore: maybe(
         () => categories.search.result.data.search.pageInfo.hasNextPage,
@@ -123,13 +153,13 @@ export function getFilterOpts(
       ),
       displayValues: !!params.collections
         ? maybe(
-            () =>
-              collections.initial.map(category => ({
-                label: category.name,
-                value: category.id
-              })),
-            []
-          )
+          () =>
+            collections.initial.map(category => ({
+              label: category.name,
+              value: category.id
+            })),
+          []
+        )
         : [],
       hasMore: maybe(
         () => collections.search.result.data.search.pageInfo.hasNextPage,
@@ -164,13 +194,13 @@ export function getFilterOpts(
       ),
       displayValues: !!params.productTypes
         ? maybe(
-            () =>
-              productTypes.initial.map(productType => ({
-                label: productType.name,
-                value: productType.id
-              })),
-            []
-          )
+          () =>
+            productTypes.initial.map(productType => ({
+              label: productType.name,
+              value: productType.id
+            })),
+          []
+        )
         : [],
       hasMore: maybe(
         () => productTypes.search.result.data.search.pageInfo.hasNextPage,
@@ -200,12 +230,12 @@ export function getFilterVariables(
   return {
     attributes: !!params.attributes
       ? Object.keys(params.attributes).map(key => ({
-          slug: key,
-          // It is possible for qs to parse values not as string[] but string
-          values: isArray(params.attributes[key])
-            ? params.attributes[key]
-            : (([params.attributes[key]] as unknown) as string[])
-        }))
+        slug: key,
+        // It is possible for qs to parse values not as string[] but string
+        values: isArray(params.attributes[key])
+          ? params.attributes[key]
+          : (([params.attributes[key]] as unknown) as string[])
+      }))
       : null,
     categories: params.categories !== undefined ? params.categories : null,
     collections: params.collections !== undefined ? params.collections : null,
@@ -240,9 +270,9 @@ export function getFilterQueryParam(
     return {
       [group]: active
         ? {
-            ...(rest === undefined ? {} : rest),
-            [name]: value
-          }
+          ...(rest === undefined ? {} : rest),
+          [name]: value
+        }
         : rest
     };
   }

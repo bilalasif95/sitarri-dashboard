@@ -45,7 +45,7 @@ const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   return <ProductListComponent params={params} />;
 };
 
-const ProductUpdate: React.FC<RouteComponentProps<any>> = ({ match }) => {
+const ProductUpdate: React.FC<RouteComponentProps<any>> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductUrlQueryParams = qs;
 

@@ -194,12 +194,12 @@ export const ProductList: React.FC<ProductListProps> = (props, { params }) => {
           <DisplayColumn column="productType" displayColumns={settings.columns}>
             <TableCellHeader
               className={classes.colType}
-              direction={
-                sort.sort === ProductListUrlSortField.productType
-                  ? getArrowDirection(sort.asc)
-                  : undefined
-              }
-              onClick={() => onSort(ProductListUrlSortField.productType)}
+            // direction={
+            //   sort.sort === ProductListUrlSortField.productType
+            //     ? getArrowDirection(sort.asc)
+            //     : undefined
+            // }
+            // onClick={() => onSort(ProductListUrlSortField.productType)}
             >
               <FormattedMessage
                 defaultMessage="Website"
@@ -210,13 +210,13 @@ export const ProductList: React.FC<ProductListProps> = (props, { params }) => {
           <DisplayColumn column="price" displayColumns={settings.columns}>
             <TableCellHeader
               className={classes.colPrice}
-              direction={
-                sort.sort === ProductListUrlSortField.price
-                  ? getArrowDirection(sort.asc)
-                  : undefined
-              }
-              // textAlign="right"
-              onClick={() => onSort(ProductListUrlSortField.price)}
+            // direction={
+            //   sort.sort === ProductListUrlSortField.price
+            //     ? getArrowDirection(sort.asc)
+            //     : undefined
+            // }
+            // textAlign="right"
+            // onClick={() => onSort(ProductListUrlSortField.price)}
             >
               <FormattedMessage
                 defaultMessage="Business Owner"
@@ -227,12 +227,12 @@ export const ProductList: React.FC<ProductListProps> = (props, { params }) => {
           <DisplayColumn column="isPublished" displayColumns={settings.columns}>
             <TableCellHeader
               className={classes.colPublished}
-              direction={
-                sort.sort === ProductListUrlSortField.status
-                  ? getArrowDirection(sort.asc)
-                  : undefined
-              }
-              onClick={() => onSort(ProductListUrlSortField.status)}
+            // direction={
+            //   sort.sort === ProductListUrlSortField.status
+            //     ? getArrowDirection(sort.asc)
+            //     : undefined
+            // }
+            // onClick={() => onSort(ProductListUrlSortField.status)}
             >
               <FormattedMessage
                 defaultMessage="Status"
@@ -362,32 +362,32 @@ export const ProductList: React.FC<ProductListProps> = (props, { params }) => {
                     <TableCell
                       className={classes.colPublished}
                       data-tc="isPublished"
-                      data-tc-is-published={maybe(() => product.isPublished)}
+                      data-tc-is-published={maybe(() => product.isVerified)}
                     >
                       {product &&
-                        // maybe(() => product.isPublished !== undefined) ? (
-                        <StatusLabel
-                          label={
-                            // product.isPublished
-                            //   ? 
-                            intl.formatMessage({
-                              defaultMessage: "Verified",
-                              description: "business status"
-                            })
-                            // : intl.formatMessage({
-                            //   defaultMessage: "Not Verified",
-                            //   description: "business status"
-                            // })
-                          }
-                          status={
-                            // product.isPublished ? 
-                            "success"
-                            // : "error"
-                          }
-                        />
-                        // ) : (
-                        //   <Skeleton />
-                        // )
+                        maybe(() => product.isVerified !== undefined) ? (
+                          <StatusLabel
+                            label={
+                              product.isVerified
+                                ?
+                                intl.formatMessage({
+                                  defaultMessage: "Verified",
+                                  description: "business status"
+                                })
+                                : intl.formatMessage({
+                                  defaultMessage: "Not Verified",
+                                  description: "business status"
+                                })
+                            }
+                            status={
+                              product.isVerified ?
+                                "success"
+                                : "error"
+                            }
+                          />
+                        ) : (
+                          <Skeleton />
+                        )
                       }
                     </TableCell>
                   </DisplayColumn>

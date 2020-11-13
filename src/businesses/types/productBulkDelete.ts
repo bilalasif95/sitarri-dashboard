@@ -15,12 +15,12 @@ export interface productBulkDelete_productBulkDelete_errors {
 }
 
 export interface productBulkDelete_productBulkDelete {
-  __typename: "ProductBulkDelete";
-  errors: productBulkDelete_productBulkDelete_errors[];
+  __typename: "BusinessBulkDelete";
+  businessErrors: productBulkDelete_productBulkDelete_errors[];
 }
 
 export interface productBulkDelete {
-  productBulkDelete: productBulkDelete_productBulkDelete | null;
+  businessBulkdelete: productBulkDelete_productBulkDelete | null;
 }
 
 export interface productBulkDeleteVariables {

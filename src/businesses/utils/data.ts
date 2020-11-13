@@ -195,7 +195,7 @@ export function getProductUpdatePageFormData(
 ): ProductUpdatePageFormData {
   return {
     basePrice: maybe(() => product.basePrice.amount, 0),
-    businessCategory: maybe(() => product.businesscategory.name, ""),
+    businessCategory: maybe(() => product && product.businesscategory && product.businesscategory.name, ""),
     category: maybe(() => product.category.id, ""),
     chargeTaxes: maybe(() => product.chargeTaxes, false),
     collections: maybe(

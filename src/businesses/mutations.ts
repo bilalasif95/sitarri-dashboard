@@ -97,13 +97,14 @@ export const TypedProductImageCreateMutation = TypedMutation<
 >(productImageCreateMutation);
 
 export const productDeleteMutation = gql`
-  ${productErrorFragment}
-  mutation ProductDelete($id: ID!) {
-    productDelete(id: $id) {
-      errors: productErrors {
-        ...ProductErrorFragment
+  mutation BusinessDelete($id: ID!) {
+    businessDelete(id: $id) {
+      businessErrors {
+        code
+        field
+        message
       }
-      product {
+      business {
         id
       }
     }
@@ -512,7 +513,7 @@ export const TypedVariantImageUnassignMutation = TypedMutation<
 
 export const productBulkDeleteMutation = gql`
   mutation BusinessBulkDelete($ids: [ID!]!) {
-    businessBuldelete(ids: $ids) {
+    businessBulkdelete(ids: $ids) {
       businessErrors {
         code
         field

@@ -1,45 +1,45 @@
 // import { convertFromRaw, RawDraftContentState } from "draft-js";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
+// import Button from "@material-ui/core/Button";
+// import Card from "@material-ui/core/Card";
+// import makeStyles from "@material-ui/core/styles/makeStyles";
+// import IconButton from "@material-ui/core/IconButton";
+// import DeleteIcon from "@material-ui/icons/Delete";
 // import { diff } from "fast-array-diff";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
-import ColumnPicker, {
-  ColumnPickerChoice
-} from "@saleor/components/ColumnPicker";
+// import ColumnPicker, {
+//   ColumnPickerChoice
+// } from "@saleor/components/ColumnPicker";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
-import FilterBar from "@saleor/components/FilterBar";
+// import FilterBar from "@saleor/components/FilterBar";
 import Form from "@saleor/components/Form";
 // import Grid from "@saleor/components/Grid";
-import SearchBar from "@saleor/components/SearchBar";
-import PageHeader from "@saleor/components/PageHeader";
+// import SearchBar from "@saleor/components/SearchBar";
+// import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 // import SeoForm from "@saleor/components/SeoForm";
 // import VisibilityCard from "@saleor/components/VisibilityCard";
 // import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useBulkActions from "@saleor/hooks/useBulkActions";
-import { ProductListColumns, DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
+// import { ProductListColumns, DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import useFormset from "@saleor/hooks/useFormset";
 // import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import useNavigator from "@saleor/hooks/useNavigator";
-import usePaginator, {
-  createPaginationState
-} from "@saleor/hooks/usePaginator";
+// import usePaginator, {
+//   createPaginationState
+// } from "@saleor/hooks/usePaginator";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
-import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+// import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
-import { getSortParams, getSortUrlVariables } from "@saleor/utils/sort";
-import createSortHandler from "@saleor/utils/handlers/sortHandler";
+// import { getSortParams, getSortUrlVariables } from "@saleor/utils/sort";
+// import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { FetchMoreProps, ListActions } from "@saleor/types";
 // import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 // import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -51,9 +51,9 @@ import {
   ProductDetails_product_variants
 } from "../../types/ProductDetails";
 
-import { ProductListVariables } from "../../types/ProductList";
+// import { ProductListVariables } from "../../types/ProductList";
 
-import CategoryList from "../CategoryList";
+// import CategoryList from "../CategoryList";
 
 import {
   AvailableInGridAttributes_availableInGrid_edges_node,
@@ -85,44 +85,44 @@ import { ProductStockInput } from "../ProductStocks";
 
 import { HomePageQuery } from "../../../home/queries";
 
-import {
-  createFilterStructure
-} from "../ProductListPage/filters";
+// import {
+//   createFilterStructure
+// } from "../ProductListPage/filters";
 
-import BusinessProductList from "../BusinessProductList";
+// import BusinessProductList from "../BusinessProductList";
 
 import {
-  getCategoryFilterVariables,
-  getFilterVariables,
-  getFilterTabs,
+  // getCategoryFilterVariables,
+  // getFilterVariables,
+  // getFilterTabs,
   getFilterQueryParam,
 } from "../../views/ProductList/filters";
-import { getSortQueryVariables, getCategorySortQueryVariables } from "../../views/ProductList/sort";
+// import { getSortQueryVariables, getCategorySortQueryVariables } from "../../views/ProductList/sort";
 
-import {
-  TypedProductListQuery
-} from "../../queries";
+// import {
+//   TypedProductListQuery
+// } from "../../queries";
 
-import {
-  // businessesListUrl,
-  ProductListUrlDialog,
-  ProductListUrlQueryParams,
-  ProductListUrlSortField
-} from "../../urls";
-import { productUrl, productListUrl } from "../../../products/urls";
-import {
-  categoryUrl,
-  categoryAddUrl,
-  categoryListUrl,
-  CategoryListUrlFilters,
-  CategoryListUrlDialog,
-  CategoryListUrlQueryParams
-} from "../../../categories/urls";
-import { TypedCategoriesListQuery } from "../../../categories/queries";
-import {
-  areFiltersApplied,
-  getActiveFilters
-} from "../../../categories/views/CategoryList/filter";
+// import {
+//   // businessesListUrl,
+//   ProductListUrlDialog,
+//   ProductListUrlQueryParams,
+//   ProductListUrlSortField
+// } from "../../urls";
+import { productListUrl } from "../../../products/urls";
+// import {
+//   categoryUrl,
+//   categoryAddUrl,
+//   categoryListUrl,
+//   CategoryListUrlFilters,
+//   CategoryListUrlDialog,
+//   CategoryListUrlQueryParams
+// } from "../../../categories/urls";
+// import { TypedCategoriesListQuery } from "../../../categories/queries";
+// import {
+//   areFiltersApplied,
+//   getActiveFilters
+// } from "../../../categories/views/CategoryList/filter";
 
 export interface ProductUpdatePageProps extends ListActions {
   errors: ProductErrorFragment[];
@@ -183,33 +183,33 @@ export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
   removeStocks: string[];
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    columnPicker: {
-      marginRight: theme.spacing(3)
-    }
-  }),
-  { name: "ProductListPage" }
-);
+// const useStyles = makeStyles(
+//   theme => ({
+//     columnPicker: {
+//       marginRight: theme.spacing(3)
+//     }
+//   }),
+//   { name: "ProductListPage" }
+// );
 
 export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   disabled,
   // categories: categoryChoiceList,
   // collections: collectionChoiceList,
   errors,
-  gridAttributes,
-  availableInGridAttributes,
-  defaultSettings,
-  hasMore,
-  initialSearch,
-  loading,
-  currentTab,
-  settings,
+  // gridAttributes,
+  // availableInGridAttributes,
+  // defaultSettings,
+  // hasMore,
+  // initialSearch,
+  // loading,
+  // currentTab,
+  // settings,
   params,
-  currencySymbol,
-  filterOpts,
-  tabs,
-  totalGridAttributes,
+  // currencySymbol,
+  // filterOpts,
+  // tabs,
+  // totalGridAttributes,
   // fetchCategories,
   // fetchCollections,
   // fetchMoreCategories,
@@ -221,14 +221,14 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   saveButtonBarState,
   variants,
   // warehouses,
-  onFetchMore,
+  // onFetchMore,
   // onAll,
   onBack,
-  onAdd,
+  // onAdd,
   onDelete,
   // onTabDelete,
   // onSearchChange,
-  onUpdateListSettings,
+  // onUpdateListSettings,
   // onTabChange,
   // onTabSave,
   // onImageDelete,
@@ -246,10 +246,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   // toggle,
   // toggleAll,
   // toolbar
-}, props) => {
+}) => {
   const intl = useIntl();
   const navigate = useNavigator();
-  const paginate = usePaginator();
+  // const paginate = usePaginator();
   // const localizeDate = useDateLocalize();
   const [businesses, setBusinesses] = React.useState([]);
   const attributeInput = React.useMemo(
@@ -259,7 +259,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   // const stockInput = React.useMemo(() => getStockInputFromProduct(product), [
   //   product
   // ]);
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
+  const { reset } = useBulkActions(
     params.ids
   );
   // const { change: changeAttributeData, data: attributes } = useFormset(
@@ -297,35 +297,35 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   // const currency = maybe(() => product.basePrice.currency);
   // const hasVariants = maybe(() => product.productType.hasVariants, false);
 
-  const filterStructure = createFilterStructure(intl, filterOpts);
-  const classes = useStyles(props);
-  const columns: ColumnPickerChoice[] = [
-    {
-      label: intl.formatMessage({
-        defaultMessage: "Published",
-        description: "product status"
-      }),
-      value: "isPublished" as ProductListColumns
-    },
-    {
-      label: intl.formatMessage({
-        defaultMessage: "Price",
-        description: "product price"
-      }),
-      value: "price" as ProductListColumns
-    },
-    {
-      label: intl.formatMessage({
-        defaultMessage: "Type",
-        description: "product type"
-      }),
-      value: "productType" as ProductListColumns
-    },
-    ...availableInGridAttributes.map(attribute => ({
-      label: attribute.name,
-      value: `attribute:${attribute.id}`
-    }))
-  ];
+  // const filterStructure = createFilterStructure(intl, filterOpts);
+  // const classes = useStyles(props);
+  // const columns: ColumnPickerChoice[] = [
+  //   {
+  //     label: intl.formatMessage({
+  //       defaultMessage: "Published",
+  //       description: "product status"
+  //     }),
+  //     value: "isPublished" as ProductListColumns
+  //   },
+  //   {
+  //     label: intl.formatMessage({
+  //       defaultMessage: "Price",
+  //       description: "product price"
+  //     }),
+  //     value: "price" as ProductListColumns
+  //   },
+  //   {
+  //     label: intl.formatMessage({
+  //       defaultMessage: "Type",
+  //       description: "product type"
+  //     }),
+  //     value: "productType" as ProductListColumns
+  //   },
+  //   ...availableInGridAttributes.map(attribute => ({
+  //     label: attribute.name,
+  //     value: `attribute:${attribute.id}`
+  //   }))
+  // ];
 
   const handleSubmit = (data: any) => {
     // const dataStocks = stocks.map(stock => stock.id);
@@ -350,74 +350,74 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     });
   };
 
-  const [openModal] = createDialogActionHandlers<
-    ProductListUrlDialog,
-    ProductListUrlQueryParams
-  >(navigate, productListUrl, params);
+  // const [openModal] = createDialogActionHandlers<
+  //   ProductListUrlDialog,
+  //   ProductListUrlQueryParams
+  // >(navigate, productListUrl, params);
 
-  const [openCategoryModal] = createDialogActionHandlers<
-    CategoryListUrlDialog,
-    CategoryListUrlQueryParams
-  >(navigate, categoryListUrl, params);
+  // const [openCategoryModal] = createDialogActionHandlers<
+  //   CategoryListUrlDialog,
+  //   CategoryListUrlQueryParams
+  // >(navigate, categoryListUrl, params);
 
-  const currentCategoryTab =
-    params.activeTab === undefined
-      ? areFiltersApplied(params)
-        ? tabs.length + 1
-        : 0
-      : parseInt(params.activeTab, 0);
+  // const currentCategoryTab =
+  //   params.activeTab === undefined
+  //     ? areFiltersApplied(params)
+  //       ? tabs.length + 1
+  //       : 0
+  //     : parseInt(params.activeTab, 0);
 
-  const handleSave = (columns: ProductListColumns[]) =>
-    onUpdateListSettings("columns", columns);
+  // const handleSave = (columns: ProductListColumns[]) =>
+  //   onUpdateListSettings("columns", columns);
 
-  const paginationState = createPaginationState(settings.rowNumber, params);
-  const filter = getFilterVariables(params);
-  const sort = getSortQueryVariables(params);
+  // const paginationState = createPaginationState(settings.rowNumber, params);
+  // const filter = getFilterVariables(params);
+  // const sort = getSortQueryVariables(params);
 
-  const queryVariables = React.useMemo<ProductListVariables>(
-    () => ({
-      ...paginationState,
-      filter,
-      sort
-    }),
-    [params, settings.rowNumber]
-  );
+  // const queryVariables = React.useMemo<ProductListVariables>(
+  //   () => ({
+  //     ...paginationState,
+  //     filter,
+  //     sort
+  //   }),
+  //   [params, settings.rowNumber]
+  // );
 
-  const categoryQueryVariables = React.useMemo(
-    () => ({
-      ...paginationState,
-      filter: getCategoryFilterVariables(params),
-      sort: getCategorySortQueryVariables(params)
-    }),
-    [params]
-  );
+  // const categoryQueryVariables = React.useMemo(
+  //   () => ({
+  //     ...paginationState,
+  //     filter: getCategoryFilterVariables(params),
+  //     sort: getCategorySortQueryVariables(params)
+  //   }),
+  //   [params]
+  // );
 
-  const handleSort = (field: ProductListUrlSortField, attributeId?: string) =>
-    navigate(
-      productListUrl({
-        ...params,
-        ...getSortUrlVariables(field, params),
-        attributeId,
-        ...DEFAULT_INITIAL_PAGINATION_DATA
-      })
-    );
+  // const handleSort = (field: ProductListUrlSortField, attributeId?: string) =>
+  //   navigate(
+  //     productListUrl({
+  //       ...params,
+  //       ...getSortUrlVariables(field, params),
+  //       attributeId,
+  //       ...DEFAULT_INITIAL_PAGINATION_DATA
+  //     })
+  //   );
 
-  const categoryHandleSort = createSortHandler(navigate, categoryListUrl, params);
+  // const categoryHandleSort = createSortHandler(navigate, categoryListUrl, params);
 
-  const handleTabChange = (tab: number) => {
-    reset();
-    navigate(
-      productListUrl({
-        activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data
-      })
-    );
-  };
+  // const handleTabChange = (tab: number) => {
+  //   reset();
+  //   navigate(
+  //     productListUrl({
+  //       activeTab: tab.toString(),
+  //       ...getFilterTabs()[tab - 1].data
+  //     })
+  //   );
+  // };
 
   const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange
+    // changeFilters,
+    // resetFilters,
+    // handleSearchChange
   ] = createFilterHandlers({
     cleanupFn: reset,
     createUrl: productListUrl,
@@ -426,26 +426,26 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     params
   });
 
-  const changeFilterField = (filter: CategoryListUrlFilters) => {
-    reset();
-    navigate(
-      categoryListUrl({
-        ...getActiveFilters(params),
-        ...filter,
-        activeTab: undefined
-      })
-    );
-  };
+  // const changeFilterField = (filter: CategoryListUrlFilters) => {
+  //   reset();
+  //   navigate(
+  //     categoryListUrl({
+  //       ...getActiveFilters(params),
+  //       ...filter,
+  //       activeTab: undefined
+  //     })
+  //   );
+  // };
 
-  const handleCategoryTabChange = (tab: number) => {
-    reset();
-    navigate(
-      categoryListUrl({
-        activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data
-      })
-    );
-  };
+  // const handleCategoryTabChange = (tab: number) => {
+  //   reset();
+  //   navigate(
+  //     categoryListUrl({
+  //       activeTab: tab.toString(),
+  //       ...getFilterTabs()[tab - 1].data
+  //     })
+  //   );
+  // };
 
   return (
     <HomePageQuery>
@@ -453,7 +453,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
         maybe(() => setBusinesses(data.businessCategories.edges))
         return (
           <Form onSubmit={handleSubmit} initial={initialData} confirmLeave>
-            {({ change, data, hasChanged, submit }) => (
+            {({ change, data, submit }) => (
               // {
               // {({ change, data, hasChanged, submit, triggerChange, toggleValue }) => {
               // const handleCollectionSelect = createMultiAutocompleteSelectHandler(
@@ -494,11 +494,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       disabled={disabled}
                       errors={errors}
                       businessNames={businesses}
+                      product={product}
                       // initialDescription={initialDescription}
                       onChange={change}
                     />
                     <CardSpacer />
-                    <PageHeader title={intl.formatMessage(sectionNames.products)}>
+                    {/* <PageHeader title={intl.formatMessage(sectionNames.products)}>
                       <ColumnPicker
                         className={classes.columnPicker}
                         columns={columns}
@@ -693,7 +694,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                           )
                         }}
                       </TypedCategoriesListQuery>
-                    </Card>
+                    </Card> */}
                   </div>
                   {/* <PageHeader title={header} />
               <Grid>
@@ -844,7 +845,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     onDelete={onDelete}
                     onSave={submit}
                     state={saveButtonBarState}
-                    disabled={disabled || !hasChanged}
+                    disabled={disabled}
                   />
                 </Container>
               </>

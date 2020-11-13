@@ -219,6 +219,14 @@ const initialProductFilterDataQuery = gql`
         }
       }
     }
+    businessCategories(first: 100) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
     collections(first: 100, filter: { ids: $collections }) {
       edges {
         node {
@@ -243,21 +251,19 @@ export const useInitialProductFilterDataQuery = makeQuery<
 >(initialProductFilterDataQuery);
 
 const productListQuery = gql`
-  ${productFragment}
   query BusinessesList(
     $first: Int
-    $after: String
-    $last: Int
-    $before: String
-    $filter: ProductFilterInput
-    $sort: ProductOrder
+    $search: String
+    $sort: BusinessSortingInput
+    $filter: BusinessFilterInput
   ) {
-    businesses(first: 100) {
+    businesses(first: $first,search: $search,sortBy: $sort, filter: $filter) {
       edges {
         node {
           id
           name
           logo
+          isVerified
           websiteUrl
           user(first:100) {
             edges {
@@ -282,35 +288,6 @@ const productListQuery = gql`
           id
           name
         }
-      }
-    }
-    products(
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-      filter: $filter
-      sortBy: $sort
-    ) {
-      edges {
-        node {
-          ...ProductFragment
-          attributes {
-            attribute {
-              id
-            }
-            values {
-              id
-              name
-            }
-          }
-        }
-      }
-      pageInfo {
-        hasPreviousPage
-        hasNextPage
-        startCursor
-        endCursor
       }
     }
   }
@@ -344,6 +321,14 @@ const productDetailsQuery = gql`
             name
             description
           }
+        }
+      }
+    }
+    businessCategories(first: 100) {
+      edges {
+        node {
+          id
+          name
         }
       }
     }

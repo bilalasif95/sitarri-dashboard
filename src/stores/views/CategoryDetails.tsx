@@ -30,12 +30,15 @@ import {
 import {
   useCategoryBulkDeleteMutation,
   useCategoryDeleteMutation,
-  useCategoryUpdateMutation
+  useCategoryUpdateMutation,
+  useStoreImageCreateMutation,
+  useStoreImageDeleteMutation
 } from "../mutations";
 import { useCategoryDetailsQuery } from "../queries";
 import { CategoryBulkDelete } from "../types/CategoryBulkDelete";
 import { CategoryDelete } from "../types/CategoryDelete";
 import { CategoryUpdate } from "../types/CategoryUpdate";
+import { ProductImageCreate, ProductImageCreateVariables } from "../types/ProductImageCreate";
 import {
   categoryAddUrl,
   categoryUrl,
@@ -92,8 +95,33 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     }
   };
 
+  const handleStoreImageCreate = (data: ProductImageCreate) => {
+    const imageError = data.storeImagecreate.storeErrors.find(
+      error =>
+        error.field === ("image" as keyof ProductImageCreateVariables)
+    );
+    if (imageError) {
+      notify({
+        text: intl.formatMessage(commonMessages.somethingWentWrong)
+      });
+    }
+  };
+
+  const handleImageDeleteSuccess = () =>
+    notify({
+      text: intl.formatMessage(commonMessages.savedChanges)
+    });
+
   const [deleteCategory, deleteResult] = useCategoryDeleteMutation({
     onCompleted: handleCategoryDelete
+  });
+
+  const [storeImagecreate] = useStoreImageCreateMutation({
+    onCompleted: handleStoreImageCreate
+  });
+
+  const [storeImagedelete] = useStoreImageDeleteMutation({
+    onCompleted: handleImageDeleteSuccess
   });
 
   const handleCategoryUpdate = (data: CategoryUpdate) => {
@@ -189,25 +217,20 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
               images={maybe(() => data.store.images)}
               onCategoryClick={id => () => navigate(categoryUrl(id))}
               onDelete={() => openModal("delete")}
-              onImageDelete={() => () =>
-                updateCategory({
+              onImageDelete={(id) => () =>
+                storeImagedelete({
                   variables: {
-                    id,
-                    input: {
-                      business: category.business.id,
-                      images: null,
-                    }
+                    id
                   }
                 })
               }
               paramsProps={params}
               onImageUpload={file =>
-                updateCategory({
+                storeImagecreate({
                   variables: {
-                    id,
                     input: {
-                      business: category.business.id,
-                      images: file,
+                      image: file,
+                      store: id,
                     }
                   }
                 })

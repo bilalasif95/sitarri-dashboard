@@ -19,6 +19,14 @@ import {
   CategoryUpdate,
   CategoryUpdateVariables
 } from "./types/CategoryUpdate";
+import {
+  ProductImageCreate,
+  ProductImageCreateVariables
+} from "./types/ProductImageCreate";
+import {
+  ProductImageDelete,
+  ProductImageDeleteVariables
+} from "./types/ProductImageDelete";
 
 export const categoryDeleteMutation = gql`
   ${productErrorFragment}
@@ -53,6 +61,44 @@ export const useCategoryCreateMutation = makeMutation<
   CategoryCreate,
   CategoryCreateVariables
 >(categoryCreateMutation);
+
+export const storeImageCreateMutation = gql`
+  ${categoryDetailsFragment}
+  mutation StoreImageCreate($input: StoreImageCreateInput!) {
+    storeImagecreate(input: $input) {
+      store {
+        ...StoreDetailsFragment
+      }
+      storeErrors{
+        code
+        field
+      }
+    }
+  }
+`;
+export const useStoreImageCreateMutation = makeMutation<
+  ProductImageCreate,
+  ProductImageCreateVariables
+>(storeImageCreateMutation);
+
+export const storeImageDeleteMutation = gql`
+  ${categoryDetailsFragment}
+  mutation StoreImageDelete($id: ID!) {
+    storeImagedelete(id: $id) {
+      store {
+        ...StoreDetailsFragment
+      }
+      storeErrors{
+        code
+        field
+      }
+    }
+  }
+`;
+export const useStoreImageDeleteMutation = makeMutation<
+  ProductImageDelete,
+  ProductImageDeleteVariables
+>(storeImageDeleteMutation);
 
 export const categoryUpdateMutation = gql`
   mutation StoreUpdate($id: ID!, $input: StoreCreateInput!) {
