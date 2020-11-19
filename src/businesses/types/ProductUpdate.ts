@@ -217,6 +217,8 @@ export interface ProductUpdateVariables {
   id: string;
   businesscategory: string;
   websiteUrl: string;
+  deliverooUrl?: string;
+  uberEatsUrl?: string;
   facebookUrl: string;
   logo: any;
   twitterUrl: string;

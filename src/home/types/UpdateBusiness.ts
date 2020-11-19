@@ -36,11 +36,14 @@ export interface UpdateBusiness {
 }
 
 export interface UpdateBusinessVariables {
+  id?: any;
   input: {
-    name: string;
+    name?: string;
     category: string;
     facebookUrl: string;
     instagramUrl: string;
+    deliverooUrl?: string;
+    uberEatsUrl?: string;
     logo: any;
     twitterUrl: string;
     websiteUrl: string;

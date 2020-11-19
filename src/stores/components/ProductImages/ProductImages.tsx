@@ -112,7 +112,7 @@ interface ProductImagesProps {
   images: any;
   loading?: boolean;
   onImageDelete: (id: string) => () => void;
-  // onImageEdit: (id: string) => () => void;
+  onImageEdit: (id: string) => () => void;
   onImageReorder?: ReorderAction;
   onImageUpload(file: File);
 }
@@ -123,16 +123,15 @@ interface SortableImageProps {
     alt?: string;
     url: string;
   };
-  // onImageEdit: (id: string) => void;
+  onImageEdit: (id: string) => void;
   onImageDelete: () => void;
 }
 
 const SortableImage = SortableElement<SortableImageProps>(
-  ({ image, onImageDelete }) => (
+  ({ image, onImageEdit, onImageDelete }) => (
     <ImageTile
       image={image}
-      onImageEdit={undefined}
-      // onImageEdit ? () => onImageEdit(image.id) : undefined}
+      onImageEdit={onImageEdit ? () => onImageEdit(image.id) : undefined}
       onImageDelete={onImageDelete}
     />
   )
@@ -143,18 +142,18 @@ interface ImageListContainerProps {
   items: any;
   preview: any;
   onImageDelete: (id: string) => () => void;
-  // onImageEdit: (id: string) => () => void;
+  onImageEdit: (id: string) => () => void;
 }
 
 const ImageListContainer = SortableContainer<ImageListContainerProps>(
-  ({ items, preview, onImageDelete, ...props }) => (
+  ({ items, preview, onImageDelete, onImageEdit, ...props }) => (
     <div {...props}>
       {items.map((image, index) => (
         <SortableImage
           key={`item-${index}`}
           index={index}
           image={image}
-          // onImageEdit={onImageEdit ? onImageEdit(image.id) : null}
+          onImageEdit={onImageEdit ? onImageEdit(image.id) : null}
           onImageDelete={onImageDelete(image.id)}
         />
       ))}
@@ -172,7 +171,7 @@ const ProductImages: React.FC<ProductImagesProps> = props => {
     images,
     placeholderImage,
     loading,
-    // onImageEdit,
+    onImageEdit,
     onImageDelete,
     onImageReorder,
     onImageUpload
@@ -271,7 +270,7 @@ const ProductImages: React.FC<ProductImagesProps> = props => {
                       [classes.rootDragActive]: isDragActive
                     })}
                     onImageDelete={onImageDelete}
-                  // onImageEdit={onImageEdit}
+                    onImageEdit={onImageEdit}
                   />
                 </CardContent>
               )}

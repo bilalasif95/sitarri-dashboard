@@ -52,7 +52,7 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = (
   const intl = useIntl();
   const classes = useStyles(props);
   const [businessNamesArray, setBusinessNamesArray] = React.useState([]);
-  const [countryDisplayName, setCountryDisplayName] = useStateFromProps(maybe(() => data && data.status, ""));
+  const [countryDisplayName, setCountryDisplayName] = useStateFromProps(maybe(() => category.status, ""));
   const formErrors = getFormErrors(["name", "description"], errors);
   const handleCountrySelect = createSingleAutocompleteSelectHandler(
     onChange,
@@ -134,7 +134,9 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = (
               value={data.status}
               choices={businessNamesArray}
               InputProps={{
-                autoComplete: "off"
+                inputProps: {
+                  autocomplete: "plsdontautocomplete" // Somehow it shuts it down
+                }
               }}
             />
           </div>

@@ -10,6 +10,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import Slider from "@material-ui/core/Slider";
 import Typography from "@material-ui/core/Typography";
+import { maybe } from "../../../misc";
 
 const useStyles = makeStyles(
   theme => ({
@@ -90,39 +91,77 @@ export const StoreOpeningClosingHours: React.FC<any> = (
   const [saturdayTime, setSaturdayTime] = React.useState([0, 1440]);
   const [sundayTime, setSundayTime] = React.useState([0, 1440]);
 
+  React.useEffect(() => {
+    setMondayTime([
+      maybe(() => data && data.mondayOpeningTime, 0), maybe(() => data && data.mondayClosingTime, 0)
+    ])
+    setTuesdayTime([
+      maybe(() => data && data.tuesdayOpeningTime, 0), maybe(() => data && data.tuesdayClosingTime, 0)
+    ])
+    setWednesdayTime([
+      maybe(() => data && data.wednesdayOpeningTime, 0), maybe(() => data && data.wednesdayClosingTime, 0)
+    ])
+    setThursdayTime([
+      maybe(() => data && data.thursdayOpeningTime, 0), maybe(() => data && data.thursdayClosingTime, 0)
+    ])
+    setFridayTime([
+      maybe(() => data && data.fridayOpeningTime, 0), maybe(() => data && data.fridayClosingTime, 0)
+    ])
+    setSaturdayTime([
+      maybe(() => data && data.saturdayOpeningTime, 0), maybe(() => data && data.saturdayClosingTime, 0)
+    ])
+    setSundayTime([
+      maybe(() => data && data.sundayOpeningTime, 0), maybe(() => data && data.sundayClosingTime, 0)
+    ])
+  }, [data])
+
   const mondayHandleChange = (event, newValue) => {
     event.preventDefault();
     setMondayTime(newValue);
+    data.mondayOpeningTime = newValue[0];
+    data.mondayClosingTime = newValue[1];
   };
 
   const tuesdayHandleChange = (event, newValue) => {
     event.preventDefault();
     setTuesdayTime(newValue);
+    data.tuesdayOpeningTime = newValue[0];
+    data.tuesdayClosingTime = newValue[1];
   };
 
   const wednesdayHandleChange = (event, newValue) => {
     event.preventDefault();
     setWednesdayTime(newValue);
+    data.wednesdayOpeningTime = newValue[0];
+    data.wednesdayClosingTime = newValue[1];
   };
 
   const thursdayHandleChange = (event, newValue) => {
     event.preventDefault();
     setThursdayTime(newValue);
+    data.thursdayOpeningTime = newValue[0];
+    data.thursdayClosingTime = newValue[1];
   };
 
   const fridayHandleChange = (event, newValue) => {
     event.preventDefault();
     setFridayTime(newValue);
+    data.fridayOpeningTime = newValue[0];
+    data.fridayClosingTime = newValue[1];
   };
 
   const saturdayHandleChange = (event, newValue) => {
     event.preventDefault();
     setSaturdayTime(newValue);
+    data.saturdayOpeningTime = newValue[0];
+    data.saturdayClosingTime = newValue[1];
   };
 
   const sundayHandleChange = (event, newValue) => {
     event.preventDefault();
     setSundayTime(newValue);
+    data.sundayOpeningTime = newValue[0];
+    data.sundayClosingTime = newValue[1];
   };
 
   return (

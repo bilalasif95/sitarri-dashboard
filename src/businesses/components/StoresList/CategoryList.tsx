@@ -10,7 +10,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 // import { CategoryFragment } from "@saleor/categories/types/CategoryFragment";
-import Checkbox from "@saleor/components/Checkbox";
+// import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
@@ -27,7 +27,7 @@ import {
   storesListUrl,
   StoreListUrlQueryParams,
   StoreListUrlDialog
-} from "../../urls";
+} from "../../../stores/urls";
 
 const useStyles = makeStyles(
   theme => ({
@@ -46,7 +46,13 @@ const useStyles = makeStyles(
       paddingLeft: 0
     },
     colProducts: {
-      // textAlign: "center"
+      "& div": {
+        "& div": {
+          paddingRight: "1.5rem",
+          width: "100%",
+        }
+      },
+      textAlign: "right",
     },
     colSubcategories: {
       // textAlign: "center"
@@ -68,7 +74,7 @@ interface CategoryListProps
   onAdd?();
 }
 
-const numberOfColumns = 5;
+const numberOfColumns = 3;
 
 const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
   const {
@@ -80,7 +86,7 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
     isChecked,
     isRoot,
     selected,
-    toggle,
+    // toggle,
     toggleAll,
     toolbar,
     onNextPage,
@@ -103,7 +109,7 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
         colSpan={numberOfColumns}
         selected={selected}
         disabled={disabled}
-        items={categories}
+        items={[]}
         toggleAll={toggleAll}
         toolbar={toolbar}
       >
@@ -134,20 +140,20 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
         >
           <FormattedMessage defaultMessage="Address" />
         </TableCellHeader>
-        <TableCellHeader
-          // direction={
-          //   isRoot && sort.sort === CategoryListUrlSortField.subcategoryCount
-          //     ? getArrowDirection(sort.asc)
-          //     : undefined
-          // }
+        {/* <TableCellHeader
+          direction={
+            isRoot && sort.sort === CategoryListUrlSortField.subcategoryCount
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
           className={classes.colProducts}
-        // disableClick={!isRoot}
-        // onClick={() =>
-        //   isRoot && onSort(CategoryListUrlSortField.subcategoryCount)
-        // }
+          disableClick={!isRoot}
+          onClick={() =>
+            isRoot && onSort(CategoryListUrlSortField.subcategoryCount)
+          }
         >
           <FormattedMessage defaultMessage="Business" />
-        </TableCellHeader>
+        </TableCellHeader> */}
         <TableCellHeader
           // direction={
           //   isRoot && sort.sort === CategoryListUrlSortField.productCount
@@ -197,14 +203,14 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
                 data-tc="id"
                 data-tc-id={maybe(() => category.id)}
               >
-                <TableCell padding="checkbox">
+                {/* <TableCell padding="checkbox">
                   <Checkbox
                     checked={isSelected}
                     disabled={disabled}
                     disableClickPropagation
                     onChange={() => toggle(category.id)}
                   />
-                </TableCell>
+                </TableCell> */}
                 <TableCell className={classes.colName} data-tc="name">
                   {category && category.name ? category.name : <Skeleton />}
                 </TableCell>
@@ -223,13 +229,13 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
                       <Skeleton />
                     )}
                 </TableCell>
-                <TableCell className={classes.colProducts}>
+                {/* <TableCell className={classes.colProducts}>
                   {(category && category.business !== undefined) || (category && category.business !== null) ? (
                     category && category.business && category.business.name
                   ) : (
                       <Skeleton />
                     )}
-                </TableCell>
+                </TableCell> */}
                 <TableCell className={classes.colProducts}>
                   <IconButton
                     color="primary"

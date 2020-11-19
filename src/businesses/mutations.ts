@@ -148,6 +148,8 @@ export const productUpdateMutation = gql`
     $facebookUrl: String
     $instagramUrl: String
     $twitterUrl: String
+    $deliverooUrl: String
+    $uberEatsUrl: String
     $logo: Upload
   ) {
     businessUpdate(
@@ -158,6 +160,8 @@ export const productUpdateMutation = gql`
         facebookUrl: $facebookUrl
         instagramUrl: $instagramUrl
         twitterUrl: $twitterUrl
+        deliverooUrl: $deliverooUrl
+        uberEatsUrl: $uberEatsUrl
         logo: $logo
       }
     ) {

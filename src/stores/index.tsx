@@ -9,14 +9,17 @@ import { WindowTitle } from "../components/WindowTitle";
 import {
   categoryAddPath,
   categoryListPath,
-  CategoryListUrlQueryParams,
   categoryPath,
   CategoryUrlQueryParams,
-  CategoryListUrlSortField
+  CategoryListUrlSortField,
+  ProductImageUrlQueryParams,
+  productImagePath,
+  StoreListUrlQueryParams
 } from "./urls";
 import { CategoryCreateView } from "./views/CategoryCreate";
 import CategoryDetailsView, { getActiveTab } from "./views/CategoryDetails";
 import CategoryListComponent from "./views/CategoryList";
+import ProductImageComponent from "./views/ProductImage";
 
 interface CategoryDetailsRouteParams {
   id: string;
@@ -51,11 +54,27 @@ const CategoryCreate: React.FC<RouteComponentProps<
 
 const CategoryList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: CategoryListUrlQueryParams = {
+  const params: StoreListUrlQueryParams = {
     ...asSortParams(qs, CategoryListUrlSortField)
   };
 
   return <CategoryListComponent params={params} />;
+};
+
+const ProductImage: React.FC<RouteComponentProps<any>> = ({
+  location,
+  match
+}) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: ProductImageUrlQueryParams = qs;
+
+  return (
+    <ProductImageComponent
+      imageId={decodeURIComponent(match.params.imageId)}
+      productId={decodeURIComponent(match.params.productId)}
+      params={params}
+    />
+  );
 };
 
 const Component = () => {
@@ -69,6 +88,10 @@ const Component = () => {
         <Route exact path={categoryAddPath()} component={CategoryCreate} />
         <Route exact path={categoryAddPath(":id")} component={CategoryCreate} />
         <Route path={categoryPath(":id")} component={CategoryDetails} />
+        <Route
+          path={productImagePath(":productId", ":imageId")}
+          component={ProductImage}
+        />
       </Switch>
     </>
   );

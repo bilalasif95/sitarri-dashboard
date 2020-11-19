@@ -5,15 +5,15 @@ import {
   createFilterUtils
 } from "../../../utils/filters";
 import {
-  CategoryListUrlFilters,
+  StoreListUrlFilters,
   CategoryListUrlFiltersEnum,
-  CategoryListUrlQueryParams
+  StoreListUrlQueryParams
 } from "../../urls";
 
 export const CATEGORY_FILTERS_KEY = "categoryFilters";
 
 export function getFilterVariables(
-  params: CategoryListUrlFilters
+  params: StoreListUrlFilters
 ): CategoryFilterInput {
   const { user } = useUser();
   return {
@@ -26,9 +26,9 @@ export const {
   deleteFilterTab,
   getFilterTabs,
   saveFilterTab
-} = createFilterTabUtils<CategoryListUrlFilters>(CATEGORY_FILTERS_KEY);
+} = createFilterTabUtils<StoreListUrlFilters>(CATEGORY_FILTERS_KEY);
 
 export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
-  CategoryListUrlQueryParams,
-  CategoryListUrlFilters
+  StoreListUrlQueryParams,
+  StoreListUrlFilters
 >(CategoryListUrlFiltersEnum);

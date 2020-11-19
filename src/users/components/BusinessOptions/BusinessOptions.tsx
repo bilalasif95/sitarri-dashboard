@@ -826,7 +826,9 @@ const BusinessOptions: React.FC<any> = props => {
                                 value={data.business}
                                 choices={businessNamesArray}
                                 InputProps={{
-                                  autoComplete: "off"
+                                  inputProps: {
+                                    autocomplete: "plsdontautocomplete" // Somehow it shuts it down
+                                  }
                                 }}
                               />
                             </div>
@@ -983,7 +985,9 @@ const BusinessOptions: React.FC<any> = props => {
                                 value={data.business}
                                 choices={businessNamesArray}
                                 InputProps={{
-                                  autoComplete: "off"
+                                  inputProps: {
+                                    autocomplete: "plsdontautocomplete" // Somehow it shuts it down
+                                  }
                                 }}
                               />
                             </div>
@@ -1259,7 +1263,9 @@ const BusinessOptions: React.FC<any> = props => {
                             helperText="You can change or add more later"
                             choices={businessNamesArray}
                             InputProps={{
-                              autoComplete: "off"
+                              inputProps: {
+                                autocomplete: "plsdontautocomplete" // Somehow it shuts it down
+                              }
                             }}
                           />
                           {/* <TextField

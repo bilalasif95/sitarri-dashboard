@@ -251,14 +251,14 @@ interface CategoryDetailsFormProps {
 }
 
 export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormProps> = (
-  { disabled, data, onChange, errors, businessNames },
+  { disabled, category, data, onChange, errors, businessNames },
   props
 ) => {
   const intl = useIntl();
   const classes = useStyles(props);
   const [businessNamesArray, setBusinessNamesArray] = React.useState([]);
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
-    maybe(() => data && data.businessCategory, "")
+    maybe(() => category.businesscategory ? category.businesscategory.name : category.business.businesscategory.name, "")
   );
   const [logo, setLogo] = React.useState<any>();
   const formErrors = getFormErrors(
@@ -348,7 +348,9 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
               value={data.businessCategory}
               choices={businessNamesArray}
               InputProps={{
-                autoComplete: "off"
+                inputProps: {
+                  autocomplete: "plsdontautocomplete" // Somehow it shuts it down
+                }
               }}
             />
           </div>

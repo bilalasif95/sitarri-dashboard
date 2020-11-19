@@ -25,11 +25,11 @@ import { useCategoryBulkDeleteMutation } from "../../mutations";
 import { useRootCategoriesQuery } from "../../queries";
 import { CategoryBulkDelete } from "../../types/CategoryBulkDelete";
 import {
-  categoryAddUrl,
-  CategoryListUrlFilters,
-  CategoryListUrlQueryParams,
-  categoryUrl,
-  CategoryListUrlDialog,
+  storeAddUrl,
+  StoreListUrlFilters,
+  StoreListUrlQueryParams,
+  storesUrl,
+  StoreListUrlDialog,
   storesListUrl
 } from "../../urls";
 import {
@@ -37,13 +37,13 @@ import {
   deleteFilterTab,
   getActiveFilters,
   getFilterTabs,
-  getFilterVariables,
+  // getFilterVariables,
   saveFilterTab
 } from "./filter";
-// import { getSortQueryVariables } from "./sort";
+import { getSortQueryVariables } from "./sort";
 
 interface CategoryListProps {
-  params: CategoryListUrlQueryParams;
+  params: StoreListUrlQueryParams;
 }
 
 export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
@@ -61,9 +61,9 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
-      filter: getFilterVariables(params),
-      // sort: getSortQueryVariables(params)
-      sort: null
+      // filter: getFilterVariables(params),
+      search: params.query,
+      sort: getSortQueryVariables(params)
     }),
     [params]
   );
@@ -81,7 +81,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const changeFilterField = (filter: CategoryListUrlFilters) => {
+  const changeFilterField = (filter: StoreListUrlFilters) => {
     reset();
     navigate(
       storesListUrl({
@@ -93,8 +93,8 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   };
 
   const [openModal, closeModal] = createDialogActionHandlers<
-    CategoryListUrlDialog,
-    CategoryListUrlQueryParams
+    StoreListUrlDialog,
+    StoreListUrlQueryParams
   >(navigate, storesListUrl, params);
 
   const handleTabChange = (tab: number) => {
@@ -125,7 +125,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   );
 
   const handleCategoryBulkDelete = (data: CategoryBulkDelete) => {
-    if (data.categoryBulkDelete.errors.length === 0) {
+    if (data.storeBulkdelete.storeErrors.length === 0) {
       navigate(storesListUrl(), true);
       refetch();
       reset();
@@ -158,8 +158,8 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         tabs={tabs.map(tab => tab.name)}
         settings={settings}
         sort={getSortParams(params)}
-        onAdd={() => navigate(categoryAddUrl())}
-        onRowClick={id => () => navigate(categoryUrl(id))}
+        onAdd={() => navigate(storeAddUrl())}
+        onRowClick={id => () => navigate(storesUrl(id))}
         onSort={handleSort}
         disabled={loading}
         onNextPage={loadNextPage}

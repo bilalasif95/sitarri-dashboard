@@ -126,6 +126,8 @@ export const productFragmentDetails = gql`
     facebookUrl
     twitterUrl
     instagramUrl
+    deliverooUrl
+    uberEatsUrl
   }
 `;
 
@@ -298,6 +300,7 @@ export const TypedProductListQuery = TypedQuery<
 >(productListQuery);
 
 const productDetailsQuery = gql`
+  ${pageInfoFragment}
   query BusinessDetails($id: ID!) {
     business(id: $id) {
       id
@@ -319,8 +322,18 @@ const productDetailsQuery = gql`
           node {
             id
             name
-            description
+            address {
+              streetAddress
+              city
+            }
+            business {
+              id
+              name
+            }
           }
+        }
+        pageInfo {
+          ...PageInfoFragment
         }
       }
     }

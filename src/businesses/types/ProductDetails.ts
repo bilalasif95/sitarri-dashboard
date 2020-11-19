@@ -181,6 +181,7 @@ export interface ProductDetails_product {
   productType: ProductDetails_product_productType;
   name: string;
   descriptionJson: any;
+  businessStore?: any;
   seoTitle: string | null;
   seoDescription: string | null;
   category: ProductDetails_product_category | null;

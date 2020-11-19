@@ -1,7 +1,8 @@
 import gql from "graphql-tag";
 
 import makeMutation from "@saleor/hooks/makeMutation";
-import { productErrorFragment } from "@saleor/attributes/mutations";
+import { TypedMutation } from "../mutations";
+// import { productErrorFragment } from "@saleor/attributes/mutations";
 import { categoryDetailsFragment } from "./queries";
 import {
   CategoryBulkDelete,
@@ -27,13 +28,21 @@ import {
   ProductImageDelete,
   ProductImageDeleteVariables
 } from "./types/ProductImageDelete";
+import {
+  ProductImageReorder,
+  ProductImageReorderVariables
+} from "./types/ProductImageReorder";
+import {
+  ProductImageUpdate,
+  ProductImageUpdateVariables
+} from "./types/ProductImageUpdate";
 
 export const categoryDeleteMutation = gql`
-  ${productErrorFragment}
-  mutation CategoryDelete($id: ID!) {
-    categoryDelete(id: $id) {
-      errors: productErrors {
-        ...ProductErrorFragment
+  mutation StoreDelete($id: ID!) {
+    storeDelete(id: $id) {
+      storeErrors {
+        code
+        field
       }
     }
   }
@@ -45,14 +54,14 @@ export const useCategoryDeleteMutation = makeMutation<
 
 export const categoryCreateMutation = gql`
   ${categoryDetailsFragment}
-  ${productErrorFragment}
-  mutation CategoryCreate($parent: ID, $input: CategoryInput!) {
-    categoryCreate(parent: $parent, input: $input) {
-      category {
-        ...CategoryDetailsFragment
+  mutation StoreCreate($input: StoreCreateInput!) {
+    storeCreate(input: $input) {
+      store {
+        ...StoreDetailsFragment
       }
-      errors: productErrors {
-        ...ProductErrorFragment
+      storeErrors {
+        field
+        code
       }
     }
   }
@@ -112,7 +121,10 @@ export const categoryUpdateMutation = gql`
           streetAddress
           postalCode
           city
-          country
+          country{
+            country
+            code
+          }
         }
         logo
         websiteUrl
@@ -146,11 +158,11 @@ export const useCategoryUpdateMutation = makeMutation<
 >(categoryUpdateMutation);
 
 export const categoryBulkDeleteMutation = gql`
-  ${productErrorFragment}
-  mutation CategoryBulkDelete($ids: [ID]!) {
-    categoryBulkDelete(ids: $ids) {
-      errors: productErrors {
-        ...ProductErrorFragment
+  mutation StoreBulkDelete($ids: [ID]!) {
+    storeBulkdelete(ids: $ids) {
+      storeErrors{
+        code
+        field
       }
     }
   }
@@ -159,3 +171,66 @@ export const useCategoryBulkDeleteMutation = makeMutation<
   CategoryBulkDelete,
   CategoryBulkDeleteVariables
 >(categoryBulkDeleteMutation);
+
+// sortOrder
+
+export const productImagesReorder = gql`
+  mutation StoreImageReorder($productId: ID!, $imagesIds: [ID]!) {
+    storeImagereorder(storeId: $productId, imagesIds: $imagesIds) {
+      storeErrors{
+        code
+        field
+      }
+      store {
+        id
+        images {
+          id
+          alt
+          url
+        }
+      }
+    }
+  }
+`;
+export const TypedProductImagesReorder = TypedMutation<
+  ProductImageReorder,
+  ProductImageReorderVariables
+>(productImagesReorder);
+
+export const productImageDeleteMutation = gql`
+  ${categoryDetailsFragment}
+  mutation StoreImageDelete($id: ID!) {
+    storeImagedelete(id: $id) {
+      store {
+        ...StoreDetailsFragment
+      }
+      storeErrors{
+        code
+        field
+      }
+    }
+  }
+`;
+export const TypedProductImageDeleteMutation = TypedMutation<
+  ProductImageDelete,
+  ProductImageDeleteVariables
+>(productImageDeleteMutation);
+
+export const productImageUpdateMutation = gql`
+${categoryDetailsFragment}
+  mutation StoreImageUpdate($id: ID!, $alt: String!) {
+    storeImageupdate(id: $id, input: { alt: $alt }) {
+      storeErrors{
+        code
+        field
+      }
+      store {
+        ...StoreDetailsFragment
+      }
+    }
+  }
+`;
+export const TypedProductImageUpdateMutation = TypedMutation<
+  ProductImageUpdate,
+  ProductImageUpdateVariables
+>(productImageUpdateMutation);

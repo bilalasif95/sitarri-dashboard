@@ -285,39 +285,23 @@ export const productCreateMutation = gql`
   ${productErrorFragment}
   ${productFragmentDetails}
   mutation ProductCreate(
-    $attributes: [AttributeValueInput]
     $publicationDate: Date
     $category: ID!
-    $chargeTaxes: Boolean!
-    $collections: [ID]
     $description: String
     $isPublished: Boolean!
     $name: String!
     $basePrice: Decimal
-    $productType: ID!
     $store: ID
-    $sku: String
-    $seo: SeoInput
-    $stocks: [StockInput!]!
-    $trackInventory: Boolean!
   ) {
     productCreate(
       input: {
-        attributes: $attributes
         publicationDate: $publicationDate
         category: $category
-        chargeTaxes: $chargeTaxes
-        collections: $collections
         description: $description
         isPublished: $isPublished
         name: $name
         store: $store
         basePrice: $basePrice
-        productType: $productType
-        sku: $sku
-        seo: $seo
-        stocks: $stocks
-        trackInventory: $trackInventory
       }
     ) {
       errors: productErrors {

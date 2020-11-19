@@ -109,6 +109,11 @@ export interface CategoryDetails_category {
   id: string;
   backgroundImage: CategoryDetails_category_backgroundImage | null;
   name: string;
+  businesscategory?: any;
+  status?: string;
+  business?: any;
+  phone?: string;
+  address?: any;
   description?: any;
   seoDescription: string | null;
   seoTitle: string | null;

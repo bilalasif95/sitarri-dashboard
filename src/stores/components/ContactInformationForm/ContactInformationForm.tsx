@@ -101,22 +101,22 @@ interface CategoryDetailsFormProps {
 }
 
 export const ContactInformationForm: React.FC<CategoryDetailsFormProps> = (
-  { disabled, data, onChange, errors, countries, latlngError },
+  { disabled, category, data, onChange, errors, countries, latlngError },
   // { category, disabled, data, onChange, errors },
   props
 ) => {
   const intl = useIntl();
   const classes = useStyles(props);
-
   const [businessNamesArray, setBusinessNamesArray] = React.useState([]);
-  const [phone, setPhone] = useStateFromProps(maybe(() => data && data.phone, ""));
+  const [phone, setPhone] = useStateFromProps(maybe(() => category.phone, ""));
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
-    maybe(() => data && data.country, "")
+    maybe(() => category && category.address ? category.address.country.country : "United Kingdom", "")
   );
   const formErrors = getFormErrors(["streetAddress", "streetAddress2", "city", "postalCode"], errors);
 
   const handleOnChange = value => {
     setPhone(value);
+    data.phone = value;
   };
 
   React.useEffect(() => {
@@ -221,7 +221,9 @@ export const ContactInformationForm: React.FC<CategoryDetailsFormProps> = (
               value={data.country}
               choices={businessNamesArray}
               InputProps={{
-                autoComplete: "off"
+                inputProps: {
+                  autocomplete: "plsdontautocomplete" // Somehow it shuts it down
+                }
               }}
             />
           </div>

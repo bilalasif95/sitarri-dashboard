@@ -1,12 +1,16 @@
 import gql from "graphql-tag";
 
 import makeQuery from "@saleor/hooks/makeQuery";
-import { pageInfoFragment } from "../queries";
+import { pageInfoFragment, TypedQuery } from "../queries";
 import {
   CategoryDetails,
   CategoryDetailsVariables
 } from "./types/CategoryDetails";
 import { RootCategories } from "./types/RootCategories";
+import {
+  ProductImageById,
+  ProductImageByIdVariables
+} from "./types/ProductImageById";
 
 export const categoryFragment = gql`
   fragment CategoryFragment on Category {
@@ -29,9 +33,34 @@ export const categoryDetailsFragment = gql`
         streetAddress
         city
         postalCode
-        country
+        country {
+          code
+          country
+        }
       }
       category
+      status
+      mondayOpeningTime
+      mondayOpeningStatus
+      mondayClosingTime
+      tuesdayOpeningStatus
+      tuesdayOpeningTime
+      tuesdayClosingTime
+      wednesdayOpeningStatus
+      wednesdayOpeningTime
+      wednesdayClosingTime
+      thursdayOpeningStatus
+      thursdayOpeningTime
+      thursdayClosingTime
+      fridayOpeningStatus
+      fridayOpeningTime
+      fridayClosingTime
+      saturdayOpeningStatus
+      saturdayOpeningTime
+      saturdayClosingTime
+      sundayOpeningStatus
+      sundayOpeningTime
+      sundayClosingTime
       business {
         id
         name
@@ -57,6 +86,7 @@ export const rootCategories = gql`
     $after: String
     $last: Int
     $before: String
+    $search: String
     $sort: StoreOrder
   ) {
     stores(
@@ -65,6 +95,7 @@ export const rootCategories = gql`
       last: $last
       before: $before
       sortBy: $sort
+      search: $search
     ) {
       edges {
         node {
@@ -103,24 +134,55 @@ export const categoryDetails = gql`
       id
       name
       description
+      seoTitle
+      seoDescription
       address {
         streetAddress
+        streetAddress2
         city
         postalCode
-        country
+        country {
+          code
+          country
+        }
       }
-      category
       business {
         id
         name
+        logo
+        businesscategory{
+          id
+          name
+        }
+        websiteUrl
+        facebookUrl
+        twitterUrl
+        instagramUrl
+        deliverooUrl
+        uberEatsUrl
       }
-      logo
-      websiteUrl
-      facebookUrl
-      twitterUrl
-      instagramUrl
-      deliverooUrl
-      uberEatsUrl
+      status
+      mondayOpeningTime
+      mondayOpeningStatus
+      mondayClosingTime
+      tuesdayOpeningStatus
+      tuesdayOpeningTime
+      tuesdayClosingTime
+      wednesdayOpeningStatus
+      wednesdayOpeningTime
+      wednesdayClosingTime
+      thursdayOpeningStatus
+      thursdayOpeningTime
+      thursdayClosingTime
+      fridayOpeningStatus
+      fridayOpeningTime
+      fridayClosingTime
+      saturdayOpeningStatus
+      saturdayOpeningTime
+      saturdayClosingTime
+      sundayOpeningStatus
+      sundayOpeningTime
+      sundayClosingTime
       phone
       images {
         url
@@ -152,10 +214,6 @@ export const categoryDetails = gql`
             category {
               name
             }
-            productType {
-              id
-              name
-            }
           }
         }
       }
@@ -166,3 +224,25 @@ export const useCategoryDetailsQuery = makeQuery<
   CategoryDetails,
   CategoryDetailsVariables
 >(categoryDetails);
+
+const productImageQuery = gql`
+  query StoreImageById($productId: ID!, $imageId: ID!) {
+    store(id: $productId) {
+      id
+      name
+      mainImage: imageById(id: $imageId) {
+        id
+        alt
+        url
+      }
+      images {
+        id
+        url(size: 48)
+      }
+    }
+  }
+`;
+export const TypedProductImageQuery = TypedQuery<
+  ProductImageById,
+  ProductImageByIdVariables
+>(productImageQuery);

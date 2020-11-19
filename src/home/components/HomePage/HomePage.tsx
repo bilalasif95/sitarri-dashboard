@@ -1135,7 +1135,9 @@ const HomePage: React.FC<HomePageProps> = props => {
                                 value={data.business}
                                 choices={businessNamesArray}
                                 InputProps={{
-                                  autoComplete: "off"
+                                  inputProps: {
+                                    autocomplete: "plsdontautocomplete" // Somehow it shuts it down
+                                  }
                                 }}
                               />
                             </div>
@@ -1293,7 +1295,9 @@ const HomePage: React.FC<HomePageProps> = props => {
                                 value={data.business}
                                 choices={businessNamesArray}
                                 InputProps={{
-                                  autoComplete: "off"
+                                  inputProps: {
+                                    autocomplete: "plsdontautocomplete" // Somehow it shuts it down
+                                  }
                                 }}
                               />
                             </div>
@@ -1558,7 +1562,9 @@ const HomePage: React.FC<HomePageProps> = props => {
                           helperText="You can change or add more later"
                           choices={businessNamesArray}
                           InputProps={{
-                            autoComplete: "off"
+                            inputProps: {
+                              autocomplete: "plsdontautocomplete" // Somehow it shuts it down
+                            }
                           }}
                         />
                         {/* <TextField

@@ -32,7 +32,7 @@ import {
   CategoryDetails_category_products_edges_node
 } from "../../types/CategoryDetails";
 // import CategoryBackground from "../CategoryBackground";
-import CategoryProducts from "../CategoryProducts";
+// import CategoryProducts from "../CategoryProducts";
 
 import { HomePageQuery } from "../../../home/queries";
 
@@ -68,6 +68,20 @@ export interface FormData {
   fridayOpenClose: boolean;
   saturdayOpenClose: boolean;
   sundayOpenClose: boolean;
+  mondayOpeningTime: number;
+  mondayClosingTime: number;
+  tuesdayOpeningTime: number;
+  tuesdayClosingTime: number;
+  wednesdayOpeningTime: number;
+  wednesdayClosingTime: number;
+  thursdayOpeningTime: number;
+  thursdayClosingTime: number;
+  fridayOpeningTime: number;
+  fridayClosingTime: number;
+  saturdayOpeningTime: number;
+  saturdayClosingTime: number;
+  sundayOpeningTime: number;
+  sundayClosingTime: number;
 }
 
 export enum CategoryPageTab {
@@ -82,7 +96,7 @@ export interface CategoryUpdatePageProps
   errors: any;
   disabled: boolean;
   paramsProps: any;
-  // placeholderImage: string;
+  placeholderImage: string;
   category: any;
   products: CategoryDetails_category_products_edges_node[];
   latlngError: string;
@@ -95,7 +109,7 @@ export interface CategoryUpdatePageProps
   saveButtonBarState: ConfirmButtonTransitionState;
   onSubmit: (data: FormData) => void;
   onImageDelete: (id: string) => () => void;
-  // onImageEdit?(id: string);
+  onImageEdit?(id: string);
   onImageReorder?(event: { oldIndex: number; newIndex: number });
   onImageUpload(file: File);
   onNextPage();
@@ -118,32 +132,32 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   // paramsProps,
   disabled,
   errors,
-  pageInfo,
-  // placeholderImage,
+  // pageInfo,
+  placeholderImage,
   // onImageEdit,
   onImageReorder,
-  products,
+  // products,
   images,
   saveButtonBarState,
   latlngError,
   // subcategories,
   // onAddCategory,
-  onAddProduct,
+  // onAddProduct,
   onBack,
   // onCategoryClick,
   onDelete,
-  onNextPage,
-  onPreviousPage,
-  onProductClick,
+  // onNextPage,
+  // onPreviousPage,
+  // onProductClick,
   onSubmit,
   onImageDelete,
   onImageUpload,
-  isChecked,
-  productListToolbar,
-  selected,
+  // isChecked,
+  // productListToolbar,
+  // selected,
   // subcategoryListToolbar,
-  toggle,
-  toggleAll
+  // toggle,
+  // toggleAll
 }: CategoryUpdatePageProps) => {
   const intl = useIntl();
   const shop = useShop();
@@ -151,33 +165,47 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   const initialData: FormData = category
     ? {
       backgroundImageAlt: maybe(() => category.backgroundImage.alt, ""),
-      businessCategory: maybe(() => category.category, ""),
+      businessCategory: maybe(() => category.business.businesscategory, ""),
       city: maybe(() => category.address.city, ""),
-      country: maybe(() => category.address.country, ""),
-      delivery: maybe(() => category.deliverooUrl.slice(12), ""),
+      country: maybe(() => category.address.country.code, ""),
+      delivery: maybe(() => category.business.deliverooUrl.slice(12), ""),
       description: maybe(() => category.description, ""),
-      facebook: maybe(() => category.facebookUrl.slice(25), ""),
-      fridayOpenClose: maybe(() => true, false),
-      instagram: maybe(() => category.instagramUrl.slice(26), ""),
-      logo: maybe(() => category.logo, ""),
-      mondayOpenClose: maybe(() => true, false),
+      facebook: maybe(() => category.business.facebookUrl.slice(25), ""),
+      fridayClosingTime: maybe(() => category.fridayClosingTime, 0),
+      fridayOpenClose: maybe(() => category.fridayOpeningStatus, false),
+      fridayOpeningTime: maybe(() => category.fridayOpeningTime, 0),
+      instagram: maybe(() => category.business.instagramUrl.slice(26), ""),
+      logo: maybe(() => category.business.logo, ""),
+      mondayClosingTime: maybe(() => category.mondayClosingTime, 0),
+      mondayOpenClose: maybe(() => category.mondayOpeningStatus, false),
+      mondayOpeningTime: maybe(() => category.mondayOpeningTime, 0),
       name: maybe(() => category.name, ""),
       phone: maybe(() => category.phone, ""),
       postalCode: maybe(() => category.address.postalCode, ""),
-      reservationSystem: maybe(() => category.uberEatsUrl.slice(12), ""),
-      saturdayOpenClose: maybe(() => true, false),
+      reservationSystem: maybe(() => category.business.uberEatsUrl.slice(12), ""),
+      saturdayClosingTime: maybe(() => category.saturdayClosingTime, 0),
+      saturdayOpenClose: maybe(() => category.saturdayOpeningStatus, false),
+      saturdayOpeningTime: maybe(() => category.saturdayOpeningTime, 0),
       seoDescription: maybe(() => category.seoDescription, ""),
       seoTitle: maybe(() => category.seoTitle, ""),
-      status: maybe(() => "", ""),
+      status: maybe(() => category.status, ""),
       streetAddress: maybe(() => category.address.streetAddress, ""),
-      streetAddress2: maybe(() => "", ""),
-      sundayOpenClose: maybe(() => false, false),
+      streetAddress2: maybe(() => category.address.streetAddress2, ""),
+      sundayClosingTime: maybe(() => category.sundayClosingTime, 0),
+      sundayOpenClose: maybe(() => category.sundayOpeningStatus, false),
+      sundayOpeningTime: maybe(() => category.sundayOpeningTime, 0),
       tags: maybe(() => category.tags, ""),
-      thursdayOpenClose: maybe(() => true, false),
-      tuesdayOpenClose: maybe(() => true, false),
-      twitter: maybe(() => category.twitterUrl.slice(24), ""),
-      website: maybe(() => category.websiteUrl.slice(12), ""),
-      wednesdayOpenClose: maybe(() => true, false),
+      thursdayClosingTime: maybe(() => category.thursdayClosingTime, 0),
+      thursdayOpenClose: maybe(() => category.thursdayOpeningStatus, false),
+      thursdayOpeningTime: maybe(() => category.thursdayOpeningTime, 0),
+      tuesdayClosingTime: maybe(() => category.tuesdayClosingTime, 0),
+      tuesdayOpenClose: maybe(() => category.tuesdayOpeningStatus, false),
+      tuesdayOpeningTime: maybe(() => category.tuesdayOpeningTime, 0),
+      twitter: maybe(() => category.business.twitterUrl.slice(24), ""),
+      website: maybe(() => category.business.websiteUrl.slice(12), ""),
+      wednesdayClosingTime: maybe(() => category.wednesdayClosingTime, 0),
+      wednesdayOpenClose: maybe(() => category.wednesdayOpeningStatus, false),
+      wednesdayOpeningTime: maybe(() => category.wednesdayOpeningTime, 0),
     }
     : {
       backgroundImageAlt: "",
@@ -187,27 +215,41 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
       delivery: "",
       description: "",
       facebook: "",
+      fridayClosingTime: 0,
       fridayOpenClose: false,
+      fridayOpeningTime: 0,
       instagram: "",
       logo: "",
+      mondayClosingTime: 0,
       mondayOpenClose: false,
+      mondayOpeningTime: 0,
       name: "",
       phone: "",
       postalCode: "",
       reservationSystem: "",
+      saturdayClosingTime: 0,
       saturdayOpenClose: false,
+      saturdayOpeningTime: 0,
       seoDescription: "",
       seoTitle: "",
       status: "",
       streetAddress: "",
       streetAddress2: "",
+      sundayClosingTime: 0,
       sundayOpenClose: false,
+      sundayOpeningTime: 0,
       tags: "",
+      thursdayClosingTime: 0,
       thursdayOpenClose: false,
+      thursdayOpeningTime: 0,
+      tuesdayClosingTime: 0,
       tuesdayOpenClose: false,
+      tuesdayOpeningTime: 0,
       twitter: "",
       website: "",
+      wednesdayClosingTime: 0,
       wednesdayOpenClose: false,
+      wednesdayOpeningTime: 0,
     };
 
   return (
@@ -216,7 +258,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
         maybe(() => setBusinesses(data.businessCategories.edges))
         return (
           <Form onSubmit={onSubmit} initial={initialData} confirmLeave>
-            {({ data, change, submit, hasChanged }) => (
+            {({ data, change, submit }) => (
               <Container>
                 <AppHeader onBack={onBack}>
                   {intl.formatMessage(sectionNames.stores)}
@@ -265,10 +307,10 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                     <CardSpacer />
                     <ProductImages
                       images={images}
-                      // placeholderImage={placeholderImage}
+                      placeholderImage={placeholderImage}
                       onImageDelete={onImageDelete}
                       onImageReorder={onImageReorder}
-                      // onImageEdit={onImageEdit}
+                      onImageEdit={undefined}
                       onImageUpload={onImageUpload}
                     />
                     {/* <CategoryBackground
@@ -354,7 +396,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             </Card>
           )} */}
                     {/* {currentTab === CategoryPageTab.products && ( */}
-                    <CategoryProducts
+                    {/* <CategoryProducts
                       categoryName={maybe(() => category.name)}
                       products={products}
                       disabled={disabled}
@@ -368,7 +410,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                       selected={selected}
                       isChecked={isChecked}
                       toolbar={productListToolbar}
-                    />
+                    /> */}
                     {/* )} */}
                   </div>
                   <div>
@@ -396,7 +438,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                   onDelete={onDelete}
                   onSave={submit}
                   state={saveButtonBarState}
-                  disabled={disabled || !hasChanged}
+                  disabled={disabled}
                 />
               </Container>
             )}

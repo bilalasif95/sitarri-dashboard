@@ -18,21 +18,21 @@ export const categoryListPath = categorySectionUrl;
 export enum CategoryListUrlFiltersEnum {
   query = "query"
 }
-export type CategoryListUrlFilters = Filters<CategoryListUrlFiltersEnum>;
-export type CategoryListUrlDialog = "delete" | TabActionDialog;
+export type StoreListUrlFilters = Filters<CategoryListUrlFiltersEnum>;
+export type StoreListUrlDialog = "delete" | TabActionDialog;
 export enum CategoryListUrlSortField {
   name = "name",
   productCount = "products",
   subcategoryCount = "subcategories"
 }
 export type CategoryListUrlSort = Sort<CategoryListUrlSortField>;
-export type CategoryListUrlQueryParams = ActiveTab &
+export type StoreListUrlQueryParams = ActiveTab &
   BulkAction &
-  CategoryListUrlFilters &
+  StoreListUrlFilters &
   CategoryListUrlSort &
-  Dialog<CategoryListUrlDialog> &
+  Dialog<StoreListUrlDialog> &
   Pagination;
-export const storesListUrl = (params?: CategoryListUrlQueryParams) =>
+export const storesListUrl = (params?: StoreListUrlQueryParams) =>
   categorySectionUrl + "?" + stringifyQs(params);
 
 export const categoryPath = (id: string) => urlJoin(categorySectionUrl, id);
@@ -44,7 +44,7 @@ export type CategoryUrlQueryParams = BulkAction &
   Dialog<CategoryUrlDialog> &
   Pagination &
   ActiveTab<CategoryPageTab>;
-export const categoryUrl = (id: string, params?: CategoryUrlQueryParams) =>
+export const storesUrl = (id: string, params?: CategoryUrlQueryParams) =>
   categoryPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 export const categoryAddPath = (parentId?: string) => {
@@ -53,5 +53,18 @@ export const categoryAddPath = (parentId?: string) => {
   }
   return urlJoin(categorySectionUrl, "add");
 };
-export const categoryAddUrl = (parentId?: string) =>
+export const storeAddUrl = (parentId?: string) =>
   categoryAddPath(parentId ? encodeURIComponent(parentId) : undefined);
+
+export const productImagePath = (productId: string, imageId: string) =>
+  urlJoin(categorySectionUrl, productId, "image", imageId);
+export type ProductImageUrlDialog = "remove";
+export type ProductImageUrlQueryParams = Dialog<"remove">;
+export const productImageUrl = (
+  productId: string,
+  imageId: string,
+  params?: ProductImageUrlQueryParams
+) =>
+  productImagePath(encodeURIComponent(productId), encodeURIComponent(imageId)) +
+  "?" +
+  stringifyQs(params);

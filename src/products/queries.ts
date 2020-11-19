@@ -74,10 +74,6 @@ export const productFragment = gql`
     basePrice {
       ...Money
     }
-    productType {
-      id
-      name
-    }
   }
 `;
 
@@ -103,28 +99,14 @@ const productVariantAttributesFragment = gql`
         slug
       }
     }
-    productType {
-      id
-      variantAttributes {
-        id
-        name
-        values {
-          id
-          name
-          slug
-        }
-      }
-    }
   }
 `;
 
 export const productFragmentDetails = gql`
   ${fragmentProductImage}
   ${fragmentMoney}
-  ${productVariantAttributesFragment}
   ${stockFragment}
   fragment Product on Product {
-    ...ProductVariantAttributesFragment
     name
     description
     seoTitle
@@ -185,11 +167,6 @@ export const productFragmentDetails = gql`
         ...StockFragment
       }
       trackInventory
-    }
-    productType {
-      id
-      name
-      hasVariants
     }
   }
 `;
@@ -328,15 +305,6 @@ const productListQuery = gql`
       edges {
         node {
           ...ProductFragment
-          attributes {
-            attribute {
-              id
-            }
-            values {
-              id
-              name
-            }
-          }
         }
       }
       pageInfo {

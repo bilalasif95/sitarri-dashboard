@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 import makeQuery from "@saleor/hooks/makeQuery";
-import { pageInfoFragment,TypedQuery } from "../queries";
+import { pageInfoFragment, TypedQuery } from "../queries";
 import {
   CategoryDetails,
   CategoryDetailsVariables
@@ -146,10 +146,6 @@ export const categoryDetails = gql`
             isAvailable
             thumbnail {
               url
-            }
-            productType {
-              id
-              name
             }
           }
         }

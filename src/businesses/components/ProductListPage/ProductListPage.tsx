@@ -1010,7 +1010,9 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                           helperText="You can change or add more later"
                           choices={businessNamesArray}
                           InputProps={{
-                            autoComplete: "off"
+                            inputProps: {
+                              autocomplete: "plsdontautocomplete" // Somehow it shuts it down
+                            }
                           }}
                         />
                         {/* <TextField

@@ -115,8 +115,8 @@ const TagsComponent = withStyles(styles, { name: "TagsComponent" })(
     componentDidUpdate(prevProps) {
 
       if (prevProps.tags !== this.props.tags) {
-      
-        this.props.tags && this.props.tags.map(tag => {
+
+        return this.props.tags && this.props.tags.map(tag => {
 
           const { tiles, tileIds } = this.state;
 
@@ -131,10 +131,6 @@ const TagsComponent = withStyles(styles, { name: "TagsComponent" })(
             tileIds,
             tiles
           });
-
-
-          this.props.data.tags = Object.values(this.state.tiles);
-
         })
       }
     }
@@ -184,7 +180,7 @@ const TagsComponent = withStyles(styles, { name: "TagsComponent" })(
     }
     render() {
       const classes = this.props.classes;
-
+      this.props.data.tags = Object.values(this.state.tiles);
       return (
         <>
           <p>
