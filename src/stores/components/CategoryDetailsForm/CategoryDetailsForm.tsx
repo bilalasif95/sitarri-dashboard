@@ -17,7 +17,7 @@ import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { maybe } from "../../../misc";
 import { CategoryDetails_category } from "../../types/CategoryDetails";
 import SingleAutocompleteSelectField from "../../../components/SingleAutocompleteSelectField";
-import TagsComponent from "./TagsComponent";
+// import TagsComponent from "./TagsComponent";
 
 const useStyles = makeStyles(
   theme => ({
@@ -141,7 +141,7 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = (
             />
           </div>
           <FormSpacer />
-          <TagsComponent data={data} tags={maybe(() => category.tags)} />
+          {/* <TagsComponent data={data} tags={maybe(() => category.tags)} /> */}
         </CardContent>
       </Card>
     </>

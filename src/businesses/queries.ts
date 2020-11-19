@@ -311,6 +311,7 @@ const productDetailsQuery = gql`
       facebookUrl
       twitterUrl
       deliverooUrl
+      isVerified
       uberEatsUrl
       instagramUrl
       businesscategory{

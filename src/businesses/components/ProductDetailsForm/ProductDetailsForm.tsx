@@ -330,7 +330,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
             <ul className={classes.VerifiedList}>
               <li className={classes.VerifiedText}>
                 <SVG className={classes.VerifiedImg} src={Shield} />
-                Verified
+                {product && product.isVerified ? "Verified" : "Not Verified"}
               </li>
             </ul>
           </div>
