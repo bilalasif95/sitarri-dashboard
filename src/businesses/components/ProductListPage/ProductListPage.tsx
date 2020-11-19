@@ -1295,55 +1295,55 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                             //   setPhoneError("Invalid Phone Number.");
                             // } else {
                             //   setPhoneError("");
-                            if (
-                              data.website !== "" &&
-                              !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(
-                                data.website
-                              )
-                            ) {
-                              setWebsiteURLError("Invalid Website URL.");
-                            } else {
-                              setWebsiteURLError("");
-                              if (
-                                data.facebook !== "" &&
-                                !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(
-                                  data.facebook
-                                )
-                              ) {
-                                setFacebookURLError("Invalid Facebook URL.");
-                              } else {
-                                setFacebookURLError("");
-                                if (
-                                  data.instagram !== "" &&
-                                  !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(
-                                    data.instagram
-                                  )
-                                ) {
-                                  setInstagramURLError("Invalid Twitter URL.");
-                                } else {
-                                  setInstagramURLError("");
-                                  if (
-                                    data.twitter !== "" &&
-                                    !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(
-                                      data.twitter
-                                    )
-                                  ) {
-                                    setTwitterURLError("Invalid Instagram URL.");
-                                  } else {
-                                    setTwitterURLError("");
-                                    submit();
-                                    // setFacebookURL(data.facebook);
-                                    // setInstagramURL(data.instagram);
-                                    // setWebsiteURL(data.website);
-                                    // setTwitterURL(data.twitter);
-                                    // setPhone(data.phone);
-                                    // setAddInformationModal(false);
-                                    // setChooseLocationModal(true);
-                                    // setOpenChooseLocationModal(true);
-                                  }
-                                }
-                              }
-                            }
+                            // if (
+                            //   data.website !== "" &&
+                            //   !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(
+                            //     data.website
+                            //   )
+                            // ) {
+                            //   setWebsiteURLError("Invalid Website URL.");
+                            // } else {
+                            //   setWebsiteURLError("");
+                            //   if (
+                            //     data.facebook !== "" &&
+                            //     !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(
+                            //       data.facebook
+                            //     )
+                            //   ) {
+                            //     setFacebookURLError("Invalid Facebook URL.");
+                            //   } else {
+                            //     setFacebookURLError("");
+                            //     if (
+                            //       data.instagram !== "" &&
+                            //       !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(
+                            //         data.instagram
+                            //       )
+                            //     ) {
+                            //       setInstagramURLError("Invalid Twitter URL.");
+                            //     } else {
+                            //       setInstagramURLError("");
+                            //       if (
+                            //         data.twitter !== "" &&
+                            //         !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(
+                            //           data.twitter
+                            //         )
+                            //       ) {
+                            //         setTwitterURLError("Invalid Instagram URL.");
+                            //       } else {
+                            //         setTwitterURLError("");
+                            submit();
+                            // setFacebookURL(data.facebook);
+                            // setInstagramURL(data.instagram);
+                            // setWebsiteURL(data.website);
+                            // setTwitterURL(data.twitter);
+                            // setPhone(data.phone);
+                            // setAddInformationModal(false);
+                            // setChooseLocationModal(true);
+                            // setOpenChooseLocationModal(true);
+                            //     }
+                            //   }
+                            // }
+                            // }
                             // }
                           }}
                           className={classes.sendbtn}

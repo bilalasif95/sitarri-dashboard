@@ -118,7 +118,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
                             sundayClosingTime: formData.sundayClosingTime,
                             sundayOpeningStatus: formData.sundayOpenClose,
                             sundayOpeningTime: formData.sundayOpeningTime,
-                            tags: formData.tags,
+                            // tags: formData.tags,
                             thursdayClosingTime: formData.thursdayClosingTime,
                             thursdayOpeningStatus: formData.thursdayOpenClose,
                             thursdayOpeningTime: formData.thursdayOpeningTime,
