@@ -191,6 +191,7 @@ export interface ProductDetails_product {
   };
   description?: any;
   seoTitle: string | null;
+  business?: any;
   seoDescription: string | null;
   category: ProductDetails_product_category | null;
   collections: (ProductDetails_product_collections | null)[] | null;

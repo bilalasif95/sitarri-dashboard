@@ -51,6 +51,8 @@ export interface ProductList_products_edges_node {
   user?: any;
   thumbnail: ProductList_products_edges_node_thumbnail | null;
   isAvailable: boolean | null;
+  category?: any;
+  business?: any;
   isPublished: boolean;
   isVerified?: Boolean;
   basePrice: ProductList_products_edges_node_basePrice | null;

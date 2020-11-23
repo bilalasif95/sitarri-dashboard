@@ -3,6 +3,10 @@ import gql from "graphql-tag";
 import { productErrorFragment } from "@saleor/attributes/mutations";
 import makeMutation from "@saleor/hooks/makeMutation";
 import { TypedMutation } from "../mutations";
+import {
+  CollectionAssignProduct,
+  CollectionAssignProductVariables
+} from "./types/CollectionAssignProduct";
 import { ProductCreate, ProductCreateVariables } from "./types/ProductCreate";
 import { ProductDelete, ProductDeleteVariables } from "./types/ProductDelete";
 import {
@@ -55,6 +59,10 @@ import {
   ProductVariantBulkDelete,
   ProductVariantBulkDeleteVariables
 } from "./types/ProductVariantBulkDelete";
+import {
+  UnassignCollectionProduct,
+  UnassignCollectionProductVariables
+} from "./types/UnassignCollectionProduct";
 
 export const bulkProductErrorFragment = gql`
   fragment BulkProductErrorFragment on BulkProductError {
@@ -70,12 +78,12 @@ const bulkStockErrorFragment = gql`
     index
   }
 `;
-const stockErrorFragment = gql`
-  fragment StockErrorFragment on StockError {
-    code
-    field
-  }
-`;
+// const stockErrorFragment = gql`
+//   fragment StockErrorFragment on StockError {
+//     code
+//     field
+//   }
+// `;
 
 export const productImageCreateMutation = gql`
   ${productErrorFragment}
@@ -109,6 +117,60 @@ export const productDeleteMutation = gql`
     }
   }
 `;
+
+// $first: Int
+//     $after: String
+//     $last: Int
+//     $before: String
+
+// products(first: $first, after: $after, before: $before, last: $last) {
+//   edges {
+//     node {
+//       id
+//     }
+//   }
+//   pageInfo {
+//     endCursor
+//     hasNextPage
+//     hasPreviousPage
+//     startCursor
+//   }
+// }
+
+const assignCollectionProduct = gql`
+  ${productErrorFragment}
+  mutation ProductAddStores(
+    $productId: ID!
+    $stores: [ID!]!
+  ) {
+    productAddStores(productId: $productId, stores: $stores) {
+      product {
+        id
+        storess(first:100){
+          edges{
+            node{
+              id
+              name
+              address{
+                city
+                streetAddress
+                streetAddress2
+              }
+            }
+          }
+        }
+      }
+      errors: productErrors {
+        ...ProductErrorFragment
+      }
+    }
+  }
+`;
+export const TypedCollectionAssignProductMutation = TypedMutation<
+  CollectionAssignProduct,
+  CollectionAssignProductVariables
+>(assignCollectionProduct);
+
 export const TypedProductDeleteMutation = TypedMutation<
   ProductDelete,
   ProductDeleteVariables
@@ -186,41 +248,29 @@ export const TypedProductUpdateMutation = TypedMutation<
 >(productUpdateMutation);
 
 export const simpleProductUpdateMutation = gql`
-  ${bulkStockErrorFragment}
   ${productErrorFragment}
   ${productFragmentDetails}
-  ${stockErrorFragment}
-  ${fragmentVariant}
   mutation SimpleProductUpdate(
     $id: ID!
-    $attributes: [AttributeValueInput]
     $publicationDate: Date
-    $category: ID
-    $chargeTaxes: Boolean!
-    $collections: [ID]
+    $category: ID!
     $description: String
     $isPublished: Boolean!
     $name: String
+    $business: ID!
     $store: ID
     $basePrice: Decimal
-    $productVariantId: ID!
-    $productVariantInput: ProductVariantInput!
     $seo: SeoInput
-    $addStocks: [StockInput!]!
-    $deleteStocks: [ID!]!
-    $updateStocks: [StockInput!]!
   ) {
     productUpdate(
       id: $id
       input: {
-        attributes: $attributes
         publicationDate: $publicationDate
         category: $category
-        chargeTaxes: $chargeTaxes
-        collections: $collections
         description: $description
         isPublished: $isPublished
         name: $name
+        business: $business
         store: $store
         basePrice: $basePrice
         seo: $seo
@@ -231,47 +281,6 @@ export const simpleProductUpdateMutation = gql`
       }
       product {
         ...Product
-      }
-    }
-    productVariantUpdate(id: $productVariantId, input: $productVariantInput) {
-      errors: productErrors {
-        ...ProductErrorFragment
-      }
-      productVariant {
-        ...ProductVariant
-      }
-    }
-    productVariantStocksCreate(
-      stocks: $addStocks
-      variantId: $productVariantId
-    ) {
-      errors: bulkStockErrors {
-        ...BulkStockErrorFragment
-      }
-      productVariant {
-        ...ProductVariant
-      }
-    }
-    productVariantStocksDelete(
-      warehouseIds: $deleteStocks
-      variantId: $productVariantId
-    ) {
-      errors: stockErrors {
-        ...StockErrorFragment
-      }
-      productVariant {
-        ...ProductVariant
-      }
-    }
-    productVariantStocksUpdate(
-      stocks: $updateStocks
-      variantId: $productVariantId
-    ) {
-      errors: bulkStockErrors {
-        ...BulkStockErrorFragment
-      }
-      productVariant {
-        ...ProductVariant
       }
     }
   }
@@ -292,6 +301,7 @@ export const productCreateMutation = gql`
     $name: String!
     $basePrice: Decimal
     $store: ID
+    $business: ID!
   ) {
     productCreate(
       input: {
@@ -300,6 +310,7 @@ export const productCreateMutation = gql`
         description: $description
         isPublished: $isPublished
         name: $name
+        business: $business
         store: $store
         basePrice: $basePrice
       }
@@ -313,6 +324,54 @@ export const productCreateMutation = gql`
     }
   }
 `;
+
+const unassignCollectionProduct = gql`
+  ${productErrorFragment}
+  mutation UnassignStoreProduct(
+    $productId: ID!
+    $stores: [ID]!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
+    productRemoveStores(
+      productId: $productId
+      stores: $stores
+    ) {
+      product {
+        id
+        storess(first: $first, after: $after, before: $before, last: $last) {
+          edges {
+            node {
+              id
+              name
+              address{
+                city
+                streetAddress
+                streetAddress2
+              }
+            }
+          }
+          pageInfo {
+            endCursor
+            hasNextPage
+            hasPreviousPage
+            startCursor
+          }
+        }
+      }
+      errors: productErrors {
+        ...ProductErrorFragment
+      }
+    }
+  }
+`;
+export const TypedUnassignCollectionProductMutation = TypedMutation<
+  UnassignCollectionProduct,
+  UnassignCollectionProductVariables
+>(unassignCollectionProduct);
+
 export const TypedProductCreateMutation = TypedMutation<
   ProductCreate,
   ProductCreateVariables

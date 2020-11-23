@@ -69,6 +69,14 @@ export const productFragment = gql`
     thumbnail {
       url
     }
+    business {
+      id
+      name
+    }
+    category {
+      id
+      name
+    }
     isAvailable
     isPublished
     basePrice {
@@ -107,6 +115,7 @@ export const productFragmentDetails = gql`
   ${fragmentMoney}
   ${stockFragment}
   fragment Product on Product {
+    id
     name
     description
     seoTitle
@@ -114,6 +123,57 @@ export const productFragmentDetails = gql`
     category {
       id
       name
+    }
+    storess(first: 100){
+      edges{
+        node{
+          id
+          name
+          address{
+            city
+            streetAddress
+          }
+        }
+      }
+    }
+    business{
+      id
+      name
+      businessStore(first:100) {
+        edges{
+          node{
+            id
+            name
+            logo
+            address{
+              streetAddress
+              city
+            }
+          }
+        }
+        pageInfo{
+          hasPreviousPage
+          hasNextPage
+          startCursor
+          endCursor
+        }
+        totalCount
+      }
+      productCategoryBusiness(first:100){
+        edges{
+          node{
+            id
+            name
+          }
+        }
+        pageInfo{
+          hasPreviousPage
+          hasNextPage
+          startCursor
+          endCursor
+        }
+        totalCount
+      }
     }
     collections {
       id

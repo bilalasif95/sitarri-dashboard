@@ -1,5 +1,5 @@
 // import { convertFromRaw, RawDraftContentState } from "draft-js";
-import { diff } from "fast-array-diff";
+// import { diff } from "fast-array-diff";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -14,7 +14,8 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
-import useFormset from "@saleor/hooks/useFormset";
+// import useFormset from "@saleor/hooks/useFormset";
+import useNavigator from "@saleor/hooks/useNavigator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
@@ -31,27 +32,29 @@ import {
   ProductDetails_product_variants
 } from "../../types/ProductDetails";
 import {
-  getAttributeInputFromProduct,
+  // getAttributeInputFromProduct,
   getChoices,
   getProductUpdatePageFormData,
   // getSelectedAttributesFromProduct,
   // ProductAttributeValueChoices,
   ProductUpdatePageFormData,
-  getStockInputFromProduct
+  // getStockInputFromProduct
 } from "../../utils/data";
 // import {
 //   createAttributeChangeHandler,
 //   createAttributeMultiChangeHandler
 // } from "../../utils/handlers";
 // import ProductAttributes, { ProductAttributeInput } from "../ProductAttributes";
-import { ProductAttributeInput } from "../ProductAttributes";
+// import { ProductAttributeInput } from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductImages from "../ProductImages";
 import ProductOrganization from "../ProductOrganization";
 import ProductPricing from "../ProductPricing";
 // import ProductVariants from "../ProductVariants";
 // import ProductStocks, { ProductStockInput } from "../ProductStocks";
-import { ProductStockInput } from "../ProductStocks";
+// import { ProductStockInput } from "../ProductStocks";
+import CollectionProducts from "../CollectionProducts/CollectionProducts";
+import { storesUrl } from "../../../stores/urls";
 
 export interface ProductUpdatePageProps extends ListActions {
   errors: ProductErrorFragment[];
@@ -67,6 +70,8 @@ export interface ProductUpdatePageProps extends ListActions {
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: WarehouseFragment[];
+  pageInfo?: any;
+  onProductUnassign?: (id: string, event: React.MouseEvent<any>) => void;
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
   onVariantsAdd: () => void;
@@ -74,6 +79,9 @@ export interface ProductUpdatePageProps extends ListActions {
   onImageDelete: (id: string) => () => void;
   onBack?();
   onDelete();
+  onAdd?();
+  loadNextPage?();
+  loadPreviousPage?();
   onImageEdit?(id: string);
   onImageReorder?(event: { oldIndex: number; newIndex: number });
   onImageUpload(file: File);
@@ -83,11 +91,11 @@ export interface ProductUpdatePageProps extends ListActions {
 }
 
 export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
-  attributes: ProductAttributeInput[];
+  // attributes: ProductAttributeInput[];
   collections: string[];
-  addStocks: ProductStockInput[];
-  updateStocks: ProductStockInput[];
-  removeStocks: string[];
+  // addStocks: ProductStockInput[];
+  // updateStocks: ProductStockInput[];
+  // removeStocks: string[];
 }
 
 export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
@@ -113,37 +121,43 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onImageReorder,
   onImageUpload,
   onSeoClick,
+  onAdd,
   onSubmit,
+  onProductUnassign,
+  loadNextPage,
+  pageInfo,
+  loadPreviousPage,
   // onVariantAdd,
   // onVariantsAdd,
   // onVariantShow,
-  // isChecked,
-  // selected,
-  // toggle,
-  // toggleAll,
-  // toolbar
+  isChecked,
+  selected,
+  toggle,
+  toggleAll,
+  toolbar
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
   const localizeDate = useDateLocalize();
-  const attributeInput = React.useMemo(
-    () => getAttributeInputFromProduct(product),
-    [product]
-  );
-  const stockInput = React.useMemo(() => getStockInputFromProduct(product), [
-    product
-  ]);
+  // const attributeInput = React.useMemo(
+  //   () => getAttributeInputFromProduct(product),
+  //   [product]
+  // );
+  // const stockInput = React.useMemo(() => getStockInputFromProduct(product), [
+  //   product
+  // ]);
   // const { change: changeAttributeData, data: attributes } = useFormset(
   //   attributeInput
   // );
-  const { data: attributes } = useFormset(
-    attributeInput
-  );
-  const {
-    // add: addStock,
-    // change: changeStockData,
-    data: stocks,
-    // remove: removeStock
-  } = useFormset(stockInput);
+  // const { data: attributes } = useFormset(
+  //   attributeInput
+  // );
+  // const {
+  //   // add: addStock,
+  //   // change: changeStockData,
+  //   data: stocks,
+  //   // remove: removeStock
+  // } = useFormset(stockInput);
 
   // const [selectedAttributes, setSelectedAttributes] = useStateFromProps<
   //   ProductAttributeValueChoices[]
@@ -168,22 +182,22 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   // const hasVariants = maybe(() => product.productType.hasVariants, false);
 
   const handleSubmit = (data: ProductUpdatePageFormData) => {
-    const dataStocks = stocks.map(stock => stock.id);
-    const variantStocks = product.variants[0].stocks.map(
-      stock => stock.warehouse.id
-    );
-    const stockDiff = diff(variantStocks, dataStocks);
+    // const dataStocks = stocks.map(stock => stock.id);
+    // const variantStocks = product.variants[0].stocks.map(
+    //   stock => stock.warehouse.id
+    // );
+    // const stockDiff = diff(variantStocks, dataStocks);
 
     onSubmit({
       ...data,
-      addStocks: stocks.filter(stock =>
-        stockDiff.added.some(addedStock => addedStock === stock.id)
-      ),
-      attributes,
-      removeStocks: stockDiff.removed,
-      updateStocks: stocks.filter(
-        stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
-      )
+      // addStocks: stocks.filter(stock =>
+      //   stockDiff.added.some(addedStock => addedStock === stock.id)
+      // ),
+      // attributes,
+      // removeStocks: stockDiff.removed,
+      // updateStocks: stocks.filter(
+      //   stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
+      // )
     });
   };
 
@@ -313,6 +327,22 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       defaultMessage:
                         "Add search engine title and description to make this product easier to find"
                     })}
+                  />
+                  <CardSpacer />
+                  <CollectionProducts
+                    disabled={disabled}
+                    collection={product}
+                    onRowClick={id => () => navigate(storesUrl(id))}
+                    onAdd={onAdd}
+                    onNextPage={loadNextPage}
+                    pageInfo={pageInfo}
+                    toolbar={toolbar}
+                    toggle={toggle}
+                    selected={selected}
+                    toggleAll={toggleAll}
+                    isChecked={isChecked}
+                    onProductUnassign={onProductUnassign}
+                    onPreviousPage={loadPreviousPage}
                   />
                 </div>
                 <div>

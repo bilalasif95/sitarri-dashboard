@@ -15,6 +15,7 @@ export interface SearchProducts_search_edges_node {
   __typename: "Product";
   id: string;
   name: string;
+  logo?: string;
   thumbnail: SearchProducts_search_edges_node_thumbnail | null;
 }
 

@@ -25,13 +25,15 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
   const [latlngError, setlatLngError] = React.useState("");
   const [latLngLoading, setlatLngLoading] = React.useState(false);
   const handleSuccess = (data: any) => {
-    if (data.storeCreate.storeErrors.length === 0 && data.businessUpdate.businessErrors.length === 0) {
+    if (data.storeCreate.storeErrors.length === 0) {
+      // if (data.businessUpdate.businessErrors.length === 0) {
       notify({
         text: intl.formatMessage({
-          defaultMessage: "Category created"
+          defaultMessage: "Store created"
         })
       });
       navigate(storesUrl(data.storeCreate.store.id));
+      // }
     }
   };
 
@@ -118,7 +120,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
                             sundayClosingTime: formData.sundayClosingTime,
                             sundayOpeningStatus: formData.sundayOpenClose,
                             sundayOpeningTime: formData.sundayOpeningTime,
-                            // tags: formData.tags,
+                            tags: formData.tags,
                             thursdayClosingTime: formData.thursdayClosingTime,
                             thursdayOpeningStatus: formData.thursdayOpenClose,
                             thursdayOpeningTime: formData.thursdayOpeningTime,

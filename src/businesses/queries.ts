@@ -301,6 +301,7 @@ export const TypedProductListQuery = TypedQuery<
 
 const productDetailsQuery = gql`
   ${pageInfoFragment}
+  ${fragmentMoney}
   query BusinessDetails($id: ID!) {
     business(id: $id) {
       id
@@ -328,6 +329,39 @@ const productDetailsQuery = gql`
               city
             }
             business {
+              id
+              name
+            }
+          }
+        }
+        pageInfo {
+          ...PageInfoFragment
+        }
+      }
+      productCategoryBusiness(first:100) {
+        edges {
+          node {
+            id
+            name
+            products(first:100) {
+              totalCount
+            }
+          }
+        }
+        pageInfo {
+          ...PageInfoFragment
+        }
+      }
+      businessProduct(first:100) {
+        edges {
+          node {
+            id
+            name
+            isPublished
+            basePrice {
+              ...Money
+            }
+            category {
               id
               name
             }

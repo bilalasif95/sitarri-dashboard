@@ -11,6 +11,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import SVG from "react-inlinesvg";
 
 import arrowleft from "@assets/images/arrow-left.svg";
+import closeIcon from "@assets/images/close.svg";
 import inputicon from "@assets/images/inputicon.svg";
 import search from "@assets/images/search.svg";
 import globe from "@assets/images/globe.svg";
@@ -277,6 +278,16 @@ const useStyles = makeStyles(
     },
     claimcard: {
       backgroundColor: "#fff"
+    },
+    closeicon: {
+      "& svg": {
+        "& path": {
+          fill: "black",
+        },
+      },
+      cursor: "pointer",
+      position: "absolute",
+      right: "20px",
     },
     columnPicker: {
       marginRight: theme.spacing(3)
@@ -861,6 +872,12 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             {({ change, data }) => (
               <>
                 <DialogContent className={classes.businessmodalcont}>
+                  <span onClick={() => setAddBusinessModal(false)}>
+                    <SVG
+                      className={classes.closeicon}
+                      src={closeIcon}
+                    />
+                  </span>
                   <div className={classes.businessmodal}>
                     <ul className={classes.mylist}>
                       <li className={classes.listitem}>
@@ -873,7 +890,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                         // }}
                         >
                           {/* <SVG
-                                                                    classname={classes.arrowlefticon}
+                                                                    className={classes.arrowlefticon}
                                                                     src={arrowleft}
                                                                 /> */}
                         </span>
@@ -1109,7 +1126,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                                 }}
                               >
                                 <SVG
-                                  classname={classes.arrowlefticon}
+                                  className={classes.arrowlefticon}
                                   src={arrowleft}
                                 />
                               </span>
@@ -1387,7 +1404,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                       // }
                     }}
                   >
-                    <SVG classname={classes.arrowlefticon} src={arrowleft} />
+                    <SVG className={classes.arrowlefticon} src={arrowleft} />
                   </span>
                   <span className={classes.listtext}>All done!!!!</span>
                 </li>
@@ -1481,7 +1498,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                                 }}
                               >
                                 <SVG
-                                  classname={classes.arrowlefticon}
+                                  className={classes.arrowlefticon}
                                   src={arrowleft}
                                 />
                               </span>

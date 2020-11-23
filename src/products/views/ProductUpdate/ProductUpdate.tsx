@@ -1,17 +1,21 @@
+import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
+// import IconButton from "@material-ui/core/IconButton";
+// import DeleteIcon from "@material-ui/icons/Delete";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import placeholderImg from "@assets/images/placeholder255x255.png";
 import ActionDialog from "@saleor/components/ActionDialog";
+import AssignProductDialog from "@saleor/components/AssignStoreDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import usePaginator, { createPaginationState } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
+import useProductSearch from "@saleor/searches/useStoreSearch";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -21,12 +25,14 @@ import { getMutationState, maybe } from "../../../misc";
 import ProductUpdatePage from "../../components/ProductUpdatePage";
 import ProductUpdateOperations from "../../containers/ProductUpdateOperations";
 import { TypedProductDetailsQuery } from "../../queries";
+import { CollectionAssignProduct } from "../../types/CollectionAssignProduct";
 import {
   ProductImageCreate,
   ProductImageCreateVariables
 } from "../../types/ProductImageCreate";
 import { ProductUpdate as ProductUpdateMutationResult } from "../../types/ProductUpdate";
 import { ProductVariantBulkDelete } from "../../types/ProductVariantBulkDelete";
+import { UnassignCollectionProduct } from "../../types/UnassignCollectionProduct";
 import {
   productImageUrl,
   productListUrl,
@@ -45,7 +51,7 @@ import {
 
 interface ProductUpdateProps {
   id: string;
-  params: ProductUrlQueryParams;
+  params: any;
 }
 
 export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
@@ -54,14 +60,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
+
   const intl = useIntl();
-  const {
-    loadMore: loadMoreCategories,
-    search: searchCategories,
-    result: searchCategoriesOpts
-  } = useCategorySearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
-  });
+  const paginate = usePaginator();
+
   const {
     loadMore: loadMoreCollections,
     search: searchCollections,
@@ -69,13 +71,16 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   } = useCollectionSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+  const paginationState = createPaginationState(PAGINATE_BY, params);
   const warehouses = useWarehouseList({
     displayLoader: true,
     variables: {
       first: 50
     }
   });
-
+  const { search, result } = useProductSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductUrlDialog,
     ProductUrlQueryParams
@@ -91,6 +96,17 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         if (product === null) {
           return <NotFoundPage onBack={handleBack} />;
         }
+
+        const {
+          loadMore: loadMoreCategories,
+          search: searchCategories,
+          result: searchCategoriesOpts
+        } = useCategorySearch({
+          variables: {
+            business: maybe(() => product.business.id),
+            ...DEFAULT_INITIAL_SEARCH_DATA
+          }
+        });
 
         const handleDelete = () => {
           notify({
@@ -135,6 +151,30 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           }
         };
 
+        const handleProductAssign = (data: CollectionAssignProduct) => {
+          if (data.productAddStores.errors.length === 0) {
+            notify({
+              text: intl.formatMessage({
+                defaultMessage: "Added store to product"
+              })
+            });
+            navigate(productUrl(id), true);
+          }
+        };
+
+        const handleProductUnassign = (data: UnassignCollectionProduct) => {
+          if (data.productRemoveStores.errors.length === 0) {
+            notify({
+              text: intl.formatMessage({
+                defaultMessage: "Deleted store from product"
+              })
+            });
+            refetch();
+            reset();
+            closeModal();
+          }
+        };
+
         return (
           <ProductUpdateOperations
             product={product}
@@ -143,6 +183,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
             onImageCreate={handleImageCreate}
             onImageDelete={handleImageDeleteSuccess}
             onUpdate={handleUpdate}
+            onProductAssign={handleProductAssign}
+            onProductUnassign={handleProductUnassign}
           >
             {({
               bulkProductVariantDelete,
@@ -151,7 +193,9 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
               deleteProductImage,
               reorderProductImages,
               updateProduct,
-              updateSimpleProduct
+              updateSimpleProduct,
+              assignProduct,
+              unassignProduct
             }) => {
               const handleImageDelete = (id: string) => () =>
                 deleteProductImage.mutate({ id });
@@ -159,7 +203,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                 navigate(productImageUrl(id, imageId));
               const handleSubmit = createUpdateHandler(
                 product,
-                updateProduct.mutate,
+                // updateProduct.mutate,
                 updateSimpleProduct.mutate
               );
               const handleImageUpload = createImageUploadHandler(
@@ -207,6 +251,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                 )
               ];
 
+              const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
+                maybe(() => product.business.businessStore.pageInfo),
+                paginationState,
+                params
+              );
+
               return (
                 <>
                   <WindowTitle title={maybe(() => data.product.name)} />
@@ -229,6 +279,18 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                     }
                     variants={maybe(() => product.variants)}
                     onBack={handleBack}
+                    loadNextPage={loadNextPage}
+                    onProductUnassign={(productId, event) => {
+                      event.stopPropagation();
+                      unassignProduct.mutate({
+                        productId: id,
+                        stores: [productId],
+                        ...paginationState
+                      });
+                    }}
+                    pageInfo={pageInfo}
+                    loadPreviousPage={loadPreviousPage}
+                    onAdd={() => openModal("assign")}
                     onDelete={() => openModal("remove")}
                     onImageReorder={handleImageReorder}
                     onSubmit={handleSubmit}
@@ -240,17 +302,32 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                     onImageEdit={handleImageEdit}
                     onImageDelete={handleImageDelete}
                     toolbar={
-                      <IconButton
+                      <Button
                         color="primary"
                         onClick={() =>
-                          openModal("remove-variants", {
+                          openModal("unassign", {
                             ids: listElements
                           })
                         }
                       >
-                        <DeleteIcon />
-                      </IconButton>
+                        <FormattedMessage
+                          defaultMessage="Unassign"
+                          description="unassign store from product, button"
+                        />
+                      </Button>
                     }
+                    // toolbar={
+                    //   <IconButton
+                    //     color="primary"
+                    //     onClick={() =>
+                    //       openModal("remove-variants", {
+                    //         ids: listElements
+                    //       })
+                    //     }
+                    //   >
+                    //     <DeleteIcon />
+                    //   </IconButton>
+                    // }
                     isChecked={isSelected}
                     selected={listElements.length}
                     toggle={toggle}
@@ -272,6 +349,29 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                       onFetchMore: loadMoreCollections
                     }}
                   />
+                  <AssignProductDialog
+                    confirmButtonState={assignProduct.opts.status}
+                    open={params.action === "assign"}
+                    onFetch={search}
+                    loading={result.loading}
+                    onClose={closeModal}
+                    onSubmit={products =>
+                      assignProduct.mutate({
+                        ...paginationState,
+                        productId: id,
+                        stores: products.map(product => product.id)
+                      })
+                    }
+                    products={maybe(() =>
+                      product.business.businessStore.edges
+                        .map(edge => edge.node)
+                    )}
+                  // products={maybe(() =>
+                  //   result.data.search.edges
+                  //     .map(edge => edge.node)
+                  //     .filter(suggestedProduct => suggestedProduct.id)
+                  // )}
+                  />
                   <ActionDialog
                     open={params.action === "remove"}
                     onClose={closeModal}
@@ -289,6 +389,34 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                         description="delete product"
                         values={{
                           name: product ? product.name : undefined
+                        }}
+                      />
+                    </DialogContentText>
+                  </ActionDialog>
+                  <ActionDialog
+                    confirmButtonState={unassignProduct.opts.status}
+                    onClose={closeModal}
+                    onConfirm={() =>
+                      unassignProduct.mutate({
+                        ...paginationState,
+                        productId: id,
+                        stores: params.ids
+                      })
+                    }
+                    open={params.action === "unassign"}
+                    title={intl.formatMessage({
+                      defaultMessage: "Unassign stores from product",
+                      description: "dialog title"
+                    })}
+                  >
+                    <DialogContentText>
+                      <FormattedMessage
+                        defaultMessage="{counter,plural,one{Are you sure you want to unassign this store?} other{Are you sure you want to unassign {displayQuantity} stores?}}"
+                        values={{
+                          counter: maybe(() => params.ids.length),
+                          displayQuantity: (
+                            <strong>{maybe(() => params.ids.length)}</strong>
+                          )
                         }}
                       />
                     </DialogContentText>

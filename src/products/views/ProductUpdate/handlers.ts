@@ -1,5 +1,5 @@
 import { decimal } from "@saleor/misc";
-import useUser from "@saleor/hooks/useUser";
+// import useUser from "@saleor/hooks/useUser";
 import { ProductUpdatePageSubmitData } from "@saleor/products/components/ProductUpdatePage";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import { ProductImageCreateVariables } from "@saleor/products/types/ProductImageCreate";
@@ -8,21 +8,22 @@ import { ProductUpdateVariables } from "@saleor/products/types/ProductUpdate";
 import { SimpleProductUpdateVariables } from "@saleor/products/types/SimpleProductUpdate";
 import { ReorderEvent } from "@saleor/types";
 import { arrayMove } from "react-sortable-hoc";
-import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
+// import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 
 export function createUpdateHandler(
   product: ProductDetails_product,
-  updateProduct: (variables: ProductUpdateVariables) => void,
+  // updateProduct: (variables: ProductUpdateVariables) => void,
   updateSimpleProduct: (variables: SimpleProductUpdateVariables) => void
 ) {
-  const { user } = useUser();
+  // const { user } = useUser();
   return (data: ProductUpdatePageSubmitData) => {
     const productVariables: ProductUpdateVariables = {
-      attributes: data.attributes.map(attribute => ({
-        id: attribute.id,
-        values: attribute.value[0] === "" ? [] : attribute.value
-      })),
+      // attributes: data.attributes.map(attribute => ({
+      //   id: attribute.id,
+      //   values: attribute.value[0] === "" ? [] : attribute.value
+      // })),
       basePrice: decimal(data.basePrice),
+      business: product.business.id,
       category: data.category,
       chargeTaxes: data.chargeTaxes,
       collections: data.collections,
@@ -36,24 +37,24 @@ export function createUpdateHandler(
         description: data.seoDescription,
         title: data.seoTitle
       },
-      store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
+      // store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
     };
 
-    if (product.productType.hasVariants) {
-      updateProduct(productVariables);
-    } else {
-      updateSimpleProduct({
-        ...productVariables,
-        addStocks: data.addStocks.map(mapFormsetStockToStockInput),
-        deleteStocks: data.removeStocks,
-        productVariantId: product.variants[0].id,
-        productVariantInput: {
-          sku: data.sku,
-          trackInventory: data.trackInventory
-        },
-        updateStocks: data.updateStocks.map(mapFormsetStockToStockInput)
-      });
-    }
+    // if (product.productType.hasVariants) {
+    //   updateProduct(productVariables);
+    // } else {
+    updateSimpleProduct({
+      ...productVariables,
+      // addStocks: data.addStocks.map(mapFormsetStockToStockInput),
+      // deleteStocks: data.removeStocks,
+      // productVariantId: product.variants[0].id,
+      productVariantInput: {
+        sku: data.sku,
+        trackInventory: data.trackInventory
+      },
+      // updateStocks: data.updateStocks.map(mapFormsetStockToStockInput)
+    });
+    // }
   };
 }
 

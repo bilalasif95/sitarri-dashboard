@@ -8,7 +8,7 @@ export const API_URI = process.env.API_URI;
 export const DEFAULT_INITIAL_SEARCH_DATA: SearchVariables = {
   after: null,
   first: 20,
-  query: ""
+  query: "",
 };
 
 export const DEFAULT_INITIAL_PAGINATION_DATA: Pagination = {

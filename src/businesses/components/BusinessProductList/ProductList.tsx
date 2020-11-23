@@ -99,8 +99,8 @@ const DisplayColumn = TDisplayColumn as React.FunctionComponent<
 
 interface ProductListProps
   extends ListProps<ProductListColumns>,
-    ListActions,
-    SortPage<ProductListUrlSortField> {
+  ListActions,
+  SortPage<ProductListUrlSortField> {
   activeAttributeSortId: string;
   gridAttributes: AvailableInGridAttributes_grid_edges_node[];
   products: ProductList_products_edges_node[];
@@ -182,12 +182,12 @@ export const ProductList: React.FC<ProductListProps> = props => {
           <DisplayColumn column="productType" displayColumns={settings.columns}>
             <TableCellHeader
               className={classes.colType}
-              direction={
-                sort.sort === ProductListUrlSortField.productType
-                  ? getArrowDirection(sort.asc)
-                  : undefined
-              }
-              onClick={() => onSort(ProductListUrlSortField.productType)}
+            // direction={
+            //   sort.sort === ProductListUrlSortField.productType
+            //     ? getArrowDirection(sort.asc)
+            //     : undefined
+            // }
+            // onClick={() => onSort(ProductListUrlSortField.productType)}
             >
               <FormattedMessage
                 defaultMessage="Category"
@@ -221,7 +221,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                 className={classes.colAttribute}
                 direction={
                   sort.sort === ProductListUrlSortField.attribute &&
-                  attributeId === activeAttributeSortId
+                    attributeId === activeAttributeSortId
                     ? getArrowDirection(sort.asc)
                     : undefined
                 }
@@ -312,11 +312,11 @@ export const ProductList: React.FC<ProductListProps> = props => {
                       className={classes.colType}
                       data-tc="product-type"
                     >
-                      {product && product.productType ? (
-                        product.productType.name
+                      {product && product.category ? (
+                        product.category.name
                       ) : (
-                        <Skeleton />
-                      )}
+                          <Skeleton />
+                        )}
                     </TableCell>
                   </DisplayColumn>
                   <DisplayColumn
@@ -329,24 +329,24 @@ export const ProductList: React.FC<ProductListProps> = props => {
                       data-tc-is-published={maybe(() => product.isPublished)}
                     >
                       {product &&
-                      maybe(() => product.isPublished !== undefined) ? (
-                        <StatusLabel
-                          label={
-                            product.isPublished
-                              ? intl.formatMessage({
+                        maybe(() => product.isPublished !== undefined) ? (
+                          <StatusLabel
+                            label={
+                              product.isPublished
+                                ? intl.formatMessage({
                                   defaultMessage: "Published",
                                   description: "product status"
                                 })
-                              : intl.formatMessage({
+                                : intl.formatMessage({
                                   defaultMessage: "Not published",
                                   description: "product status"
                                 })
-                          }
-                          status={product.isPublished ? "success" : "error"}
-                        />
-                      ) : (
-                        <Skeleton />
-                      )}
+                            }
+                            status={product.isPublished ? "success" : "error"}
+                          />
+                        ) : (
+                          <Skeleton />
+                        )}
                     </TableCell>
                   </DisplayColumn>
                   {gridAttributesFromSettings.map(gridAttribute => (
@@ -379,12 +379,12 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   >
                     <TableCell className={classes.colPrice}>
                       {maybe(() => product.basePrice) &&
-                      maybe(() => product.basePrice.amount) !== undefined &&
-                      maybe(() => product.basePrice.currency) !== undefined ? (
-                        <Money money={product.basePrice} />
-                      ) : (
-                        <Skeleton />
-                      )}
+                        maybe(() => product.basePrice.amount) !== undefined &&
+                        maybe(() => product.basePrice.currency) !== undefined ? (
+                          <Money money={product.basePrice} />
+                        ) : (
+                          <Skeleton />
+                        )}
                     </TableCell>
                   </DisplayColumn>
                 </TableRow>

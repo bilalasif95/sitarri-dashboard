@@ -44,10 +44,6 @@ export const collectionProductFragment = gql`
     id
     isPublished
     name
-    productType {
-      id
-      name
-    }
     thumbnail {
       url
     }

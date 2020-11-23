@@ -12,7 +12,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useUser from "@saleor/hooks/useUser";
+// import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import NotFoundPage from "@saleor/components/NotFoundPage";
@@ -65,7 +65,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     params.ids
   );
   const intl = useIntl();
-  const { user } = useUser();
+  // const { user } = useUser();
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const { data, loading, refetch } = useCategoryDetailsQuery({
     displayLoader: true,
@@ -190,7 +190,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                     id,
                     input: {
                       backgroundImage: null,
-                      store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
+                      business: localStorage.getItem("businessID"),
+                      // store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
                     }
                   }
                 })
@@ -201,7 +202,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                     id,
                     input: {
                       backgroundImage: file,
-                      store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
+                      business: localStorage.getItem("businessID"),
+                      // store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
                     }
                   }
                 })
@@ -216,13 +218,14 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                     id,
                     input: {
                       backgroundImageAlt: formData.backgroundImageAlt,
+                      business: localStorage.getItem("businessID"),
                       descriptionJson: JSON.stringify(formData.description),
                       name: formData.name,
                       seo: {
                         description: formData.seoDescription,
                         title: formData.seoTitle
                       },
-                      store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
+                      // store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
                     }
                   }
                 })

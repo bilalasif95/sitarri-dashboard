@@ -1,7 +1,7 @@
 // import { convertFromRaw, RawDraftContentState } from "draft-js";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-// import makeStyles from "@material-ui/core/styles/makeStyles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 // import { diff } from "fast-array-diff";
@@ -10,12 +10,12 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
-// import ColumnPicker, {
-//   ColumnPickerChoice
-// } from "@saleor/components/ColumnPicker";
+import ColumnPicker, {
+  ColumnPickerChoice
+} from "@saleor/components/ColumnPicker";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
-// import FilterBar from "@saleor/components/FilterBar";
+import FilterBar from "@saleor/components/FilterBar";
 import Form from "@saleor/components/Form";
 // import Grid from "@saleor/components/Grid";
 import SearchBar from "@saleor/components/SearchBar";
@@ -25,7 +25,7 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 // import VisibilityCard from "@saleor/components/VisibilityCard";
 // import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useBulkActions from "@saleor/hooks/useBulkActions";
-// import { ProductListColumns, DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
+import { ProductListColumns, DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import useFormset from "@saleor/hooks/useFormset";
 // import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -37,8 +37,8 @@ import { maybe } from "@saleor/misc";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-// import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
-import { getSortParams } from "@saleor/utils/sort";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
+import { getSortParams, getSortUrlVariables } from "@saleor/utils/sort";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { FetchMoreProps, ListActions } from "@saleor/types";
 // import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
@@ -53,7 +53,7 @@ import {
 
 // import { ProductListVariables } from "../../types/ProductList";
 
-// import CategoryList from "../CategoryList";
+import CategoryList from "../CategoryList";
 import StoresList from "../StoresList";
 
 import {
@@ -86,39 +86,39 @@ import { ProductStockInput } from "../ProductStocks";
 
 import { HomePageQuery } from "../../../home/queries";
 
-// import {
-//   createFilterStructure
-// } from "../ProductListPage/filters";
+import {
+  createFilterStructure
+} from "../ProductListPage/filters";
 
-// import BusinessProductList from "../BusinessProductList";
+import BusinessProductList from "../BusinessProductList";
 
 import {
   // getCategoryFilterVariables,
   // getFilterVariables,
   getFilterTabs,
-  // getFilterQueryParam,
+  getFilterQueryParam,
 } from "../../views/ProductList/filters";
-// import { getSortQueryVariables, getCategorySortQueryVariables } from "../../views/ProductList/sort";
+// import { getSortQueryVariables } from "../../views/ProductList/sort";
 
 // import {
 //   TypedProductListQuery
 // } from "../../queries";
 
-// import {
-//   // businessesListUrl,
-//   ProductListUrlDialog,
-//   ProductListUrlQueryParams,
-//   ProductListUrlSortField
-// } from "../../urls";
-// import { productUrl, productListUrl } from "../../../products/urls";
-// import {
-//   categoryUrl,
-//   categoryAddUrl,
-//   categoryListUrl,
-//   CategoryListUrlFilters,
-//   CategoryListUrlDialog,
-//   CategoryListUrlQueryParams
-// } from "../../../categories/urls";
+import {
+  // businessesListUrl,
+  ProductListUrlDialog,
+  ProductListUrlQueryParams,
+  ProductListUrlSortField
+} from "../../urls";
+import { productUrl, productListUrl } from "../../../products/urls";
+import {
+  categoryUrl,
+  categoryAddUrl,
+  categoryListUrl,
+  CategoryListUrlFilters,
+  CategoryListUrlDialog,
+  CategoryListUrlQueryParams
+} from "../../../categories/urls";
 // import { TypedCategoriesListQuery } from "../../../categories/queries";
 import {
   areFiltersApplied,
@@ -192,33 +192,33 @@ export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
   removeStocks: string[];
 }
 
-// const useStyles = makeStyles(
-//   theme => ({
-//     columnPicker: {
-//       marginRight: theme.spacing(3)
-//     }
-//   }),
-//   { name: "ProductListPage" }
-// );
+const useStyles = makeStyles(
+  theme => ({
+    columnPicker: {
+      marginRight: theme.spacing(3)
+    }
+  }),
+  { name: "ProductListPage" }
+);
 
 export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   disabled,
   // categories: categoryChoiceList,
   // collections: collectionChoiceList,
   errors,
-  // gridAttributes,
-  // availableInGridAttributes,
-  // defaultSettings,
-  // hasMore,
+  gridAttributes,
+  availableInGridAttributes,
+  defaultSettings,
+  hasMore,
   initialSearch,
-  // loading,
-  // currentTab,
+  loading,
+  currentTab,
   settings,
   params,
-  // currencySymbol,
-  // filterOpts,
+  currencySymbol,
+  filterOpts,
   tabs,
-  // totalGridAttributes,
+  totalGridAttributes,
   // fetchCategories,
   // fetchCollections,
   // fetchMoreCategories,
@@ -230,10 +230,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   saveButtonBarState,
   variants,
   // warehouses,
-  // onFetchMore,
+  onFetchMore,
   // onAll,
   onBack,
-  // onAdd,
+  onAdd,
   onDelete,
   // onTabDelete,
   // onSearchChange,
@@ -255,7 +255,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   // toggle,
   // toggleAll,
   // toolbar
-}) => {
+}, props) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const paginate = usePaginator();
@@ -306,35 +306,35 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   // const currency = maybe(() => product.basePrice.currency);
   // const hasVariants = maybe(() => product.productType.hasVariants, false);
 
-  // const filterStructure = createFilterStructure(intl, filterOpts);
-  // const classes = useStyles(props);
-  // const columns: ColumnPickerChoice[] = [
-  //   {
-  //     label: intl.formatMessage({
-  //       defaultMessage: "Published",
-  //       description: "product status"
-  //     }),
-  //     value: "isPublished" as ProductListColumns
-  //   },
-  //   {
-  //     label: intl.formatMessage({
-  //       defaultMessage: "Price",
-  //       description: "product price"
-  //     }),
-  //     value: "price" as ProductListColumns
-  //   },
-  //   {
-  //     label: intl.formatMessage({
-  //       defaultMessage: "Type",
-  //       description: "product type"
-  //     }),
-  //     value: "productType" as ProductListColumns
-  //   },
-  //   ...availableInGridAttributes.map(attribute => ({
-  //     label: attribute.name,
-  //     value: `attribute:${attribute.id}`
-  //   }))
-  // ];
+  const filterStructure = createFilterStructure(intl, filterOpts);
+  const classes = useStyles(props);
+  const columns: ColumnPickerChoice[] = [
+    {
+      label: intl.formatMessage({
+        defaultMessage: "Published",
+        description: "product status"
+      }),
+      value: "isPublished" as ProductListColumns
+    },
+    {
+      label: intl.formatMessage({
+        defaultMessage: "Price",
+        description: "product price"
+      }),
+      value: "price" as ProductListColumns
+    },
+    {
+      label: intl.formatMessage({
+        defaultMessage: "Category",
+        description: "product type"
+      }),
+      value: "productType" as ProductListColumns
+    },
+    ...availableInGridAttributes.map(attribute => ({
+      label: attribute.name,
+      value: `attribute:${attribute.id}`
+    }))
+  ];
 
   const handleSubmit = (data: any) => {
     // const dataStocks = stocks.map(stock => stock.id);
@@ -359,15 +359,15 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     });
   };
 
-  // const [openModal] = createDialogActionHandlers<
-  //   ProductListUrlDialog,
-  //   ProductListUrlQueryParams
-  // >(navigate, productListUrl, params);
+  const [openModal] = createDialogActionHandlers<
+    ProductListUrlDialog,
+    ProductListUrlQueryParams
+  >(navigate, productListUrl, params);
 
-  // const [openCategoryModal] = createDialogActionHandlers<
-  //   CategoryListUrlDialog,
-  //   CategoryListUrlQueryParams
-  // >(navigate, categoryListUrl, params);
+  const [openCategoryModal] = createDialogActionHandlers<
+    CategoryListUrlDialog,
+    CategoryListUrlQueryParams
+  >(navigate, categoryListUrl, params);
 
   const [openStoreModal] = createDialogActionHandlers<
     StoreListUrlDialog,
@@ -381,8 +381,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
         : 0
       : parseInt(params.activeTab, 0);
 
-  // const handleSave = (columns: ProductListColumns[]) =>
-  //   onUpdateListSettings("columns", columns);
+  const handleSave = (columns: ProductListColumns[]) =>
+    onUpdateListSettings("columns", columns);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   // const filter = getFilterVariables(params);
@@ -406,51 +406,51 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   //   [params]
   // );
 
-  // const handleSort = (field: ProductListUrlSortField, attributeId?: string) =>
-  //   navigate(
-  //     productListUrl({
-  //       ...params,
-  //       ...getSortUrlVariables(field, params),
-  //       attributeId,
-  //       ...DEFAULT_INITIAL_PAGINATION_DATA
-  //     })
-  //   );
+  const handleSort = (field: ProductListUrlSortField, attributeId?: string) =>
+    navigate(
+      productListUrl({
+        ...params,
+        ...getSortUrlVariables(field, params),
+        attributeId,
+        ...DEFAULT_INITIAL_PAGINATION_DATA
+      })
+    );
 
-  // const categoryHandleSort = createSortHandler(navigate, categoryListUrl, params);
+  const categoryHandleSort = createSortHandler(navigate, categoryListUrl, params);
   const storeHandleSort = createSortHandler(navigate, storesListUrl, params);
 
-  // const handleTabChange = (tab: number) => {
-  //   reset();
-  //   navigate(
-  //     productListUrl({
-  //       activeTab: tab.toString(),
-  //       ...getFilterTabs()[tab - 1].data
-  //     })
-  //   );
-  // };
+  const handleTabChange = (tab: number) => {
+    reset();
+    navigate(
+      productListUrl({
+        activeTab: tab.toString(),
+        ...getFilterTabs()[tab - 1].data
+      })
+    );
+  };
 
-  // const [
-  //   changeFilters,
-  //   resetFilters,
-  //   handleSearchChange
-  // ] = createFilterHandlers({
-  //   cleanupFn: reset,
-  //   createUrl: productListUrl,
-  //   getFilterQueryParam,
-  //   navigate,
-  //   params
-  // });
+  const [
+    changeFilters,
+    resetFilters,
+    handleSearchChange
+  ] = createFilterHandlers({
+    cleanupFn: reset,
+    createUrl: productListUrl,
+    getFilterQueryParam,
+    navigate,
+    params
+  });
 
-  // const changeFilterField = (filter: CategoryListUrlFilters) => {
-  //   reset();
-  //   navigate(
-  //     categoryListUrl({
-  //       ...getActiveFilters(params),
-  //       ...filter,
-  //       activeTab: undefined
-  //     })
-  //   );
-  // };
+  const changeFilterField = (filter: CategoryListUrlFilters) => {
+    reset();
+    navigate(
+      categoryListUrl({
+        ...getActiveFilters(params),
+        ...filter,
+        activeTab: undefined
+      })
+    );
+  };
 
   const changeStoreFilterField = (filter: StoreListUrlFilters) => {
     reset();
@@ -463,15 +463,15 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     );
   };
 
-  // const handleCategoryTabChange = (tab: number) => {
-  //   reset();
-  //   navigate(
-  //     categoryListUrl({
-  //       activeTab: tab.toString(),
-  //       ...getFilterTabs()[tab - 1].data
-  //     })
-  //   );
-  // };
+  const handleCategoryTabChange = (tab: number) => {
+    reset();
+    navigate(
+      categoryListUrl({
+        activeTab: tab.toString(),
+        ...getFilterTabs()[tab - 1].data
+      })
+    );
+  };
 
   const handleStoreTabChange = (tab: number) => {
     reset();
@@ -485,6 +485,18 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
     maybe(() => product.businessStore.pageInfo),
+    paginationState,
+    params
+  );
+
+  const { loadNextPage: categoriesloadNextPage, loadPreviousPage: categoriesloadPreviousPage, pageInfo: categoriespageInfo } = paginate(
+    maybe(() => product.productCategoryBusiness.pageInfo),
+    paginationState,
+    params
+  );
+
+  const { loadNextPage: productsloadNextPage, loadPreviousPage: productsloadPreviousPage, pageInfo: productspageInfo } = paginate(
+    maybe(() => product.businessProduct.pageInfo),
     paginationState,
     params
   );
@@ -540,7 +552,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       // initialDescription={initialDescription}
                       onChange={change}
                     />
-                    {/* <CardSpacer />
+                    <CardSpacer />
                     <PageHeader title={intl.formatMessage(sectionNames.products)}>
                       <ColumnPicker
                         className={classes.columnPicker}
@@ -590,84 +602,74 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                           defaultMessage: "Search Products..."
                         })}
                       />
-                      <TypedProductListQuery displayLoader variables={queryVariables}>
-                        {({ data, loading }) => {
-                          const { loadNextPage, loadPreviousPage } = paginate(
-                            maybe(() => data.products.pageInfo),
-                            paginationState,
-                            params
-                          );
-                          return (
-                            <BusinessProductList
-                              products={maybe(() =>
-                                data.products.edges.map(edge => edge.node)
-                              )}
-                              toggle={toggle}
-                              sort={{
-                                asc: params.asc,
-                                sort: params.sort
-                              }}
-                              onSort={handleSort}
-                              isChecked={isSelected}
-                              selected={listElements.length}
-                              toggleAll={toggleAll}
-                              toolbar={
-                                <>
-                                  <Button
-                                    color="primary"
-                                    onClick={() =>
-                                      openModal("unpublish", {
-                                        ids: listElements
-                                      })
-                                    }
-                                  >
-                                    <FormattedMessage
-                                      defaultMessage="Unpublish"
-                                      description="unpublish product, button"
-                                    />
-                                  </Button>
-                                  <Button
-                                    color="primary"
-                                    onClick={() =>
-                                      openModal("publish", {
-                                        ids: listElements
-                                      })
-                                    }
-                                  >
-                                    <FormattedMessage
-                                      defaultMessage="Publish"
-                                      description="publish product, button"
-                                    />
-                                  </Button>
-                                  <IconButton
-                                    color="primary"
-                                    onClick={() =>
-                                      openModal("delete", {
-                                        ids: listElements
-                                      })
-                                    }
-                                  >
-                                    <DeleteIcon />
-                                  </IconButton>
-                                </>
-                              }
-                              params={params}
-                              activeAttributeSortId={params.attributeId}
-                              onRowClick={id => () => navigate(productUrl(id))}
-                              disabled={loading}
-                              onNextPage={loadNextPage}
-                              onPreviousPage={loadPreviousPage}
-                              gridAttributes={gridAttributes}
-                              settings={settings}
-                              onUpdateListSettings={onUpdateListSettings}
-                            />
-                          )
+                      <BusinessProductList
+                        products={maybe(() =>
+                          product.businessProduct.edges.map(edge => edge.node)
+                        )}
+                        toggle={toggle}
+                        sort={{
+                          asc: params.asc,
+                          sort: params.sort
                         }}
-                      </TypedProductListQuery>
+                        onSort={handleSort}
+                        isChecked={isSelected}
+                        pageInfo={productspageInfo}
+                        selected={listElements.length}
+                        toggleAll={toggleAll}
+                        toolbar={
+                          <>
+                            <Button
+                              color="primary"
+                              onClick={() =>
+                                openModal("unpublish", {
+                                  ids: listElements
+                                })
+                              }
+                            >
+                              <FormattedMessage
+                                defaultMessage="Unpublish"
+                                description="unpublish product, button"
+                              />
+                            </Button>
+                            <Button
+                              color="primary"
+                              onClick={() =>
+                                openModal("publish", {
+                                  ids: listElements
+                                })
+                              }
+                            >
+                              <FormattedMessage
+                                defaultMessage="Publish"
+                                description="publish product, button"
+                              />
+                            </Button>
+                            <IconButton
+                              color="primary"
+                              onClick={() =>
+                                openModal("delete", {
+                                  ids: listElements
+                                })
+                              }
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </>
+                        }
+                        params={params}
+                        activeAttributeSortId={params.attributeId}
+                        onRowClick={id => () => navigate(productUrl(id))}
+                        disabled={loading}
+                        onNextPage={productsloadNextPage}
+                        onPreviousPage={productsloadPreviousPage}
+                        gridAttributes={gridAttributes}
+                        settings={settings}
+                        onUpdateListSettings={onUpdateListSettings}
+                      />
                     </Card>
                     <CardSpacer />
                     <PageHeader title={intl.formatMessage(sectionNames.categories)}>
-                      <Button color="primary" variant="contained" onClick={() => navigate(categoryAddUrl())}>
+                      <Button color="primary" variant="contained" onClick={() => { localStorage.setItem("businessID", product.id); navigate(categoryAddUrl()) }}>
                         <FormattedMessage
                           defaultMessage="Create category"
                           description="button"
@@ -692,51 +694,51 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                         onTabDelete={() => openCategoryModal("delete-search")}
                         onTabSave={() => openCategoryModal("save-search")}
                       />
-                      <TypedCategoriesListQuery displayLoader variables={categoryQueryVariables}>
+                      {/* <TypedCategoriesListQuery displayLoader variables={categoryQueryVariables}>
                         {({ data }) => {
                           const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
                             maybe(() => data.categories.pageInfo),
                             paginationState,
                             params
                           );
-                          return (
-                            <CategoryList
-                              categories={maybe(
-                                () => data.categories.edges.map(edge => edge.node),
-                                []
-                              )}
-                              disabled={disabled}
-                              isChecked={isSelected}
-                              isRoot={true}
-                              pageInfo={pageInfo}
-                              selected={listElements.length}
-                              settings={settings}
-                              toggle={toggle}
-                              toggleAll={toggleAll}
-                              toolbar={
-                                <IconButton
-                                  color="primary"
-                                  onClick={() =>
-                                    openCategoryModal("delete", {
-                                      ids: listElements
-                                    })
-                                  }
-                                >
-                                  <DeleteIcon />
-                                </IconButton>
-                              }
-                              onAdd={() => navigate(categoryAddUrl())}
-                              onNextPage={loadNextPage}
-                              onPreviousPage={loadPreviousPage}
-                              onRowClick={id => () => navigate(categoryUrl(id))}
-                              onUpdateListSettings={onUpdateListSettings}
-                              sort={getSortParams(params)}
-                              onSort={categoryHandleSort}
-                            />
-                          )
+                          return ( */}
+                      <CategoryList
+                        categories={maybe(
+                          () => product.productCategoryBusiness.edges.map(edge => edge.node),
+                          []
+                        )}
+                        disabled={disabled}
+                        isChecked={isSelected}
+                        isRoot={true}
+                        pageInfo={categoriespageInfo}
+                        selected={listElements.length}
+                        settings={settings}
+                        toggle={toggle}
+                        toggleAll={toggleAll}
+                        toolbar={
+                          <IconButton
+                            color="primary"
+                            onClick={() =>
+                              openCategoryModal("delete", {
+                                ids: listElements
+                              })
+                            }
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        }
+                        onAdd={() => navigate(categoryAddUrl())}
+                        onNextPage={categoriesloadNextPage}
+                        onPreviousPage={categoriesloadPreviousPage}
+                        onRowClick={id => () => navigate(categoryUrl(id))}
+                        onUpdateListSettings={onUpdateListSettings}
+                        sort={getSortParams(params)}
+                        onSort={categoryHandleSort}
+                      />
+                      {/* )
                         }}
-                      </TypedCategoriesListQuery>
-                    </Card> */}
+                      </TypedCategoriesListQuery> */}
+                    </Card>
                     <CardSpacer />
                     <PageHeader title={intl.formatMessage(sectionNames.stores)}>
                       <Button color="primary" variant="contained" onClick={() => { localStorage.setItem("businessID", product.id); navigate(storeAddUrl()) }}>

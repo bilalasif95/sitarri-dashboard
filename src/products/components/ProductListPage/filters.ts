@@ -98,25 +98,25 @@ export function createFilterStructure(
       ),
       active: opts.status.active
     },
-    {
-      ...createOptionsField(
-        ProductFilterKeys.stock,
-        intl.formatMessage(messages.quantity),
-        [opts.stockStatus.value],
-        false,
-        [
-          {
-            label: intl.formatMessage(messages.available),
-            value: StockAvailability.IN_STOCK
-          },
-          {
-            label: intl.formatMessage(messages.outOfStock),
-            value: StockAvailability.OUT_OF_STOCK
-          }
-        ]
-      ),
-      active: opts.stockStatus.active
-    },
+    // {
+    //   ...createOptionsField(
+    //     ProductFilterKeys.stock,
+    //     intl.formatMessage(messages.quantity),
+    //     [opts.stockStatus.value],
+    //     false,
+    //     [
+    //       {
+    //         label: intl.formatMessage(messages.available),
+    //         value: StockAvailability.IN_STOCK
+    //       },
+    //       {
+    //         label: intl.formatMessage(messages.outOfStock),
+    //         value: StockAvailability.OUT_OF_STOCK
+    //       }
+    //     ]
+    //   ),
+    //   active: opts.stockStatus.active
+    // },
     {
       ...createPriceField(
         ProductFilterKeys.price,
@@ -143,42 +143,42 @@ export function createFilterStructure(
       ),
       active: opts.categories.active
     },
-    {
-      ...createAutocompleteField(
-        ProductFilterKeys.collections,
-        intl.formatMessage(sectionNames.collections),
-        opts.collections.value,
-        opts.collections.displayValues,
-        true,
-        opts.collections.choices,
-        {
-          hasMore: opts.collections.hasMore,
-          initialSearch: "",
-          loading: opts.collections.loading,
-          onFetchMore: opts.collections.onFetchMore,
-          onSearchChange: opts.collections.onSearchChange
-        }
-      ),
-      active: opts.collections.active
-    },
-    {
-      ...createAutocompleteField(
-        ProductFilterKeys.productType,
-        intl.formatMessage(sectionNames.productTypes),
-        opts.productType.value,
-        opts.productType.displayValues,
-        true,
-        opts.productType.choices,
-        {
-          hasMore: opts.productType.hasMore,
-          initialSearch: "",
-          loading: opts.productType.loading,
-          onFetchMore: opts.productType.onFetchMore,
-          onSearchChange: opts.productType.onSearchChange
-        }
-      ),
-      active: opts.productType.active
-    },
+    // {
+    //   ...createAutocompleteField(
+    //     ProductFilterKeys.collections,
+    //     intl.formatMessage(sectionNames.collections),
+    //     opts.collections.value,
+    //     opts.collections.displayValues,
+    //     true,
+    //     opts.collections.choices,
+    //     {
+    //       hasMore: opts.collections.hasMore,
+    //       initialSearch: "",
+    //       loading: opts.collections.loading,
+    //       onFetchMore: opts.collections.onFetchMore,
+    //       onSearchChange: opts.collections.onSearchChange
+    //     }
+    //   ),
+    //   active: opts.collections.active
+    // },
+    // {
+    //   ...createAutocompleteField(
+    //     ProductFilterKeys.productType,
+    //     intl.formatMessage(sectionNames.productTypes),
+    //     opts.productType.value,
+    //     opts.productType.displayValues,
+    //     true,
+    //     opts.productType.choices,
+    //     {
+    //       hasMore: opts.productType.hasMore,
+    //       initialSearch: "",
+    //       loading: opts.productType.loading,
+    //       onFetchMore: opts.productType.onFetchMore,
+    //       onSearchChange: opts.productType.onSearchChange
+    //     }
+    //   ),
+    //   active: opts.productType.active
+    // },
     ...opts.attributes.map(attr => ({
       ...createOptionsField(
         attr.slug as any,

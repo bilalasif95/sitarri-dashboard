@@ -8,7 +8,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import Checkbox from "@saleor/components/Checkbox";
-import Money from "@saleor/components/Money";
+// import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
@@ -177,12 +177,12 @@ export const ProductList: React.FC<ProductListProps> = props => {
           <DisplayColumn column="productType" displayColumns={settings.columns}>
             <TableCellHeader
               className={classes.colType}
-              direction={
-                sort.sort === ProductListUrlSortField.productType
-                  ? getArrowDirection(sort.asc)
-                  : undefined
-              }
-              onClick={() => onSort(ProductListUrlSortField.productType)}
+            // direction={
+            //   sort.sort === ProductListUrlSortField.productType
+            //     ? getArrowDirection(sort.asc)
+            //     : undefined
+            // }
+            // onClick={() => onSort(ProductListUrlSortField.productType)}
             >
               <FormattedMessage
                 defaultMessage="Category"
@@ -238,13 +238,13 @@ export const ProductList: React.FC<ProductListProps> = props => {
           <DisplayColumn column="price" displayColumns={settings.columns}>
             <TableCellHeader
               className={classes.colPrice}
-              direction={
-                sort.sort === ProductListUrlSortField.price
-                  ? getArrowDirection(sort.asc)
-                  : undefined
-              }
+              // direction={
+              //   sort.sort === ProductListUrlSortField.price
+              //     ? getArrowDirection(sort.asc)
+              //     : undefined
+              // }
               textAlign="right"
-              onClick={() => onSort(ProductListUrlSortField.price)}
+            // onClick={() => onSort(ProductListUrlSortField.price)}
             >
               <FormattedMessage
                 defaultMessage="Business"
@@ -307,8 +307,8 @@ export const ProductList: React.FC<ProductListProps> = props => {
                       className={classes.colType}
                       data-tc="product-type"
                     >
-                      {product && product.productType ? (
-                        product.productType.name
+                      {product && product.category ? (
+                        product.category.name
                       ) : (
                           <Skeleton />
                         )}
@@ -373,13 +373,18 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     displayColumns={settings.columns}
                   >
                     <TableCell className={classes.colPrice}>
-                      {maybe(() => product.basePrice) &&
+                      {product && product.business ? (
+                        product.business.name
+                      ) : (
+                          <Skeleton />
+                        )}
+                      {/* {maybe(() => product.basePrice) &&
                         maybe(() => product.basePrice.amount) !== undefined &&
                         maybe(() => product.basePrice.currency) !== undefined ? (
                           <Money money={product.basePrice} />
                         ) : (
                           <Skeleton />
-                        )}
+                        )} */}
                     </TableCell>
                   </DisplayColumn>
                 </TableRow>

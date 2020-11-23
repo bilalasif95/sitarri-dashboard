@@ -8,7 +8,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import useUser from "@saleor/hooks/useUser";
+// import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import AssignAttributeDialog from "@saleor/productTypes/components/AssignAttributeDialog";
@@ -46,7 +46,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const { user } = useUser();
+  // const { user } = useUser();
   const productAttributeListActions = useBulkActions();
   const variantAttributeListActions = useBulkActions();
   const intl = useIntl();
@@ -157,7 +157,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                         productAttributes: formData.productAttributes.map(
                           choice => choice.value
                         ),
-                        store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
+                        // store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
                         taxCode: formData.taxType,
                         variantAttributes: formData.variantAttributes.map(
                           choice => choice.value
@@ -173,7 +173,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                       id,
                       input: {
                         hasVariants,
-                        store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
+                        // store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
                       }
                     });
                   const handleAssignAttribute = () =>
@@ -354,8 +354,8 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                                   ...params,
                                   ids: ids.includes(attributeId)
                                     ? params.ids.filter(
-                                        selectedId => selectedId !== attributeId
-                                      )
+                                      selectedId => selectedId !== attributeId
+                                    )
                                     : [...ids, attributeId]
                                 })
                               );

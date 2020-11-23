@@ -48,9 +48,9 @@ const useStyles = makeStyles(
     colProducts: {
       textAlign: "center"
     },
-    colSubcategories: {
-      textAlign: "center"
-    },
+    // colSubcategories: {
+    //   textAlign: "center"
+    // },
     tableRow: {
       cursor: "pointer"
     }
@@ -120,16 +120,16 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
           <FormattedMessage defaultMessage="Category Name" />
         </TableCellHeader>
         <TableCellHeader
-          direction={
-            isRoot && sort.sort === CategoryListUrlSortField.subcategoryCount
-              ? getArrowDirection(sort.asc)
-              : undefined
-          }
+          // direction={
+          //   isRoot && sort.sort === CategoryListUrlSortField.subcategoryCount
+          //     ? getArrowDirection(sort.asc)
+          //     : undefined
+          // }
           className={classes.colSubcategories}
-          disableClick={!isRoot}
-          onClick={() =>
-            isRoot && onSort(CategoryListUrlSortField.subcategoryCount)
-          }
+        // disableClick={!isRoot}
+        // onClick={() =>
+        //   isRoot && onSort(CategoryListUrlSortField.subcategoryCount)
+        // }
         >
           <FormattedMessage
             defaultMessage="Business"
@@ -182,7 +182,6 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
           categories,
           category => {
             const isSelected = category ? isChecked(category.id) : false;
-
             return (
               <TableRow
                 className={classes.tableRow}
@@ -206,10 +205,8 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
                 </TableCell>
                 <TableCell className={classes.colSubcategories}>
                   {category &&
-                    category.children &&
-                    category.children.totalCount !== undefined ? (
-                      category.children.totalCount
-                    ) : (
+                    category.business ?
+                    category.business.name : (
                       <Skeleton />
                     )}
                 </TableCell>

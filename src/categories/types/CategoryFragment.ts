@@ -20,6 +20,7 @@ export interface CategoryFragment {
   __typename: "Category";
   id: string;
   name: string;
+  business?: any;
   children: CategoryFragment_children | null;
   products: CategoryFragment_products | null;
 }

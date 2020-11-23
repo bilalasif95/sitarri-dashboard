@@ -3,13 +3,19 @@ import React from "react";
 import { getMutationProviderData, maybe } from "../../misc";
 import { PartialMutationProviderOutput } from "../../types";
 import {
+  TypedCollectionAssignProductMutation,
   TypedProductDeleteMutation,
   TypedProductImageCreateMutation,
   TypedProductImageDeleteMutation,
   TypedProductUpdateMutation,
   TypedProductVariantBulkDeleteMutation,
-  TypedSimpleProductUpdateMutation
+  TypedSimpleProductUpdateMutation,
+  TypedUnassignCollectionProductMutation
 } from "../mutations";
+import {
+  CollectionAssignProduct,
+  CollectionAssignProductVariables
+} from "../types/CollectionAssignProduct";
 import { ProductDelete, ProductDeleteVariables } from "../types/ProductDelete";
 import { ProductDetails_product } from "../types/ProductDetails";
 import {
@@ -33,6 +39,10 @@ import {
   SimpleProductUpdate,
   SimpleProductUpdateVariables
 } from "../types/SimpleProductUpdate";
+import {
+  UnassignCollectionProduct,
+  UnassignCollectionProductVariables
+} from "../types/UnassignCollectionProduct";
 import ProductImagesReorderProvider from "./ProductImagesReorder";
 
 interface ProductUpdateOperationsProps {
@@ -66,6 +76,14 @@ interface ProductUpdateOperationsProps {
       SimpleProductUpdate,
       SimpleProductUpdateVariables
     >;
+    assignProduct: PartialMutationProviderOutput<
+      CollectionAssignProduct,
+      CollectionAssignProductVariables
+    >;
+    unassignProduct: PartialMutationProviderOutput<
+      UnassignCollectionProduct,
+      UnassignCollectionProductVariables
+    >;
   }) => React.ReactNode;
   onBulkProductVariantDelete?: (data: ProductVariantBulkDelete) => void;
   onDelete?: (data: ProductDelete) => void;
@@ -73,6 +91,8 @@ interface ProductUpdateOperationsProps {
   onImageDelete?: (data: ProductImageDelete) => void;
   onImageReorder?: (data: ProductImageReorder) => void;
   onUpdate?: (data: ProductUpdate) => void;
+  onProductAssign: (data: CollectionAssignProduct) => void;
+  onProductUnassign: (data: UnassignCollectionProduct) => void;
 }
 
 const ProductUpdateOperations: React.FC<ProductUpdateOperationsProps> = ({
@@ -83,7 +103,9 @@ const ProductUpdateOperations: React.FC<ProductUpdateOperationsProps> = ({
   onImageDelete,
   onImageCreate,
   onImageReorder,
-  onUpdate
+  onUpdate,
+  onProductAssign,
+  onProductUnassign,
 }) => {
   const productId = product ? product.id : "";
   return (
@@ -103,41 +125,57 @@ const ProductUpdateOperations: React.FC<ProductUpdateOperationsProps> = ({
                       onCompleted={onImageDelete}
                     >
                       {(...deleteProductImage) => (
-                        <TypedSimpleProductUpdateMutation
-                          onCompleted={onUpdate}
-                        >
-                          {(...updateSimpleProduct) => (
-                            <TypedProductVariantBulkDeleteMutation
-                              onCompleted={onBulkProductVariantDelete}
+                        <TypedCollectionAssignProductMutation onCompleted={onProductAssign}>
+                          {(...assignProduct) => (
+                            <TypedUnassignCollectionProductMutation
+                              onCompleted={onProductUnassign}
                             >
-                              {(...bulkProductVariantDelete) =>
-                                children({
-                                  bulkProductVariantDelete: getMutationProviderData(
-                                    ...bulkProductVariantDelete
-                                  ),
-                                  createProductImage: getMutationProviderData(
-                                    ...createProductImage
-                                  ),
-                                  deleteProduct: getMutationProviderData(
-                                    ...deleteProduct
-                                  ),
-                                  deleteProductImage: getMutationProviderData(
-                                    ...deleteProductImage
-                                  ),
-                                  reorderProductImages: getMutationProviderData(
-                                    ...reorderProductImages
-                                  ),
-                                  updateProduct: getMutationProviderData(
-                                    ...updateProduct
-                                  ),
-                                  updateSimpleProduct: getMutationProviderData(
-                                    ...updateSimpleProduct
-                                  )
-                                })
-                              }
-                            </TypedProductVariantBulkDeleteMutation>
+                              {(...unassignProduct) => (
+                                <TypedSimpleProductUpdateMutation
+                                  onCompleted={onUpdate}
+                                >
+                                  {(...updateSimpleProduct) => (
+                                    <TypedProductVariantBulkDeleteMutation
+                                      onCompleted={onBulkProductVariantDelete}
+                                    >
+                                      {(...bulkProductVariantDelete) =>
+                                        children({
+                                          assignProduct: getMutationProviderData(
+                                            ...assignProduct
+                                          ),
+                                          bulkProductVariantDelete: getMutationProviderData(
+                                            ...bulkProductVariantDelete
+                                          ),
+                                          createProductImage: getMutationProviderData(
+                                            ...createProductImage
+                                          ),
+                                          deleteProduct: getMutationProviderData(
+                                            ...deleteProduct
+                                          ),
+                                          deleteProductImage: getMutationProviderData(
+                                            ...deleteProductImage
+                                          ),
+                                          reorderProductImages: getMutationProviderData(
+                                            ...reorderProductImages
+                                          ),
+                                          unassignProduct: getMutationProviderData(
+                                            ...unassignProduct
+                                          ),
+                                          updateProduct: getMutationProviderData(
+                                            ...updateProduct
+                                          ),
+                                          updateSimpleProduct: getMutationProviderData(
+                                            ...updateSimpleProduct
+                                          ),
+                                        })
+                                      }
+                                    </TypedProductVariantBulkDeleteMutation>
+                                  )}
+                                </TypedSimpleProductUpdateMutation>
+                              )}
+                            </TypedUnassignCollectionProductMutation>
                           )}
-                        </TypedSimpleProductUpdateMutation>
+                        </TypedCollectionAssignProductMutation>
                       )}
                     </TypedProductImageDeleteMutation>
                   )}

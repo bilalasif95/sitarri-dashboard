@@ -22,10 +22,10 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colName: {
-        // width: 200
+        width: 1000
       },
       colProducts: {
-        // width: 530
+        width: 200
       },
       colSubcategories: {
         width: 530
@@ -49,14 +49,14 @@ const useStyles = makeStyles(
 
 interface CategoryListProps
   extends ListProps,
-    ListActions,
-    SortPage<CategoryListUrlSortField> {
+  ListActions,
+  SortPage<CategoryListUrlSortField> {
   categories?: CategoryFragment[];
   isRoot: boolean;
   onAdd?();
 }
 
-const numberOfColumns = 4;
+const numberOfColumns = 3;
 
 const CategoryList: React.FC<CategoryListProps> = props => {
   const {
@@ -103,7 +103,7 @@ const CategoryList: React.FC<CategoryListProps> = props => {
         >
           <FormattedMessage defaultMessage="Category Name" />
         </TableCellHeader>
-        <TableCellHeader
+        {/* <TableCellHeader
           direction={
             isRoot && sort.sort === CategoryListUrlSortField.subcategoryCount
               ? getArrowDirection(sort.asc)
@@ -119,7 +119,7 @@ const CategoryList: React.FC<CategoryListProps> = props => {
             defaultMessage="Subcategories"
             description="number of subcategories"
           />
-        </TableCellHeader>
+        </TableCellHeader> */}
         <TableCellHeader
           direction={
             isRoot && sort.sort === CategoryListUrlSortField.productCount
@@ -180,23 +180,23 @@ const CategoryList: React.FC<CategoryListProps> = props => {
                 <TableCell className={classes.colName} data-tc="name">
                   {category && category.name ? category.name : <Skeleton />}
                 </TableCell>
-                <TableCell className={classes.colSubcategories}>
+                {/* <TableCell className={classes.colSubcategories}>
                   {category &&
-                  category.children &&
-                  category.children.totalCount !== undefined ? (
-                    category.children.totalCount
-                  ) : (
-                    <Skeleton />
-                  )}
-                </TableCell>
+                    category.children &&
+                    category.children.totalCount !== undefined ? (
+                      category.children.totalCount
+                    ) : (
+                      <Skeleton />
+                    )}
+                </TableCell> */}
                 <TableCell className={classes.colProducts}>
                   {category &&
-                  category.products &&
-                  category.products.totalCount !== undefined ? (
-                    category.products.totalCount
-                  ) : (
-                    <Skeleton />
-                  )}
+                    category.products &&
+                    category.products.totalCount !== undefined ? (
+                      category.products.totalCount
+                    ) : (
+                      <Skeleton />
+                    )}
                 </TableCell>
               </TableRow>
             );
@@ -207,8 +207,8 @@ const CategoryList: React.FC<CategoryListProps> = props => {
                 {isRoot ? (
                   <FormattedMessage defaultMessage="No categories found" />
                 ) : (
-                  <FormattedMessage defaultMessage="No subcategories found" />
-                )}
+                    <FormattedMessage defaultMessage="No subcategories found" />
+                  )}
               </TableCell>
             </TableRow>
           )

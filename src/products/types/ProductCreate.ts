@@ -224,7 +224,8 @@ export interface ProductCreateVariables {
   name: string;
   basePrice?: any | null;
   productType: string;
-  store: string;
+  store?: string;
+  business?: string;
   sku?: string | null;
   seo?: SeoInput | null;
   stocks: StockInput[];

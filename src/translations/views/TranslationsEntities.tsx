@@ -6,7 +6,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
-import useUser from "@saleor/hooks/useUser";
+// import useUser from "@saleor/hooks/useUser";
 import { PAGINATE_BY } from "../../config";
 import { maybe } from "../../misc";
 import TranslationsEntitiesList from "../components/TranslationsEntitiesList";
@@ -58,13 +58,13 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
   const navigate = useNavigator();
   const paginate = usePaginator();
   const shop = useShop();
-  const { user } = useUser();
+  // const { user } = useUser();
   if (Object.keys(TranslatableEntities).indexOf(params.tab) === -1) {
     navigate(
       "?" +
-        stringifyQs({
-          tab: TranslatableEntities.categories
-        }),
+      stringifyQs({
+        tab: TranslatableEntities.categories
+      }),
       true
     );
   }
@@ -73,51 +73,51 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
     onCategoriesTabClick: () =>
       navigate(
         "?" +
-          stringifyQs({
-            tab: TranslatableEntities.categories
-          })
+        stringifyQs({
+          tab: TranslatableEntities.categories
+        })
       ),
     onCollectionsTabClick: () =>
       navigate(
         "?" +
-          stringifyQs({
-            tab: TranslatableEntities.collections
-          })
+        stringifyQs({
+          tab: TranslatableEntities.collections
+        })
       ),
     onPagesTabClick: () =>
       navigate(
         "?" +
-          stringifyQs({
-            tab: TranslatableEntities.pages
-          })
+        stringifyQs({
+          tab: TranslatableEntities.pages
+        })
       ),
     onProductTypesTabClick: () =>
       navigate(
         "?" +
-          stringifyQs({
-            tab: TranslatableEntities.productTypes
-          })
+        stringifyQs({
+          tab: TranslatableEntities.productTypes
+        })
       ),
     onProductsTabClick: () =>
       navigate(
         "?" +
-          stringifyQs({
-            tab: TranslatableEntities.products
-          })
+        stringifyQs({
+          tab: TranslatableEntities.products
+        })
       ),
     onSalesTabClick: () =>
       navigate(
         "?" +
-          stringifyQs({
-            tab: TranslatableEntities.sales
-          })
+        stringifyQs({
+          tab: TranslatableEntities.sales
+        })
       ),
     onVouchersTabClick: () =>
       navigate(
         "?" +
-          stringifyQs({
-            tab: TranslatableEntities.vouchers
-          })
+        stringifyQs({
+          tab: TranslatableEntities.vouchers
+        })
       )
   };
   const lang = maybe(() =>
@@ -129,7 +129,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
       ...paginationState,
       filter: {
         search: params.query,
-        store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
+        // store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
       },
       language: language as any
     }),
@@ -174,14 +174,14 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                       completion: {
                         current: node.translation
                           ? [
-                              node.translation.descriptionJson,
-                              node.translation.name,
-                              node.translation.seoDescription,
-                              node.translation.seoTitle
-                            ].reduce(
-                              (acc, field) => acc + (field !== null ? 1 : 0),
-                              0
-                            )
+                            node.translation.descriptionJson,
+                            node.translation.name,
+                            node.translation.seoDescription,
+                            node.translation.seoTitle
+                          ].reduce(
+                            (acc, field) => acc + (field !== null ? 1 : 0),
+                            0
+                          )
                           : 0,
                         max: 4
                       },
@@ -224,14 +224,14 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                       completion: {
                         current: node.translation
                           ? [
-                              node.translation.descriptionJson,
-                              node.translation.name,
-                              node.translation.seoDescription,
-                              node.translation.seoTitle
-                            ].reduce(
-                              (acc, field) => acc + (field !== null ? 1 : 0),
-                              0
-                            )
+                            node.translation.descriptionJson,
+                            node.translation.name,
+                            node.translation.seoDescription,
+                            node.translation.seoTitle
+                          ].reduce(
+                            (acc, field) => acc + (field !== null ? 1 : 0),
+                            0
+                          )
                           : 0,
                         max: 4
                       },
@@ -274,14 +274,14 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                       completion: {
                         current: node.translation
                           ? [
-                              node.translation.descriptionJson,
-                              node.translation.name,
-                              node.translation.seoDescription,
-                              node.translation.seoTitle
-                            ].reduce(
-                              (acc, field) => acc + (field !== null ? 1 : 0),
-                              0
-                            )
+                            node.translation.descriptionJson,
+                            node.translation.name,
+                            node.translation.seoDescription,
+                            node.translation.seoTitle
+                          ].reduce(
+                            (acc, field) => acc + (field !== null ? 1 : 0),
+                            0
+                          )
                           : 0,
                         max: 4
                       },
@@ -404,14 +404,14 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                       completion: {
                         current: node.translation
                           ? [
-                              node.translation.contentJson,
-                              node.translation.seoDescription,
-                              node.translation.seoTitle,
-                              node.translation.title
-                            ].reduce(
-                              (acc, field) => acc + (field !== null ? 1 : 0),
-                              0
-                            )
+                            node.translation.contentJson,
+                            node.translation.seoDescription,
+                            node.translation.seoTitle,
+                            node.translation.title
+                          ].reduce(
+                            (acc, field) => acc + (field !== null ? 1 : 0),
+                            0
+                          )
                           : 0,
                         max: 4
                       },
@@ -451,24 +451,24 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                         current:
                           node.productAttributes && node.variantAttributes
                             ? maybe(() => node.productAttributes, []).reduce(
-                                sumTranslations,
-                                0
-                              ) +
-                              maybe(() => node.variantAttributes, []).reduce(
-                                sumTranslations,
-                                0
-                              )
+                              sumTranslations,
+                              0
+                            ) +
+                            maybe(() => node.variantAttributes, []).reduce(
+                              sumTranslations,
+                              0
+                            )
                             : 0,
                         max:
                           node.productAttributes && node.variantAttributes
                             ? node.productAttributes.reduce(
-                                (acc, attr) => acc + attr.values.length,
-                                node.productAttributes.length
-                              ) +
-                              node.variantAttributes.reduce(
-                                (acc, attr) => acc + attr.values.length,
-                                node.variantAttributes.length
-                              )
+                              (acc, attr) => acc + attr.values.length,
+                              node.productAttributes.length
+                            ) +
+                            node.variantAttributes.reduce(
+                              (acc, attr) => acc + attr.values.length,
+                              node.variantAttributes.length
+                            )
                             : 0
                       },
                       id: node.id,

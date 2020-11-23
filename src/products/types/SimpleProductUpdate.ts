@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AttributeValueInput, ProductVariantInput, SeoInput, StockInput, ProductErrorCode, AttributeInputTypeEnum, StockErrorCode } from "./../../types/globalTypes";
+import { AttributeValueInput, ProductVariantInput, SeoInput, ProductErrorCode, AttributeInputTypeEnum, StockErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: SimpleProductUpdate
@@ -722,10 +722,10 @@ export interface SimpleProductUpdateVariables {
   isPublished: boolean;
   name?: string | null;
   basePrice?: any | null;
-  productVariantId: string;
-  productVariantInput: ProductVariantInput;
+  productVariantId?: string;
+  productVariantInput?: ProductVariantInput;
   seo?: SeoInput | null;
-  addStocks: StockInput[];
-  deleteStocks: string[];
-  updateStocks: StockInput[];
+  // addStocks: StockInput[];
+  // deleteStocks: string[];
+  // updateStocks: StockInput[];
 }

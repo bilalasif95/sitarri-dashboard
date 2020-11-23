@@ -45,7 +45,7 @@ const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   return <ProductListComponent params={params} />;
 };
 
-const ProductUpdate: React.FC<RouteComponentProps<any>> = ({ match }) => {
+const ProductUpdate: React.FC<RouteComponentProps<any>> = ({ match, location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductUrlQueryParams = qs;
 
@@ -89,10 +89,10 @@ const ProductImage: React.FC<RouteComponentProps<any>> = ({
 const ProductVariantCreate: React.FC<RouteComponentProps<any>> = ({
   match
 }) => (
-  <ProductVariantCreateComponent
-    productId={decodeURIComponent(match.params.id)}
-  />
-);
+    <ProductVariantCreateComponent
+      productId={decodeURIComponent(match.params.id)}
+    />
+  );
 
 const ProductVariantCreator: React.FC<RouteComponentProps<{
   id: string;

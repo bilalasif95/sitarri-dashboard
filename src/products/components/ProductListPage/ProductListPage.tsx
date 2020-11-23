@@ -98,14 +98,14 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     },
     {
       label: intl.formatMessage({
-        defaultMessage: "Price",
+        defaultMessage: "Business",
         description: "product price"
       }),
       value: "price" as ProductListColumns
     },
     {
       label: intl.formatMessage({
-        defaultMessage: "Type",
+        defaultMessage: "Category",
         description: "product type"
       }),
       value: "productType" as ProductListColumns
