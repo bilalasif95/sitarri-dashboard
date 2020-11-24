@@ -49,6 +49,7 @@ export interface FormData {
   phone: string;
   tags: any;
   logo: any;
+  rating: any;
   status: any;
   reservationSystem: string;
   instagram: string;
@@ -118,6 +119,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
     name: maybe(() => "", ""),
     phone: maybe(() => "", ""),
     postalCode: maybe(() => "", ""),
+    rating: maybe(() => 0, 0),
     reservationSystem: maybe(() => category.uberEatsUrl.slice(12), ""),
     saturdayClosingTime: maybe(() => 1440, 1440),
     saturdayOpenClose: maybe(() => true, false),
@@ -160,6 +162,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
       name: "",
       phone: "",
       postalCode: "",
+      rating: 0,
       reservationSystem: "",
       saturdayClosingTime: 1440,
       saturdayOpenClose: false,

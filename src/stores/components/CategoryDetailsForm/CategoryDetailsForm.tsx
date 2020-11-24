@@ -38,6 +38,7 @@ interface CategoryDetailsFormProps {
     // description: RawDraftContentState;
     status?: string;
     tags?: any;
+    rating?: any;
   };
   statuses: any;
   disabled: boolean;
@@ -53,7 +54,7 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = (
   const classes = useStyles(props);
   const [businessNamesArray, setBusinessNamesArray] = React.useState([]);
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(maybe(() => category.status, ""));
-  const formErrors = getFormErrors(["name", "description"], errors);
+  const formErrors = getFormErrors(["name", "rating", "description"], errors);
   const handleCountrySelect = createSingleAutocompleteSelectHandler(
     onChange,
     setCountryDisplayName,
@@ -142,6 +143,19 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = (
           </div>
           <FormSpacer />
           <TagsComponent data={data} tags={maybe(() => category.tags)} />
+          <FormSpacer />
+          <TextField
+            label={intl.formatMessage({
+              defaultMessage: "Rating"
+            })}
+            name="rating"
+            disabled={disabled}
+            value={data && data.rating}
+            onChange={onChange}
+            error={!!formErrors.rating}
+            helperText={getProductErrorMessage(formErrors.rating, intl)}
+            fullWidth
+          />
         </CardContent>
       </Card>
     </>

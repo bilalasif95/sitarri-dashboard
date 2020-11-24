@@ -302,6 +302,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                                     // logo: formData.logo,
                                     name: formData.name,
                                     phone: formData.phone,
+                                    rating: formData.rating,
                                     saturdayClosingTime: formData.saturdayClosingTime,
                                     saturdayOpeningStatus: formData.saturdayOpenClose,
                                     saturdayOpeningTime: formData.saturdayOpeningTime,

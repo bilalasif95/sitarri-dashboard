@@ -136,6 +136,7 @@ export const categoryDetails = gql`
       description
       seoTitle
       seoDescription
+      rating
       address {
         streetAddress
         streetAddress2

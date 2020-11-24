@@ -49,6 +49,7 @@ export interface FormData {
   status: any;
   phone: string;
   city: string;
+  rating: any;
   instagram: string;
   mondayOpenClose: boolean;
   delivery: string;
@@ -182,6 +183,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
       name: maybe(() => category.name, ""),
       phone: maybe(() => category.phone, ""),
       postalCode: maybe(() => category.address.postalCode, ""),
+      rating: maybe(() => category.rating, 0),
       reservationSystem: maybe(() => category.business.uberEatsUrl.slice(12), ""),
       saturdayClosingTime: maybe(() => category.saturdayClosingTime, 0),
       saturdayOpenClose: maybe(() => category.saturdayOpeningStatus, false),
@@ -226,6 +228,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
       name: "",
       phone: "",
       postalCode: "",
+      rating: 0,
       reservationSystem: "",
       saturdayClosingTime: 0,
       saturdayOpenClose: false,
