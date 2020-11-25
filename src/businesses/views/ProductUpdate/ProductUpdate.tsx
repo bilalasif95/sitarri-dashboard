@@ -371,7 +371,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params, listPa
                         currencySymbol={currencySymbol}
                         placeholderImage={placeholderImg}
                         product={product}
-                        onAdd={() => { localStorage.setItem("businessID", product.id); navigate(productAddUrl) }}
+                        onAdd={() => { localStorage.setItem("businessID", product.id); localStorage.setItem("businessCategoryID", product.businesscategory.id); navigate(productAddUrl) }}
                         onUpdateListSettings={updateListSettings}
                         warehouses={
                           warehouses.data?.warehouses.edges.map(

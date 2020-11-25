@@ -24,6 +24,7 @@ export function createUpdateHandler(
       // })),
       basePrice: decimal(data.basePrice),
       business: product.business.id,
+      businesscategory: product.business.businesscategory.id,
       category: data.category,
       chargeTaxes: data.chargeTaxes,
       collections: data.collections,
@@ -39,7 +40,6 @@ export function createUpdateHandler(
       },
       // store: user.businessUser.edges && user.businessUser.edges[0] && user.businessUser.edges[0].node.businessStore.edges && user.businessUser.edges[0].node.businessStore.edges[0] && user.businessUser.edges[0].node.businessStore.edges[0].node.id,
     };
-
     // if (product.productType.hasVariants) {
     //   updateProduct(productVariables);
     // } else {

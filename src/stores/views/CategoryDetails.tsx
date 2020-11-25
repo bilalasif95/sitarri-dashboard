@@ -341,6 +341,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                                       },
                                       // backgroundImageAlt: formData.backgroundImageAlt,
                                       business: maybe(() => data.store.business.id),
+                                      businesscategory: maybe(() => data.store.business.businesscategory.id),
                                       // category: formData.businessCategory,
                                       // deliverooUrl: "https://www." + formData.delivery,
                                       description: formData.description,

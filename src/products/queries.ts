@@ -143,6 +143,10 @@ export const productFragmentDetails = gql`
     business{
       id
       name
+      businesscategory{
+        id
+        name
+      }
       businessStore(first:100) {
         edges{
           node{

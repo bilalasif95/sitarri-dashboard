@@ -259,6 +259,7 @@ export const simpleProductUpdateMutation = gql`
     $name: String
     $business: ID!
     $store: ID
+    $businesscategory: ID!
     $basePrice: Decimal
     $seo: SeoInput
   ) {
@@ -270,6 +271,7 @@ export const simpleProductUpdateMutation = gql`
         description: $description
         isPublished: $isPublished
         name: $name
+        businesscategory: $businesscategory
         business: $business
         store: $store
         basePrice: $basePrice
@@ -301,6 +303,7 @@ export const productCreateMutation = gql`
     $name: String!
     $basePrice: Decimal
     $store: ID
+    $businesscategory: ID!
     $business: ID!
   ) {
     productCreate(
@@ -310,6 +313,7 @@ export const productCreateMutation = gql`
         description: $description
         isPublished: $isPublished
         name: $name
+        businesscategory: $businesscategory
         business: $business
         store: $store
         basePrice: $basePrice

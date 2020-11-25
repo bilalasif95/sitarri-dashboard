@@ -229,4 +229,5 @@ export interface ProductUpdateVariables {
   seo?: SeoInput | null;
   store?: string;
   business?: string;
+  businesscategory?: any;
 }

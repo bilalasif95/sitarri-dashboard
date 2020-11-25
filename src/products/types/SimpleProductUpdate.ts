@@ -723,6 +723,7 @@ export interface SimpleProductUpdateVariables {
   name?: string | null;
   basePrice?: any | null;
   productVariantId?: string;
+  businesscategory?: any;
   productVariantInput?: ProductVariantInput;
   seo?: SeoInput | null;
   // addStocks: StockInput[];

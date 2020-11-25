@@ -82,6 +82,7 @@ export const ProductCreateView: React.FC = () => {
               })),
               basePrice: decimal(formData.basePrice),
               business: localStorage.getItem("businessID"),
+              businesscategory: localStorage.getItem("businessCategoryID"),
               category: formData.category,
               chargeTaxes: formData.chargeTaxes,
               collections: formData.collections,

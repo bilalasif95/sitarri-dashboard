@@ -225,6 +225,7 @@ export interface ProductCreateVariables {
   basePrice?: any | null;
   productType: string;
   store?: string;
+  businesscategory?: any;
   business?: string;
   sku?: string | null;
   seo?: SeoInput | null;

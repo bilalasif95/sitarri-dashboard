@@ -46,7 +46,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
     []
   );
   const id = localStorage.getItem("businessID");
-
+  const businessCategoryID = localStorage.getItem("businessCategoryID");
   return (
     <>
       <WindowTitle
@@ -104,6 +104,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
                               streetAddress2: formData.streetAddress2,
                             },
                             business: id,
+                            businesscategory: businessCategoryID,
                             description: formData.description,
                             fridayClosingTime: formData.fridayClosingTime,
                             fridayOpeningStatus: formData.fridayOpenClose,
