@@ -94,7 +94,7 @@ export const CategoryProductList: React.FC<
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const numberOfColumns = 5;
+  const numberOfColumns = 4;
 
   return (
     <div className={classes.tableContainer}>
@@ -102,7 +102,7 @@ export const CategoryProductList: React.FC<
         <colgroup>
           <col />
           <col className={classes.colName} />
-          <col className={classes.colType} />
+          {/* <col className={classes.colType} /> */}
           <col className={classes.colPublished} />
           <col className={classes.colPrice} />
         </colgroup>
@@ -119,12 +119,12 @@ export const CategoryProductList: React.FC<
               <FormattedMessage defaultMessage="Name" description="product" />
             </span>
           </TableCell>
-          <TableCell className={classes.colType}>
+          {/* <TableCell className={classes.colType}>
             <FormattedMessage
               defaultMessage="Type"
               description="product type"
             />
-          </TableCell>
+          </TableCell> */}
           <TableCell className={classes.colPublished}>
             <FormattedMessage
               defaultMessage="Published"
@@ -179,43 +179,43 @@ export const CategoryProductList: React.FC<
                   >
                     {product ? product.name : <Skeleton />}
                   </TableCellAvatar>
-                  <TableCell className={classes.colType}>
+                  {/* <TableCell className={classes.colType}>
                     {product && product.productType ? (
                       product.productType.name
                     ) : (
                       <Skeleton />
                     )}
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell className={classes.colPublished}>
                     {product &&
-                    maybe(() => product.isAvailable !== undefined) ? (
-                      <StatusLabel
-                        label={
-                          product.isAvailable
-                            ? intl.formatMessage({
+                      maybe(() => product.isAvailable !== undefined) ? (
+                        <StatusLabel
+                          label={
+                            product.isAvailable
+                              ? intl.formatMessage({
                                 defaultMessage: "Published",
                                 description: "product",
                                 id: "productStatusLabel"
                               })
-                            : intl.formatMessage({
+                              : intl.formatMessage({
                                 defaultMessage: "Not published",
                                 description: "product"
                               })
-                        }
-                        status={product.isAvailable ? "success" : "error"}
-                      />
-                    ) : (
-                      <Skeleton />
-                    )}
+                          }
+                          status={product.isAvailable ? "success" : "error"}
+                        />
+                      ) : (
+                        <Skeleton />
+                      )}
                   </TableCell>
                   <TableCell className={classes.colPrice}>
                     {maybe(() => product.basePrice) &&
-                    maybe(() => product.basePrice.amount) !== undefined &&
-                    maybe(() => product.basePrice.currency) !== undefined ? (
-                      <Money money={product.basePrice} />
-                    ) : (
-                      <Skeleton />
-                    )}
+                      maybe(() => product.basePrice.amount) !== undefined &&
+                      maybe(() => product.basePrice.currency) !== undefined ? (
+                        <Money money={product.basePrice} />
+                      ) : (
+                        <Skeleton />
+                      )}
                   </TableCell>
                 </TableRow>
               );

@@ -2,6 +2,10 @@ import React from "react";
 
 import { getMutationProviderData, maybe } from "../../misc";
 import { PartialMutationProviderOutput } from "../../types";
+import {
+  TypedCollectionAssignProductMutation,
+  TypedUnassignCollectionProductMutation
+} from "../mutations";
 // import {
 //   TypedProductDeleteMutation,
 //   TypedProductImageCreateMutation,
@@ -21,9 +25,17 @@ import { PartialMutationProviderOutput } from "../../types";
 //   ProductImageDeleteVariables
 // } from "../types/ProductImageDelete";
 import {
+  CollectionAssignProduct,
+  CollectionAssignProductVariables
+} from "../types/StoreAssignProduct";
+import {
   ProductImageReorder,
   ProductImageReorderVariables
 } from "../types/ProductImageReorder";
+import {
+  UnassignCollectionProduct,
+  UnassignCollectionProductVariables
+} from "../types/UnassignStoreProduct";
 // import { ProductUpdate, ProductUpdateVariables } from "../types/ProductUpdate";
 // import {
 //   ProductVariantBulkDelete,
@@ -66,6 +78,14 @@ interface ProductUpdateOperationsProps {
     //   SimpleProductUpdate,
     //   SimpleProductUpdateVariables
     // >;
+    assignProduct: PartialMutationProviderOutput<
+      CollectionAssignProduct,
+      CollectionAssignProductVariables
+    >;
+    unassignProduct: PartialMutationProviderOutput<
+      UnassignCollectionProduct,
+      UnassignCollectionProductVariables
+    >;
   }) => React.ReactNode;
   // onBulkProductVariantDelete?: (data: ProductVariantBulkDelete) => void;
   // onDelete?: (data: ProductDelete) => void;
@@ -73,6 +93,8 @@ interface ProductUpdateOperationsProps {
   // onImageDelete?: (data: ProductImageDelete) => void;
   onImageReorder?: (data: ProductImageReorder) => void;
   // onUpdate?: (data: ProductUpdate) => void;
+  onProductAssign: (data: CollectionAssignProduct) => void;
+  onProductUnassign: (data: UnassignCollectionProduct) => void;
 }
 
 const ProductUpdateOperations: React.FC<ProductUpdateOperationsProps> = ({
@@ -84,6 +106,8 @@ const ProductUpdateOperations: React.FC<ProductUpdateOperationsProps> = ({
   // onImageCreate,
   onImageReorder,
   // onUpdate
+  onProductAssign,
+  onProductUnassign,
 }) => {
   const productId = product ? product.id : "";
   return (
@@ -95,55 +119,71 @@ const ProductUpdateOperations: React.FC<ProductUpdateOperationsProps> = ({
       onCompleted={onImageReorder}
     >
       {(...reorderProductImages) => (
-        // <TypedProductImageCreateMutation onCompleted={onImageCreate}>
-        //   {(...createProductImage) => (
-        //     <TypedProductDeleteMutation onCompleted={onDelete}>
-        //       {(...deleteProduct) => (
-        //         <TypedProductImageDeleteMutation
-        //           onCompleted={onImageDelete}
-        //         >
-        //           {(...deleteProductImage) => (
-        //             <TypedSimpleProductUpdateMutation
-        //               onCompleted={onUpdate}
-        //             >
-        //               {(...updateSimpleProduct) => (
-        //                 <TypedProductVariantBulkDeleteMutation
-        //                   onCompleted={onBulkProductVariantDelete}
-        //                 >
-        //                   {(...bulkProductVariantDelete) =>
-        children({
-          // bulkProductVariantDelete: getMutationProviderData(
-          //   ...bulkProductVariantDelete
-          // ),
-          // createProductImage: getMutationProviderData(
-          //   ...createProductImage
-          // ),
-          // deleteProduct: getMutationProviderData(
-          //   ...deleteProduct
-          // ),
-          // deleteProductImage: getMutationProviderData(
-          //   ...deleteProductImage
-          // ),
-          reorderProductImages: getMutationProviderData(
-            ...reorderProductImages
-          ),
-          // updateProduct: getMutationProviderData(
-          //   ...updateProduct
-          // ),
-          // updateSimpleProduct: getMutationProviderData(
-          //   ...updateSimpleProduct
-          // )
-        })
-        //                   }
-        //                 </TypedProductVariantBulkDeleteMutation>
-        //               )}
-        //             </TypedSimpleProductUpdateMutation>
-        //           )}
-        //         </TypedProductImageDeleteMutation>
-        //       )}
-        //     </TypedProductDeleteMutation>
-        //   )}
-        // </TypedProductImageCreateMutation>
+        <TypedCollectionAssignProductMutation onCompleted={onProductAssign}>
+          {(...assignProduct) => (
+            <TypedUnassignCollectionProductMutation
+              onCompleted={onProductUnassign}
+            >
+              {(...unassignProduct) => (
+                // <TypedProductImageCreateMutation onCompleted={onImageCreate}>
+                //   {(...createProductImage) => (
+                //     <TypedProductDeleteMutation onCompleted={onDelete}>
+                //       {(...deleteProduct) => (
+                //         <TypedProductImageDeleteMutation
+                //           onCompleted={onImageDelete}
+                //         >
+                //           {(...deleteProductImage) => (
+                //             <TypedSimpleProductUpdateMutation
+                //               onCompleted={onUpdate}
+                //             >
+                //               {(...updateSimpleProduct) => (
+                //                 <TypedProductVariantBulkDeleteMutation
+                //                   onCompleted={onBulkProductVariantDelete}
+                //                 >
+                //                   {(...bulkProductVariantDelete) =>
+                children({
+                  assignProduct: getMutationProviderData(
+                    ...assignProduct
+                  ),
+                  // bulkProductVariantDelete: getMutationProviderData(
+                  //   ...bulkProductVariantDelete
+                  // ),
+                  // createProductImage: getMutationProviderData(
+                  //   ...createProductImage
+                  // ),
+                  // deleteProduct: getMutationProviderData(
+                  //   ...deleteProduct
+                  // ),
+                  // deleteProductImage: getMutationProviderData(
+                  //   ...deleteProductImage
+                  // ),
+                  reorderProductImages: getMutationProviderData(
+                    ...reorderProductImages
+                  ),
+                  // updateProduct: getMutationProviderData(
+                  //   ...updateProduct
+                  // ),
+                  // updateSimpleProduct: getMutationProviderData(
+                  //   ...updateSimpleProduct
+                  // )
+                  unassignProduct: getMutationProviderData(
+                    ...unassignProduct
+                  ),
+                })
+                //                   }
+                //                 </TypedProductVariantBulkDeleteMutation>
+                //               )}
+                //             </TypedSimpleProductUpdateMutation>
+                //           )}
+                //         </TypedProductImageDeleteMutation>
+                //       )}
+                //     </TypedProductDeleteMutation>
+                //   )}
+                // </TypedProductImageCreateMutation>
+              )}
+            </TypedUnassignCollectionProductMutation>
+          )}
+        </TypedCollectionAssignProductMutation>
       )}
     </ProductImagesReorderProvider>
     //   )}

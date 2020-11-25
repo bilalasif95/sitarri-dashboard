@@ -103,7 +103,11 @@ export const rootCategories = gql`
           name
           address {
             streetAddress
+            streetAddress2
             city
+            country{
+              code
+            }
           }
           business {
             id
@@ -195,6 +199,29 @@ export const categoryDetails = gql`
       }
       openingHours
       closingHours
+      productss(first: $first, after: $after, last: $last, before: $before) {
+        pageInfo {
+          ...PageInfoFragment
+        }
+        edges {
+          cursor
+          node {
+            id
+            name
+            basePrice {
+              amount
+              currency
+            }
+            isAvailable
+            thumbnail {
+              url
+            }
+            category {
+              name
+            }
+          }
+        }
+      }
       storeProduct(first: $first, after: $after, last: $last, before: $before) {
         pageInfo {
           ...PageInfoFragment

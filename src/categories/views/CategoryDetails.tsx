@@ -173,7 +173,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
               disabled={loading}
               errors={updateResult.data?.categoryUpdate.errors || []}
               onAddCategory={() => navigate(categoryAddUrl(id))}
-              onAddProduct={() => navigate(productAddUrl)}
+              onAddProduct={() => { localStorage.setItem("businessID", maybe(() => data.category.business.id)); navigate(productAddUrl) }}
               onBack={() =>
                 navigate(
                   maybe(

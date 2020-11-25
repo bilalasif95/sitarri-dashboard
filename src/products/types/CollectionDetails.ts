@@ -30,7 +30,11 @@ export interface CollectionDetails_collection_products_edges_node {
   name: string;
   address: {
     streetAddress: string;
+    streetAddress2: string;
     city: string;
+    country: {
+      code: string;
+    }
   }
   productType: CollectionDetails_collection_products_edges_node_productType;
   thumbnail: CollectionDetails_collection_products_edges_node_thumbnail | null;

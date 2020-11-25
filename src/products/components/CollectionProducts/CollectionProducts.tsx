@@ -38,7 +38,7 @@ const useStyles = makeStyles(
       marginLeft: AVATAR_MARGIN
     },
     colPublished: {
-      width: 200
+      width: 400
     },
     colType: {
       width: 200
@@ -121,7 +121,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
           toolbar={toolbar}
         >
           <TableCell className={classes.colName}>
-            <span className={classes.colNameLabel}>
+            <span>
               <FormattedMessage
                 defaultMessage="Name"
                 description="store name"
@@ -195,7 +195,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                   <TableCell className={classes.colPublished}>
                     {maybe<React.ReactNode>(
                       () => (
-                        product.address.streetAddress + "," + product.address.city
+                        product.address.streetAddress + "," + product.address.streetAddress2 + "," + product.address.city + "," + product.address.country.code
                         // <StatusLabel
                         //   label={
                         //     product.isPublished

@@ -1,8 +1,10 @@
+import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableRow from "@material-ui/core/TableRow";
+import DeleteIcon from "@material-ui/icons/Delete";
 import Checkbox from "@saleor/components/Checkbox";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -36,6 +38,12 @@ const useStyles = makeStyles(
       colType: {
         width: 200
       }
+    },
+    colActions: {
+      "&:last-child": {
+        paddingRight: 0
+      },
+      width: 76 + theme.spacing(0.5)
     },
     colFill: {
       padding: 0,
@@ -73,6 +81,7 @@ const useStyles = makeStyles(
 
 interface CategoryProductListProps extends ListProps, ListActions {
   products: CategoryDetails_category_products_edges_node[];
+  onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
 }
 
 export const CategoryProductList: React.FC<
@@ -89,13 +98,14 @@ export const CategoryProductList: React.FC<
     toolbar,
     onNextPage,
     onPreviousPage,
-    onRowClick
+    onRowClick,
+    onProductUnassign,
   } = props;
 
   const classes = useStyles(props);
   // const intl = useIntl();
 
-  const numberOfColumns = 4;
+  const numberOfColumns = 5;
 
   return (
     <div className={classes.tableContainer}>
@@ -144,6 +154,7 @@ export const CategoryProductList: React.FC<
               description="product price"
             />
           </TableCell>
+          <TableCell className={classes.colActions} />
         </TableHead>
         <TableFooter>
           <TableRow>
@@ -226,6 +237,14 @@ export const CategoryProductList: React.FC<
                       ) : (
                         <Skeleton />
                       )}
+                  </TableCell>
+                  <TableCell className={classes.colActions}>
+                    <IconButton
+                      disabled={!product}
+                      onClick={event => onProductUnassign(product.id, event)}
+                    >
+                      <DeleteIcon color="primary" />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               );

@@ -223,6 +223,7 @@ export interface ProductUpdateVariables {
   logo: any;
   twitterUrl: string;
   instagramUrl: string;
+  logoString?: string;
   // attributes?: (AttributeValueInput | null)[] | null;
   // publicationDate?: any | null;
   // category?: string | null;

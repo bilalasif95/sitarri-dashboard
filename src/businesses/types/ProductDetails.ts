@@ -185,6 +185,7 @@ export interface ProductDetails_product {
   productCategoryBusiness?: any;
   businessProduct?: any;
   seoTitle: string | null;
+  businesscategory?: any;
   seoDescription: string | null;
   category: ProductDetails_product_category | null;
   collections: (ProductDetails_product_collections | null)[] | null;

@@ -124,6 +124,9 @@ export const categoryDetails = gql`
   ) {
     category(id: $id) {
       ...CategoryDetailsFragment
+      business{
+        id
+      }
       children(first: $first, after: $after, last: $last, before: $before) {
         edges {
           node {

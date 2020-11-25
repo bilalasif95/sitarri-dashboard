@@ -82,6 +82,8 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
                   geocodeByAddress(
                     formData.streetAddress +
                     "," +
+                    formData.streetAddress2 +
+                    "," +
                     formData.city +
                     "," +
                     formData.country
@@ -142,7 +144,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
                           facebookUrl: formData.facebook ? "https://www.facebook.com/" + formData.facebook : "",
                           id,
                           instagramUrl: formData.instagram ? "https://www.instagram.com/" + formData.instagram : "",
-                          logo: formData.logo,
+                          logo: formData.logo ? formData.logo : maybe(() => data.business.logo),
                           twitterUrl: formData.twitter ? "https://www.twitter.com/" + formData.twitter : "",
                           uberEatsUrl: formData.reservationSystem ? "https://www." + formData.reservationSystem : "",
                           websiteUrl: formData.website ? "https://www." + formData.website : "",

@@ -67,7 +67,7 @@ import { ProductBulkCreate } from "../../../home/types/ProductBulkCreate";
 
 import SingleAutocompleteSelectField from "../../../components/SingleAutocompleteSelectField";
 
-import { getAuthToken } from "../../../auth/utils";
+// import { getAuthToken } from "../../../auth/utils";
 import {
   createFilterStructure,
   ProductFilterKeys,
@@ -88,6 +88,7 @@ export interface ProductListPageProps
   totalGridAttributes: number;
   products: ProductList_products_edges_node[];
   paramsProps: ProductListUrlQueryParams;
+  refetch: any;
 }
 
 const useStyles = makeStyles(
@@ -518,6 +519,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     tabs,
     totalGridAttributes,
     onAdd,
+    refetch,
     onAll,
     onFetchMore,
     onFilterChange,
@@ -597,8 +599,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     setBusinessNamesArray(businessNameArray);
   }, [businessNames]);
 
-  const { user, verifyTokenAndSetData } = useUser();
-  const token = getAuthToken();
+  const { user } = useUser();
+  // const token = getAuthToken();
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
     maybe(() => "", "")
   );
@@ -1424,7 +1426,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               color="primary"
               variant="contained"
               type="submit"
-              onClick={() => { verifyTokenAndSetData(token); setAllDoneModal(false); setOpenAllDoneModal(false); window.location.reload() }}
+              onClick={() => { refetch(); setAllDoneModal(false); setOpenAllDoneModal(false) }}
               className={classes.confirmbtn}>
               <span>Go to dashboard</span>
             </ConfirmButton>

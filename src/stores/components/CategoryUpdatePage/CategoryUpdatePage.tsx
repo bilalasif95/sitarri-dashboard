@@ -29,10 +29,10 @@ import StoreOpeningClosingHours from "../../components/StoreOpeningClosingHours"
 import {
   // CategoryDetails_category,
   CategoryDetails_category_children_edges_node,
-  CategoryDetails_category_products_edges_node
+  // CategoryDetails_category_products_edges_node
 } from "../../types/CategoryDetails";
 // import CategoryBackground from "../CategoryBackground";
-// import CategoryProducts from "../CategoryProducts";
+import CategoryProducts from "../CategoryProducts";
 
 import { HomePageQuery } from "../../../home/queries";
 
@@ -99,7 +99,7 @@ export interface CategoryUpdatePageProps
   paramsProps: any;
   placeholderImage: string;
   category: any;
-  products: CategoryDetails_category_products_edges_node[];
+  products: any;
   latlngError: string;
   subcategories: CategoryDetails_category_children_edges_node[];
   pageInfo: {
@@ -108,6 +108,7 @@ export interface CategoryUpdatePageProps
   };
   images: any;
   saveButtonBarState: ConfirmButtonTransitionState;
+  onProductUnassign?: (id: string, event: React.MouseEvent<any>) => void;
   onSubmit: (data: FormData) => void;
   onImageDelete: (id: string) => () => void;
   onImageEdit?(id: string);
@@ -133,32 +134,33 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   // paramsProps,
   disabled,
   errors,
-  // pageInfo,
+  pageInfo,
   placeholderImage,
   // onImageEdit,
   onImageReorder,
-  // products,
+  products,
   images,
   saveButtonBarState,
   latlngError,
   // subcategories,
   // onAddCategory,
-  // onAddProduct,
+  onAddProduct,
+  onProductUnassign,
   onBack,
   // onCategoryClick,
   onDelete,
-  // onNextPage,
-  // onPreviousPage,
-  // onProductClick,
+  onNextPage,
+  onPreviousPage,
+  onProductClick,
   onSubmit,
   onImageDelete,
   onImageUpload,
-  // isChecked,
-  // productListToolbar,
-  // selected,
+  isChecked,
+  productListToolbar,
+  selected,
   // subcategoryListToolbar,
-  // toggle,
-  // toggleAll
+  toggle,
+  toggleAll
 }: CategoryUpdatePageProps) => {
   const intl = useIntl();
   const shop = useShop();
@@ -399,7 +401,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             </Card>
           )} */}
                     {/* {currentTab === CategoryPageTab.products && ( */}
-                    {/* <CategoryProducts
+                    <CategoryProducts
                       categoryName={maybe(() => category.name)}
                       products={products}
                       disabled={disabled}
@@ -413,7 +415,8 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                       selected={selected}
                       isChecked={isChecked}
                       toolbar={productListToolbar}
-                    /> */}
+                      onProductUnassign={onProductUnassign}
+                    />
                     {/* )} */}
                   </div>
                   <div>

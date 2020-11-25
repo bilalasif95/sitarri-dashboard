@@ -119,7 +119,7 @@ export interface CategoryDetails_category {
   seoTitle: string | null;
   parent: CategoryDetails_category_parent | null;
   children: CategoryDetails_category_children | null;
-  products: CategoryDetails_category_products | null;
+  productss?: CategoryDetails_category_products | null;
   tags?: any;
 }
 

@@ -39,7 +39,8 @@ export const categoryPath = (id: string) => urlJoin(categorySectionUrl, id);
 export type CategoryUrlDialog =
   | "delete"
   | "delete-categories"
-  | "delete-products";
+  | "delete-products"
+  | "assign" | "unassign";
 export type CategoryUrlQueryParams = BulkAction &
   Dialog<CategoryUrlDialog> &
   Pagination &

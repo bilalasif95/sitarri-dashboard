@@ -369,7 +369,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
                   name="facebookUrl"
                   error={!!formErrors.facebookUrl}
                   helperText={!!formErrors.facebookUrl}
-                  type="url"
+                  // type="url"
                   onChange={onChange}
                   value={data && data.facebookUrl}
                 />
@@ -387,7 +387,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
                   name="twitterUrl"
                   error={!!formErrors.twitterUrl}
                   helperText={!!formErrors.twitterUrl}
-                  type="url"
+                  // type="url"
                   onChange={onChange}
                   value={data && data.twitterUrl}
                 />
@@ -407,7 +407,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
                   name="websiteUrl"
                   error={!!formErrors.websiteUrl}
                   helperText={!!formErrors.websiteUrl}
-                  type="url"
+                  // type="url"
                   onChange={onChange}
                   value={data && data.websiteUrl}
                 />
@@ -425,7 +425,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = (
                   name="instagramUrl"
                   error={!!formErrors.instagramUrl}
                   helperText={!!formErrors.instagramUrl}
-                  type="url"
+                  // type="url"
                   onChange={onChange}
                   value={data && data.instagramUrl}
                 />

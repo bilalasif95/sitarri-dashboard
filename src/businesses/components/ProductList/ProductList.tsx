@@ -334,7 +334,7 @@ export const ProductList: React.FC<ProductListProps> = (props, { params }) => {
                       data-tc="product-type"
                     >
                       {product && product.websiteUrl ? (
-                        product.websiteUrl
+                        <a href={product.websiteUrl} target="_blank" rel="noopener noreferrer">{product.websiteUrl.slice(8)}</a>
                       ) : (
                           <Skeleton />
                         )}

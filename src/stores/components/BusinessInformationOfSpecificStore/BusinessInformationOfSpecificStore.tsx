@@ -365,7 +365,7 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
                 name="facebook"
                 error={!!formErrors.facebookUrl}
                 helperText={!!formErrors.facebookUrl}
-                type="url"
+                // type="url"
                 onChange={onChange}
                 value={data.facebook}
               />
@@ -383,7 +383,7 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
                 name="twitter"
                 error={!!formErrors.twitterUrl}
                 helperText={!!formErrors.twitterUrl}
-                type="url"
+                // type="url"
                 onChange={onChange}
                 value={data.twitter}
               />
@@ -401,7 +401,7 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
                 name="website"
                 error={!!formErrors.websiteUrl}
                 helperText={!!formErrors.websiteUrl}
-                type="url"
+                // type="url"
                 onChange={onChange}
                 value={data.website}
               />
@@ -418,7 +418,7 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
                 name="instagram"
                 error={!!formErrors.instagramUrl}
                 helperText={!!formErrors.instagramUrl}
-                type="url"
+                // type="url"
                 onChange={onChange}
                 value={data.instagram}
               />
@@ -439,7 +439,7 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
                   name="delivery"
                   error={!!formErrors.deliverooUrl}
                   helperText={!!formErrors.deliverooUrl}
-                  type="url"
+                  // type="url"
                   onChange={onChange}
                   value={data.delivery}
                 />
@@ -464,7 +464,7 @@ export const BusinessInformationOfSpecificStore: React.FC<CategoryDetailsFormPro
                   name="reservationSystem"
                   error={!!formErrors.uberEatsUrl}
                   helperText={!!formErrors.uberEatsUrl}
-                  type="url"
+                  // type="url"
                   onChange={onChange}
                   value={data.reservationSystem}
                 />

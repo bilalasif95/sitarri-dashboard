@@ -9,8 +9,8 @@ import {
 
 export const searchProducts = gql`
   ${pageInfoFragment}
-  query SearchProducts($after: String, $first: Int!, $query: String!) {
-    search: products(after: $after, first: $first, filter: { search: $query }) {
+  query SearchProducts($after: String, $first: Int!, $query: String!, $business: ID) {
+    search: products(after: $after, first: $first, filter: { search: $query, business: $business }) {
       edges {
         node {
           id

@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
+// import { productErrorFragment } from "@saleor/attributes/mutations";
 import makeMutation from "@saleor/hooks/makeMutation";
 import { TypedMutation } from "../mutations";
-// import { productErrorFragment } from "@saleor/attributes/mutations";
 import { categoryDetailsFragment } from "./queries";
 import {
   CategoryBulkDelete,
@@ -21,6 +21,10 @@ import {
   CategoryUpdateVariables
 } from "./types/CategoryUpdate";
 import {
+  CollectionAssignProduct,
+  CollectionAssignProductVariables
+} from "./types/StoreAssignProduct";
+import {
   ProductImageCreate,
   ProductImageCreateVariables
 } from "./types/ProductImageCreate";
@@ -36,6 +40,10 @@ import {
   ProductImageUpdate,
   ProductImageUpdateVariables
 } from "./types/ProductImageUpdate";
+import {
+  UnassignCollectionProduct,
+  UnassignCollectionProductVariables
+} from "./types/UnassignStoreProduct";
 
 export const categoryDeleteMutation = gql`
   mutation StoreDelete($id: ID!) {
@@ -234,3 +242,104 @@ export const TypedProductImageUpdateMutation = TypedMutation<
   ProductImageUpdate,
   ProductImageUpdateVariables
 >(productImageUpdateMutation);
+
+const assignCollectionProduct = gql`
+  mutation StoreAddProducts(
+    $productId: ID!
+    $stores: [ID!]!
+  ) {
+    storeAddproducts(storeId: $productId, products: $stores) {
+      store {
+        id
+        productss(first:100){
+          edges{
+            node{
+              id
+              name
+              category{
+                id
+                name
+              }
+              thumbnail {
+                url
+              }
+              basePrice{
+                amount
+                currency
+              }
+            }
+          }
+          pageInfo {
+            endCursor
+            hasNextPage
+            hasPreviousPage
+            startCursor
+          }
+        }
+      }
+      storeErrors{
+        code
+        message
+        field
+      }
+    }
+  }
+`;
+export const TypedCollectionAssignProductMutation = TypedMutation<
+  CollectionAssignProduct,
+  CollectionAssignProductVariables
+>(assignCollectionProduct);
+
+const unassignCollectionProduct = gql`
+  mutation UnassignStoreProduct(
+    $productId: ID!
+    $stores: [ID]!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
+    storeRemoveproducts(
+      storeId: $productId
+      products: $stores
+    ) {
+      store {
+        id
+        productss(first:$first,after:$after,last: $last, before: $before ){
+          edges{
+            node{
+              id
+              name
+              category{
+                id
+                name
+              }
+              thumbnail {
+                url
+              }
+              basePrice{
+                amount
+                currency
+              }
+            }
+          }
+          pageInfo {
+            endCursor
+            hasNextPage
+            hasPreviousPage
+            startCursor
+          }
+        }
+      }
+      storeErrors{
+        code
+        message
+        field
+      }
+    }
+  }
+`;
+export const TypedUnassignCollectionProductMutation = TypedMutation<
+  UnassignCollectionProduct,
+  UnassignCollectionProductVariables
+>(unassignCollectionProduct);

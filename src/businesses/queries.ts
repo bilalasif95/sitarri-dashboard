@@ -326,7 +326,11 @@ const productDetailsQuery = gql`
             name
             address {
               streetAddress
+              streetAddress2
               city
+              country{
+                code
+              }
             }
             business {
               id

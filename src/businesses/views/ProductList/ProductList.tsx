@@ -290,6 +290,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                             asc: params.asc,
                             sort: params.sort
                           }}
+                          refetch={refetch}
                           onSort={handleSort}
                           availableInGridAttributes={maybe(
                             () =>

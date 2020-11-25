@@ -215,8 +215,8 @@ const CategoryList: React.FC<CategoryListProps> = (props, { params }) => {
                       category.address.streetAddress && (
                         <>
                           {category.address.streetAddress +
-                            ", " +
-                            category.address.city}
+                            ", " + category.address.streetAddress2 + ", " +
+                            category.address.city + ", " + category.address.country.code}
                         </>
                       )
                     ) : (

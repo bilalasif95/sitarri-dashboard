@@ -132,6 +132,10 @@ export const productFragmentDetails = gql`
           address{
             city
             streetAddress
+            streetAddress2
+            country{
+              code
+            }
           }
         }
       }
@@ -147,7 +151,11 @@ export const productFragmentDetails = gql`
             logo
             address{
               streetAddress
+              streetAddress2
               city
+              country{
+                code
+              }
             }
           }
         }

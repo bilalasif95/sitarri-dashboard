@@ -741,7 +741,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     </Card>
                     <CardSpacer />
                     <PageHeader title={intl.formatMessage(sectionNames.stores)}>
-                      <Button color="primary" variant="contained" onClick={() => { localStorage.setItem("businessID", product.id); navigate(storeAddUrl()) }}>
+                      <Button color="primary" variant="contained" onClick={() => { localStorage.setItem("businessID", product.id); localStorage.setItem("businessCategoryID", product.businesscategory.id); navigate(storeAddUrl()) }}>
                         <FormattedMessage
                           defaultMessage="Create Store"
                           description="button"

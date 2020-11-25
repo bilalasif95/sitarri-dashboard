@@ -5,12 +5,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import CardTitle from "@saleor/components/CardTitle";
 import { ListActions, PageListProps } from "../../../types";
-import { CategoryDetails_category_products_edges_node } from "../../types/CategoryDetails";
+// import { CategoryDetails_category_products_edges_node } from "../../types/CategoryDetails";
 import CategoryProductList from "../CategoryProductList";
 
 interface CategoryProductsProps extends PageListProps, ListActions {
-  products: CategoryDetails_category_products_edges_node[];
+  products: any;
   categoryName: string;
+  onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
 }
 
 export const CategoryProducts: React.FC<CategoryProductsProps> = ({
@@ -23,6 +24,7 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
   onRowClick,
   categoryName,
   isChecked,
+  onProductUnassign,
   selected,
   toggle,
   toggleAll,
@@ -62,6 +64,7 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
         toggle={toggle}
         toggleAll={toggleAll}
         toolbar={toolbar}
+        onProductUnassign={onProductUnassign}
       />
     </Card>
   );

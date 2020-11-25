@@ -112,6 +112,7 @@ export interface CategoryDetails_category {
   parent: CategoryDetails_category_parent | null;
   children: CategoryDetails_category_children | null;
   products: CategoryDetails_category_products | null;
+  business?: any;
 }
 
 export interface CategoryDetails {
