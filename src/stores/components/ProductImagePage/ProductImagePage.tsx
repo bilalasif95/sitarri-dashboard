@@ -7,6 +7,7 @@ import { useIntl } from "react-intl";
 
 import AppHeader from "@saleor/components/AppHeader";
 import CardTitle from "@saleor/components/CardTitle";
+import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -15,7 +16,9 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
+import { maybe } from "../../../misc";
 import ProductImageNavigation from "../ProductImageNavigation";
+import CategoryBackground from "../StoreBackground";
 
 const useStyles = makeStyles(
   theme => ({
@@ -41,6 +44,10 @@ interface ProductImagePageProps {
     id: string;
     alt: string;
     url: string;
+    title?: string;
+    imageUrl?: string;
+    faviconAlt?: string;
+    favicon?: any
   };
   images?: Array<{
     id: string;
@@ -52,7 +59,9 @@ interface ProductImagePageProps {
   onBack: () => void;
   onDelete: () => void;
   onRowClick: (id: string) => () => void;
-  onSubmit: (data: { description: string }) => void;
+  onSubmit: (data: { description: string; imageUrl?: string; title?: string; favicon?: any; faviconAlt?: string; }) => void;
+  onImageDelete?: () => void;
+  onImageUpload?(file: File);
 }
 
 const ProductImagePage: React.FC<ProductImagePageProps> = props => {
@@ -65,6 +74,8 @@ const ProductImagePage: React.FC<ProductImagePageProps> = props => {
     onBack,
     onDelete,
     onRowClick,
+    onImageDelete,
+    onImageUpload,
     onSubmit
   } = props;
 
@@ -73,7 +84,13 @@ const ProductImagePage: React.FC<ProductImagePageProps> = props => {
 
   return (
     <Form
-      initial={{ description: image ? image.alt : "" }}
+      initial={{
+        description: image ? image.alt : "",
+        favicon: image ? image.favicon : "",
+        faviconAlt: image ? image.faviconAlt : "",
+        imageUrl: image ? image.imageUrl : "",
+        title: image ? image.title : "",
+      }}
       onSubmit={onSubmit}
       confirmLeave
     >
@@ -114,6 +131,40 @@ const ProductImagePage: React.FC<ProductImagePageProps> = props => {
                     value={data.description}
                     multiline
                     fullWidth
+                  />
+                  <CardSpacer />
+                  <TextField
+                    name="title"
+                    label="Image Title"
+                    helperText={intl.formatMessage({
+                      defaultMessage: "Optional",
+                      description: "field is optional"
+                    })}
+                    disabled={disabled}
+                    onChange={change}
+                    value={data.title}
+                    fullWidth
+                  />
+                  <CardSpacer />
+                  <TextField
+                    name="imageUrl"
+                    label="Image URL"
+                    helperText={intl.formatMessage({
+                      defaultMessage: "Optional",
+                      description: "field is optional"
+                    })}
+                    disabled={disabled}
+                    onChange={change}
+                    value={data.imageUrl}
+                    fullWidth
+                  />
+                  <CardSpacer />
+                  <CategoryBackground
+                    data={data}
+                    onImageUpload={onImageUpload}
+                    onImageDelete={onImageDelete}
+                    image={maybe(() => image.favicon)}
+                    onChange={change}
                   />
                 </CardContent>
               </Card>

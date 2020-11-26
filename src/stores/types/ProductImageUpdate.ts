@@ -215,5 +215,9 @@ export interface ProductImageUpdate {
 
 export interface ProductImageUpdateVariables {
   id: string;
-  alt: string;
+  alt?: string;
+  title?: string;
+  imageUrl?: string;
+  favicon?: any;
+  faviconAlt?: string;
 }

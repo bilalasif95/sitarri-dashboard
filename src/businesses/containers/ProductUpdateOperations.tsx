@@ -8,7 +8,8 @@ import {
   TypedProductImageDeleteMutation,
   TypedProductUpdateMutation,
   TypedProductVariantBulkDeleteMutation,
-  TypedSimpleProductUpdateMutation
+  // TypedSimpleProductUpdateMutation,
+  TypedProductUpdateMutationWithoutLogo
 } from "../mutations";
 import { ProductDelete, ProductDeleteVariables } from "../types/ProductDelete";
 import { ProductDetails_product } from "../types/ProductDetails";
@@ -29,10 +30,10 @@ import {
   ProductVariantBulkDelete,
   ProductVariantBulkDeleteVariables
 } from "../types/ProductVariantBulkDelete";
-import {
-  SimpleProductUpdate,
-  SimpleProductUpdateVariables
-} from "../types/SimpleProductUpdate";
+// import {
+//   SimpleProductUpdate,
+//   SimpleProductUpdateVariables
+// } from "../types/SimpleProductUpdate";
 import ProductImagesReorderProvider from "./ProductImagesReorder";
 
 interface ProductUpdateOperationsProps {
@@ -63,8 +64,10 @@ interface ProductUpdateOperationsProps {
       ProductUpdateVariables
     >;
     updateSimpleProduct: PartialMutationProviderOutput<
-      SimpleProductUpdate,
-      SimpleProductUpdateVariables
+      ProductUpdate,
+      ProductUpdateVariables
+    // SimpleProductUpdate,
+    // SimpleProductUpdateVariables
     >;
   }) => React.ReactNode;
   onBulkProductVariantDelete?: (data: ProductVariantBulkDelete) => void;
@@ -103,10 +106,14 @@ const ProductUpdateOperations: React.FC<ProductUpdateOperationsProps> = ({
                       onCompleted={onImageDelete}
                     >
                       {(...deleteProductImage) => (
-                        <TypedSimpleProductUpdateMutation
+                        <TypedProductUpdateMutationWithoutLogo
                           onCompleted={onUpdate}
                         >
                           {(...updateSimpleProduct) => (
+                            // <TypedSimpleProductUpdateMutation
+                            //   onCompleted={onUpdate}
+                            // >
+                            //   {(...updateSimpleProduct) => (
                             <TypedProductVariantBulkDeleteMutation
                               onCompleted={onBulkProductVariantDelete}
                             >
@@ -137,7 +144,7 @@ const ProductUpdateOperations: React.FC<ProductUpdateOperationsProps> = ({
                               }
                             </TypedProductVariantBulkDeleteMutation>
                           )}
-                        </TypedSimpleProductUpdateMutation>
+                        </TypedProductUpdateMutationWithoutLogo>
                       )}
                     </TypedProductImageDeleteMutation>
                   )}

@@ -65,11 +65,14 @@ export const ProductImage: React.FC<ProductImageProps> = ({
                     deleteImage({ variables: { id: imageId } });
                   const handleImageClick = (id: string) => () =>
                     navigate(productImageUrl(productId, id));
-                  const handleUpdate = (formData: { description: string }) => {
+                  const handleUpdate = (formData: { description: string, title: string, imageUrl: string, faviconAlt: string }) => {
                     updateImage({
                       variables: {
                         alt: formData.description,
-                        id: imageId
+                        faviconAlt: formData.faviconAlt,
+                        id: imageId,
+                        imageUrl: formData.imageUrl,
+                        title: formData.title,
                       }
                     });
                   };
@@ -90,6 +93,22 @@ export const ProductImage: React.FC<ProductImageProps> = ({
                               action: "remove"
                             })
                           )
+                        }
+                        onImageDelete={() =>
+                          updateImage({
+                            variables: {
+                              favicon: null,
+                              id: imageId,
+                            }
+                          })
+                        }
+                        onImageUpload={file =>
+                          updateImage({
+                            variables: {
+                              favicon: file,
+                              id: imageId,
+                            }
+                          })
                         }
                         onRowClick={handleImageClick}
                         onSubmit={handleUpdate}

@@ -220,7 +220,7 @@ export interface ProductUpdateVariables {
   deliverooUrl?: string;
   uberEatsUrl?: string;
   facebookUrl: string;
-  logo: any;
+  logo?: any;
   twitterUrl: string;
   instagramUrl: string;
   logoString?: string;

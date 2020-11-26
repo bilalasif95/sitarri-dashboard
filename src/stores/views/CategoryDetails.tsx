@@ -51,7 +51,7 @@ import {
   CategoryUrlDialog,
   storesListUrl
 } from "../urls";
-import { TypedProductUpdateMutation } from "../../businesses/mutations";
+import { TypedProductUpdateMutation, TypedProductUpdateMutationWithoutLogo } from "../../businesses/mutations";
 import { createImageReorderHandler } from "../../products/views/ProductUpdate/handlers";
 import ProductUpdateOperations from "../containers/ProductUpdateOperations";
 import { productUrl } from "../../products/urls";
@@ -241,274 +241,296 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           <>
             <TypedProductUpdateMutation onCompleted={handleCategoryUpdate}>
               {(businessUpdate, businessUpdateOpts) => (
-                <ProductUpdateOperations
-                  product={category}
-                  onProductAssign={handleProductAssign}
-                  onProductUnassign={handleProductUnassign}
-                >
-                  {({ reorderProductImages,
-                    assignProduct,
-                    unassignProduct
-                  }) => {
-                    const handleImageReorder = createImageReorderHandler(
-                      category,
-                      reorderProductImages.mutate
-                    );
-                    const handleImageEdit = (imageId: string) => () =>
-                      navigate(productImageUrl(id, imageId));
-                    return (
-                      <>
-                        <CategoryUpdatePage
-                          changeTab={changeTab}
-                          currentTab={params.activeTab}
-                          category={maybe(() => data.store)}
-                          disabled={loading || latLngLoading || businessUpdateOpts.loading}
-                          latlngError={latlngError}
-                          errors={updateResult.data?.storeUpdate.errors || []}
-                          onAddCategory={() => navigate(storeAddUrl(id))}
-                          onAddProduct={() => openModal("assign")}
-                          onBack={() =>
-                            navigate(
-                              maybe(
-                                () => storesUrl(data.store.parent.id),
-                                storesListUrl()
-                              )
-                            )
-                          }
-                          onProductUnassign={(productId, event) => {
-                            event.stopPropagation();
-                            unassignProduct.mutate({
-                              productId: id,
-                              stores: [productId],
-                              ...paginationState
-                            });
-                          }}
-                          images={maybe(() => data.store.images)}
-                          onCategoryClick={id => () => navigate(productUrl(id))}
-                          onDelete={() => openModal("delete")}
-                          onImageDelete={(id) => () =>
-                            storeImagedelete({
-                              variables: {
-                                id
+                <TypedProductUpdateMutationWithoutLogo onCompleted={handleCategoryUpdate}>
+                  {(businessUpdateWithoutLogo, businessUpdateWithoutLogoOpts) => (
+                    <ProductUpdateOperations
+                      product={category}
+                      onProductAssign={handleProductAssign}
+                      onProductUnassign={handleProductUnassign}
+                    >
+                      {({ reorderProductImages,
+                        assignProduct,
+                        unassignProduct
+                      }) => {
+                        const handleImageReorder = createImageReorderHandler(
+                          category,
+                          reorderProductImages.mutate
+                        );
+                        const handleImageEdit = (imageId: string) => () =>
+                          navigate(productImageUrl(id, imageId));
+                        return (
+                          <>
+                            <CategoryUpdatePage
+                              changeTab={changeTab}
+                              currentTab={params.activeTab}
+                              category={maybe(() => data.store)}
+                              disabled={loading || latLngLoading || businessUpdateOpts.loading || businessUpdateWithoutLogoOpts.loading}
+                              latlngError={latlngError}
+                              errors={updateResult.data?.storeUpdate.errors || []}
+                              onAddCategory={() => navigate(storeAddUrl(id))}
+                              onAddProduct={() => openModal("assign")}
+                              onBack={() =>
+                                navigate(
+                                  maybe(
+                                    () => storesUrl(data.store.parent.id),
+                                    storesListUrl()
+                                  )
+                                )
                               }
-                            })
-                          }
-                          placeholderImage={placeholderImg}
-                          onImageReorder={handleImageReorder}
-                          onImageEdit={handleImageEdit}
-                          paramsProps={params}
-                          onImageUpload={file =>
-                            storeImagecreate({
-                              variables: {
-                                input: {
-                                  image: file,
-                                  store: id,
-                                }
-                              }
-                            })
-                          }
-                          onNextPage={loadNextPage}
-                          onPreviousPage={loadPreviousPage}
-                          pageInfo={pageInfo}
-                          onProductClick={id => () => navigate(storesUrl(id))}
-                          onSubmit={formData => {
-                            setlatLngError("");
-                            setlatLngLoading(true);
-                            geocodeByAddress(
-                              formData.streetAddress +
-                              "," +
-                              formData.streetAddress2 +
-                              "," +
-                              formData.city +
-                              "," +
-                              formData.country
-                            )
-                              .then(results => getLatLng(results[0]))
-                              .then(latLng => {
-                                setlatLngLoading(false);
-                                updateCategory({
+                              onProductUnassign={(productId, event) => {
+                                event.stopPropagation();
+                                unassignProduct.mutate({
+                                  productId: id,
+                                  stores: [productId],
+                                  ...paginationState
+                                });
+                              }}
+                              images={maybe(() => data.store.images)}
+                              onCategoryClick={id => () => navigate(productUrl(id))}
+                              onDelete={() => openModal("delete")}
+                              onImageDelete={(id) => () =>
+                                storeImagedelete({
                                   variables: {
-                                    id,
+                                    id
+                                  }
+                                })
+                              }
+                              placeholderImage={placeholderImg}
+                              onImageReorder={handleImageReorder}
+                              onImageEdit={handleImageEdit}
+                              paramsProps={params}
+                              onImageUpload={file =>
+                                storeImagecreate({
+                                  variables: {
                                     input: {
-                                      address: {
-                                        city: formData.city,
-                                        country: formData.country,
-                                        latitude: latLng.lat,
-                                        longitude: latLng.lng,
-                                        postalCode: formData.postalCode,
-                                        streetAddress: formData.streetAddress,
-                                        streetAddress2: formData.streetAddress2,
-                                      },
-                                      // backgroundImageAlt: formData.backgroundImageAlt,
-                                      business: maybe(() => data.store.business.id),
-                                      businesscategory: maybe(() => data.store.business.businesscategory.id),
-                                      // category: formData.businessCategory,
-                                      // deliverooUrl: "https://www." + formData.delivery,
-                                      description: formData.description,
-                                      // facebookUrl: "https://www.facebook.com/" + formData.facebook,
-                                      // instagramUrl: "https://www.instagram.com/" + formData.instagram,
-                                      fridayClosingTime: formData.fridayClosingTime,
-                                      fridayOpeningStatus: formData.fridayOpenClose,
-                                      fridayOpeningTime: formData.fridayOpeningTime,
-                                      mondayClosingTime: formData.mondayClosingTime,
-                                      mondayOpeningStatus: formData.mondayOpenClose,
-                                      mondayOpeningTime: formData.mondayOpeningTime,
-                                      // logo: formData.logo,
-                                      name: formData.name,
-                                      phone: formData.phone,
-                                      rating: formData.rating,
-                                      saturdayClosingTime: formData.saturdayClosingTime,
-                                      saturdayOpeningStatus: formData.saturdayOpenClose,
-                                      saturdayOpeningTime: formData.saturdayOpeningTime,
-                                      seoDescription: formData.seoDescription,
-                                      seoTitle: formData.seoTitle,
-                                      status: formData.status,
-                                      sundayClosingTime: formData.sundayClosingTime,
-                                      sundayOpeningStatus: formData.sundayOpenClose,
-                                      sundayOpeningTime: formData.sundayOpeningTime,
-                                      tags: formData.tags,
-                                      thursdayClosingTime: formData.thursdayClosingTime,
-                                      thursdayOpeningStatus: formData.thursdayOpenClose,
-                                      thursdayOpeningTime: formData.thursdayOpeningTime,
-                                      tuesdayClosingTime: formData.tuesdayClosingTime,
-                                      tuesdayOpeningStatus: formData.tuesdayOpenClose,
-                                      tuesdayOpeningTime: formData.tuesdayOpeningTime,
-                                      wednesdayClosingTime: formData.wednesdayClosingTime,
-                                      wednesdayOpeningStatus: formData.wednesdayOpenClose,
-                                      wednesdayOpeningTime: formData.wednesdayOpeningTime,
-                                      // twitterUrl: "https://www.twitter.com/" + formData.twitter,
-                                      // uberEatsUrl: "https://www." + formData.reservationSystem,
-                                      // websiteUrl: "https://www." + formData.website,
-                                      // seo: {
-                                      //   description: formData.seoDescription,
-                                      //   title: formData.seoTitle
-                                      // },
+                                      image: file,
+                                      store: id,
                                     }
                                   }
                                 })
-                                businessUpdate({
-                                  variables: {
-                                    businesscategory: formData.businessCategory.id,
-                                    deliverooUrl: formData.delivery ? "https://www." + formData.delivery : "",
-                                    facebookUrl: formData.facebook ? "https://www.facebook.com/" + formData.facebook : "",
-                                    id: maybe(() => data.store.business.id),
-                                    instagramUrl: formData.instagram ? "https://www.instagram.com/" + formData.instagram : "",
-                                    logo: formData.logo ? formData.logo : maybe(() => data.store.business.logo),
-                                    twitterUrl: formData.twitter ? "https://www.twitter.com/" + formData.twitter : "",
-                                    uberEatsUrl: formData.reservationSystem ? "https://www." + formData.reservationSystem : "",
-                                    websiteUrl: formData.website ? "https://www." + formData.website : "",
-                                  }
-                                })
-                              })
-                              .catch(error => {
-                                setlatLngLoading(false);
-                                setlatLngError(error);
-                              });
-                          }}
-                          products={maybe(() =>
-                            category.productss.edges.map(edge => edge.node)
-                          )}
-                          saveButtonBarState={updateResult.status}
-                          subcategories={maybe(() =>
-                            category.productss.edges.map(edge => edge.node)
-                          )}
-                          subcategoryListToolbar={
-                            <IconButton
-                              color="primary"
-                              onClick={() =>
-                                openModal("delete-categories", {
-                                  ids: listElements
-                                })
                               }
-                            >
-                              <DeleteIcon />
-                            </IconButton>
-                          }
-                          productListToolbar={
-                            <Button
-                              color="primary"
-                              onClick={() =>
-                                openModal("unassign", {
-                                  ids: listElements
-                                })
-                              }
-                            >
-                              <FormattedMessage
-                                defaultMessage="Unassign"
-                                description="unassign product from store, button"
-                              />
-                            </Button>
-                            // <IconButton
-                            //   color="primary"
-                            //   onClick={() =>
-                            //     openModal("delete-products", {
-                            //       ids: listElements
-                            //     })
-                            //   }
-                            // >
-                            //   <DeleteIcon />
-                            // </IconButton>
-                          }
-                          isChecked={isSelected}
-                          selected={listElements.length}
-                          toggle={toggle}
-                          toggleAll={toggleAll}
-                        />
-                        <AssignProductDialog
-                          confirmButtonState={assignProduct.opts.status}
-                          open={params.action === "assign"}
-                          onFetch={search}
-                          loading={result.loading}
-                          onClose={closeModal}
-                          onSubmit={products =>
-                            assignProduct.mutate({
-                              ...paginationState,
-                              productId: id,
-                              stores: products.map(product => product.id)
-                            })
-                          }
-                          // products={maybe(() =>
-                          //   product.business.businessStore.edges
-                          //     .map(edge => edge.node)
-                          // )}
-                          products={maybe(() =>
-                            result.data.search.edges
-                              .map(edge => edge.node)
-                              .filter(suggestedProduct => suggestedProduct.id)
-                          )}
-                        />
-                        <ActionDialog
-                          confirmButtonState={unassignProduct.opts.status}
-                          onClose={closeModal}
-                          onConfirm={() =>
-                            unassignProduct.mutate({
-                              ...paginationState,
-                              productId: id,
-                              stores: params.ids
-                            })
-                          }
-                          open={params.action === "unassign"}
-                          title={intl.formatMessage({
-                            defaultMessage: "Unassign products from store",
-                            description: "dialog title"
-                          })}
-                        >
-                          <DialogContentText>
-                            <FormattedMessage
-                              defaultMessage="{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
-                              values={{
-                                counter: maybe(() => params.ids.length),
-                                displayQuantity: (
-                                  <strong>{maybe(() => params.ids.length)}</strong>
+                              onNextPage={loadNextPage}
+                              onPreviousPage={loadPreviousPage}
+                              pageInfo={pageInfo}
+                              onProductClick={id => () => navigate(storesUrl(id))}
+                              onSubmit={formData => {
+                                setlatLngError("");
+                                setlatLngLoading(true);
+                                geocodeByAddress(
+                                  formData.streetAddress +
+                                  "," +
+                                  formData.streetAddress2 +
+                                  "," +
+                                  formData.city +
+                                  "," +
+                                  formData.country
                                 )
+                                  .then(results => getLatLng(results[0]))
+                                  .then(latLng => {
+                                    setlatLngLoading(false);
+                                    updateCategory({
+                                      variables: {
+                                        id,
+                                        input: {
+                                          address: {
+                                            city: formData.city,
+                                            country: formData.country,
+                                            latitude: latLng.lat,
+                                            longitude: latLng.lng,
+                                            postalCode: formData.postalCode,
+                                            streetAddress: formData.streetAddress,
+                                            streetAddress2: formData.streetAddress2,
+                                          },
+                                          // backgroundImageAlt: formData.backgroundImageAlt,
+                                          business: maybe(() => data.store.business.id),
+                                          businesscategory: maybe(() => data.store.business.businesscategory.id),
+                                          // category: formData.businessCategory,
+                                          // deliverooUrl: "https://www." + formData.delivery,
+                                          description: formData.description,
+                                          // facebookUrl: "https://www.facebook.com/" + formData.facebook,
+                                          // instagramUrl: "https://www.instagram.com/" + formData.instagram,
+                                          fridayClosingTime: formData.fridayClosingTime,
+                                          fridayOpeningStatus: formData.fridayOpenClose,
+                                          fridayOpeningTime: formData.fridayOpeningTime,
+                                          mondayClosingTime: formData.mondayClosingTime,
+                                          mondayOpeningStatus: formData.mondayOpenClose,
+                                          mondayOpeningTime: formData.mondayOpeningTime,
+                                          // logo: formData.logo,
+                                          name: formData.name,
+                                          phone: formData.phone,
+                                          rating: formData.rating,
+                                          saturdayClosingTime: formData.saturdayClosingTime,
+                                          saturdayOpeningStatus: formData.saturdayOpenClose,
+                                          saturdayOpeningTime: formData.saturdayOpeningTime,
+                                          seoDescription: formData.seoDescription,
+                                          seoTitle: formData.seoTitle,
+                                          status: formData.status,
+                                          sundayClosingTime: formData.sundayClosingTime,
+                                          sundayOpeningStatus: formData.sundayOpenClose,
+                                          sundayOpeningTime: formData.sundayOpeningTime,
+                                          tags: formData.tags,
+                                          thursdayClosingTime: formData.thursdayClosingTime,
+                                          thursdayOpeningStatus: formData.thursdayOpenClose,
+                                          thursdayOpeningTime: formData.thursdayOpeningTime,
+                                          tuesdayClosingTime: formData.tuesdayClosingTime,
+                                          tuesdayOpeningStatus: formData.tuesdayOpenClose,
+                                          tuesdayOpeningTime: formData.tuesdayOpeningTime,
+                                          wednesdayClosingTime: formData.wednesdayClosingTime,
+                                          wednesdayOpeningStatus: formData.wednesdayOpenClose,
+                                          wednesdayOpeningTime: formData.wednesdayOpeningTime,
+                                          // twitterUrl: "https://www.twitter.com/" + formData.twitter,
+                                          // uberEatsUrl: "https://www." + formData.reservationSystem,
+                                          // websiteUrl: "https://www." + formData.website,
+                                          // seo: {
+                                          //   description: formData.seoDescription,
+                                          //   title: formData.seoTitle
+                                          // },
+                                        }
+                                      }
+                                    })
+                                    if ((formData.logo === null) || (typeof formData.logo === "string")) {
+                                      businessUpdateWithoutLogo({
+                                        variables: {
+                                          businesscategory: formData.businessCategory.id,
+                                          deliverooUrl: formData.delivery ? "https://www." + formData.delivery : "",
+                                          facebookUrl: formData.facebook ? "https://www.facebook.com/" + formData.facebook : "",
+                                          id: maybe(() => data.store.business.id),
+                                          instagramUrl: formData.instagram ? "https://www.instagram.com/" + formData.instagram : "",
+                                          // logo: formData.logo ? formData.logo : maybe(() => data.store.business.logo),
+                                          twitterUrl: formData.twitter ? "https://www.twitter.com/" + formData.twitter : "",
+                                          uberEatsUrl: formData.reservationSystem ? "https://www." + formData.reservationSystem : "",
+                                          websiteUrl: formData.website ? "https://www." + formData.website : "",
+                                        }
+                                      })
+                                    }
+                                    else {
+                                      businessUpdate({
+                                        variables: {
+                                          businesscategory: formData.businessCategory.id,
+                                          deliverooUrl: formData.delivery ? "https://www." + formData.delivery : "",
+                                          facebookUrl: formData.facebook ? "https://www.facebook.com/" + formData.facebook : "",
+                                          id: maybe(() => data.store.business.id),
+                                          instagramUrl: formData.instagram ? "https://www.instagram.com/" + formData.instagram : "",
+                                          logo: formData.logo,
+                                          twitterUrl: formData.twitter ? "https://www.twitter.com/" + formData.twitter : "",
+                                          uberEatsUrl: formData.reservationSystem ? "https://www." + formData.reservationSystem : "",
+                                          websiteUrl: formData.website ? "https://www." + formData.website : "",
+                                        }
+                                      })
+                                    }
+                                  })
+                                  .catch(error => {
+                                    setlatLngLoading(false);
+                                    setlatLngError(error);
+                                  });
                               }}
+                              products={maybe(() =>
+                                category.productss.edges.map(edge => edge.node)
+                              )}
+                              saveButtonBarState={updateResult.status}
+                              subcategories={maybe(() =>
+                                category.productss.edges.map(edge => edge.node)
+                              )}
+                              subcategoryListToolbar={
+                                <IconButton
+                                  color="primary"
+                                  onClick={() =>
+                                    openModal("delete-categories", {
+                                      ids: listElements
+                                    })
+                                  }
+                                >
+                                  <DeleteIcon />
+                                </IconButton>
+                              }
+                              productListToolbar={
+                                <Button
+                                  color="primary"
+                                  onClick={() =>
+                                    openModal("unassign", {
+                                      ids: listElements
+                                    })
+                                  }
+                                >
+                                  <FormattedMessage
+                                    defaultMessage="Unassign"
+                                    description="unassign product from store, button"
+                                  />
+                                </Button>
+                                // <IconButton
+                                //   color="primary"
+                                //   onClick={() =>
+                                //     openModal("delete-products", {
+                                //       ids: listElements
+                                //     })
+                                //   }
+                                // >
+                                //   <DeleteIcon />
+                                // </IconButton>
+                              }
+                              isChecked={isSelected}
+                              selected={listElements.length}
+                              toggle={toggle}
+                              toggleAll={toggleAll}
                             />
-                          </DialogContentText>
-                        </ActionDialog>
-                      </>
-                    )
-                  }}
-                </ProductUpdateOperations>
+                            <AssignProductDialog
+                              confirmButtonState={assignProduct.opts.status}
+                              open={params.action === "assign"}
+                              onFetch={search}
+                              loading={result.loading}
+                              onClose={closeModal}
+                              onSubmit={products =>
+                                assignProduct.mutate({
+                                  ...paginationState,
+                                  productId: id,
+                                  stores: products.map(product => product.id)
+                                })
+                              }
+                              // products={maybe(() =>
+                              //   product.business.businessStore.edges
+                              //     .map(edge => edge.node)
+                              // )}
+                              products={maybe(() =>
+                                result.data.search.edges
+                                  .map(edge => edge.node)
+                                  .filter(suggestedProduct => suggestedProduct.id)
+                              )}
+                            />
+                            <ActionDialog
+                              confirmButtonState={unassignProduct.opts.status}
+                              onClose={closeModal}
+                              onConfirm={() =>
+                                unassignProduct.mutate({
+                                  ...paginationState,
+                                  productId: id,
+                                  stores: params.ids
+                                })
+                              }
+                              open={params.action === "unassign"}
+                              title={intl.formatMessage({
+                                defaultMessage: "Unassign products from store",
+                                description: "dialog title"
+                              })}
+                            >
+                              <DialogContentText>
+                                <FormattedMessage
+                                  defaultMessage="{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
+                                  values={{
+                                    counter: maybe(() => params.ids.length),
+                                    displayQuantity: (
+                                      <strong>{maybe(() => params.ids.length)}</strong>
+                                    )
+                                  }}
+                                />
+                              </DialogContentText>
+                            </ActionDialog>
+                          </>
+                        )
+                      }}
+                    </ProductUpdateOperations>
+                  )
+                  }
+                </TypedProductUpdateMutationWithoutLogo>
               )
               }
             </TypedProductUpdateMutation>

@@ -13,8 +13,8 @@ import { ProductUpdateVariables } from "../../types/ProductUpdate";
 export function createUpdateHandler(
   product: ProductDetails_product,
   updateProduct: (variables: ProductUpdateVariables) => void,
-  businessCategories: any
-  // updateSimpleProduct: (variables: SimpleProductUpdateVariables) => void
+  businessCategories: any,
+  updateSimpleProduct: (variables: ProductUpdateVariables) => void
 ) {
   // const { user } = useUser();
 
@@ -50,7 +50,20 @@ export function createUpdateHandler(
     };
 
     // if (product.productType.hasVariants) {
-    updateProduct(productVariables);
+    if ((data.logo === null) || (typeof data.logo === "string")) {
+      updateSimpleProduct({
+        businesscategory: category.length ? category[0].node.id : product.businesscategory.id,
+        facebookUrl: data.facebookUrl ? "https://www.facebook.com/" + data.facebookUrl : "",
+        id: product.id,
+        instagramUrl: data.instagramUrl ? "https://www.instagram.com/" + data.instagramUrl : "",
+        // logo: data.logo,
+        twitterUrl: data.twitterUrl ? "https://www.twitter.com/" + data.twitterUrl : "",
+        websiteUrl: data.websiteUrl ? "https://www." + data.websiteUrl : "",
+      })
+    }
+    else {
+      updateProduct(productVariables);
+    }
     // } else {
     //   updateSimpleProduct({
     //     ...productVariables,

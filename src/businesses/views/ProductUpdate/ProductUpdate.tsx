@@ -291,8 +291,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params, listPa
                   const handleSubmit = createUpdateHandler(
                     product,
                     updateProduct.mutate,
-                    data && data.businessCategories && data.businessCategories.edges
-                    // updateSimpleProduct.mutate
+                    data && data.businessCategories && data.businessCategories.edges,
+                    updateSimpleProduct.mutate,
                   );
                   const handleImageUpload = createImageUploadHandler(
                     id,
@@ -314,10 +314,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params, listPa
                     updateProduct.opts.loading || updateSimpleProduct.opts.loading,
                     maybe(() => updateProduct.opts.data.productUpdate.errors),
                     maybe(() => updateSimpleProduct.opts.data.productUpdate.errors),
-                    maybe(
-                      () =>
-                        updateSimpleProduct.opts.data.productVariantUpdate.errors
-                    )
+                    // maybe(
+                    //   () =>
+                    //     updateSimpleProduct.opts.data.productVariantUpdate.errors
+                    // )
                   );
 
                   const categories = maybe(

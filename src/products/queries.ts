@@ -58,6 +58,10 @@ export const fragmentProductImage = gql`
     alt
     sortOrder
     url
+    faviconAlt
+    favicon
+    title
+    imageUrl
   }
 `;
 
@@ -472,6 +476,10 @@ const productImageQuery = gql`
         id
         alt
         url
+        favicon
+        imageUrl
+        faviconAlt
+        title
       }
       images {
         id

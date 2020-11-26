@@ -71,6 +71,10 @@ export const categoryDetailsFragment = gql`
         url
         id
         alt
+        faviconAlt
+        favicon
+        title
+        imageUrl
       }
       tags {
         name

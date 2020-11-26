@@ -136,7 +136,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   errors,
   pageInfo,
   placeholderImage,
-  // onImageEdit,
+  onImageEdit,
   onImageReorder,
   products,
   images,
@@ -315,7 +315,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                       placeholderImage={placeholderImage}
                       onImageDelete={onImageDelete}
                       onImageReorder={onImageReorder}
-                      onImageEdit={undefined}
+                      onImageEdit={onImageEdit}
                       onImageUpload={onImageUpload}
                     />
                     {/* <CategoryBackground

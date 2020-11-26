@@ -11,6 +11,10 @@ export interface ProductImageById_product_mainImage {
   id: string;
   alt: string;
   url: string;
+  imageUrl?: string;
+  title?: string;
+  faviconAlt?: string;
+  favicon?: any
 }
 
 export interface ProductImageById_product_images {

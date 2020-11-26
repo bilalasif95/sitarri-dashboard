@@ -181,6 +181,46 @@ export const TypedProductUpdateMutation = TypedMutation<
   ProductUpdateVariables
 >(productUpdateMutation);
 
+export const productUpdateMutationWithoutLogo = gql`
+  ${productFragmentDetails}
+  mutation BusinessUpdateWithoutLogo(
+    $id: ID!
+    $businesscategory: ID!
+    $websiteUrl: String
+    $facebookUrl: String
+    $instagramUrl: String
+    $twitterUrl: String
+    $deliverooUrl: String
+    $uberEatsUrl: String
+  ) {
+    businessUpdate(
+      id: $id
+      input: {
+        businesscategory: $businesscategory
+        websiteUrl: $websiteUrl
+        facebookUrl: $facebookUrl
+        instagramUrl: $instagramUrl
+        twitterUrl: $twitterUrl
+        deliverooUrl: $deliverooUrl
+        uberEatsUrl: $uberEatsUrl
+      }
+    ) {
+      businessErrors {
+        code
+        field
+        message
+      }
+      business {
+        ...Business
+      }
+    }
+  }
+`;
+export const TypedProductUpdateMutationWithoutLogo = TypedMutation<
+  ProductUpdate,
+  ProductUpdateVariables
+>(productUpdateMutationWithoutLogo);
+
 export const simpleProductUpdateMutation = gql`
   ${bulkStockErrorFragment}
   ${productErrorFragment}

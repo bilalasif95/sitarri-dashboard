@@ -87,11 +87,8 @@ const Component = () => {
         <Route exact path={categoryListPath} component={CategoryList} />
         <Route exact path={categoryAddPath()} component={CategoryCreate} />
         <Route exact path={categoryAddPath(":id")} component={CategoryCreate} />
+        <Route exact path={productImagePath(":productId", ":imageId")} component={ProductImage} />
         <Route path={categoryPath(":id")} component={CategoryDetails} />
-        <Route
-          path={productImagePath(":productId", ":imageId")}
-          component={ProductImage}
-        />
       </Switch>
     </>
   );

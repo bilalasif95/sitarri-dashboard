@@ -147,6 +147,10 @@ export interface ProductImageUpdate_productImageUpdate_product_images {
   alt: string;
   sortOrder: number | null;
   url: string;
+  imageUrl?: string;
+  title?: string;
+  favicon?: any;
+  faviconAlt?: string;
 }
 
 export interface ProductImageUpdate_productImageUpdate_product_variants_priceOverride {
@@ -215,5 +219,9 @@ export interface ProductImageUpdate {
 
 export interface ProductImageUpdateVariables {
   id: string;
-  alt: string;
+  alt?: string;
+  title?: string;
+  imageUrl?: string;
+  favicon?: any;
+  faviconAlt?: string;
 }
