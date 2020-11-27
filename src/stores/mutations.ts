@@ -226,8 +226,8 @@ export const TypedProductImageDeleteMutation = TypedMutation<
 
 export const productImageUpdateMutation = gql`
 ${categoryDetailsFragment}
-  mutation StoreImageUpdate($id: ID!, $alt: String, $imageUrl: String, $title: String, $faviconAlt: String) {
-    storeImageupdate(id: $id, input: { alt: $alt, imageUrl: $imageUrl, title: $title, faviconAlt: $faviconAlt }) {
+  mutation StoreImageUpdate($id: ID!, $alt: String, $imageUrl: String, $title: String, $faviconAlt: String, $favicon: String) {
+    storeImageupdate(id: $id, input: { alt: $alt, imageUrl: $imageUrl, title: $title, faviconAlt: $faviconAlt, favicon: $favicon }) {
       storeErrors{
         code
         field

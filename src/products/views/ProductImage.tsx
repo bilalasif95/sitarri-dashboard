@@ -66,10 +66,11 @@ export const ProductImage: React.FC<ProductImageProps> = ({
                     deleteImage({ variables: { id: imageId } });
                   const handleImageClick = (id: string) => () =>
                     navigate(productImageUrl(productId, id));
-                  const handleUpdate = (formData: { description: string, title: string, imageUrl: string, faviconAlt: string }) => {
+                  const handleUpdate = (formData: { description: string, favicon: string, title: string, imageUrl: string, faviconAlt: string }) => {
                     updateImage({
                       variables: {
                         alt: formData.description,
+                        favicon: formData.favicon,
                         faviconAlt: formData.faviconAlt,
                         id: imageId,
                         imageUrl: formData.imageUrl,

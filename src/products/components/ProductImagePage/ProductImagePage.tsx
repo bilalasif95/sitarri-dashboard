@@ -16,9 +16,9 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import Skeleton from "@saleor/components/Skeleton";
 // import { commonMessages } from "@saleor/intl";
-import { maybe } from "../../../misc";
+// import { maybe } from "../../../misc";
 import ProductImageNavigation from "../ProductImageNavigation";
-import CategoryBackground from "../CategoryBackground";
+// import CategoryBackground from "../CategoryBackground";
 
 const useStyles = makeStyles(
   theme => ({
@@ -71,8 +71,8 @@ const ProductImagePage: React.FC<ProductImagePageProps> = props => {
     images,
     product,
     saveButtonBarState,
-    onImageUpload,
-    onImageDelete,
+    // onImageUpload,
+    // onImageDelete,
     onBack,
     onDelete,
     onRowClick,
@@ -148,7 +148,7 @@ const ProductImagePage: React.FC<ProductImagePageProps> = props => {
                   <CardSpacer />
                   <TextField
                     name="imageUrl"
-                    label="Image URL"
+                    label="Image Source URL"
                     helperText={intl.formatMessage({
                       defaultMessage: "Optional",
                       description: "field is optional"
@@ -159,13 +159,38 @@ const ProductImagePage: React.FC<ProductImagePageProps> = props => {
                     fullWidth
                   />
                   <CardSpacer />
-                  <CategoryBackground
+                  <TextField
+                    name="favicon"
+                    label="Favicon URL"
+                    helperText={intl.formatMessage({
+                      defaultMessage: "Optional",
+                      description: "field is optional"
+                    })}
+                    disabled={disabled}
+                    onChange={change}
+                    value={data.favicon}
+                    fullWidth
+                  />
+                  <CardSpacer />
+                  <TextField
+                    name="faviconAlt"
+                    label="Favicon Alt"
+                    helperText={intl.formatMessage({
+                      defaultMessage: "Optional",
+                      description: "field is optional"
+                    })}
+                    disabled={disabled}
+                    onChange={change}
+                    value={data.faviconAlt}
+                    fullWidth
+                  />
+                  {/* <CategoryBackground
                     data={data}
                     onImageUpload={onImageUpload}
                     onImageDelete={onImageDelete}
                     image={maybe(() => image.favicon)}
                     onChange={change}
-                  />
+                  /> */}
                 </CardContent>
               </Card>
             </div>

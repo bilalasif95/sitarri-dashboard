@@ -512,7 +512,7 @@ export const TypedProductImageDeleteMutation = TypedMutation<
 export const productImageUpdateMutation = gql`
   ${productErrorFragment}
   ${productFragmentDetails}
-  mutation ProductImageUpdate($id: ID!, $alt: String, $imageUrl: String, $title: String, $faviconAlt: String, $favicon: Upload ) {
+  mutation ProductImageUpdate($id: ID!, $alt: String, $imageUrl: String, $title: String, $faviconAlt: String, $favicon: String ) {
     productImageUpdate(id: $id, input: { alt: $alt, imageUrl: $imageUrl, title: $title, faviconAlt: $faviconAlt, favicon: $favicon  }) {
       errors: productErrors {
         ...ProductErrorFragment
