@@ -266,6 +266,10 @@ const productImageQuery = gql`
         id
         alt
         url
+        favicon
+        faviconAlt
+        title
+        imageUrl
       }
       images {
         id

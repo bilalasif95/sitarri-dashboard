@@ -612,6 +612,9 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
       setOpenAddInformationModal(false);
       setOpenImportInformationModal(true);
       setImportInformationModal(true);
+      setBusinessName("");
+      setBusinessCategory("");
+      setLogo("");
       // setAddBusinessModal(false);
       // setChooseCategoryModal(true);
       // setOpenChooseCategoryModal(true);

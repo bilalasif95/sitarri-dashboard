@@ -7,12 +7,12 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
-import ImageTile from "@saleor/components/ImageTile";
+import ImageTile from "@saleor/components/FaviconImageTile";
 import ImageUpload from "@saleor/components/ImageUpload";
 import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
 import { FormattedMessage, useIntl } from "react-intl";
-import { ProductImageById_product_mainImage } from "../../types/ProductImageById";
+// import { ProductImageById_product_mainImage } from "../../types/ProductImageById";
 
 const useStyles = makeStyles(
   theme => ({
@@ -37,7 +37,9 @@ const useStyles = makeStyles(
       width: 148
     },
     title: {
-      fontSize: "1rem",
+      "& .MuiTypography-h5": {
+        fontSize: "1rem !important",
+      },
     }
   }),
   { name: "CategoryBackground" }
@@ -45,7 +47,7 @@ const useStyles = makeStyles(
 
 export interface CategoryBackgroundProps {
   data: any;
-  image: ProductImageById_product_mainImage;
+  image: any;
   onChange: (event: React.ChangeEvent<any>) => void;
   onImageDelete: () => void;
   onImageUpload: (file: File) => void;
@@ -96,11 +98,11 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
             </div>
           </div>
         </CardContent>
-      ) : image === null ? (
+      ) : (image === null) || (image === "") ? (
         <ImageUpload onImageUpload={files => onImageUpload(files[0])} />
       ) : (
             <CardContent>
-              <ImageTile image={image} onImageDelete={onImageDelete} />
+              <ImageTile image={image} alt={data.faviconAlt} onImageDelete={onImageDelete} />
             </CardContent>
           )}
 
@@ -109,7 +111,7 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
           <Hr />
           <CardContent>
             <TextField
-              name="backgroundImageAlt"
+              name="faviconAlt"
               label="Favicon Alt"
               helperText={intl.formatMessage({
                 defaultMessage: "(Optional)",

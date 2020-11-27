@@ -15,7 +15,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import Skeleton from "@saleor/components/Skeleton";
-import { commonMessages } from "@saleor/intl";
+// import { commonMessages } from "@saleor/intl";
 import { maybe } from "../../../misc";
 import ProductImageNavigation from "../ProductImageNavigation";
 import CategoryBackground from "../StoreBackground";
@@ -121,7 +121,7 @@ const ProductImagePage: React.FC<ProductImagePageProps> = props => {
                 <CardContent>
                   <TextField
                     name="description"
-                    label={intl.formatMessage(commonMessages.description)}
+                    label="Image Alt"
                     helperText={intl.formatMessage({
                       defaultMessage: "Optional",
                       description: "field is optional"

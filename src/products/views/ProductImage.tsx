@@ -97,7 +97,7 @@ export const ProductImage: React.FC<ProductImageProps> = ({
                         onImageDelete={() =>
                           updateImage({
                             variables: {
-                              favicon: null,
+                              favicon: "",
                               id: imageId,
                             }
                           })
