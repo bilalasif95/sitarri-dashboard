@@ -343,7 +343,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                                           },
                                           // backgroundImageAlt: formData.backgroundImageAlt,
                                           business: maybe(() => data.store.business.id),
-                                          businesscategory: maybe(() => data.store.business.businesscategory.id),
+                                          businesscategory: typeof formData.businessCategory === "string" ? formData.businessCategory : formData.businessCategory.id,
                                           // category: formData.businessCategory,
                                           // deliverooUrl: "https://www." + formData.delivery,
                                           description: formData.description,
@@ -391,7 +391,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                                     if ((formData.logo === null) || (typeof formData.logo === "string")) {
                                       businessUpdateWithoutLogo({
                                         variables: {
-                                          businesscategory: formData.businessCategory.id,
+                                          businesscategory: typeof formData.businessCategory === "string" ? formData.businessCategory : formData.businessCategory.id,
                                           deliverooUrl: formData.delivery ? "https://www." + formData.delivery : "",
                                           facebookUrl: formData.facebook ? "https://www.facebook.com/" + formData.facebook : "",
                                           id: maybe(() => data.store.business.id),
@@ -406,7 +406,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
                                     else {
                                       businessUpdate({
                                         variables: {
-                                          businesscategory: formData.businessCategory.id,
+                                          businesscategory: typeof formData.businessCategory === "string" ? formData.businessCategory : formData.businessCategory.id,
                                           deliverooUrl: formData.delivery ? "https://www." + formData.delivery : "",
                                           facebookUrl: formData.facebook ? "https://www.facebook.com/" + formData.facebook : "",
                                           id: maybe(() => data.store.business.id),

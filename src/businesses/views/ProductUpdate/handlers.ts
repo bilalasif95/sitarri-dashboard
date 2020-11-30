@@ -21,7 +21,7 @@ export function createUpdateHandler(
   return (data: any) => {
     const category = businessCategories.filter(val => val.node.name === data.businessCategory)
     const productVariables: ProductUpdateVariables = {
-      businesscategory: category.length ? category[0].node.id : product.businesscategory.id,
+      businesscategory: category.length ? category[0].node.id : data.businessCategory,
       facebookUrl: data.facebookUrl ? "https://www.facebook.com/" + data.facebookUrl : "",
       id: product.id,
       instagramUrl: data.instagramUrl ? "https://www.instagram.com/" + data.instagramUrl : "",
@@ -52,7 +52,7 @@ export function createUpdateHandler(
     // if (product.productType.hasVariants) {
     if ((data.logo === null) || (typeof data.logo === "string")) {
       updateSimpleProduct({
-        businesscategory: category.length ? category[0].node.id : product.businesscategory.id,
+        businesscategory: category.length ? category[0].node.id : data.businessCategory,
         facebookUrl: data.facebookUrl ? "https://www.facebook.com/" + data.facebookUrl : "",
         id: product.id,
         instagramUrl: data.instagramUrl ? "https://www.instagram.com/" + data.instagramUrl : "",

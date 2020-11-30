@@ -46,7 +46,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
     []
   );
   const id = localStorage.getItem("businessID");
-  const businessCategoryID = localStorage.getItem("businessCategoryID");
+
   return (
     <>
       <WindowTitle
@@ -106,7 +106,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
                                   streetAddress2: formData.streetAddress2,
                                 },
                                 business: id,
-                                businesscategory: businessCategoryID,
+                                businesscategory: typeof formData.businessCategory === "string" ? formData.businessCategory : formData.businessCategory.id,
                                 description: formData.description,
                                 fridayClosingTime: formData.fridayClosingTime,
                                 fridayOpeningStatus: formData.fridayOpenClose,
@@ -143,7 +143,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
                           if ((formData.logo === null) || (typeof formData.logo === "string")) {
                             businessUpdateWithoutLogo({
                               variables: {
-                                businesscategory: formData.businessCategory.id,
+                                businesscategory: typeof formData.businessCategory === "string" ? formData.businessCategory : formData.businessCategory.id,
                                 deliverooUrl: formData.delivery ? "https://www." + formData.delivery : "",
                                 facebookUrl: formData.facebook ? "https://www.facebook.com/" + formData.facebook : "",
                                 id,
@@ -158,7 +158,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
                           else {
                             businessUpdate({
                               variables: {
-                                businesscategory: formData.businessCategory.id,
+                                businesscategory: typeof formData.businessCategory === "string" ? formData.businessCategory : formData.businessCategory.id,
                                 deliverooUrl: formData.delivery ? "https://www." + formData.delivery : "",
                                 facebookUrl: formData.facebook ? "https://www.facebook.com/" + formData.facebook : "",
                                 id,
